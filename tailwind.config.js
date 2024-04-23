@@ -9,9 +9,16 @@ module.exports = {
     extend: {
       colors: {
         "principale-800": "#4D7A4C",
+        "dark-green": "#2F5637",
+        red: "#D61919",
+        yellow: "#F8CA29",
+        "taupe-grey": "#AEA485",
+        "light-grey": "#F5F3EB",
+        grey: "#E8E5DB",
       },
       fontFamily: {
-        mcqueen: "mcqueen",
+        mcqueen: ["var(--font-mcqueen)"],
+        raleway: ["var(--font-raleway)"],
       },
     },
   },
