@@ -1,3 +1,5 @@
 export default function SearchBar() {
-  return <input type="text" />;
+  return (
+    <input className="grow border border-black rounded-full h-11" type="text" />
+  );
 }
