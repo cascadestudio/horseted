@@ -1,6 +1,7 @@
-export default function HorsetedLogo() {
+export default function HorsetedLogo({ className }) {
   return (
     <svg
+      className={className}
       width="209"
       height="43"
       viewBox="0 0 209 43"

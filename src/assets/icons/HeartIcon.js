@@ -1,6 +1,7 @@
-export default function HeartIcon() {
+export default function HeartIcon({ className }) {
   return (
     <svg
+      className={className}
       width="23"
       height="20"
       viewBox="0 0 23 20"
