@@ -9,6 +9,21 @@ const mcqueen = localFont({
       weight: "600",
       style: "normal",
     },
+    {
+      path: "../assets/fonts/McQueen-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+});
+
+const raleway = localFont({
+  src: [
+    {
+      path: "../assets/fonts/Raleway-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
   ],
 });
 
