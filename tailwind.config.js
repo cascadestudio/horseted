@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "light-green": "#4D7A4C",
         "dark-green": "#2F5637",
+        "light-green": "#4D7A4C",
         red: "#D61919",
         yellow: "#F8CA29",
         "dark-grey": "#AEA485",
@@ -18,6 +18,15 @@ module.exports = {
       fontFamily: {
         mcqueen: ["var(--font-mcqueen)"],
         raleway: ["var(--font-raleway)"],
+      },
+      fontSize: {
+        sm: "0.8rem",
+        base: "16px",
+        xl: "1.25rem",
+        "2xl": "1.563rem",
+        "3xl": "1.953rem",
+        "4xl": "2.441rem",
+        "5xl": "3.052rem",
       },
     },
   },
