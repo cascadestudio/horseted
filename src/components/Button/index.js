@@ -3,8 +3,8 @@ export default function Button({ children, variant, className }) {
     <button
       className={`${className} font-mcqueen font-semibold rounded-xl h-11 px-7 ${
         variant === "white"
-          ? "bg-white text-light-green border border-light-green"
-          : "bg-light-green text-white"
+          ? "bg-white text-dark-green border border-dark-green"
+          : "bg-dark-green text-white"
       }`}
     >
       {children}
