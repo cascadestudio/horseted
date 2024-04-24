@@ -9,7 +9,7 @@ export default function Header() {
   return (
     <header className="container mx-auto py-5 px-5">
       <div className="flex justify-between items-center gap-x-7">
-        <BurgerIcon />
+        <BurgerIcon className="lg:hidden" />
         <HorsetedLogo className="h-8 lg:h-auto" />
         <SearchBar className="hidden lg:block" />
         <Button className="hidden lg:block">Vendre</Button>
