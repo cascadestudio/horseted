@@ -9,9 +9,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <>
-      <footer className="container mx-auto pt-20 px-11 md:flex md:justify-around md:px-0">
+      <footer className="container mx-auto pt-20 px-11 lg:flex lg:justify-around lg:px-0">
         <div className="flex flex-col mb-8">
-          <HorsetedBlackIcon className="h-24 self-center mb-3 md:h-40 md:mb-7" />
+          <HorsetedBlackIcon className="h-24 self-center mb-3 lg:h-40 lg:mb-7" />
           <Button className="px-16">Vendre maintenant</Button>
         </div>
         <div className="pb-7">
@@ -68,10 +68,10 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        <div className="md:flex md:flex-col md:justify-between md:pb-7">
+        <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
           <div>
             <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
-            <ul className="pb-9 md:pb-0">
+            <ul className="pb-9 lg:pb-0">
               <li className="pb-2">
                 <a href="#">Mentions légales</a>
               </li>
@@ -86,8 +86,8 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="flex justify-center md:justify-start">
-            <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full md:bg-transparent md:border-none md:px-0 md:py-0 md:pb-2">
+          <div className="flex justify-center lg:justify-start">
+            <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2">
               <a href="#">
                 <InstagramIcon className="h-6" />
               </a>
@@ -104,9 +104,9 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-      <div className="mt-10 bg-light-grey text-center pt-8 pb-16 md:flex md:justify-between md:px-24 md:pb-8">
+      <div className="mt-10 bg-light-grey text-center pt-8 pb-16 lg:flex lg:justify-between lg:px-24 lg:pb-8">
         <p>SAS HORSETED copyright {currentYear}</p>
-        <p className="hidden md:block">
+        <p className="hidden lg:block">
           Site créé par{" "}
           <a href="https://citronnoir.com/" className="underline">
             Citron Noir
