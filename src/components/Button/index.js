@@ -3,8 +3,8 @@ export default function Button({ children, variant, className }) {
     <button
       className={`${className} rounded-xl h-11 px-7 ${
         variant === "white"
-          ? "bg-white text-principale-800 border border-principale-800"
-          : "bg-principale-800 text-white"
+          ? "bg-white text-light-green border border-light-green"
+          : "bg-light-green text-white"
       }`}
     >
       {children}
