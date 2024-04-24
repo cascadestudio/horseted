@@ -1,6 +1,6 @@
-"use client";
+// "use client";
 import "./globals.css";
-import { AuthContextProvider } from "@/context/AuthContext";
+// import { AuthContextProvider } from "@/context/AuthContext";
 import Layout from "@/components/Layout";
 import localFont from "next/font/local";
 import { Raleway } from "next/font/google";
@@ -41,9 +41,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
-        <AuthContextProvider>
-          <Layout>{children}</Layout>
-        </AuthContextProvider>
+        {/* <AuthContextProvider> */}
+        <Layout>{children}</Layout>
+        {/* </AuthContextProvider> */}
       </body>
     </html>
   );
