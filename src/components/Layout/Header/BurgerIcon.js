@@ -14,8 +14,8 @@ export default function BurgerIcon({ className }) {
         x2="27"
         y2="1"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -23,8 +23,8 @@ export default function BurgerIcon({ className }) {
         x2="27"
         y2="8.5"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
       <line
         x1="1"
@@ -32,8 +32,8 @@ export default function BurgerIcon({ className }) {
         x2="27"
         y2="16"
         stroke="black"
-        stroke-width="2"
-        stroke-linecap="round"
+        strokeWidth="2"
+        strokeLinecap="round"
       />
     </svg>
   );
