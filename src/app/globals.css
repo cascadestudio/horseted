@@ -4,5 +4,8 @@
 
 * {
   border-radius: 4px;
+}
+a,
+p {
   font-family: "Raleway", system-ui, sans-serif;
 }
