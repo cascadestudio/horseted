@@ -1,34 +1,18 @@
 import Link from "next/link";
-
-async function getCategories() {
-  const res = await fetch(`${process.env.HORSETED_API_BASE_URL}/categories`, {
-    headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.HORSETED_API_KEY,
-      body: {
-        // parentId: 167,
-      },
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
-}
+import getCategories from "./getCategories";
+import SubCategories from "./SubCategories";
 
 export default async function NavBar({ className }) {
   const categories = await getCategories();
-  // console.log(categories);
   return (
     <nav className={className + " py-4 border-t font-raleway font-semibold"}>
       <ul className="flex">
         {categories.map((category) => {
-          const { name } = category;
+          const { name, id } = category;
           return (
             <li key={name} className="mr-5">
               {name}
+              <SubCategories parentId={id} />
             </li>
           );
         })}
