@@ -87,26 +87,26 @@ export default function Footer() {
           </div>
           <div className="pb-7">
             <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
-            <ul>
-              <li className="pb-2">
+            <ul className="[&>li]:pb-2">
+              <li>
                 <a href="#">À propos</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Aide</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Vendre</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Acheter</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Livraisons & retours</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Articles</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Écurie</a>
               </li>
             </ul>
@@ -115,26 +115,26 @@ export default function Footer() {
             <h4 className="uppercase font-extrabold pb-2 text-lg">
               Notre sélection
             </h4>
-            <ul>
-              <li className="pb-2">
+            <ul className="[&>li]:pb-2">
+              <li>
                 <a href="#">Vêtements pour la cavalière</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Boots en cuir pour la cavalière</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Casques</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Sangles et accessoires</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Enrênements</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Selles et accessoires</a>
               </li>
-              <li className="pb-2">
+              <li>
                 <a href="#">Brosses</a>
               </li>
             </ul>
@@ -142,34 +142,34 @@ export default function Footer() {
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
             <div>
               <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
-              <ul className="pb-9 lg:pb-0">
-                <li className="pb-2">
+              <ul className="pb-9 lg:pb-0 [&>li]:pb-2">
+                <li>
                   <a href="#">Mentions légales</a>
                 </li>
-                <li className="pb-2">
+                <li>
                   <a href="#">Conditions générales des ventes</a>
                 </li>
-                <li className="pb-2">
+                <li>
                   <a href="#">Conditions d’utilisation</a>
                 </li>
-                <li className="pb-2">
+                <li>
                   <a href="#">Charte vendeur</a>
                 </li>
               </ul>
             </div>
             <div className="flex justify-center lg:justify-start">
-              <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2">
+              <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2 [&>a>svg]:h-6">
                 <a href="#">
-                  <InstagramIcon className="h-6" />
+                  <InstagramIcon />
                 </a>
                 <a href="#">
-                  <YoutubeIcon className="h-6" />
+                  <YoutubeIcon />
                 </a>
                 <a href="#">
-                  <FacebookIcon className="h-6" />
+                  <FacebookIcon />
                 </a>
                 <a href="#">
-                  <LinkedInIcon className="h-6" />
+                  <LinkedInIcon />
                 </a>
               </div>
             </div>
