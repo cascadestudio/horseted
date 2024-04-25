@@ -3,29 +3,36 @@
 import Link from "next/link";
 // import getCategories from "./getCategories";
 import SubCategories from "./SubCategories";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function NavBar({ className }) {
+  const [categories, setCategories] = useState([]);
+  const [isSubCategories, setIsSubCategories] = useState(false);
+
   useEffect(() => {
     fetch("http://localhost:3000/api")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        setCategories(data.data);
       });
   }, []);
-  // const categories = await getCategories();
+
   return (
     <nav className={className + " py-4 border-t font-raleway font-semibold"}>
       <ul className="flex">
-        {/* {categories.map((category) => {
+        {categories.map((category) => {
           const { name, id } = category;
           return (
-            <li key={name} className="mr-5">
+            <li
+              key={name}
+              className="mr-5"
+              onClick={() => setIsSubCategories(true)}
+            >
               {name}
-              <SubCategories parentId={id} />
+              {isSubCategories && <SubCategories parentId={id} />}
             </li>
           );
-        })} */}
+        })}
       </ul>
       <div className=" border-l border-black [&>*]:ml-5">
         <Link href="/aide">Aide</Link>
