@@ -1,7 +1,6 @@
 import getCategories from "./getCategories";
-import ItemCategories from "./ItemCategories";
 
-export default async function SubCategories({ className, parentId }) {
+export default async function ItemCategories({ className, parentId }) {
   const subCategories = await getCategories(parentId);
 
   return (
@@ -11,7 +10,6 @@ export default async function SubCategories({ className, parentId }) {
         return (
           <li key={name} className="mr-5">
             {name}
-            <ItemCategories parentId={id} />
           </li>
         );
       })}
