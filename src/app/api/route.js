@@ -1,14 +1,14 @@
 export async function GET() {
-  const res = await fetch(`${process.env.HORSETED_API_BASE_URL}/categories`, {
-    headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.HORSETED_API_KEY,
-      body: {
-        parentId: 1,
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=161`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
       },
-    },
-  });
+    }
+  );
   const data = await res.json();
-  console.log(Response.json({ data }));
+  // console.log(Response.json({ data }));
   return Response.json({ data });
 }
