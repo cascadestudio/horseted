@@ -16,8 +16,8 @@ module.exports = {
         "light-grey": "#F5F3EB",
       },
       fontFamily: {
+        sans: ["var(--font-raleway)"],
         mcqueen: ["var(--font-mcqueen)"],
-        raleway: ["var(--font-raleway)"],
       },
       fontSize: {
         sm: "0.8rem",

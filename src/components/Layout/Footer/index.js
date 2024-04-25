@@ -76,7 +76,7 @@ export default function Footer() {
           </div>
           <div className="pb-7">
             <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
-            <ul className="[&>li]:pb-2">
+            <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
                 <a href="#">À propos</a>
               </li>
@@ -104,7 +104,7 @@ export default function Footer() {
             <h4 className="uppercase font-extrabold pb-2 text-lg">
               Notre sélection
             </h4>
-            <ul className="[&>li]:pb-2">
+            <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
                 <a href="#">Vêtements pour la cavalière</a>
               </li>
@@ -131,7 +131,7 @@ export default function Footer() {
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
             <div>
               <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
-              <ul className="pb-9 lg:pb-0 [&>li]:pb-2">
+              <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
                   <a href="#">Mentions légales</a>
                 </li>
