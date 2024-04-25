@@ -25,7 +25,7 @@ export default function Footer() {
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation
           </p>
-          <Image priority src={HorsetedApp} alt="App Horseted" />
+          <Image src={HorsetedApp} alt="App Horseted" />
         </div>
         <div className="hidden lg:block lg:bg-[#E8E5DB] lg:border-t lg:border-light-green">
           <div className=" lg:container lg:mx-auto lg:flex lg:py-11 lg:justify-between lg:items-center lg:px-5">
@@ -40,12 +40,7 @@ export default function Footer() {
             </div>
             <Button className="lg:flex lg:items-center" variant="black">
               Vendre un équipement{" "}
-              <Image
-                className="lg:ml-3"
-                priority
-                src={RightArrow}
-                alt="Right Arrow"
-              />
+              <Image className="lg:ml-3" src={RightArrow} alt="Right Arrow" />
             </Button>
           </div>
         </div>
@@ -53,7 +48,6 @@ export default function Footer() {
           <div className="flex flex-col mb-7 lg:mb-5">
             <Image
               className="self-end mr-3 lg:w-12 lg:-mr-20 lg:-mb-3"
-              priority
               src={BurstIcon}
               alt="Burst Icon"
             />
@@ -66,17 +60,12 @@ export default function Footer() {
             <a href="#">
               <Image
                 className="pb-3 lg:pb-0"
-                priority
                 src={PlayStoreButton}
                 alt="Télécharger sur Play Store"
               />
             </a>
             <a href="#">
-              <Image
-                priority
-                src={AppStoreButton}
-                alt="Télécharger sur App Store"
-              />
+              <Image src={AppStoreButton} alt="Télécharger sur App Store" />
             </a>
           </div>
         </div>
