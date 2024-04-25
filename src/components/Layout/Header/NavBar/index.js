@@ -6,10 +6,13 @@ import SubCategories from "./SubCategories";
 import { useEffect } from "react";
 
 export default function NavBar({ className }) {
-  // useEffect(() => {
-
-  // },[])
-
+  useEffect(() => {
+    fetch("http://localhost:3000/api")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+      });
+  }, []);
   // const categories = await getCategories();
   return (
     <nav className={className + " py-4 border-t font-raleway font-semibold"}>
