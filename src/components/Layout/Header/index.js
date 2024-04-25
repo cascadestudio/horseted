@@ -23,7 +23,7 @@ export default function Header() {
           <MessageIcon />
         </div>
         <SearchBar className="lg:hidden mt-4" />
-        <NavBar className="hidden lg:block" />
+        <NavBar className="hidden lg:flex" />
       </div>
     </header>
   );
