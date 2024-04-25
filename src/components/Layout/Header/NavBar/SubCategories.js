@@ -6,7 +6,7 @@ export default function SubCategories({ className, parentId }) {
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api?query=161")
+    fetch(`http://localhost:3000/api?query=${parentId}`)
       .then((res) => res.json())
       .then((data) => {
         setSubCategories(data.data);
