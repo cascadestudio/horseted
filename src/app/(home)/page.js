@@ -2,7 +2,7 @@
 // import { useRouter } from "next/navigation";
 // import { useAuthContext } from "@/context/AuthContext";
 // import { useEffect } from "react";
-import RecentProductsSection from "./RecentProductsSection";
+import ProductsSection from "./ProductsSection";
 
 export default function Home() {
   // const router = useRouter();
@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <main className="font-mcqueen font-thin">
-      <RecentProductsSection />
+      <ProductsSection title="Pour le cavalier" />
     </main>
   );
 }
