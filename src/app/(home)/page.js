@@ -2,6 +2,7 @@
 // import { useRouter } from "next/navigation";
 // import { useAuthContext } from "@/context/AuthContext";
 // import { useEffect } from "react";
+import RecentProductsSection from "./RecentProductsSection";
 
 export default function Home() {
   // const router = useRouter();
@@ -13,5 +14,9 @@ export default function Home() {
   //   if (user == null) router.push("/signin");
   // }, [user]);
 
-  return <main className="font-mcqueen font-thin">Home</main>;
+  return (
+    <main className="font-mcqueen font-thin">
+      <RecentProductsSection />
+    </main>
+  );
 }
