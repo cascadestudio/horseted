@@ -4,13 +4,13 @@ import { useFetchCategories } from "@/libs/hooks";
 
 export default function SubCategories({ parentId }) {
   const [subCategories, isLoading] = useFetchCategories(parentId);
-  const [selectedSubCategories, setSelectedSubCategories] = useState();
+  const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
   const isSubCategories = subCategories.length > 0;
 
   useEffect(() => {
     isSubCategories &&
       !isLoading &&
-      setSelectedSubCategories(subCategories[0].id);
+      setSelectedSubCategoriesId(subCategories[0].id);
   }, [isLoading]);
 
   if (isSubCategories) {
@@ -19,22 +19,24 @@ export default function SubCategories({ parentId }) {
         <ul>
           {subCategories?.map((category) => {
             const { name, id } = category;
-            const isActive = selectedSubCategories === id;
+            const isActive = selectedSubCategoriesId === id;
             return (
               <li key={name} className="mr-5">
                 <button
-                  className={`  ${
+                  className={`${
                     isActive && " border-b-2 border-dark-green text-dark-green"
                   }`}
-                  onClick={() => setSelectedSubCategories(id)}
+                  onClick={() => setSelectedSubCategoriesId(id)}
                 >
                   {name}
                 </button>
-                {isActive && <ItemCategories parentId={id} />}
               </li>
             );
           })}
         </ul>
+        {selectedSubCategoriesId !== null && (
+          <ItemCategories parentId={selectedSubCategoriesId} />
+        )}
       </div>
     );
   }

@@ -9,6 +9,7 @@ export function useFetchCategories(parentId) {
       .then((res) => res.json())
       .then((data) => {
         setCategories(data.data);
+        // console.log(data.data);
         setIsLoading(false);
       });
   }, []);
