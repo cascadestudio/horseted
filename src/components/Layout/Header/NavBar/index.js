@@ -6,7 +6,7 @@ import SubCategories from "./SubCategories";
 import { useState } from "react";
 
 export default function NavBar({ className }) {
-  const [isSubCategories, setIsSubCategories] = useState(false);
+  const [selectedSubCategories, setSelectedSubCategories] = useState(null);
   const [categories, setCategories] = useFetchCategories();
 
   return (
@@ -18,10 +18,10 @@ export default function NavBar({ className }) {
             <li
               key={name}
               className="mr-5"
-              onClick={() => setIsSubCategories(true)}
+              onClick={() => setSelectedSubCategories(id)}
             >
               {name}
-              {isSubCategories && <SubCategories parentId={id} />}
+              {selectedSubCategories === id && <SubCategories parentId={id} />}
             </li>
           );
         })}

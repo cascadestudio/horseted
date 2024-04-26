@@ -1,17 +1,10 @@
 import ItemCategories from "./ItemCategories";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFetchCategories } from "@/libs/hooks";
 
 export default function SubCategories({ className, parentId }) {
   const [subCategories, setSubCategories] = useFetchCategories(parentId);
-
-  useEffect(() => {
-    fetch(`http://localhost:3000/api?query=${parentId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setSubCategories(data.data);
-      });
-  }, []);
+  const [selectedItemCategories, setSelectedItemCategories] = useState(null);
 
   return (
     <div className="absolute bg-white p-5">
@@ -19,9 +12,15 @@ export default function SubCategories({ className, parentId }) {
         {subCategories.map((category) => {
           const { name, id } = category;
           return (
-            <li key={name} className="mr-5">
+            <li
+              key={name}
+              className="mr-5"
+              onClick={() => setSelectedItemCategories(id)}
+            >
               {name}
-              {/* <ItemCategories parentId={id} /> */}
+              {selectedItemCategories === id && (
+                <ItemCategories parentId={id} />
+              )}
             </li>
           );
         })}
