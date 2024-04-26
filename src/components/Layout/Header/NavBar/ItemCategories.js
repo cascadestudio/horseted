@@ -1,11 +1,11 @@
 import { useFetchCategories } from "@/libs/hooks";
 
-export default function SubCategories({ parentId }) {
+export default function ItemCategories({ parentId }) {
   const [itemCategories] = useFetchCategories(parentId);
 
   if (itemCategories.length > 0) {
     return (
-      <div className="p-5">
+      <div key={itemCategories} className="p-5">
         <ul>
           {itemCategories.map((category) => {
             const { name, id } = category;

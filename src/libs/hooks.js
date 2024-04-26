@@ -12,7 +12,7 @@ export function useFetchCategories(parentId) {
         // console.log(data.data);
         setIsLoading(false);
       });
-  }, []);
+  }, [parentId]);
 
   return [categories, isLoading];
 }
