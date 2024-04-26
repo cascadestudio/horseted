@@ -10,7 +10,7 @@ export default function ItemCategories({ parentId }) {
           {itemCategories.map((category) => {
             const { name, id } = category;
             return (
-              <li key={name} className="mr-5 text-red">
+              <li key={name} className="">
                 {name}
               </li>
             );

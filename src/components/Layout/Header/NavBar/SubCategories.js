@@ -15,17 +15,20 @@ export default function SubCategories({ parentId }) {
 
   if (isSubCategories) {
     return (
-      <div className="absolute top-[51px] bg-white p-5 border border-dark-green rounded-b-[20px]">
-        <ul>
+      <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex">
+        <ul className="border-r">
           {subCategories?.map((category) => {
             const { name, id } = category;
             const isActive = selectedSubCategoriesId === id;
             return (
-              <li key={name} className="mr-5">
+              <li
+                key={name}
+                className={`pt-6 pb-4 px-6  ${
+                  isActive && " border-b-2 border-dark-green text-dark-green"
+                }`}
+              >
                 <button
-                  className={`${
-                    isActive && " border-b-2 border-dark-green text-dark-green"
-                  }`}
+                  className={`capitalize`}
                   onClick={() => setSelectedSubCategoriesId(id)}
                 >
                   {name}
