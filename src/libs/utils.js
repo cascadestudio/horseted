@@ -1,6 +1,6 @@
 export async function getProducts() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?category=occaecat`,
+    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?terms=nostrud`,
     {
       headers: {
         "Content-Type": "application/json",

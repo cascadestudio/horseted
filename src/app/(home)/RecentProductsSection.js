@@ -10,8 +10,8 @@ export default async function RecentProductsSection() {
     <>
       <h3>Récemment ajouté</h3>
       {products.items.slice(0, 10).map((product) => {
-        console.log(product.category);
-        return <h4>{product.category.name}</h4>;
+        console.log(product.title);
+        return <h4>{product.title}</h4>;
       })}
     </>
   );
