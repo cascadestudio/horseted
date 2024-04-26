@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export default function NavBar({ className }) {
   const [selectedSubCategories, setSelectedSubCategories] = useState(null);
-  const [categories, setCategories] = useFetchCategories();
+  const [categories] = useFetchCategories();
 
   return (
     <nav className={className + " py-4 border-t font-raleway font-semibold"}>

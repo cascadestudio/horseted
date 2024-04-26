@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useFetchCategories } from "@/libs/hooks";
 
 export default function SubCategories({ className, parentId }) {
-  const [subCategories, setSubCategories] = useFetchCategories(parentId);
+  const [subCategories] = useFetchCategories(parentId);
   const [selectedItemCategories, setSelectedItemCategories] = useState(null);
 
   return (
