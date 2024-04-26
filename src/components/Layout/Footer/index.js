@@ -29,7 +29,7 @@ export default function Footer() {
             <Image
               width={920}
               height={580}
-              sizes="(max-width: 768px) 100vw, 920px"
+              sizes="100vw, (min-width: 1024px) 920px"
               src={HorsetedApp}
               alt="App Horseted"
             />
