@@ -10,7 +10,9 @@ export default function NavBar({ className }) {
   const [categories] = useFetchCategories();
 
   return (
-    <nav className={className + " border-t font-raleway font-semibold"}>
+    <nav
+      className={className + " border-t font-raleway font-semibold capitalize"}
+    >
       <div className="flex container mx-auto">
         <ul className="flex">
           {categories.map((category) => {
