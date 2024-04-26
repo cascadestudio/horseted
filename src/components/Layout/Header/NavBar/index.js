@@ -13,7 +13,7 @@ export default function NavBar({ className }) {
     <nav
       className={className + " border-t font-raleway font-semibold capitalize"}
     >
-      <div className="flex container mx-auto">
+      <div className="flex items-center container mx-auto">
         <ul className="flex">
           {categories.map((category) => {
             const { name, id } = category;
@@ -33,7 +33,7 @@ export default function NavBar({ className }) {
             );
           })}
         </ul>
-        <div className=" border-l border-black [&>*]:ml-5">
+        <div className="h-8 flex items-center border-l border-black [&>*]:block [&>*]:py-3 [&>*]:px-6 ">
           <Link href="/aide">Aide</Link>
           <Link href="/a-propos">À propos</Link>
           <Link href="/articles">Articles</Link>
