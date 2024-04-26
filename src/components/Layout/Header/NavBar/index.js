@@ -10,26 +10,32 @@ export default function NavBar({ className }) {
   const [categories] = useFetchCategories();
 
   return (
-    <nav className={className + " py-4 border-t font-raleway font-semibold"}>
-      <ul className="flex">
-        {categories.map((category) => {
-          const { name, id } = category;
-          return (
-            <li
-              key={name}
-              className="mr-5"
-              onClick={() => setSelectedSubCategories(id)}
-            >
-              {name}
-              {selectedSubCategories === id && <SubCategories parentId={id} />}
-            </li>
-          );
-        })}
-      </ul>
-      <div className=" border-l border-black [&>*]:ml-5">
-        <Link href="/aide">Aide</Link>
-        <Link href="/a-propos">À propos</Link>
-        <Link href="/articles">Articles</Link>
+    <nav className={className + " border-t font-raleway font-semibold"}>
+      <div className="flex container mx-auto">
+        <ul className="flex">
+          {categories.map((category) => {
+            const { name, id } = category;
+            const isActive = selectedSubCategories === id;
+            return (
+              <li key={name} className="relative">
+                <button
+                  onClick={() => setSelectedSubCategories(id)}
+                  className={` capitalize py-3 px-6 text-center ${
+                    isActive && " border-b-2 border-dark-green text-dark-green"
+                  }`}
+                >
+                  {name}
+                </button>
+                {isActive && <SubCategories parentId={id} />}
+              </li>
+            );
+          })}
+        </ul>
+        <div className=" border-l border-black [&>*]:ml-5">
+          <Link href="/aide">Aide</Link>
+          <Link href="/a-propos">À propos</Link>
+          <Link href="/articles">Articles</Link>
+        </div>
       </div>
     </nav>
   );

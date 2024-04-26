@@ -27,7 +27,9 @@ export default function Footer() {
               enim ad minim veniam, quis nostrud exercitation
             </p>
             <Image
-              sizes="(min-width: 768px) 920px, 100vw"
+              width={920}
+              height={580}
+              sizes="(max-width: 768px) 100vw, 920px"
               src={HorsetedApp}
               alt="App Horseted"
             />

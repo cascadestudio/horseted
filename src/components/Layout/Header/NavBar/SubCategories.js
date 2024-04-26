@@ -7,17 +7,15 @@ export default function SubCategories({ className, parentId }) {
   const [selectedItemCategories, setSelectedItemCategories] = useState(null);
 
   return (
-    <div className="absolute bg-white p-5">
+    <div className="absolute top-[51px] bg-white p-5">
       <ul>
         {subCategories.map((category) => {
           const { name, id } = category;
           return (
-            <li
-              key={name}
-              className="mr-5"
-              onClick={() => setSelectedItemCategories(id)}
-            >
-              {name}
+            <li key={name} className="mr-5">
+              <button onClick={() => setSelectedItemCategories(id)}>
+                {name}
+              </button>
               {selectedItemCategories === id && (
                 <ItemCategories parentId={id} />
               )}
