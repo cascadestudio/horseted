@@ -20,10 +20,10 @@ export default function Home() {
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
           <div>
-            <h4 className="font-mcqueen font-bold text-2xl text-white mb-1">
+            <h4 className="font-mcqueen font-bold text-2xl text-white mb-1 lg:text-3xl lg:mb-5">
               Pourquoi choisir des produits d'équitation de seconde main ?
             </h4>
-            <p className="text-white">
+            <p className="text-white lg:text-[18px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -33,10 +33,10 @@ export default function Home() {
             </p>
           </div>
           <div>
-            <h4 className="font-mcqueen font-bold text-2xl text-white mb-1">
+            <h4 className="font-mcqueen font-bold text-2xl text-white mb-1 lg:text-3xl lg:mb-5">
               Pourquoi choisir des produits d'équitation de seconde main ?
             </h4>
-            <p className="text-white">
+            <p className="text-white lg:text-[18px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
