@@ -1,9 +1,9 @@
-// import getCategories from "./getCategories";
 import ItemCategories from "./ItemCategories";
 import { useEffect, useState } from "react";
+import { useFetchCategories } from "@/libs/hooks";
 
 export default function SubCategories({ className, parentId }) {
-  const [subCategories, setSubCategories] = useState([]);
+  const [subCategories, setSubCategories] = useFetchCategories(parentId);
 
   useEffect(() => {
     fetch(`http://localhost:3000/api?query=${parentId}`)

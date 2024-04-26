@@ -1,21 +1,13 @@
 "use client";
 
 import Link from "next/link";
-// import getCategories from "./getCategories";
+import { useFetchCategories } from "@/libs/hooks";
 import SubCategories from "./SubCategories";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function NavBar({ className }) {
-  const [categories, setCategories] = useState([]);
   const [isSubCategories, setIsSubCategories] = useState(false);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data.data);
-      });
-  }, []);
+  const [categories, setCategories] = useFetchCategories();
 
   return (
     <nav className={className + " py-4 border-t font-raleway font-semibold"}>
