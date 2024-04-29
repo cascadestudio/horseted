@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 
-export default function RenderBlob({ image }) {
+export default function RenderBlob({ blob }) {
+  const image = URL.createObjectURL(blob);
+
   return (
     <>
       <img src={image} alt="" />

@@ -29,5 +29,10 @@ export async function getProductImage(query) {
     throw new Error("Failed to fetch data");
   }
 
-  return res.blob();
+  const blob = await res.blob();
+  const text = await blob.arrayBuffer();
+  const encoded = Buffer.from(text).toString("base64");
+
+  // console.log("encoded =>", encoded);
+  return encoded;
 }
