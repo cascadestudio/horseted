@@ -3,7 +3,7 @@ import ProductsSection from "./ProductsSection";
 export default function Home() {
   return (
     <main>
-      <RecentProductsSection />
+      <ProductsSection />
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
           <div>
