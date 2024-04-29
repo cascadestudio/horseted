@@ -28,7 +28,6 @@ export async function getProductImage(query) {
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  console.log(res.body.source);
 
   return res.blob();
 }
