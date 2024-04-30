@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// Fetch Categories
 export function useFetchCategories(parentId) {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,18 +17,22 @@ export function useFetchCategories(parentId) {
   return [categories, isLoading];
 }
 
-export function useFetchProducts() {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+// Click Outside Element
+export function useIsClickOutsideElement(elementRef) {
+  const [isClickOutside, setIsClickOutside] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/getProducts`)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.data);
-        setIsLoading(false);
-      });
-  }, [parentId]);
+    const checkIfClickedOutside = (e) => {
+      if (elementRef.current && !elementRef.current.contains(e.target)) {
+        setIsClickOutside(true);
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside);
+      document.body.style.overflow = "scroll";
+    };
+  }, []);
 
-  return [products, isLoading];
+  return isClickOutside;
 }

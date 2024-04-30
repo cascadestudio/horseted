@@ -1,21 +1,27 @@
 import ItemCategories from "./ItemCategories";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useFetchCategories } from "@/libs/hooks";
+import { useIsClickOutsideElement } from "@/libs/hooks";
 
-export default function SubCategories({ parentId }) {
+export default function SubCategoriesPanel({ parentId }) {
+  const panelRef = useRef();
   const [subCategories, isLoading] = useFetchCategories(parentId);
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
   const isSubCategories = subCategories.length > 0;
+  const isClickOutside = useIsClickOutsideElement(panelRef);
 
   useEffect(() => {
-    isSubCategories &&
-      !isLoading &&
+    if (isSubCategories && !isLoading) {
       setSelectedSubCategoriesId(subCategories[0].id);
+    }
   }, [isLoading]);
 
-  if (isSubCategories) {
+  if (isSubCategories && !isClickOutside) {
     return (
-      <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex">
+      <div
+        ref={panelRef}
+        className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex"
+      >
         <ul className="border-r">
           {subCategories?.map((category) => {
             const { name, id } = category;

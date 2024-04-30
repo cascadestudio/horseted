@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useFetchCategories } from "@/libs/hooks";
-import SubCategories from "./SubCategories";
+import SubCategoriesPanel from "./SubCategoriesPanel";
 import { useState } from "react";
 
 export default function NavBar({ className }) {
@@ -28,7 +28,7 @@ export default function NavBar({ className }) {
                 >
                   {name}
                 </button>
-                {isActive && <SubCategories parentId={id} />}
+                {isActive && <SubCategoriesPanel parentId={id} />}
               </li>
             );
           })}
