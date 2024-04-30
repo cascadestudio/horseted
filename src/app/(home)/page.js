@@ -1,9 +1,11 @@
 import ProductsSection from "./ProductsSection";
+import BlogSection from "./BlogSection";
 
 export default function Home() {
   return (
     <main>
       <ProductsSection />
+      <BlogSection />
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
           <div>
