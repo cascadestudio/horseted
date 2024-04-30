@@ -4,10 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function ProductCard({ product, className }) {
-  console.log(product);
   const { title, price, favoritCount, size } = product;
   return (
-    <Link href={`/products/${product.id}`} className={className + " block"}>
+    <Link href={`/product/${product.id}`} className={className + " block"}>
       <ProductImage product={product} />
       <p>{price} €</p>
       <p>{favoritCount}</p>

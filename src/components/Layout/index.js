@@ -9,7 +9,7 @@ export default function Layout({ children }) {
   const { user } = useAuthContext();
   const router = useRouter();
 
-  console.log("user =>", user);
+  // console.log("user =>", user);
 
   useEffect(() => {
     if (user == null) router.push("/signin");

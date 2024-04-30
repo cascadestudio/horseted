@@ -18,7 +18,6 @@ export default function signinPage() {
     }
 
     // else successful
-    console.log(result);
     return router.push("/");
   };
   return (

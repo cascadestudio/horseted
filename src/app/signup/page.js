@@ -18,7 +18,6 @@ export default function signupPage() {
     }
 
     // else successful
-    console.log(result);
     return router.push("/");
   };
   return (
