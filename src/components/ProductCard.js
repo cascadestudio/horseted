@@ -1,4 +1,6 @@
 import { getProductImage } from "@/libs/fetch";
+import placeholderImage from "@/assets/images/placeholder.svg";
+import Image from "next/image";
 
 export default async function ProductCard({ product, className }) {
   console.log(product);
@@ -28,6 +30,12 @@ async function ProductImage({ product }) {
       />
     );
   } else {
-    return <p>Pas d'images produit</p>;
+    return (
+      <Image
+        className="aspect-[280/340] object-cover"
+        src={placeholderImage}
+        alt="Image du produit"
+      />
+    );
   }
 }
