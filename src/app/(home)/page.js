@@ -1,11 +1,15 @@
 import ProductsSection from "./ProductsSection";
 import BlogSection from "./BlogSection";
+import { client } from "../../../sanity/lib/client";
 
-export default function Home() {
+export default async function Home() {
+  const articles = await client.fetch(`*[_type == "article"]`);
+  console.log(articles);
+
   return (
     <main>
       <ProductsSection />
-      <BlogSection />
+      <BlogSection articles={articles} />
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
           <div>
