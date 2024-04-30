@@ -9,7 +9,7 @@ import PlayStoreButton from "@/assets/buttons/PlayStoreButton.svg";
 import AppStoreButton from "@/assets/buttons/AppStoreButton.svg";
 import BurstIcon from "@/assets/icons/BurstIcon.svg";
 import HorsetedApp from "@/assets/images/HorsetedApp.png";
-import RightArrow from "@/assets/icons/RightArrow.svg";
+import RightArrow from "@/assets/icons/RightArrow.js";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -48,7 +48,7 @@ export default function Footer() {
             </div>
             <Button className="lg:flex lg:items-center" variant="black">
               Vendre un équipement{" "}
-              <Image className="lg:ml-3" src={RightArrow} alt="Right Arrow" />
+              <RightArrow stroke="black" className="lg:ml-3" />
             </Button>
           </div>
         </div>

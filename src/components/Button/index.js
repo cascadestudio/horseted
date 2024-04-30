@@ -6,7 +6,7 @@ export default function Button({ children, variant, className }) {
           ? "bg-white text-dark-green border border-dark-green"
           : variant === "black"
           ? "bg-transparent text-black border border-black"
-          : "bg-dark-green text-white"
+          : "bg-light-green text-white"
       }`}
     >
       {children}
