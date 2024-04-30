@@ -31,8 +31,7 @@ export async function getProductImage(query) {
 
   const blob = await res.blob();
   const text = await blob.arrayBuffer();
-  const encoded = Buffer.from(text).toString("base64");
+  const base64 = Buffer.from(text).toString("base64");
 
-  // console.log("encoded =>", encoded);
-  return encoded;
+  return base64;
 }
