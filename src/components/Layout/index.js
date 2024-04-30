@@ -1,5 +1,4 @@
-"use client";
-import { AuthContextProvider, useAuthContext } from "@/context/AuthContext";
+import { useAuthContext } from "@/context/AuthContext";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
@@ -10,18 +9,17 @@ export default function Layout({ children }) {
   const { user } = useAuthContext();
   const router = useRouter();
 
-  // const idToken = user.accessToken;
-  console.log(user);
+  console.log("user =>", user);
 
   useEffect(() => {
     if (user == null) router.push("/signin");
   }, [user]);
 
   return (
-    <AuthContextProvider>
+    <>
       <Header />
       {children}
       <Footer />
-    </AuthContextProvider>
+    </>
   );
 }

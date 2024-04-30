@@ -1,7 +1,10 @@
+"use client";
+
 import "./globals.css";
 import Layout from "@/components/Layout";
 import localFont from "next/font/local";
 import { Raleway } from "next/font/google";
+import { AuthContextProvider } from "@/context/AuthContext";
 
 const mcqueen = localFont({
   src: [
@@ -30,16 +33,18 @@ const raleway = Raleway({
   variable: "--font-raleway",
 });
 
-export const metadata = {
-  title: "Horseted",
-  description: "Horseted",
-};
+// export const metadata = {
+//   title: "Horseted",
+//   description: "Horseted",
+// };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
-        <Layout>{children}</Layout>
+        <AuthContextProvider>
+          <Layout>{children}</Layout>
+        </AuthContextProvider>
       </body>
     </html>
   );

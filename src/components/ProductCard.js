@@ -1,18 +1,19 @@
 import { getProductImage } from "@/libs/fetch";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function ProductCard({ product, className }) {
   console.log(product);
   const { title, price, favoritCount, size } = product;
   return (
-    <div className={className}>
+    <Link href={`/products/${product.id}`} className={className}>
       <ProductImage product={product} />
       <p>{price} €</p>
       <p>{favoritCount}</p>
       <h4>{title}</h4>
       <p>{size?.value}</p>
-    </div>
+    </Link>
   );
 }
 
