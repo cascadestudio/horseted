@@ -4,7 +4,6 @@ import { client } from "../../../sanity/lib/client";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
-  console.log(articles);
 
   return (
     <main>
