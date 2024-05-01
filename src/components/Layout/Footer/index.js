@@ -46,7 +46,11 @@ export default function Footer() {
                 l’argent dès maintenant !
               </p>
             </div>
-            <Button className="lg:flex lg:items-center" variant="black">
+            <Button
+              href="/sellproduct"
+              className="lg:flex lg:items-center"
+              variant="black"
+            >
               Vendre un équipement{" "}
               <RightArrow stroke="black" className="lg:ml-3" />
             </Button>
