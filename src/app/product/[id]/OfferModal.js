@@ -1,5 +1,5 @@
 export default function OfferModal() {
-  console.log("OfferModal");
+  // TODO : Click on "Faire une offre" => POST /orders?price
   return (
     <>
       <div>OfferModal</div>
