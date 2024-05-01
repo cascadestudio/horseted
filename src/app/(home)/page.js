@@ -7,9 +7,9 @@ export default function Home() {
   // const idToken = user.accessToken;
   // console.log(idToken);
 
-  // useEffect(() => {
-  //   if (user == null) router.push("/signin");
-  // }, [user]);
+export default async function Home() {
+  const articles = await client.fetch(`*[_type == "article"]`);
+  console.log(articles);
 
   return (
     <main>
