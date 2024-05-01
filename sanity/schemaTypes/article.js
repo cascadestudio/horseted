@@ -20,7 +20,7 @@ export const article = {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "mainImage",
+      name: "image",
       title: "Image",
       type: "image",
       options: {
@@ -46,7 +46,7 @@ export const article = {
   preview: {
     select: {
       title: "title",
-      media: "mainImage",
+      media: "image",
     },
   },
 };

@@ -1,14 +1,9 @@
-// "use client";
-// import { useRouter } from "next/navigation";
-// import { useAuthContext } from "@/context/AuthContext";
-// import { useEffect } from "react";
 import ProductsSection from "./ProductsSection";
 import BlogSection from "./BlogSection";
 import { client } from "../../../sanity/lib/client";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
-  console.log(articles);
 
   return (
     <main>
