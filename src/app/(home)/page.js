@@ -1,6 +1,7 @@
 import ProductsSection from "./ProductsSection";
 import BlogSection from "./BlogSection";
 import { client } from "../../../sanity/lib/client";
+import Button from "@/components/Button";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
@@ -9,6 +10,23 @@ export default async function Home() {
   return (
     <main>
       <ProductsSection />
+      <div className="container mx-auto px-5 py-14">
+        <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:mb-4 lg:text-4xl">
+          Notre mission : Développement durable et passion
+        </h2>
+        <p className="lg:text-[18px] mb-6">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+          <br />
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+          dolore eu fugiat nulla pariatur
+        </p>
+        <Button href="#" variant={"black"} className="w-full text-center">
+          En savoir plus
+        </Button>
+      </div>
       <BlogSection articles={articles} />
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
