@@ -3,6 +3,8 @@ import signIn from "@/libs/firebase/auth/signin";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Button from "@/components/Button";
+
 export default function signinPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -47,7 +49,7 @@ export default function signinPage() {
               placeholder="password"
             />
           </label>
-          <button type="submit">Sign in</button>
+          <Button type="submit">Sign in</Button>
         </form>
       </div>
       <p>Vous n’avez pas de compte ?</p>

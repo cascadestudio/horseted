@@ -47,5 +47,5 @@ export default async function ProductPage({ params }) {
 }
 
 function BuyButton() {
-  return <Button>Acheter</Button>;
+  return <Button href="/checkout">Acheter</Button>;
 }
