@@ -19,8 +19,7 @@ export default function BlogCard({ title, image, body, link }) {
       </div>
       <div className="p-6">
         <h3 className="font-mcqueen font-semibold text-xl mb-3">{title}</h3>
-        {/* <p className="mb-5">{body}</p> */}
-        <div className="prose prose-stone">
+        <div className="mb-5 prose line-clamp-3 lg:prose-lg">
           <PortableText value={body} />
         </div>
         <Link className="flex items-center text-light-green" href={link}>
