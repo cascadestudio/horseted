@@ -70,7 +70,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-5 py-14">
+      <div className="container mx-auto px-5 py-14 lg:pt-12 lg:pb-24">
         <div className="flex flex-col items-center lg:rounded-[56px] lg:border lg:border-black">
           <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:w-full">
             <Image
