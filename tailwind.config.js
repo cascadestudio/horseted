@@ -13,11 +13,13 @@ module.exports = {
         red: "#D61919",
         yellow: "#F8CA29",
         "dark-grey": "#AEA485",
+        grey: "#ADA89F",
         "light-grey": "#F5F3EB",
       },
       fontFamily: {
         sans: ["var(--font-raleway)"],
         mcqueen: ["var(--font-mcqueen)"],
+        poppins: ["var(--font-poppins)"],
       },
       fontSize: {
         sm: "0.8rem",

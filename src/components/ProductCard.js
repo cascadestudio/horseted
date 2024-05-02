@@ -2,16 +2,35 @@ import { getProductImage } from "@/libs/fetch";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Link from "next/link";
+import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 
 export default async function ProductCard({ product, className }) {
-  const { title, price, favoritCount, size } = product;
+  const { title, price, favoritCount, shipping } = product;
   return (
-    <Link href={`/product/${product.id}`} className={className + " block"}>
+    <Link
+      href={`/product/${product.id}`}
+      className={
+        className + " block border-b border-grey mb-12 ml-5 max-w-[280px]"
+      }
+    >
       <ProductImage product={product} />
-      <p>{price} €</p>
-      <p>{favoritCount}</p>
-      <h4>{title}</h4>
-      <p>{size?.value}</p>
+      <div className="flex p-5 justify-between">
+        <div>
+          <p className="font-poppins font-bold">{price} €</p>
+          <h4 className="text-lg font-extrabold text-light-green truncate max-w-[195px]">
+            {title}
+          </h4>
+          <p className="text-grey">{shipping}</p>
+        </div>
+        <div className="flex items-start">
+          <Image
+            src={favoriteCountIcon}
+            alt="favoriteCountIcon"
+            className="w-5 mr-1"
+          />
+          <p className="leading-none">{favoritCount}</p>
+        </div>
+      </div>
     </Link>
   );
 }
@@ -24,7 +43,7 @@ async function ProductImage({ product }) {
 
     return (
       <img
-        className="aspect-[280/340] object-cover"
+        className="aspect-[280/340] object-cover w-[280px]"
         src={`data:image/png;base64, ${base64}`}
         alt="Image du produit"
       />
@@ -32,7 +51,7 @@ async function ProductImage({ product }) {
   } else {
     return (
       <Image
-        className="aspect-[280/340] object-cover"
+        className="aspect-[280/340] object-cover w-[280px]"
         src={placeholderImage}
         alt="Image du produit"
       />
