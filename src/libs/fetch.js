@@ -1,3 +1,4 @@
+// Get API
 export async function getApi(query) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/${query}`,
@@ -15,6 +16,7 @@ export async function getApi(query) {
   return res.json();
 }
 
+// Get Product Image
 export async function getProductImage(query) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/${query}`,

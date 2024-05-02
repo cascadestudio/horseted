@@ -4,14 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function ProductCard({ product, className }) {
-  const { title, price, favoritCount, size } = product;
+  const { title, price, favoritCount, shipping } = product;
   return (
     <Link href={`/product/${product.id}`} className={className + " block"}>
       <ProductImage product={product} />
       <p>{price} €</p>
       <p>{favoritCount}</p>
       <h4>{title}</h4>
-      <p>{size?.value}</p>
+      <p>{shipping}</p>
     </Link>
   );
 }
