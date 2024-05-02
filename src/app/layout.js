@@ -1,5 +1,3 @@
-"use client";
-
 import "./globals.css";
 import Layout from "@/components/Layout";
 import localFont from "next/font/local";
@@ -33,10 +31,10 @@ const raleway = Raleway({
   variable: "--font-raleway",
 });
 
-// export const metadata = {
-//   title: "Horseted",
-//   description: "Horseted",
-// };
+export const metadata = {
+  title: "Horseted",
+  description: "Horseted",
+};
 
 export default function RootLayout({ children }) {
   return (
