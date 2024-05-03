@@ -6,13 +6,13 @@ export default async function RecentProductsSection({ title }) {
   const products = await getApi("products?category=206");
 
   return (
-    <section className="mt-12">
+    <section className="mt-12 pb-32 bg-light-grey">
       <h3 className="font-bold text-[32px] mb-4">{title}</h3>
       <Carousel>
-        {products.items.map((product) => {
+        {products.items.slice(0, 25).map((product) => {
           return (
-            <div key={product}>
-              <ProductCard className="w-80" product={product} />;
+            <div className="pr-6" key={product}>
+              <ProductCard className="w-80" product={product} />
             </div>
           );
         })}
