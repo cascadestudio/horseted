@@ -38,6 +38,10 @@ export default async function ProductCard({ product, className }) {
           <p className="leading-none">{favoritCount}</p>
         </div>
       </div>
+      <p>{price} €</p>
+      <p>{favoritCount}</p>
+      <h4>{title}</h4>
+      <p>{shipping}</p>
     </Link>
   );
 }
