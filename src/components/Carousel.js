@@ -9,7 +9,14 @@ export default function Carousel({ children }) {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 4.2,
+    slidesToScroll: 4,
+    swipeToSlide: true,
+    afterChange: function (index) {
+      console.log(
+        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
+      );
+    },
   };
   return <Slider {...settings}>{children}</Slider>;
 }
