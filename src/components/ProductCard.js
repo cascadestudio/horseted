@@ -6,6 +6,13 @@ import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 
 export default async function ProductCard({ product, className }) {
   const { title, price, favoritCount, shipping } = product;
+  const shippingSizeTranslations = {
+    small: "Petit",
+    medium: "Moyen",
+    large: "Grand",
+    very_large: "Très grand",
+  };
+  const shippingSizeFrench = shippingSizeTranslations[shipping];
   return (
     <Link
       href={`/product/${product.id}`}
@@ -20,7 +27,7 @@ export default async function ProductCard({ product, className }) {
           <h4 className="text-lg font-extrabold text-light-green truncate max-w-[195px]">
             {title}
           </h4>
-          <p className="text-grey">{shipping}</p>
+          <p className="text-grey">{shippingSizeFrench}</p>
         </div>
         <div className="flex items-start">
           <Image
