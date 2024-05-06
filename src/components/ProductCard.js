@@ -13,19 +13,16 @@ export default async function ProductCard({ product, className }) {
     very_large: "Très grand",
   };
   const shippingSizeFrench = shippingSizeTranslations[shipping];
-  console.log("shippingSizeFrench =>", shippingSizeFrench);
   return (
     <Link
       href={`/product/${product.id}`}
-      className={
-        className + " block border-b border-grey mb-12 ml-5 max-w-[280px]"
-      }
+      className={className + " block border-b border-grey mb-8"}
     >
       <ProductImage product={product} />
       <div className="flex p-5 justify-between">
-        <div>
+        <div className="max-w-[82%]">
           <p className="font-poppins font-bold">{price} €</p>
-          <h4 className="text-lg font-extrabold text-light-green truncate max-w-[195px]">
+          <h4 className="text-lg font-extrabold text-light-green truncate">
             {title}
           </h4>
           <p className="text-grey">{shippingSizeFrench}</p>

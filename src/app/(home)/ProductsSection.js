@@ -8,15 +8,22 @@ export default async function RecentProductsSection({ title }) {
   return (
     <section className="mt-12 pb-32 bg-light-grey">
       <h3 className="font-bold text-[32px] mb-4">{title}</h3>
-      <Carousel>
-        {products.items.slice(0, 25).map((product) => {
-          return (
-            <div className="" key={product}>
-              <ProductCard className="w-80" product={product} />
-            </div>
-          );
-        })}
-      </Carousel>
+      <div className="container mx-auto px-5">
+        <Carousel>
+          {products.items.map((product, index) => {
+            return (
+              <div
+                className={`block ${index >= 4 ? "hidden md:block" : ""} ${
+                  index >= 16 ? "hidden lg:block" : ""
+                }`}
+                key={product}
+              >
+                <ProductCard className="mr-5" product={product} />
+              </div>
+            );
+          })}
+        </Carousel>
+      </div>
     </section>
   );
 }
