@@ -6,18 +6,44 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function Carousel({ children }) {
   const [slideIndex, setSlideIndex] = useState(0);
-  const childrenCount = React.Children.count(children);
+  console.log(Math.ceil(slideIndex / 4));
   let sliderRef = useRef(null);
   var settings = {
     arrows: false,
-    dots: false,
+    dots: true,
     infinite: false,
     speed: 500,
     beforeChange: (current, next) => setSlideIndex(next),
     initialSlide: 0,
     slidesToShow: 4.4,
     slidesToScroll: 4,
+    appendDots: (dots) => (
+      <ul>
+        {dots.map((dot, index) => (
+          <li key={index} style={{ width: "144px", margin: 0, padding: 0 }}>
+            {dot.props.children}
+          </li>
+        ))}
+      </ul>
+    ),
+    customPaging: (i) => (
+      <div
+        style={{
+          width: "100%",
+          height: "7px",
+          cursor: "pointer",
+          background: i === Math.ceil(slideIndex / 4) ? "#4D7A4C" : "white",
+        }}
+      />
+    ),
     responsive: [
+      {
+        breakpoint: 1720,
+        settings: {
+          slidesToShow: 4.4,
+          slidesToScroll: 4,
+        },
+      },
       {
         breakpoint: 1400,
         settings: {
@@ -66,43 +92,6 @@ export default function Carousel({ children }) {
       >
         {children}
       </Slider>
-      <input
-        className="w-[480px] h-2 self-center cursor-pointer"
-        onChange={(e) => sliderRef.slickGoTo(e.target.value)}
-        value={slideIndex}
-        type="range"
-        min={0}
-        max={childrenCount - 4}
-        step="1"
-      />
-      <style>
-        {`
-          input[type='range']::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 140px;
-            height: 7px;
-            background-color: #4D7A4C;
-            border-radius: 0;
-            border: none;
-            cursor: pointer;
-          }
-          input[type='range']::-moz-range-thumb {
-            width: 140px;
-            height: 7px;
-            background-color: #4D7A4C;
-            border: none;
-            border-radius: 0;
-            cursor: pointer;
-          }
-          input[type='range']::-webkit-slider-runnable-track {
-            height: 2px;
-          }
-          input[type='range']::-moz-range-track {
-            height: 2px;
-          }
-        `}
-      </style>
     </div>
   );
 }
