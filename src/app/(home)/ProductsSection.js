@@ -11,7 +11,7 @@ export default async function RecentProductsSection({ title }) {
       <Carousel>
         {products.items.slice(0, 25).map((product) => {
           return (
-            <div className="pr-6" key={product}>
+            <div className="" key={product}>
               <ProductCard className="w-80" product={product} />
             </div>
           );

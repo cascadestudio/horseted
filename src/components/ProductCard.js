@@ -13,6 +13,7 @@ export default async function ProductCard({ product, className }) {
     very_large: "Très grand",
   };
   const shippingSizeFrench = shippingSizeTranslations[shipping];
+  console.log("shippingSizeFrench =>", shippingSizeFrench);
   return (
     <Link
       href={`/product/${product.id}`}
@@ -38,10 +39,6 @@ export default async function ProductCard({ product, className }) {
           <p className="leading-none">{favoritCount}</p>
         </div>
       </div>
-      <p>{price} €</p>
-      <p>{favoritCount}</p>
-      <h4>{title}</h4>
-      <p>{shipping}</p>
     </Link>
   );
 }

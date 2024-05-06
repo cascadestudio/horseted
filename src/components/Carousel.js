@@ -6,20 +6,54 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function Carousel({ children }) {
   const [slideIndex, setSlideIndex] = useState(0);
-  console.log("slideIndex =>", slideIndex);
   const childrenCount = React.Children.count(children);
-  console.log("childrenCount =>", childrenCount);
   let sliderRef = useRef(null);
   var settings = {
     arrows: false,
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
-    //slidesToShow: 4.2,
-    initialSlide: 0,
-    slidesToScroll: 4,
-    variableWidth: true,
     beforeChange: (current, next) => setSlideIndex(next),
+    initialSlide: 0,
+    slidesToShow: 4.4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1400,
+        settings: {
+          slidesToShow: 3.4,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 1040,
+        settings: {
+          slidesToShow: 2.4,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1.4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1.2,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 370,
+        settings: {
+          slidesToShow: 1.1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
