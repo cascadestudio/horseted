@@ -24,7 +24,7 @@ export default function BlogCard({ title, image, body, link }) {
         </div>
         <Link className="flex items-center text-light-green" href={link}>
           Lire l'article
-          <RightArrow stroke="#4D7A4C" className="ml-2" />
+          <RightArrow color="#4D7A4C" className="ml-2" />
         </Link>
       </div>
     </div>

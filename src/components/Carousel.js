@@ -22,7 +22,7 @@ export default function Carousel({ children }) {
           <li
             key={index}
             style={{
-              width: window.innerWidth < 1024 ? "39px" : "144px",
+              width: window.innerWidth < 1024 ? "33px" : "118px",
               margin: 0,
               padding: 0,
             }}
