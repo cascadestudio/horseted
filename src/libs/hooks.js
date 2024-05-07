@@ -30,9 +30,10 @@ export function useIsClickOutsideElement(elementRef) {
     document.addEventListener("click", checkIfClickedOutside);
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
-      document.body.style.overflow = "scroll";
+      setIsClickOutside(false);
+      // document.body.style.overflow = "scroll";
     };
   }, []);
 
-  return isClickOutside;
+  return [isClickOutside, setIsClickOutside];
 }

@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import SearchBar from "./SearchBar";
 import BurgerIcon from "./BurgerIcon";
 import NavBar from "./NavBar";
+import MyAccountDropDown from "./MyAccountDropDown";
 
 export default function Header() {
   return (
@@ -15,9 +16,7 @@ export default function Header() {
           <HorsetedLogo className="h-8 lg:h-auto" />
           <SearchBar className="hidden lg:block" />
           <Button className="hidden lg:block">Vendre</Button>
-          <Button className="hidden lg:block" variant="white">
-            Mon compte
-          </Button>
+          <MyAccountDropDown />
           <HeartIcon className="hidden lg:block" />
           <span className="bg-black h-5 w-px hidden lg:block"></span>
           <MessageIcon />
