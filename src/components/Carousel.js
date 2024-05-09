@@ -1,10 +1,27 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import resolveConfig from "tailwindcss/resolveConfig";
+import tailwindConfig from "../../tailwind.config.js";
 
 export default function Carousel({ children }) {
+  const fullConfig = resolveConfig(tailwindConfig);
+  const parseBreakpoint = (breakpoint) => {
+    return parseInt(breakpoint.replace("px", ""), 10);
+  };
+  const [isSmScreen, setIsSmScreen] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
+      setIsSmScreen(window.innerWidth < lgBreakpoint);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const [slideIndex, setSlideIndex] = useState(0);
   let sliderRef = useRef(null);
   var settings = {
@@ -22,7 +39,7 @@ export default function Carousel({ children }) {
           <li
             key={index}
             style={{
-              width: window.innerWidth < 1024 ? "33px" : "118px",
+              width: isSmScreen ? "33px" : "118px",
               margin: 0,
               padding: 0,
             }}
@@ -38,14 +55,13 @@ export default function Carousel({ children }) {
           width: "100%",
           height: "7px",
           cursor: "pointer",
-          background:
-            window.innerWidth < 1024
-              ? i === Math.ceil(slideIndex)
-                ? "#4D7A4C"
-                : "white"
-              : i === Math.ceil(slideIndex / 4)
-              ? "#4D7A4C"
-              : "white",
+          background: isSmScreen
+            ? i === Math.ceil(slideIndex)
+              ? fullConfig.theme.colors["light-green"]
+              : "white"
+            : i === Math.ceil(slideIndex / 4)
+            ? fullConfig.theme.colors["light-green"]
+            : "white",
         }}
       />
     ),
