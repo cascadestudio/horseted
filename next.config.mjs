@@ -3,13 +3,14 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        // protocol: "**",
-        hostname: "**",
-        port: "**",
-        pathname: "**",
+        protocol: "https",
+        hostname: "cdn.sanity.io",
       },
     ],
   },
+  // experimental: {
+  //   taint: true,
+  // },
 };
 
 export default nextConfig;

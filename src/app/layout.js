@@ -1,7 +1,7 @@
 import "./globals.css";
 import Layout from "@/components/Layout";
 import localFont from "next/font/local";
-import { Raleway } from "next/font/google";
+import { Raleway, Poppins } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
 
 const mcqueen = localFont({
@@ -31,6 +31,13 @@ const raleway = Raleway({
   variable: "--font-raleway",
 });
 
+const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["400", "700"],
+});
+
 export const metadata = {
   title: "Horseted",
   description: "Horseted",
@@ -39,7 +46,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fr">
-      <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
+      <body
+        className={`${mcqueen.variable} ${raleway.variable} ${poppins.variable} font-sans`}
+      >
         <AuthContextProvider>
           <Layout>{children}</Layout>
         </AuthContextProvider>
