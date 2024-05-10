@@ -9,14 +9,16 @@ import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons.svg";
 import StarsGroup from "@/assets/icons/StarsGroup.svg";
 import AppReviewImage1 from "@/assets/images/AppReviewImage1.jpg";
 import AppReviewImageMask from "@/assets/images/AppReviewImageMask.png";
-import ThreeStripesIcon from "@/assets/icons/ThreeStripesIcon.svg";
+import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
+import CategoriesSection from "./CategoriesSection";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
-
   return (
     <main>
+      <ProductsSection title="Récemment ajouté" />
+      <CategoriesSection />
       <ProductsSection title="Pour la cavalière" />
       <ProductsSection title="Pour le cavalier" />
       <ProductsSection title="Selles et Accessoires" />
@@ -110,8 +112,8 @@ export default async function Home() {
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-[32px]"
               />
               <Image
-                src={ThreeStripesIcon}
-                alt="ThreeStripesIcon"
+                src={WhiteThreeStripesIcon}
+                alt="WhiteThreeStripesIcon"
                 className="absolute top-52 left-8"
               />
               <h4 className="absolute top-60 left-10 font-black italic text-[28px] text-white">
@@ -120,8 +122,8 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
               <Image
-                src={ThreeStripesIcon}
-                alt="ThreeStripesIcon"
+                src={WhiteThreeStripesIcon}
+                alt="WhiteThreeStripesIcon"
                 className=""
               />
               <p>
@@ -144,8 +146,8 @@ export default async function Home() {
               <div className="mt-7 px-7 pb-3 flex flex-row-reverse justify-between">
                 <p className="font-extrabold text-lg ">Marion J</p>
                 <Image
-                  src={ThreeStripesIcon}
-                  alt="ThreeStripesIcon"
+                  src={WhiteThreeStripesIcon}
+                  alt="WhiteThreeStripesIcon"
                   className="rotate-[215deg]"
                 />
               </div>
