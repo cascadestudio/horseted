@@ -17,7 +17,9 @@ export default async function Home() {
 
   return (
     <main>
-      <ProductsSection />
+      <ProductsSection title="Pour la cavalière" />
+      <ProductsSection title="Pour le cavalier" />
+      <ProductsSection title="Selles et Accessoires" />
       <div className="container mx-auto px-5 py-14 lg:flex lg:flex-row-reverse lg:gap-24">
         <div className="lg:pt-20">
           <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
