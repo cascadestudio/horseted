@@ -33,7 +33,7 @@ export default function BlogSection({ articles }) {
           href="#"
         >
           Tous les articles
-          <RightArrow stroke="white" className="ml-2" />
+          <RightArrow color="white" className="ml-2" />
         </Button>
       </div>
     </div>
