@@ -12,11 +12,13 @@ import AppReviewImageMask from "@/assets/images/AppReviewImageMask.png";
 import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
+import HeroSection from "./HeroSection";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
   return (
     <main>
+      <HeroSection />
       <ProductsSection title="Récemment ajouté" />
       <CategoriesSection />
       <ProductsSection title="Pour la cavalière" />

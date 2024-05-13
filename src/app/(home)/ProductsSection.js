@@ -1,6 +1,6 @@
 import { getApi } from "@/libs/fetch";
 import ProductCard from "@/components/ProductCard";
-import Carousel from "@/components/Carousel";
+import ProductsCarousel from "@/components/ProductsCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 import resolveConfig from "tailwindcss/resolveConfig";
@@ -28,7 +28,7 @@ export default async function ProductsSection({ title }) {
             />
           </Button>
         </div>
-        <Carousel>
+        <ProductsCarousel>
           {products.items.map((product, index) => {
             return (
               <div
@@ -41,7 +41,7 @@ export default async function ProductsSection({ title }) {
               </div>
             );
           })}
-        </Carousel>
+        </ProductsCarousel>
       </div>
     </section>
   );
