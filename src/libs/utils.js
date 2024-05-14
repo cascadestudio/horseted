@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { Raleway } from "next/font/google";
+import { Raleway, Poppins } from "next/font/google";
 
 export const mcqueen = localFont({
   src: [
@@ -26,6 +26,13 @@ export const raleway = Raleway({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-raleway",
+});
+
+export const poppins = Poppins({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-poppins",
+  weight: ["400", "700"],
 });
 
 export const baseMetadata = {
