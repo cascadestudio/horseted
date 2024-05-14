@@ -13,12 +13,32 @@ import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
 import HeroSection from "./HeroSection";
+import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
   return (
     <main>
       <HeroSection />
+      <div className="bg-dark-green">
+        <div className="container mx-auto px-5 py-10 text-white lg:flex lg:items-center lg:justify-between">
+          <div>
+            <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
+              Personnalisez votre Horseted
+            </h3>
+            <p className="mb-7">
+              Personnalisez votre expérience et trouvez les articles faits pour
+              vous !. Ajoutez votre pointure, tailles et préférences
+            </p>
+          </div>
+          <Button
+            variant="transparent"
+            className="justify-center text-white border-white"
+          >
+            Personnaliser <RightArrow color="white" className="ml-2" />
+          </Button>
+        </div>
+      </div>
       <ProductsSection title="Récemment ajouté" />
       <CategoriesSection />
       <ProductsSection title="Pour la cavalière" />
