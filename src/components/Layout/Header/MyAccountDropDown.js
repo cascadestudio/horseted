@@ -1,5 +1,6 @@
 "use client";
 
+import { getAuth, signOut } from "firebase/auth";
 import Button from "@/components/Button";
 import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/libs/hooks";
@@ -19,6 +20,13 @@ export default function MyAccountDropDown() {
     setIsClickOutside(false);
   }
 
+  function handleSignout() {
+    const auth = getAuth();
+    signOut(auth).catch((error) => {
+      console.log(error);
+    });
+  }
+
   return (
     <div ref={dropdownRef}>
       <Button
@@ -30,7 +38,7 @@ export default function MyAccountDropDown() {
       </Button>
       {isClickDropdown && !isClickOutside && (
         <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex">
-          Mon compte
+          <button onClick={() => handleSignout()}>Se déconnecter</button>
         </div>
       )}
     </div>
