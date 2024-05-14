@@ -6,15 +6,15 @@ import "slick-carousel/slick/slick-theme.css";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../tailwind.config.js";
 
-export default function ProductsCarousel({ children }) {
+export default function Carousel({ children }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const parseBreakpoint = (breakpoint) => {
     return parseInt(breakpoint.replace("px", ""), 10);
   };
-  const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
   const [isSmScreen, setIsSmScreen] = useState(false);
   useEffect(() => {
     const handleResize = () => {
+      const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
       setIsSmScreen(window.innerWidth < lgBreakpoint);
     };
 
@@ -67,7 +67,7 @@ export default function ProductsCarousel({ children }) {
     ),
     responsive: [
       {
-        breakpoint: lgBreakpoint,
+        breakpoint: 1024,
         settings: {
           slidesToShow: 1.4,
           slidesToScroll: 1,
@@ -84,7 +84,7 @@ export default function ProductsCarousel({ children }) {
         }}
         {...settings}
       >
-        {children.slice(0, isSmScreen ? 4 : 16)}
+        {children.slice(0, window.innerWidth < 1024 ? 4 : 16)}
       </Slider>
     </div>
   );

@@ -9,41 +9,15 @@ import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons.svg";
 import StarsGroup from "@/assets/icons/StarsGroup.svg";
 import AppReviewImage1 from "@/assets/images/AppReviewImage1.jpg";
 import AppReviewImageMask from "@/assets/images/AppReviewImageMask.png";
-import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
+import ThreeStripesIcon from "@/assets/icons/ThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
-import CategoriesSection from "./CategoriesSection";
-import HeroSection from "./HeroSection";
-import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
+
   return (
     <main>
-      <HeroSection />
-      <div className="bg-dark-green">
-        <div className="container mx-auto px-5 py-10 text-white lg:flex lg:items-center lg:justify-between">
-          <div>
-            <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
-              Personnalisez votre Horseted
-            </h3>
-            <p className="mb-7">
-              Personnalisez votre expérience et trouvez les articles faits pour
-              vous !. Ajoutez votre pointure, tailles et préférences
-            </p>
-          </div>
-          <Button
-            variant="transparent"
-            className="justify-center text-white border-white"
-          >
-            Personnaliser <RightArrow color="white" className="ml-2" />
-          </Button>
-        </div>
-      </div>
-      <ProductsSection title="Récemment ajouté" />
-      <CategoriesSection />
-      <ProductsSection title="Pour la cavalière" />
-      <ProductsSection title="Pour le cavalier" />
-      <ProductsSection title="Selles et Accessoires" />
+      <ProductsSection />
       <div className="container mx-auto px-5 py-14 lg:flex lg:flex-row-reverse lg:gap-24">
         <div className="lg:pt-20">
           <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
@@ -134,8 +108,8 @@ export default async function Home() {
                 className="absolute top-0 left-0 w-full h-full object-cover rounded-[32px]"
               />
               <Image
-                src={WhiteThreeStripesIcon}
-                alt="WhiteThreeStripesIcon"
+                src={ThreeStripesIcon}
+                alt="ThreeStripesIcon"
                 className="absolute top-52 left-8"
               />
               <h4 className="absolute top-60 left-10 font-black italic text-[28px] text-white">
@@ -144,8 +118,8 @@ export default async function Home() {
             </div>
             <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
               <Image
-                src={WhiteThreeStripesIcon}
-                alt="WhiteThreeStripesIcon"
+                src={ThreeStripesIcon}
+                alt="ThreeStripesIcon"
                 className=""
               />
               <p>
@@ -168,8 +142,8 @@ export default async function Home() {
               <div className="mt-7 px-7 pb-3 flex flex-row-reverse justify-between">
                 <p className="font-extrabold text-lg ">Marion J</p>
                 <Image
-                  src={WhiteThreeStripesIcon}
-                  alt="WhiteThreeStripesIcon"
+                  src={ThreeStripesIcon}
+                  alt="ThreeStripesIcon"
                   className="rotate-[215deg]"
                 />
               </div>

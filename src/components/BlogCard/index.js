@@ -3,11 +3,8 @@ import Image from "next/image";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import { urlForImage } from "../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config.js";
 
 export default function BlogCard({ title, image, body, link }) {
-  const fullConfig = resolveConfig(tailwindConfig);
   return (
     <div className="border border-light-green rounded-md max-w-[350px]">
       <div className="flex items-center justify-center w-full p-1">
@@ -27,10 +24,7 @@ export default function BlogCard({ title, image, body, link }) {
         </div>
         <Link className="flex items-center text-light-green" href={link}>
           Lire l'article
-          <RightArrow
-            color={fullConfig.theme.colors["light-green"]}
-            className="ml-2"
-          />
+          <RightArrow color="#4D7A4C" className="ml-2" />
         </Link>
       </div>
     </div>
