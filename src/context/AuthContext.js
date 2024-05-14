@@ -3,6 +3,7 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const auth = getAuth(firebase_app);
 
@@ -13,6 +14,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -20,6 +22,7 @@ export const AuthContextProvider = ({ children }) => {
         setUser(user);
       } else {
         setUser(null);
+        router.push("/signin");
       }
       setLoading(false);
     });
