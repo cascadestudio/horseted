@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 
 export default function MyAccountDropDown() {
