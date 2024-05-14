@@ -1,5 +1,4 @@
-import "./globals.css";
-import Layout from "@/components/Layout";
+import "../globals.css";
 import localFont from "next/font/local";
 import { Raleway } from "next/font/google";
 import { AuthContextProvider } from "@/context/AuthContext";
@@ -7,17 +6,17 @@ import { AuthContextProvider } from "@/context/AuthContext";
 const mcqueen = localFont({
   src: [
     {
-      path: "../assets/fonts/McQueen-Medium.woff2",
+      path: "../../assets/fonts/McQueen-Medium.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../assets/fonts/McQueen-SemiBold.woff2",
+      path: "../../assets/fonts/McQueen-SemiBold.woff2",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../assets/fonts/McQueen-Bold.woff2",
+      path: "../../assets/fonts/McQueen-Bold.woff2",
       weight: "700",
       style: "normal",
     },
@@ -40,9 +39,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
-        <AuthContextProvider>
-          <Layout>{children}</Layout>
-        </AuthContextProvider>
+        <AuthContextProvider>{children}</AuthContextProvider>
       </body>
     </html>
   );
