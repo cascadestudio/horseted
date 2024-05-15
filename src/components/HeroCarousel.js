@@ -5,7 +5,8 @@ import Slider from "react-slick";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../tailwind.config.js";
 import HeroImage1 from "@/assets/images/heroImage1.jpg";
-import HeroImagesMask from "@/assets/images/HeroImagesMask.png";
+import HeroImage2 from "@/assets/images/heroImage2.jpg";
+import HeroImage3 from "@/assets/images/heroImage3.jpg";
 
 export default function HeroCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -57,43 +58,38 @@ export default function HeroCarousel() {
     ),
   };
   return (
-    <div className="slider-container relative">
+    <div className="slider-container relative h-[calc(100vh-134px)]">
       <Slider {...settings}>
         <div className="relative">
           <Image
             src={HeroImage1}
             alt="hero image 1"
-            className="w-full object-cover h-[calc(100vh-134px)]"
+            priority
+            sizes="100vh"
+            className="w-full h-[calc(100vh-134px)] object-cover"
           />
-          <Image
-            src={HeroImagesMask}
-            alt="hero images mask"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
+          <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>
         </div>
         <div className="relative">
           <Image
-            src={HeroImage1}
-            alt="hero image 1"
+            src={HeroImage2}
+            alt="hero image 2"
+            sizes="100vh"
             className="w-full object-cover h-[calc(100vh-134px)]"
           />
-          <Image
-            src={HeroImagesMask}
-            alt="hero images mask"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
+          <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>
         </div>
         <div className="relative">
           <Image
-            src={HeroImage1}
-            alt="hero image 1"
+            src={HeroImage3}
+            alt="hero image 3"
+            sizes="100vh"
             className="w-full object-cover h-[calc(100vh-134px)]"
           />
-          <Image
-            src={HeroImagesMask}
-            alt="hero images mask"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
+          <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>
         </div>
       </Slider>
     </div>

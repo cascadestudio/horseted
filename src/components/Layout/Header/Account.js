@@ -7,8 +7,6 @@ import Link from "next/link";
 export default function Account() {
   const { user } = useAuthContext();
 
-  console.log(user);
-
   return (
     <>
       {user === null ? (

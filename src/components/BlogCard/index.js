@@ -15,7 +15,7 @@ export default function BlogCard({ title, image, body, link }) {
           className="w-full h-52 object-cover rounded-md"
           src={urlForImage(image)}
           alt={title}
-          layout="responsive"
+          // layout="responsive"
           height={210}
           width={350}
         />

@@ -32,6 +32,7 @@ export default function Footer() {
               sizes="(min-width: 1024px) 920px, 100vw"
               src={HorsetedApp}
               alt="App Horseted"
+              className="w-auto"
             />
           </div>
         </div>
