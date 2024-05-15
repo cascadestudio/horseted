@@ -45,7 +45,7 @@ export default async function CategoriesSection() {
           {categories.map((category) => {
             return (
               <Link
-                key={category}
+                key={category.id}
                 href="#"
                 className="border border-black rounded-3xl py-2 px-3 mt-2 mr-2"
               >

@@ -35,7 +35,7 @@ export default async function ProductsSection({ title }) {
                 className={`block ${index >= 4 ? "hidden md:block" : ""} ${
                   index >= 16 ? "hidden lg:block" : ""
                 }`}
-                key={product}
+                key={product.id}
               >
                 <ProductCard className="mr-5" product={product} />
               </div>

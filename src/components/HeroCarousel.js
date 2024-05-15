@@ -64,6 +64,7 @@ export default function HeroCarousel() {
           <Image
             src={HeroImage1}
             alt="hero image 1"
+            priority
             sizes="100vh"
             className="w-full h-[calc(100vh-134px)] object-cover"
           />

@@ -91,6 +91,7 @@ export default async function Home() {
           </Button>
           <Image
             src={missionImage2}
+            alt="Mission Image 2"
             sizes="(min-width: 1024px) 590px, 100vw"
             className="hidden lg:block object-cover rounded-lg lg:h-[820px]"
           />
@@ -99,6 +100,7 @@ export default async function Home() {
           <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44">
             <Image
               src={missionImage1}
+              alt="Mission Image 1"
               fill
               sizes="(min-width: 1024px) 590px, 100vw"
               className="object-cover rounded-lg"
