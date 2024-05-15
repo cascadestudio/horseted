@@ -77,7 +77,6 @@ export async function getMe(query) {
     headers: {
       "Content-Type": "application/json",
       "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-      Bearer: process.env.NEXT_PUBLIC_HORSETED_API_KEY,
     },
   });
   if (!res.ok) {
