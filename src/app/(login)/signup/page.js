@@ -1,34 +1,33 @@
-"use client";
 import signUp from "@/libs/firebase/auth/signup";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { redirect } from "next/navigation";
 
 export default function signupPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
+  async function addUser(formData) {
+    "use server";
 
-  const handleForm = async (event) => {
-    event.preventDefault();
+    const rawFormData = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    const { email, password } = rawFormData;
 
     const { result, error } = await signUp(email, password);
-
     if (error) {
-      return console.log(error);
+      console.error(error.message);
+    } else if (result) {
+      redirect("/");
     }
+  }
 
-    // else successful
-    return router.push("/");
-  };
   return (
     <div className="wrapper">
       <div className="form-wrapper">
         <h1 className="mt-60 mb-30">Sign up</h1>
-        <form onSubmit={handleForm} className="form">
+        <form action={addUser} className="form">
           <label htmlFor="email">
             <p>Email</p>
             <input
-              onChange={(e) => setEmail(e.target.value)}
               required
               type="email"
               name="email"
@@ -39,7 +38,6 @@ export default function signupPage() {
           <label htmlFor="password">
             <p>Password</p>
             <input
-              onChange={(e) => setPassword(e.target.value)}
               required
               type="password"
               name="password"
@@ -47,6 +45,17 @@ export default function signupPage() {
               placeholder="password"
             />
           </label>
+          {/* <label htmlFor="username">
+            <p>Nom d’utilisateur :</p>
+            <input
+              // onChange={(e) => setPassword(e.target.value)}
+              required
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+            />
+          </label> */}
           <button type="submit">Sign up</button>
         </form>
       </div>

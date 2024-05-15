@@ -1,4 +1,4 @@
-import "../globals.css";
+import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { mcqueen, raleway, baseMetadata } from "@/libs/utils";
 
