@@ -8,13 +8,13 @@ export default async function CategoriesSection() {
   const categories = await getApi("categories");
   return (
     <section className=" bg-light-grey">
-      <div className="container mx-auto px-5 pb-8 lg:pb-24">
-        <h2 className="relative font-mcqueen font-bold text-2xl text-center lg:text-4xl lg:text-left">
+      <div className="container mx-auto px-5 pt-6 pb-10 lg:pb-20 lg:pt-0">
+        <h2 className="relative font-mcqueen font-bold text-2xl text-center pb-9 lg:text-4xl">
           Achetez et vendez du matériel d'équitation de qualité
           <Image
             src={GreenThreeStripesIcon}
             alt="GreenThreeStripesIcon"
-            className="absolute -top-8 -right-1 lg:-top-10 lg:right-60"
+            className="absolute -top-6 right-0 h-8 lg:-top-10 lg:right-24 lg:h-10"
           />
         </h2>
         <div className="grid gap-3 mb-8 lg:mb-12 lg:grid-cols-4 lg:auto-rows-[minmax(0,_0.5fr)]">

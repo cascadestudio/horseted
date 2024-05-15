@@ -12,14 +12,34 @@ import AppReviewImageMask from "@/assets/images/AppReviewImageMask.png";
 import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
-import HeroSection from "./HeroSection";
+import HeroCarousel from "@/components/HeroCarousel";
 import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
   return (
     <main>
-      <HeroSection />
+      <div className="relative">
+        <HeroCarousel />
+        <div className="text-white absolute top-1/2 px-8 lg:left-32">
+          <h1 className="font-mcqueen font-bold mb-2 text-3xl text-center lg:text-left lg:text-5xl">
+            Articles d’équitation <br /> de seconde main
+          </h1>
+          <p className="max-w-[610px] text-center lg:text-left">
+            Achetez et vendez votre matériel d’équitation avec Horseted. Donnez
+            une seconde vie à vos articles d’équitation en vendant votre
+            matériel sur Horseted
+          </p>
+          <div className="mt-5 flex flex-col items-center w-full px-9 lg:px-0 lg:mt-10 lg:flex-row gap-2">
+            <Button className="w-full justify-center lg:w-auto">
+              Vendre un article
+            </Button>
+            <Button variant="white" className="w-full justify-center lg:w-auto">
+              Parcourir les articles
+            </Button>
+          </div>
+        </div>
+      </div>
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-10 text-white lg:flex lg:items-center lg:justify-between">
           <div>
@@ -38,16 +58,17 @@ export default async function Home() {
             Personnaliser <RightArrow color="white" className="ml-2" />
           </Button>
         </div>
+        <div className="bg-light-grey pb-12 lg:pb-20"></div>
       </div>
       <ProductsSection title="Récemment ajouté" />
       <CategoriesSection />
       <ProductsSection title="Pour la cavalière" />
       <ProductsSection title="Pour le cavalier" />
       <ProductsSection title="Selles et Accessoires" />
-      <div className="container mx-auto px-5 py-14 lg:flex lg:flex-row-reverse lg:gap-24">
+      <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">
         <div className="lg:pt-20">
           <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
-            Notre mission : Développement durable et passion{" "}
+            Notre mission : Développement durable et passion
           </h2>
           <h2 className="font-mcqueen font-bold hidden lg:block lg:mb-4 lg:text-4xl">
             Notre mission : Agir pour le développement durable et rendre
@@ -87,7 +108,7 @@ export default async function Home() {
             <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:mb-4 lg:text-4xl">
               Une plateforme conçue pour les acheteurs et les vendeurs
             </h2>
-            <p className="lg:text-[18px] mb-6">
+            <p className="lg:text-[18px]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -96,7 +117,7 @@ export default async function Home() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-5 py-14 lg:pt-12 lg:pb-24">
+      <div className="container mx-auto px-5 pb-14 lg:pb-24">
         <div className="flex flex-col items-center lg:rounded-[56px] lg:border lg:border-black">
           <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:w-full">
             <Image
@@ -128,11 +149,7 @@ export default async function Home() {
                 sizes="(min-width: 1024px) 410px, 100vw"
                 className="rounded-[32px]"
               />
-              <Image
-                src={AppReviewImageMask}
-                alt="AppReviewImageMask"
-                className="absolute top-0 left-0 w-full h-full object-cover rounded-[32px]"
-              />
+              <div className="block absolute inset-0 via-transparent via-70% bg-gradient-to-tr from-black/70 to-transparent rounded-[32px]"></div>
               <Image
                 src={WhiteThreeStripesIcon}
                 alt="WhiteThreeStripesIcon"
