@@ -15,8 +15,6 @@ export default function signupPage() {
     const { result, error } = await signUp(email, password);
     if (error) {
       console.error(error.message);
-    } else if (result) {
-      redirect("/");
     }
   }
 
@@ -24,7 +22,14 @@ export default function signupPage() {
     <div className="wrapper">
       <div className="form-wrapper">
         <h1 className="mt-60 mb-30">Sign up</h1>
-        <form action={addUser} className="form">
+        <form
+          action={async (formData) => {
+            "use server";
+            await addUser(formData);
+            redirect("/");
+          }}
+          className="form"
+        >
           <label htmlFor="email">
             <p>Email</p>
             <input

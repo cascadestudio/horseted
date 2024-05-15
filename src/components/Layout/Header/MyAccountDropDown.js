@@ -44,7 +44,7 @@ export default function MyAccountDropDown() {
         Mon compte
       </Button>
       {isClickDropdown && !isClickOutside && (
-        <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex p-5">
+        <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex p-5 z-10">
           <ul>
             <li>
               <Link href="/account">Mon compte</Link>
