@@ -41,11 +41,43 @@ export async function getProductImage(query) {
 // Get Categories
 export async function getCategories(query) {
   const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${query}`;
-  console.log(url);
   const res = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
       "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+    },
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+// Get User
+export async function getUsers(query) {
+  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users?fromId=${query}`;
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+    },
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
+// Get me
+export async function getMe(query) {
+  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/me`;
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+      Bearer: process.env.NEXT_PUBLIC_HORSETED_API_KEY,
     },
   });
   if (!res.ok) {

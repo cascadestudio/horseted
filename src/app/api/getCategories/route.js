@@ -12,6 +12,5 @@ export async function GET(request) {
     }
   );
   const data = await res.json();
-  // console.log(Response.json({ data }));
   return Response.json({ data });
 }
