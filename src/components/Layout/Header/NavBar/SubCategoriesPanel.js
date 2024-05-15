@@ -8,7 +8,18 @@ export default function SubCategoriesPanel({ parentId }) {
   const [subCategories, isLoading] = useFetchCategories(parentId);
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
   const isSubCategories = subCategories.length > 0;
-  const isClickOutside = useIsClickOutsideElement(panelRef);
+  const [isClickOutside, setIsClickOutside] =
+    useIsClickOutsideElement(panelRef);
+
+  function handleClick(id) {
+    setSelectedSubCategoriesId(id);
+    if (isClickOutside) {
+      setIsClickDropdown(true);
+    } else {
+      setIsClickDropdown(!isClickDropdown);
+    }
+    setIsClickOutside(false);
+  }
 
   useEffect(() => {
     if (isSubCategories && !isLoading) {
@@ -35,7 +46,7 @@ export default function SubCategoriesPanel({ parentId }) {
               >
                 <button
                   className={`capitalize`}
-                  onClick={() => setSelectedSubCategoriesId(id)}
+                  onClick={() => handleClick(id)}
                 >
                   {name}
                 </button>

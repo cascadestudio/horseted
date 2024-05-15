@@ -1,6 +1,6 @@
 import ProductsSection from "./ProductsSection";
 import BlogSection from "./BlogSection";
-import { client } from "../../../sanity/lib/client";
+import { client } from "../../../../sanity/lib/client";
 import Button from "@/components/Button";
 import Image from "next/image";
 import missionImage1 from "@/assets/images/missionImage1.jpg";

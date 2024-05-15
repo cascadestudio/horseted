@@ -37,3 +37,20 @@ export async function getProductImage(query) {
 
   return base64;
 }
+
+// Get Categories
+export async function getCategories(query) {
+  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${query}`;
+  console.log(url);
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+    },
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
