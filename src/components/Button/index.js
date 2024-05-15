@@ -14,7 +14,7 @@ export default function Button({
       : variant === "black"
       ? "bg-transparent text-black border border-black"
       : variant === "transparent"
-      ? "bg-transparent text-dark-green border border-dark-green"
+      ? "bg-transparent text-light-green border border-light-green"
       : "bg-dark-green text-white"
   }`;
 
