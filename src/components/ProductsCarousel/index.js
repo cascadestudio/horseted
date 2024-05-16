@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../tailwind.config.js";
+import tailwindConfig from "../../../tailwind.config.js";
 
 export default function ProductsCarousel({ children }) {
   const fullConfig = resolveConfig(tailwindConfig);

@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Slider from "react-slick";
 import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../tailwind.config.js";
+import tailwindConfig from "../../../tailwind.config.js";
 import HeroImage1 from "@/assets/images/heroImage1.jpg";
 import HeroImage2 from "@/assets/images/heroImage2.jpg";
 import HeroImage3 from "@/assets/images/heroImage3.jpg";
