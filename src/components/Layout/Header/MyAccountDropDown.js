@@ -4,14 +4,15 @@ import { getAuth, signOut } from "firebase/auth";
 import Button from "@/components/Button";
 import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/libs/hooks";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function MyAccountDropDown() {
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
   const [isClickDropdown, setIsClickDropdown] = useState(false);
-  // const { router } = useRouter();
+  const router = useRouter();
 
   function handleClick() {
     if (isClickOutside) {
@@ -25,9 +26,9 @@ export default function MyAccountDropDown() {
   function handleSignout() {
     const auth = getAuth();
     signOut(auth)
-      // .then(() => {
-      //   router.push("/");
-      // })
+      .then(() => {
+        router.push("/");
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -43,8 +44,19 @@ export default function MyAccountDropDown() {
         Mon compte
       </Button>
       {isClickDropdown && !isClickOutside && (
-        <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex">
-          <button onClick={() => handleSignout()}>Se déconnecter</button>
+        <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex p-5 z-10">
+          <ul>
+            <li>
+              <Link href="/account">Mon compte</Link>
+            </li>
+            <li>
+              <Link href="/orders">Commandes</Link>
+            </li>
+            <li>
+              <Link href="/settings">Paramètres</Link>
+            </li>
+            <button onClick={() => handleSignout()}>Se déconnecter</button>
+          </ul>
         </div>
       )}
     </div>

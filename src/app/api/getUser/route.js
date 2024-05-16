@@ -3,11 +3,12 @@ export async function GET(request) {
   const query = searchParams.get("query");
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${query}`,
+    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/me`,
     {
       headers: {
         "Content-Type": "application/json",
         "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+        Bearer: query,
       },
     }
   );
