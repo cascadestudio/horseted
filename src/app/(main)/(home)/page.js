@@ -45,9 +45,9 @@ export default async function Home() {
             <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
               Personnalisez votre Horseted
             </h3>
-            <p className="mb-7">
+            <p className="mb-7 lg:mb-0 text-[14px]">
               Personnalisez votre expérience et trouvez les articles faits pour
-              vous !. Ajoutez votre pointure, tailles et préférences
+              vous ! Ajoutez votre pointure, tailles et préférences
             </p>
           </div>
           <Button
