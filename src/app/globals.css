@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --header-height: 115px;
+  }
+
+  @screen lg {
+    :root {
+      --header-height: 130px;
+    }
+  }
+}
