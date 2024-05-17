@@ -6,7 +6,7 @@ export default function BlogSection({ articles }) {
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 py-14 lg:py-28 lg:flex lg:flex-col lg:items-center">
-        <h2 className="font-mcqueen font-bold text-2xl text-center mb-14 lg:text-4xl">
+        <h2 className="font-mcqueen font-bold text-2xl text-center mb-14 lg:mb-8 lg:text-4xl">
           Astuces, Conseils et
           <br />
           Tendances Équestres

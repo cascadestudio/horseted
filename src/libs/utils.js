@@ -4,6 +4,11 @@ import { Raleway, Poppins } from "next/font/google";
 export const mcqueen = localFont({
   src: [
     {
+      path: "../assets/fonts/McQueen-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
       path: "../assets/fonts/McQueen-Medium.woff2",
       weight: "500",
       style: "normal",

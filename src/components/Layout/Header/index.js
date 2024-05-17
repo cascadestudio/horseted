@@ -9,8 +9,8 @@ import Account from "./Account";
 
 export default function Header() {
   return (
-    <header className="lg:border-b border-b-light-green">
-      <div className="container mx-auto px-5 ">
+    <header className="lg:border-b border-b-light-green h-[var(--header-height)]">
+      <div className="container mx-auto px-5">
         <div className="flex justify-between items-center gap-x-7 py-5 ">
           <BurgerIcon className="lg:hidden" />
           <HorsetedLogo className="h-8 lg:h-auto" />

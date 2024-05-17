@@ -8,7 +8,6 @@ import missionImage2 from "@/assets/images/missionImage2.jpg";
 import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons.svg";
 import StarsGroup from "@/assets/icons/StarsGroup.svg";
 import AppReviewImage1 from "@/assets/images/AppReviewImage1.jpg";
-import AppReviewImageMask from "@/assets/images/AppReviewImageMask.png";
 import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
 import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
@@ -46,9 +45,9 @@ export default async function Home() {
             <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
               Personnalisez votre Horseted
             </h3>
-            <p className="mb-7">
+            <p className="mb-7 lg:mb-0 text-[14px]">
               Personnalisez votre expérience et trouvez les articles faits pour
-              vous !. Ajoutez votre pointure, tailles et préférences
+              vous ! Ajoutez votre pointure, tailles et préférences
             </p>
           </div>
           <Button
@@ -162,11 +161,7 @@ export default async function Home() {
               </h4>
             </div>
             <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
-              <Image
-                src={WhiteThreeStripesIcon}
-                alt="WhiteThreeStripesIcon"
-                className=""
-              />
+              <Image src={WhiteThreeStripesIcon} alt="WhiteThreeStripesIcon" />
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et d

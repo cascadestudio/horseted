@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import Slider from "react-slick";
 import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../tailwind.config.js";
+import tailwindConfig from "../../../tailwind.config.js";
 import HeroImage1 from "@/assets/images/heroImage1.jpg";
 import HeroImage2 from "@/assets/images/heroImage2.jpg";
 import HeroImage3 from "@/assets/images/heroImage3.jpg";
@@ -58,7 +58,7 @@ export default function HeroCarousel() {
     ),
   };
   return (
-    <div className="slider-container relative h-[calc(100vh-134px)]">
+    <div className="slider-container relative h-[calc(100vh-var(--header-height))] ">
       <Slider {...settings}>
         <div className="relative">
           <Image
@@ -66,7 +66,7 @@ export default function HeroCarousel() {
             alt="hero image 1"
             priority
             sizes="100vh"
-            className="w-full h-[calc(100vh-134px)] object-cover"
+            className="w-full h-[calc(100vh-var(--header-height))] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
           <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>

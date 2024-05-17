@@ -5,11 +5,11 @@ import InstagramIcon from "@/assets/icons/InstagramIcon";
 import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
-import PlayStoreButton from "@/assets/buttons/PlayStoreButton.svg";
-import AppStoreButton from "@/assets/buttons/AppStoreButton.svg";
 import BurstIcon from "@/assets/icons/BurstIcon.svg";
 import HorsetedApp from "@/assets/images/HorsetedApp.png";
 import RightArrow from "@/assets/icons/RightArrow.js";
+import GooglePlayIcon from "@/assets/icons/GooglePlayIcon.svg";
+import AppleIcon from "@/assets/icons/AppleIcon.svg";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -53,11 +53,11 @@ export default function Footer() {
               variant="black"
             >
               Vendre un équipement{" "}
-              <RightArrow stroke="black" className="lg:ml-3" />
+              <RightArrow color="black" className="lg:ml-3" />
             </Button>
           </div>
         </div>
-        <div className="flex flex-col items-center bg-light-grey border-t border-b border-light-green pb-14 pt-12 lg:pb-16 lg:pt-11">
+        <div className="flex flex-col items-center bg-light-grey border-t border-b border-light-green pb-14 pt-12 lg:pb-[70px] lg:pt-11">
           <div className="flex flex-col mb-7 lg:mb-5">
             <Image
               className="self-end mr-3 lg:w-12 lg:-mr-20 lg:-mb-3"
@@ -70,22 +70,54 @@ export default function Footer() {
             </p>
           </div>
           <div className="lg:flex lg:gap-6">
-            <a href="#">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center border border-black bg-white px-9 py-3 rounded-xl mb-3 lg:mb-0"
+            >
               <Image
-                className="pb-3 lg:pb-0"
-                src={PlayStoreButton}
-                alt="Télécharger sur Play Store"
+                src={GooglePlayIcon}
+                alt="Google Play icon"
+                className="w-8 h-8 mr-4"
               />
+              <div>
+                <p className="text-[16px] leading-6 font-mcqueen">
+                  Télécharger sur
+                </p>
+                <p className="text-2xl leading-6 font-mcqueen font-semibold">
+                  Play Store
+                </p>
+              </div>
             </a>
-            <a href="#">
-              <Image src={AppStoreButton} alt="Télécharger sur App Store" />
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center border border-black bg-white px-9 py-3 rounded-xl"
+            >
+              <Image
+                src={AppleIcon}
+                alt="Google Play icon"
+                className="w-8 h-8 mr-4"
+              />
+              <div>
+                <p className="text-[16px] leading-6 font-mcqueen">
+                  Télécharger sur
+                </p>
+                <p className="text-2xl leading-6 font-mcqueen font-semibold">
+                  App Store
+                </p>
+              </div>
             </a>
           </div>
         </div>
-        <div className="container mx-auto pt-20 px-11 lg:flex lg:justify-around lg:px-0">
+        <div className="container mx-auto pt-12 lg:pt-[87px] px-11 lg:flex lg:justify-around lg:px-0">
           <div className="flex flex-col mb-8">
             <HorsetedBlackIcon className="h-24 self-center mb-3 lg:h-40 lg:mb-7" />
-            <Button className="px-16">Vendre maintenant</Button>
+            <Button className="px-16 w-full justify-center lg:w-auto">
+              Vendre maintenant
+            </Button>
           </div>
           <div className="pb-7">
             <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
