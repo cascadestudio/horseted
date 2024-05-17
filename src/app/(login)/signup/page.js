@@ -9,39 +9,31 @@ export default function signupPage() {
   const [username, setUsername] = useState("");
   const router = useRouter();
 
-  async function postUser() {
+  async function postUser(firebaseToken) {
     const response = await fetch(`http://localhost:3000/api/postUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        firebaseToken: firebaseToken,
         username: username,
         newsLetter: false,
       }),
     });
     const data = await response.json();
-    console.log(data);
   }
 
   const handleForm = async (event) => {
     event.preventDefault();
-    // const { result, error } = await signUp(email, password);
-    // if (error) {
-    //   return console.log(error);
-    // }
-    try {
-      const res = await postUser();
-      console.log(res);
-      if (res.ok) {
-        console.log("Yeai!");
-      } else {
-        console.log("Oops! Something is wrong.");
-      }
-    } catch (error) {
-      console.log(error);
+    const { result, error } = await signUp(email, password);
+    if (error) {
+      return console.log(error);
+    } else {
+      const firebaseToken = result.user.accessToken;
+      await postUser(firebaseToken);
     }
-    // return router.push("/");
+    return router.push("/");
   };
 
   return (
@@ -49,7 +41,7 @@ export default function signupPage() {
       <div className="form-wrapper">
         <h1 className="mt-60 mb-30">Sign up</h1>
         <form onSubmit={handleForm} className="form">
-          {/* <label htmlFor="email">
+          <label htmlFor="email">
             <p>Email</p>
             <input
               onChange={(e) => setEmail(e.target.value)}
@@ -70,7 +62,7 @@ export default function signupPage() {
               id="password"
               placeholder="password"
             />
-          </label> */}
+          </label>
           <label htmlFor="username">
             <p>Nom d’utilisateur :</p>
             <input
