@@ -30,7 +30,7 @@ export default function signinPage() {
     return router.push("/");
   };
   return (
-    <div className="bg-light-grey min-h-screen lg:flex ">
+    <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row ">
       <div className="lg:w-1/2">
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
@@ -40,7 +40,7 @@ export default function signinPage() {
             <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
           </div>
         </div>
-        <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:px-[91px] lg:pb-10 lg:pt-[60px]">
+        <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[500px] lg:pb-10 lg:pt-[60px]">
           <div>
             <h1 className="text-center font-mcqueen font-bold text-[22px] leading-[48px] lg:text-[36px] lg:mb-3">
               Se connecter
