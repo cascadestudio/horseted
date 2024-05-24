@@ -1,3 +1,4 @@
+// test
 "use client";
 import signUp from "@/libs/firebase/auth/signup";
 import { useRouter } from "next/navigation";
