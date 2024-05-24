@@ -98,7 +98,7 @@ export default function Footer() {
             >
               <Image
                 src={AppleIcon}
-                alt="Google Play icon"
+                alt="Apple icon"
                 className="w-8 h-8 mr-4"
               />
               <div>

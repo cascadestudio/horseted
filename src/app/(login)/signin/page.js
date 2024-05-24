@@ -8,6 +8,8 @@ import Image from "next/image";
 import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
 import LeftArrow from "@/assets/icons/LeftArrow.svg";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
+import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
+import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
 
 export default function signinPage() {
   const [email, setEmail] = useState("");
@@ -29,7 +31,7 @@ export default function signinPage() {
   return (
     <div className="bg-light-grey min-h-screen">
       <div className="border-b border-black">
-        <div className="container mx-auto px-5 py-4 flex items-center relative">
+        <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative">
           <Link href="/" className="justify-self-start">
             <Image src={LeftArrow} alt="Prec" className="h-[14px]" />
           </Link>
@@ -43,14 +45,19 @@ export default function signinPage() {
           </h1>
           <a
             href="#"
-            className="flex items-center border border-black rounded-[50px] p-1 w-[267px] ml-auto mr-auto"
+            className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto"
           >
             <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3">
               <Image src={GoogleIcon} alt="Google Icon" className="h-5 w-5" />
             </div>
-            <span className="font-semibold pl-3 pr-8">Connect with Google</span>
+            <span className="font-semibold pl-3 pr-8">
+              Continuer avec Google
+            </span>
           </a>
-          <form onSubmit={handleForm} className="mt-3">
+          <form
+            onSubmit={handleForm}
+            className="mt-3 border-b border-black mb-11"
+          >
             <label htmlFor="email">
               <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
               <input
@@ -78,15 +85,72 @@ export default function signinPage() {
               />
             </label>
             <Button
-              className="mt-8 w-full flex justify-center font-mcqueen font-semibold text-xl"
+              className="mt-8 w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl"
               type="submit"
             >
               Se connecter
             </Button>
+            <Link
+              href="#"
+              className="font-mcqueen font-bold text-[13px] leading-[48px] mb-[30px] flex justify-center"
+            >
+              Mot de passe oublié ?
+            </Link>
           </form>
         </div>
-        <p>Vous n’avez pas de compte ?</p>
-        <Link href="/signup">S’inscrire</Link>
+        <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center">
+          Inscription
+        </h2>
+        <p className="text-center mb-3">Vous n’avez pas de compte ?</p>
+        <Button
+          href="/signup"
+          variant="transparent"
+          className="w-full flex justify-center font-mcqueen font-semibold text-xl h-[52px]"
+        >
+          S’inscrire
+        </Button>
+      </div>
+      <div className="flex justify-center gap-2 bg-light-green text-white">
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8"
+        >
+          <Image
+            src={GooglePlayIconWhite}
+            alt="Google Play icon"
+            className="w-8 h-8 mr-[14px]"
+          />
+          <div>
+            <p className="text-[12px] leading-[14px] font-mcqueen">
+              Télécharger sur
+            </p>
+            <p className="leading-[18px] font-mcqueen font-semibold">
+              Play Store
+            </p>
+          </div>
+        </a>
+        <a
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl"
+        >
+          <Image
+            src={AppleIconWhite}
+            alt="Apple icon"
+            className="w-8 h-8 mr-[14px]"
+          />
+          <div>
+            <p className="text-[12px] leading-[14px] font-mcqueen">
+              Télécharger sur
+            </p>
+            <p className=" leading-[18px] font-mcqueen font-semibold">
+              App Store
+            </p>
+          </div>
+        </a>
       </div>
     </div>
   );
