@@ -40,7 +40,7 @@ export default function signinPage() {
             <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
           </div>
         </div>
-        <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[500px] lg:pb-10 lg:pt-[60px]">
+        <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[505px] lg:pb-10 lg:pt-[60px] xl:px-0">
           <div>
             <h1 className="text-center font-mcqueen font-bold text-[22px] leading-[48px] lg:text-[36px] lg:mb-3">
               Se connecter
@@ -123,7 +123,9 @@ export default function signinPage() {
         <Image
           src={HeroImage1}
           alt="Hero Image"
-          className="hidden lg:block w-full h-[71%] object-cover"
+          className="hidden lg:block w-full h-[71vh] object-cover"
+          priority
+          sizes="(min-width: 1024px) 50vw, 0vw"
         />
         <h2 className="hidden lg:block font-mcqueen font-bold text-3xl leading-[32px] mt-14 mb-6 text-center">
           Articles d’équitation <br /> de seconde main
