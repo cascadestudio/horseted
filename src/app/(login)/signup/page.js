@@ -1,4 +1,3 @@
-// test
 "use client";
 import signUp from "@/libs/firebase/auth/signup";
 import Link from "next/link";
