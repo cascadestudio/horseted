@@ -1,8 +1,8 @@
 "use client";
 import signIn from "@/libs/firebase/auth/signin";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
@@ -16,6 +16,15 @@ export default function signinPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const passwordResetSent = searchParams.get("passwordResetSent");
+    if (passwordResetSent === "true") {
+      setShowPasswordResetAlert(true);
+    }
+  }, []);
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -29,6 +38,7 @@ export default function signinPage() {
     // else successful
     return router.push("/");
   };
+
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
       <div className="lg:w-1/2">
@@ -102,6 +112,12 @@ export default function signinPage() {
               >
                 Mot de passe oublié ?
               </Link>
+              {showPasswordResetAlert && (
+                <div className=" bg-[#EAF3E8] border border-light-green text-[14px] font-normal text-center h-16 rounded-[65px] flex items-center justify-center mb-8 p-6 lg:mb-0">
+                  Un e-mail vous a été envoyé pour réinitialiser votre mot de
+                  passe
+                </div>
+              )}
             </form>
           </div>
           <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">

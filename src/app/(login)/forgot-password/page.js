@@ -25,7 +25,7 @@ export default function forgotPasswordPage() {
     }
 
     // else successful
-    return router.push("/");
+    return router.push(`/signin?passwordResetSent=true`);
   };
 
   return (
