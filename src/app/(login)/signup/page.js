@@ -20,7 +20,6 @@ export default function signupPage() {
   const [username, setUsername] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [username, setUsername] = useState("");
   const router = useRouter();
 
   async function postUser(firebaseToken) {
