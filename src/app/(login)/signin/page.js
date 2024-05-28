@@ -97,7 +97,7 @@ export default function signinPage() {
                 Se connecter
               </Button>
               <Link
-                href="#"
+                href="/forgot-password"
                 className="font-mcqueen font-bold text-[13px] leading-[48px] mb-[30px] flex justify-center lg:text-[16px]"
               >
                 Mot de passe oublié ?

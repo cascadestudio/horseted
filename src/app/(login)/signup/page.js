@@ -18,7 +18,6 @@ export default function signupPage() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [newsletter, setNewsletter] = useState(false);
-  const [termsAccepted, setTermsAccepted] = useState(false);
   const router = useRouter();
 
   const handleForm = async (event) => {
@@ -84,7 +83,9 @@ export default function signupPage() {
                 Nom d'utilisateur :
               </p>
               <div className="flex items-center border-b border-black">
-                <span className="text-black mr-2 pb-2">@</span>
+                <span className="text-black font-mcqueen font-semibold mr-2 pb-1">
+                  @
+                </span>
                 <input
                   onChange={(e) => setUsername(e.target.value)}
                   required
@@ -126,19 +127,16 @@ export default function signupPage() {
                   <input
                     type="checkbox"
                     size="10"
-                    checked={termsAccepted}
-                    onChange={() => setTermsAccepted(!termsAccepted)}
-                    className="appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
+                    required
+                    className="appearance-none peer cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
                   />
-                  {termsAccepted && (
-                    <Image
-                      src={tickIcon}
-                      alt="Tick Icon"
-                      width={10}
-                      height={7}
-                      className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer"
-                    />
-                  )}
+                  <Image
+                    src={tickIcon}
+                    alt="Tick Icon"
+                    width={10}
+                    height={7}
+                    className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer peer-checked:visible invisible"
+                  />
                 </div>
                 <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
                   J’accepte les{" "}
