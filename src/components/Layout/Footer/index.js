@@ -27,12 +27,10 @@ export default function Footer() {
               enim ad minim veniam, quis nostrud exercitation
             </p>
             <Image
-              width={920}
-              height={580}
               sizes="(min-width: 1024px) 920px, 100vw"
               src={horsetedApp}
               alt="App Horseted"
-              className="w-auto"
+              className="w-full h-auto"
             />
           </div>
         </div>
@@ -99,7 +97,7 @@ export default function Footer() {
               <Image
                 src={AppleIcon}
                 alt="Apple icon"
-                className="w-8 h-8 mr-4"
+                className="w-auto h-8 mr-4"
               />
               <div>
                 <p className="text-[16px] leading-6 font-mcqueen">

@@ -121,7 +121,7 @@ export default function forgotPasswordPage() {
             <Image
               src={AppleIconWhite}
               alt="Apple icon"
-              className="w-8 h-8 mr-[14px]"
+              className="w-auto h-8 mr-[14px]"
             />
             <div>
               <p className="text-[12px] leading-[14px] font-mcqueen lg:text-[14px] lg:leading-[16px]">
