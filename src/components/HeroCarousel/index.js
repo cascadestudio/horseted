@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import Slider from "react-slick";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
-import HeroImage1 from "@/assets/images/heroImage1.jpg";
-import HeroImage2 from "@/assets/images/heroImage2.jpg";
-import HeroImage3 from "@/assets/images/heroImage3.jpg";
+import heroImage1 from "@/assets/images/heroImage1.jpg";
+import heroImage2 from "@/assets/images/heroImage2.jpg";
+import heroImage3 from "@/assets/images/heroImage3.jpg";
 
 export default function HeroCarousel() {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -62,7 +62,7 @@ export default function HeroCarousel() {
       <Slider {...settings}>
         <div className="relative">
           <Image
-            src={HeroImage1}
+            src={heroImage1}
             alt="hero image 1"
             priority
             sizes="100vh"
@@ -73,7 +73,7 @@ export default function HeroCarousel() {
         </div>
         <div className="relative">
           <Image
-            src={HeroImage2}
+            src={heroImage2}
             alt="hero image 2"
             sizes="100vh"
             className="w-full object-cover h-[calc(100vh-134px)]"
@@ -83,7 +83,7 @@ export default function HeroCarousel() {
         </div>
         <div className="relative">
           <Image
-            src={HeroImage3}
+            src={heroImage3}
             alt="hero image 3"
             sizes="100vh"
             className="w-full object-cover h-[calc(100vh-134px)]"

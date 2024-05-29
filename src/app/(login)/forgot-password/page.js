@@ -9,7 +9,7 @@ import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
 import LeftArrow from "@/assets/icons/LeftArrow.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
-import HeroImage3 from "@/assets/images/HeroImage3.jpg";
+import heroImage3 from "@/assets/images/heroImage3.jpg";
 
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -82,7 +82,7 @@ export default function forgotPasswordPage() {
       </div>
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
-          src={HeroImage3}
+          src={heroImage3}
           alt="Hero Image"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority

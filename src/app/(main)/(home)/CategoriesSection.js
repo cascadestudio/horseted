@@ -1,7 +1,7 @@
 import { getApi } from "@/libs/fetch";
 import Image from "next/image";
 import GreenThreeStripesIcon from "@/assets/icons/GreenThreeStripesIcon.svg";
-import CategoryImage from "@/assets/images/CategoryImage.jpg";
+import categoryImage from "@/assets/images/categoryImage.jpg";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/RightArrow";
 export default async function CategoriesSection() {
@@ -28,7 +28,7 @@ export default async function CategoriesSection() {
                 } ${index === 1 ? "lg:col-span-2 lg:row-span-1" : ""}`}
               >
                 <Image
-                  src={CategoryImage}
+                  src={categoryImage}
                   alt={category.name}
                   sizes="(min-width: 1024px) 640px, 100vw"
                   className="w-full object-cover h-full"

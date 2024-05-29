@@ -11,7 +11,7 @@ import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
 import tickIcon from "@/assets/icons/tickIcon.svg";
-import HeroImage2 from "@/assets/images/HeroImage2.jpg";
+import heroImage2 from "@/assets/images/heroImage2.jpg";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -190,7 +190,7 @@ export default function signupPage() {
       </div>
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
-          src={HeroImage2}
+          src={heroImage2}
           alt="Hero Image"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
