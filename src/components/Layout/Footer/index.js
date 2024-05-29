@@ -6,7 +6,6 @@ import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
 import BurstIcon from "@/assets/icons/BurstIcon.svg";
-import horsetedApp from "@/assets/images/horsetedApp.png";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon.svg";
@@ -16,26 +15,6 @@ export default function Footer() {
   return (
     <>
       <footer>
-        <div className="flex flex-col items-center bg-light-grey px-5 pt-16 lg:pt-32 lg:px-64">
-          <div className="max-w-[920px]">
-            <h3 className="font-mcqueen font-bold text-3xl text-center mb-5 lg:text-4xl">
-              Téléchargez l’application Horseted
-            </h3>
-            <p className="font-mcqueen font-medium text-center text-lg mb-10 lg:px-7">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation
-            </p>
-            <Image
-              width={920}
-              height={580}
-              sizes="(min-width: 1024px) 920px, 100vw"
-              src={horsetedApp}
-              alt="App Horseted"
-              className="w-auto"
-            />
-          </div>
-        </div>
         <div className="hidden lg:block lg:bg-[#E8E5DB] lg:border-t lg:border-light-green">
           <div className=" lg:container lg:mx-auto lg:flex lg:py-11 lg:justify-between lg:items-center lg:px-5">
             <div>
@@ -99,7 +78,7 @@ export default function Footer() {
               <Image
                 src={AppleIcon}
                 alt="Apple icon"
-                className="w-8 h-8 mr-4"
+                className="w-auto h-8 mr-4"
               />
               <div>
                 <p className="text-[16px] leading-6 font-mcqueen">
