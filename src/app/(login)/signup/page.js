@@ -29,10 +29,9 @@ export default function signupPage() {
       body: JSON.stringify({
         firebaseToken: firebaseToken,
         username: username,
-        newsLetter: false,
+        newsLetter: newsletter,
       }),
     });
-    const data = await response.json();
   }
 
   const handleForm = async (event) => {
