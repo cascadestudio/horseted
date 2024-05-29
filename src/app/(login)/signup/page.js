@@ -20,16 +20,29 @@ export default function signupPage() {
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
 
+  async function postUser(firebaseToken) {
+    const response = await fetch(`http://localhost:3000/api/postUser`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firebaseToken: firebaseToken,
+        username: username,
+        newsLetter: newsletter,
+      }),
+    });
+  }
+
   const handleForm = async (event) => {
     event.preventDefault();
-
     const { result, error } = await signUp(email, password);
-
     if (error) {
       return console.log(error);
+    } else {
+      const firebaseToken = result.user.accessToken;
+      await postUser(firebaseToken);
     }
-
-    // else successful
     return router.push("/");
   };
 
