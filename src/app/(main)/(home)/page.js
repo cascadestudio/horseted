@@ -13,6 +13,7 @@ import appReviewImage2 from "@/assets/images/appReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
 import HeroCarousel from "@/components/HeroCarousel";
 import RightArrow from "@/assets/icons/RightArrow";
+import horsetedApp from "@/assets/images/horsetedApp.png";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
@@ -232,6 +233,24 @@ export default async function Home() {
               nulla pariatur
             </p>
           </div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center bg-light-grey px-5 pt-16 lg:pt-32 lg:px-64">
+        <div className="max-w-[920px]">
+          <h3 className="font-mcqueen font-bold text-3xl text-center mb-5 lg:text-4xl">
+            Téléchargez l’application Horseted
+          </h3>
+          <p className="font-mcqueen font-medium text-center text-lg mb-10 lg:px-7">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation
+          </p>
+          <Image
+            sizes="(min-width: 1024px) 920px, 100vw"
+            src={horsetedApp}
+            alt="App Horseted"
+            className="w-full h-auto"
+          />
         </div>
       </div>
     </main>
