@@ -1,9 +1,9 @@
 import { getApi } from "@/libs/fetch";
 import OfferButton from "./OfferButton";
-import ProductImage from "./ProductImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Button from "@/components/Button";
+import ProductImagesCarousel from "./ProductImagesCarousel";
 
 export default async function ProductPage({ params }) {
   const product = await getApi(`products/${params.id}`);
@@ -26,13 +26,7 @@ export default async function ProductPage({ params }) {
   return (
     <>
       {product.hasOwnProperty("medias") ? (
-        medias.map((media) => {
-          return (
-            <div key={media.id}>
-              <ProductImage media={media} />
-            </div>
-          );
-        })
+        <ProductImagesCarousel medias={medias} />
       ) : (
         <Image
           className="aspect-[280/340] object-cover w-20"
