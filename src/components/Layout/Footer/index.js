@@ -6,7 +6,7 @@ import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
 import BurstIcon from "@/assets/icons/BurstIcon.svg";
-import HorsetedApp from "@/assets/images/HorsetedApp.png";
+import horsetedApp from "@/assets/images/horsetedApp.png";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon.svg";
@@ -30,7 +30,7 @@ export default function Footer() {
               width={920}
               height={580}
               sizes="(min-width: 1024px) 920px, 100vw"
-              src={HorsetedApp}
+              src={horsetedApp}
               alt="App Horseted"
               className="w-auto"
             />

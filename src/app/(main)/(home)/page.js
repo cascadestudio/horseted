@@ -7,9 +7,9 @@ import missionImage1 from "@/assets/images/missionImage1.jpg";
 import missionImage2 from "@/assets/images/missionImage2.jpg";
 import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons.svg";
 import StarsGroup from "@/assets/icons/StarsGroup.svg";
-import AppReviewImage1 from "@/assets/images/AppReviewImage1.jpg";
+import appReviewImage1 from "@/assets/images/appReviewImage1.jpg";
 import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
-import AppReviewImage2 from "@/assets/images/AppReviewImage2.jpg";
+import appReviewImage2 from "@/assets/images/appReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
 import HeroCarousel from "@/components/HeroCarousel";
 import RightArrow from "@/assets/icons/RightArrow";
@@ -145,8 +145,8 @@ export default async function Home() {
           <div className="lg:flex lg:items-stretch lg:mx-5 lg:gap-8 lg:pb-5">
             <div className="flex-1 relative w-full">
               <Image
-                src={AppReviewImage1}
-                alt="AppReviewImage1"
+                src={appReviewImage1}
+                alt="appReviewImage1"
                 sizes="(min-width: 1024px) 410px, 100vw"
                 className="rounded-[32px]"
               />
@@ -170,8 +170,8 @@ export default async function Home() {
             </div>
             <div className="flex-1 w-full bg-dark-grey text-white text-end rounded-[32px] mt-6 lg:mt-0">
               <Image
-                src={AppReviewImage2}
-                alt="AppReviewImage2"
+                src={appReviewImage2}
+                alt="appReviewImage2"
                 className="w-full rounded-[32px] h-[185px] object-cover"
                 sizes="(min-width: 1024px) 410px, 100vw"
               />

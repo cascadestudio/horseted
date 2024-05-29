@@ -10,7 +10,7 @@ import LeftArrow from "@/assets/icons/LeftArrow.svg";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
-import HeroImage1 from "@/assets/images/HeroImage1.jpg";
+import heroImage1 from "@/assets/images/heroImage1.jpg";
 
 export default function signinPage() {
   const [email, setEmail] = useState("");
@@ -137,7 +137,7 @@ export default function signinPage() {
       </div>
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
-          src={HeroImage1}
+          src={heroImage1}
           alt="Hero Image"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
