@@ -5,14 +5,14 @@ import { mcqueen, raleway, baseMetadata } from "@/libs/utils";
 
 export const metadata = baseMetadata;
 
-export default function RootLayout({ children }) {
+export default function HomeLayout({ children }) {
   return (
-    <html lang="fr">
-      <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
-        <AuthContextProvider>
-          <Layout>{children}</Layout>
-        </AuthContextProvider>
-      </body>
-    </html>
+    // <html lang="fr">
+    //   <body className={`${mcqueen.variable} ${raleway.variable} font-sans`}>
+    <AuthContextProvider>
+      <Layout>{children}</Layout>
+    </AuthContextProvider>
+    //   </body>
+    // </html>
   );
 }
