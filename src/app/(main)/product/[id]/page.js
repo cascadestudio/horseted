@@ -4,6 +4,7 @@ import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Button from "@/components/Button";
 import ProductImagesCarousel from "./ProductImagesCarousel";
+import ProductImage from "./ProductImage";
 
 export default async function ProductPage({ params }) {
   const product = await getApi(`products/${params.id}`);
@@ -26,7 +27,15 @@ export default async function ProductPage({ params }) {
   return (
     <>
       {product.hasOwnProperty("medias") ? (
-        <ProductImagesCarousel medias={medias} />
+        <ProductImagesCarousel>
+          {medias.map((media) => {
+            return (
+              <div key={media.id}>
+                <ProductImage media={media} />
+              </div>
+            );
+          })}
+        </ProductImagesCarousel>
       ) : (
         <Image
           className="aspect-[280/340] object-cover w-20"
