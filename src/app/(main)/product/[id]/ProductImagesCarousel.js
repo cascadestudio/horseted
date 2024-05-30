@@ -13,29 +13,30 @@ export default function ProductImagesCarousel({ children }) {
     setNav2(sliderRef2);
   }, []);
   return (
-    <div className="flex w-[800px]">
-      <div className="w-3/4">
+    <div className="flex h-[600px] max-w-[800px]">
+      <div className="w-1/4 h-full">
         <Slider
           asNavFor={nav1}
           ref={(slider) => (sliderRef2 = slider)}
-          slidesToShow={3}
+          initialSlide={0}
+          slidesToShow={3.1}
           swipeToSlide={true}
           focusOnSelect={true}
           vertical={true}
           verticalSwiping={true}
         >
           {children.map((child, index) => (
-            <div className="w-full h-full" key={index}>
+            <div className="h-[175px]" key={index}>
               {child}
             </div>
           ))}
         </Slider>
       </div>
 
-      <div className="w-1/4">
+      <div className="w-3/4 h-[600px]">
         <Slider asNavFor={nav2} ref={(slider) => (sliderRef1 = slider)}>
           {children.map((child, index) => (
-            <div className="w-full h-full" key={index}>
+            <div className="h-[600px]" key={index}>
               {child}
             </div>
           ))}
