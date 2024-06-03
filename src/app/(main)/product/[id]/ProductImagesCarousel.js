@@ -87,13 +87,13 @@ export default function ProductImagesCarousel({ children }) {
   };
   return (
     <>
-      <div className="flex max-w-[800px]">
-        <div className="w-1/3 flex justify-center p-4 max-h-[590px]">
+      <div className="flex max-h-[590px]">
+        <div className="w-1/3 flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
-            slidesToShow={3.1}
+            slidesToShow={3.2}
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}
@@ -102,7 +102,10 @@ export default function ProductImagesCarousel({ children }) {
             className="h-[172px] w-[172px] flex items-center justify-center"
           >
             {children.map((child, index) => (
-              <div className="" key={index}>
+              <div
+                className="[&_img]:aspect-[172/172] [&_img]:rounded-lg "
+                key={index}
+              >
                 {child}
               </div>
             ))}
@@ -118,7 +121,7 @@ export default function ProductImagesCarousel({ children }) {
           >
             {children.map((child, index) => (
               <div
-                className="h-[590px] w-[590px] [&_img]:rounded-none [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
+                className="h-[590px] w-[590px] [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
                 {child}
