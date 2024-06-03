@@ -87,7 +87,7 @@ export default function ProductImagesCarousel({ children }) {
   };
   return (
     <>
-      <div className="flex max-h-[590px]">
+      <div className="flex max-h-[calc(100vh_-_var(--header-height)-120px)]">
         <div className="w-1/3 flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
@@ -121,7 +121,7 @@ export default function ProductImagesCarousel({ children }) {
           >
             {children.map((child, index) => (
               <div
-                className="h-[590px] w-[590px] [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
+                className="h-full w-full max-h-[590px] [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
                 {child}
