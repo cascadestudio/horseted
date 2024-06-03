@@ -15,7 +15,7 @@ function SampleNextArrow(props) {
       style={{
         ...style,
         position: "absolute",
-        top: "576px",
+        top: "566px",
         right: "10px",
         background: "white",
         borderRadius: "100%",
@@ -47,7 +47,7 @@ function SamplePrevArrow(props) {
       style={{
         ...style,
         display: "absolute",
-        top: "576px",
+        top: "566px",
         left: "455px",
         background: "white",
         zIndex: 1,
@@ -88,7 +88,7 @@ export default function ProductImagesCarousel({ children }) {
   return (
     <>
       <div className="flex max-w-[800px]">
-        <div className="w-1/3 p-4 overflow-hidden h-[600px]">
+        <div className="w-1/3 flex justify-center p-4 max-h-[590px]">
           <Slider
             asNavFor={nav1}
             ref={(slider) => (sliderRef2 = slider)}
@@ -99,14 +99,17 @@ export default function ProductImagesCarousel({ children }) {
             vertical={true}
             verticalSwiping={true}
             variableWidth={true}
+            className="h-[172px] w-[172px] flex items-center justify-center"
           >
             {children.map((child, index) => (
-              <div key={index}>{child}</div>
+              <div className="" key={index}>
+                {child}
+              </div>
             ))}
           </Slider>
         </div>
 
-        <div className="w-2/3 h-[600px] [&>*]:h-full">
+        <div className="w-2/3 [&>*]:h-full">
           <Slider
             {...settings}
             asNavFor={nav2}
@@ -114,7 +117,10 @@ export default function ProductImagesCarousel({ children }) {
             className="relative h-full [&>*]:h-full"
           >
             {children.map((child, index) => (
-              <div className="h-full [&>*]:h-full" key={index}>
+              <div
+                className="h-[590px] w-[590px] [&_img]:rounded-none [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
+                key={index}
+              >
                 {child}
               </div>
             ))}

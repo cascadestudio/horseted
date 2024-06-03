@@ -30,7 +30,10 @@ export default async function ProductPage({ params }) {
         <ProductImagesCarousel>
           {medias.map((media) => {
             return (
-              <div key={media.id}>
+              <div
+                className="h-[172px] aspect-[172/172] [&>img]:rounded-lg"
+                key={media.id}
+              >
                 <ProductImage media={media} />
               </div>
             );
