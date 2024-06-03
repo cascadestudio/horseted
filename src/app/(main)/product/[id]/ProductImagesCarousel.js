@@ -87,7 +87,7 @@ export default function ProductImagesCarousel({ children }) {
   };
   return (
     <>
-      <div className="flex max-h-[calc(100vh_-_var(--header-height)-120px)]">
+      <div className="flex max-w-[800px] max-h-[calc(100vh_-_var(--header-height)-120px)]">
         <div className="w-1/3 flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}

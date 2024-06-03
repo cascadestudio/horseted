@@ -22,7 +22,7 @@ module.exports = {
         poppins: ["var(--font-poppins)"],
       },
       fontSize: {
-        sm: "0.8rem",
+        sm: ["14px", "16px"],
         base: ["16px", "1.5rem"],
         xl: ["1.25rem", "1.5rem"],
         "2xl": ["1.625rem", "2rem"],
