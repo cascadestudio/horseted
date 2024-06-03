@@ -39,8 +39,8 @@ export default async function ProductPage({ params }) {
   }).format(new Date(createdAt));
   return (
     <div>
-      <div className="container mx-auto px-5 flex items-start border-b border-grey mb-11 pb-12">
-        <div className="w-2/3">
+      <div className="container mx-auto px-5 flex items-start border-b border-grey mb-11 py-12">
+        <div className="w-3/5">
           {product.hasOwnProperty("medias") ? (
             <ProductImagesCarousel>
               {medias.map((media) => {
