@@ -1,7 +1,6 @@
 export async function GET(request) {
   const searchParams = request.nextUrl.searchParams;
   const accessToken = searchParams.get("accessToken");
-  console.log("accessToken =>", accessToken);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/me`,
