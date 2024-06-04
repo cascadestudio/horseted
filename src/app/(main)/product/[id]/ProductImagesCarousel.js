@@ -11,7 +11,7 @@ function SampleNextArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black bottom-4 right-3"
+      className="absolute bg-white rounded-full border border-black bottom-3 right-3"
       style={{
         height: "29px",
         width: "29px",
@@ -36,7 +36,7 @@ function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black bottom-4 right-[50px] z-10"
+      className="absolute bg-white rounded-full border border-black bottom-3 right-[50px] z-10"
       style={{
         height: "29px",
         width: "29px",

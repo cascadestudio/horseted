@@ -16,7 +16,7 @@ export default function OfferButton() {
       <Button
         onClick={() => setIsOfferModal(true)}
         variant="transparent"
-        className="w-full flex justify-center"
+        className="w-full flex justify-center h-[52px]"
       >
         Faire une offre
       </Button>
