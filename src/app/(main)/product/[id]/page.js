@@ -38,7 +38,7 @@ export default async function ProductPage({ params }) {
     day: "numeric",
   }).format(new Date(createdAt));
   return (
-    <div>
+    <div className="bg-light-grey">
       <div className="container mx-auto px-5 flex items-start border-b border-grey mb-11 py-12">
         <div className="w-3/5">
           {product.hasOwnProperty("medias") ? (
@@ -59,7 +59,7 @@ export default async function ProductPage({ params }) {
             />
           )}
         </div>
-        <section className="flex flex-col ml-16">
+        <section className="flex flex-col ml-16 max-w-[430px]">
           <div className="flex justify-between mb-2">
             <Link
               key={category.id}

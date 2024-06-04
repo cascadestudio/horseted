@@ -8,18 +8,11 @@ import PrevArrow from "@/assets/icons/PrevArrow.svg";
 import NextArrow from "@/assets/icons/NextArrow.svg";
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
-      className={className}
+      className="absolute bg-white rounded-full border border-black bottom-4 right-3"
       style={{
-        ...style,
-        position: "absolute",
-        top: "566px",
-        right: "10px",
-        background: "white",
-        borderRadius: "100%",
-        border: "1px solid black",
         height: "29px",
         width: "29px",
       }}
@@ -40,19 +33,11 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
-      className={className}
+      className="absolute bg-white rounded-full border border-black bottom-4 right-[50px] z-10"
       style={{
-        ...style,
-        display: "absolute",
-        top: "566px",
-        left: "455px",
-        background: "white",
-        zIndex: 1,
-        borderRadius: "100%",
-        border: "1px solid black",
         height: "29px",
         width: "29px",
       }}
@@ -91,6 +76,7 @@ export default function ProductImagesCarousel({ children }) {
         <div className="w-1/3 flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
+            arrows={false}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
             slidesToShow={3.2}
