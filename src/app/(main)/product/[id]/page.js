@@ -52,11 +52,13 @@ export default async function ProductPage({ params }) {
               })}
             </ProductImagesCarousel>
           ) : (
-            <Image
-              className="aspect-[280/340] object-cover w-20"
-              src={placeholderImage}
-              alt="Image du produit"
-            />
+            <div className="flex justify-center items-center w-full h-[calc(100vh_-_var(--header-height)-120px)]">
+              <Image
+                className="aspect-[280/340] object-cover w-20"
+                src={placeholderImage}
+                alt="Image du produit"
+              />
+            </div>
           )}
         </div>
         <section className="flex flex-col ml-16 max-w-[430px]">
