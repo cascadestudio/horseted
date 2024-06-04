@@ -12,14 +12,23 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [me, setMe] = useState({});
+
   const [loading, setLoading] = useState(true);
 
-  // console.log("user =>", user);
+  async function fetchUser(accessToken) {
+    await fetch(`http://localhost:3000/api/getUser?accessToken=${accessToken}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMe(data.data);
+      });
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        fetchUser(user.accessToken);
       } else {
         setUser(null);
       }
@@ -30,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, me }}>
       {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
