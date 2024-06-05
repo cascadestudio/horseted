@@ -40,8 +40,8 @@ export default async function ProductPage({ params }) {
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 ">
-        <div className="flex items-start justify-center border-b border-grey mb-11 py-12">
-          <div className="w-3/5 max-w-[800px]">
+        <div className="border-b border-grey py-10 flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:mb-11 lg:py-12">
+          <div className="w-full lg:w-3/5">
             {product.hasOwnProperty("medias") ? (
               <ProductImagesCarousel>
                 {medias.map((media) => {
@@ -53,16 +53,16 @@ export default async function ProductPage({ params }) {
                 })}
               </ProductImagesCarousel>
             ) : (
-              <div className="flex justify-center items-center w-full h-[calc(100vh_-_var(--header-height)-120px)]">
+              <div className="flex justify-center items-center w-full h-[calc(100vh_-_var(--header-height)-100px)]">
                 <Image
-                  className="aspect-[280/340] object-cover w-20"
+                  className="aspect-[280/340] max-h-full h-full w-full object-cover"
                   src={placeholderImage}
                   alt="Image du produit"
                 />
               </div>
             )}
           </div>
-          <section className="flex flex-col ml-16 max-w-[430px]">
+          <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
             <div className="flex items-center justify-between mb-2">
               <Link
                 key={category.id}
@@ -84,9 +84,11 @@ export default async function ProductPage({ params }) {
                 </Link>
               </div>
             </div>
-            <h1 className="font-mcqueen font-bold text-4xl mb-2">{title}</h1>
-            <p className="mb-6">{description}</p>
-            <p className="font-poppins font-semibold text-[28px] leading-[42px]">
+            <h1 className="font-mcqueen font-bold text-2xl lg:text-4xl mb-2">
+              {title}
+            </h1>
+            <p className="text-sm leading-5 lg:text-base mb-6">{description}</p>
+            <p className="font-poppins font-semibold text-2xl lg:text-[28px] leading-[42px]">
               {price} €
             </p>
             <p className="font-poppins text-light-green text-sm mb-2">
@@ -106,7 +108,7 @@ export default async function ProductPage({ params }) {
                 </h4>
                 <p className="text-sm">Économisez sur les frais de livraison</p>
               </div>
-              <Button href="#" className="text-sm whitespace-nowrap h-8">
+              <Button href="#" className="text-sm whitespace-nowrap h-8 ml-5">
                 Créer un lot
               </Button>
             </div>
@@ -164,35 +166,57 @@ export default async function ProductPage({ params }) {
                   className="h-14 w-14 object-cover rounded-full"
                 />
                 <div className="flex flex-col justify-center">
-                  <h4 className="font-mcqueen font-bold text-lg leading-5 ml-3">
+                  <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3">
                     Alexandra-ast
                   </h4>
                   <div className="flex items-center ml-3">
-                    <Image src={StarIcon} alt="StarIcon" />
-                    <Image src={StarIcon} alt="StarIcon" />
-                    <Image src={StarIcon} alt="StarIcon" />
-                    <Image src={StarIcon} alt="StarIcon" />
-                    <Image src={StarIcon} alt="StarIcon" />
-                    <span className="ml-2">(6)</span>
+                    <Image
+                      src={StarIcon}
+                      alt="StarIcon"
+                      className="h-4 lg:h-6"
+                    />
+                    <Image
+                      src={StarIcon}
+                      alt="StarIcon"
+                      className="h-4 lg:h-6"
+                    />
+                    <Image
+                      src={StarIcon}
+                      alt="StarIcon"
+                      className="h-4 lg:h-6"
+                    />
+                    <Image
+                      src={StarIcon}
+                      alt="StarIcon"
+                      className="h-4 lg:h-6"
+                    />
+                    <Image
+                      src={StarIcon}
+                      alt="StarIcon"
+                      className="h-4 lg:h-6"
+                    />
+                    <span className="text-sm lg:text-base ml-2">(6)</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center">
                 <Link
                   href="#"
-                  className="h-8 w-8 pr-4 box-content mr-4 border-r border-grey flex justify-center items-center "
+                  className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
                 >
                   <Image src={MessageGreenIcon} alt="Écrire un message" />
                 </Link>
                 <Button
                   href="#"
-                  className="text-sm whitespace-nowrap h-8 px-4 py-2 flex justify-center max-w-[110px]"
+                  className="text-xs lg:text-sm whitespace-nowrap h-8 px-4 py-2 flex justify-center max-w-24 lg:max-w-[110px]"
                 >
                   Voir le profil
                 </Button>
               </div>
             </div>
-            <p className="self-end">Ajouté le {formattedDate}</p>
+            <p className="self-end text-sm lg:text-base">
+              Ajouté le {formattedDate}
+            </p>
           </section>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import ProductsSection from "../../../components/ProductsSection";
+import ProductsSection from "@/components/ProductsSection";
 import BlogSection from "./BlogSection";
 import { client } from "../../../../sanity/lib/client";
 import Button from "@/components/Button";

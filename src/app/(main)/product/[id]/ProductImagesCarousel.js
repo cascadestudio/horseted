@@ -11,7 +11,7 @@ function SampleNextArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black bottom-3 right-3"
+      className="absolute bg-white rounded-full border border-black top-1/2 right-2 lg:bottom-3 lg:right-3 cursor-pointer"
       style={{
         height: "29px",
         width: "29px",
@@ -36,7 +36,7 @@ function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black bottom-3 right-[50px] z-10"
+      className="absolute bg-white rounded-full border border-black top-1/2 left-2 lg:bottom-3 lg:right-[50px] z-10 cursor-pointer"
       style={{
         height: "29px",
         width: "29px",
@@ -60,6 +60,7 @@ function SamplePrevArrow(props) {
 export default function ProductImagesCarousel({ children }) {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
+  const [activeSlide, setActiveSlide] = useState(0);
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
   useEffect(() => {
@@ -69,11 +70,12 @@ export default function ProductImagesCarousel({ children }) {
   const settings = {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
+    beforeChange: (current, next) => setActiveSlide(next),
   };
   return (
     <>
-      <div className="flex w-fit max-w-full max-h-[calc(100vh_-_var(--header-height)-120px)]">
-        <div className="w-fit bg-white rounded-tl-[25px] rounded-bl-[25px] flex justify-center overflow-hidden p-4 pb-0">
+      <div className="flex w-fit max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
+        <div className="hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
             arrows={false}
@@ -85,12 +87,16 @@ export default function ProductImagesCarousel({ children }) {
             vertical={true}
             verticalSwiping={true}
             variableWidth={true}
-            className="h-[172px] w-[172px] flex items-center justify-center"
+            className="lg:h-[172px] lg:w-[172px] lg:flex lg:items-center lg:justify-center"
           >
             {children.map((child, index) => (
               <div
-                className="[&_img]:aspect-[172/172] [&_img]:rounded-lg "
                 key={index}
+                className={`[&_img]:aspect-[172/172] [&_img]:rounded-lg ${
+                  index === activeSlide
+                    ? "[&_img]:border-4 [&_img]:border-light-green"
+                    : ""
+                }`}
               >
                 {child}
               </div>
@@ -98,7 +104,7 @@ export default function ProductImagesCarousel({ children }) {
           </Slider>
         </div>
 
-        <div className="w-2/3 main-slider [&>*]:h-full">
+        <div className="w-full lg:w-2/3 main-slider [&>*]:h-full">
           <Slider
             {...settings}
             asNavFor={nav2}
@@ -107,7 +113,7 @@ export default function ProductImagesCarousel({ children }) {
           >
             {children.map((child, index) => (
               <div
-                className="h-full w-full max-h-[590px] [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
+                className="h-full w-full [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
                 {child}
@@ -124,8 +130,11 @@ export default function ProductImagesCarousel({ children }) {
           height: 100%;
         }
         .main-slider .slick-list {
-          border-top-right-radius: 25px;
-          border-bottom-right-radius: 25px;
+          border-radius: 25px;
+          @media (min-width: 1024px) {
+            border-top-right-radius: 25px;
+            border-bottom-right-radius: 25px;
+          }
         }
       `}</style>
     </>
