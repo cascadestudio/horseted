@@ -72,7 +72,7 @@ export default function ProductImagesCarousel({ children }) {
   };
   return (
     <>
-      <div className="flex w-fit max-w-[800px] max-h-[calc(100vh_-_var(--header-height)-120px)]">
+      <div className="flex w-fit max-w-full max-h-[calc(100vh_-_var(--header-height)-120px)]">
         <div className="w-fit bg-white rounded-tl-[25px] rounded-bl-[25px] flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
@@ -98,7 +98,7 @@ export default function ProductImagesCarousel({ children }) {
           </Slider>
         </div>
 
-        <div className="w-2/3 [&>*]:h-full">
+        <div className="w-2/3 main-slider [&>*]:h-full">
           <Slider
             {...settings}
             asNavFor={nav2}
@@ -107,7 +107,7 @@ export default function ProductImagesCarousel({ children }) {
           >
             {children.map((child, index) => (
               <div
-                className="h-full w-full max-h-[590px] [&_img]:aspect-[590/590] [&_img]:rounded-tr-[25px] [&_img]:rounded-br-[25px] [&>*]:w-full  [&>*]:h-full"
+                className="h-full w-full max-h-[590px] [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
                 {child}
@@ -122,6 +122,10 @@ export default function ProductImagesCarousel({ children }) {
         }
         .slick-slide > div {
           height: 100%;
+        }
+        .main-slider .slick-list {
+          border-top-right-radius: 25px;
+          border-bottom-right-radius: 25px;
         }
       `}</style>
     </>

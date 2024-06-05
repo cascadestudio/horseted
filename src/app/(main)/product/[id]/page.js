@@ -40,8 +40,8 @@ export default async function ProductPage({ params }) {
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 ">
-        <div className="flex items-start border-b border-grey mb-11 py-12">
-          <div className="w-3/5">
+        <div className="flex items-start justify-center border-b border-grey mb-11 py-12">
+          <div className="w-3/5 max-w-[800px]">
             {product.hasOwnProperty("medias") ? (
               <ProductImagesCarousel>
                 {medias.map((media) => {
@@ -163,7 +163,7 @@ export default async function ProductPage({ params }) {
                   alt="Photo de profil"
                   className="h-14 w-14 object-cover rounded-full"
                 />
-                <div>
+                <div className="flex flex-col justify-center">
                   <h4 className="font-mcqueen font-bold text-lg leading-5 ml-3">
                     Alexandra-ast
                   </h4>
