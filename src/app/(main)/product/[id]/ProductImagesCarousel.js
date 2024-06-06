@@ -11,7 +11,7 @@ function SampleNextArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black top-1/2 right-2 lg:bottom-3 lg:right-3 cursor-pointer"
+      className="absolute bg-white rounded-full border border-black top-1/2 transform -translate-y-1/2 right-2 lg:top-auto lg:transform-none lg:bottom-3 lg:right-3 cursor-pointer"
       style={{
         height: "29px",
         width: "29px",
@@ -24,6 +24,7 @@ function SampleNextArrow(props) {
           height: "12px",
           top: "7px",
           left: "10px",
+          width: "auto",
         }}
         src={NextArrow}
         alt="Suivant"
@@ -36,7 +37,7 @@ function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
     <div
-      className="absolute bg-white rounded-full border border-black top-1/2 left-2 lg:bottom-3 lg:right-[50px] z-10 cursor-pointer"
+      className="absolute bg-white rounded-full border border-black top-1/2 transform -translate-y-1/2 left-2 lg:top-auto lg:transform-none lg:left-auto lg:bottom-3 lg:right-[50px] z-10 cursor-pointer"
       style={{
         height: "29px",
         width: "29px",
@@ -49,6 +50,7 @@ function SamplePrevArrow(props) {
           height: "12px",
           top: "7px",
           left: "8px",
+          width: "auto",
         }}
         src={PrevArrow}
         alt="Precedent"
@@ -75,24 +77,24 @@ export default function ProductImagesCarousel({ children }) {
   return (
     <>
       <div className="flex w-fit max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
-        <div className="hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
+        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
             arrows={false}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
-            slidesToShow={3.2}
+            slidesToShow={4}
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}
             verticalSwiping={true}
-            variableWidth={true}
-            className="lg:h-[172px] lg:w-[172px] lg:flex lg:items-center lg:justify-center"
+            infinite={true}
+            className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >
             {children.map((child, index) => (
               <div
                 key={index}
-                className={`[&_img]:aspect-[172/172] [&_img]:rounded-lg ${
+                className={`cursor-pointer [&_img]:aspect-[172/172] [&_img]:rounded-lg ${
                   index === activeSlide
                     ? "[&_img]:border-4 [&_img]:border-light-green"
                     : ""
@@ -134,6 +136,8 @@ export default function ProductImagesCarousel({ children }) {
           @media (min-width: 1024px) {
             border-top-right-radius: 25px;
             border-bottom-right-radius: 25px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
           }
         }
       `}</style>

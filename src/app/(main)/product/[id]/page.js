@@ -173,27 +173,27 @@ export default async function ProductPage({ params }) {
                     <Image
                       src={StarIcon}
                       alt="StarIcon"
-                      className="h-4 lg:h-6"
+                      className="h-4 w-auto lg:h-6"
                     />
                     <Image
                       src={StarIcon}
                       alt="StarIcon"
-                      className="h-4 lg:h-6"
+                      className="h-4 w-auto lg:h-6"
                     />
                     <Image
                       src={StarIcon}
                       alt="StarIcon"
-                      className="h-4 lg:h-6"
+                      className="h-4 w-auto lg:h-6"
                     />
                     <Image
                       src={StarIcon}
                       alt="StarIcon"
-                      className="h-4 lg:h-6"
+                      className="h-4 w-auto lg:h-6"
                     />
                     <Image
                       src={StarIcon}
                       alt="StarIcon"
-                      className="h-4 lg:h-6"
+                      className="h-4 w-auto lg:h-6"
                     />
                     <span className="text-sm lg:text-base ml-2">(6)</span>
                   </div>
