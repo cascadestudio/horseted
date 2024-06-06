@@ -83,7 +83,7 @@ export default function signinPage() {
                   name="email"
                   id="email"
                   placeholder="exemple@mail.com"
-                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
                 />
               </label>
               <label htmlFor="password">
@@ -97,7 +97,7 @@ export default function signinPage() {
                   name="password"
                   id="password"
                   placeholder="Mot de passe"
-                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
                 />
               </label>
               <Button
@@ -113,7 +113,7 @@ export default function signinPage() {
                 Mot de passe oublié ?
               </Link>
               {showPasswordResetAlert && (
-                <div className=" bg-[#EAF3E8] border border-light-green text-[14px] font-normal text-center h-16 rounded-[65px] flex items-center justify-center mb-8 p-6 lg:mb-0">
+                <div className=" bg-[#EAF3E8] border border-light-green text-sm font-normal text-center h-16 rounded-[65px] flex items-center justify-center mb-8 p-6 lg:mb-0">
                   Un e-mail vous a été envoyé pour réinitialiser votre mot de
                   passe
                 </div>
@@ -159,7 +159,7 @@ export default function signinPage() {
               className="w-8 h-8 mr-[14px]"
             />
             <div>
-              <p className="text-[12px] leading-[14px] font-mcqueen lg:text-[14px] lg:leading-[16px]">
+              <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur
               </p>
               <p className="leading-[18px] font-mcqueen font-semibold lg:text-[20px]">
@@ -179,7 +179,7 @@ export default function signinPage() {
               className="w-auto h-8 mr-[14px]"
             />
             <div>
-              <p className="text-[12px] leading-[14px] font-mcqueen lg:text-[14px] lg:leading-[16px]">
+              <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur
               </p>
               <p className=" leading-[18px] font-mcqueen font-semibold lg:text-[20px]">

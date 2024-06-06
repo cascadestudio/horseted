@@ -4,7 +4,7 @@ import ProductsCarousel from "@/components/ProductsCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../../tailwind.config.js";
+import tailwindConfig from "../../../tailwind.config.js";
 
 export default async function ProductsSection({ title }) {
   const products = await getApi("products?category=206");
