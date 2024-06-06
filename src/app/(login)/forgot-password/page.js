@@ -53,7 +53,7 @@ export default function forgotPasswordPage() {
                 name="email"
                 id="email"
                 placeholder="exemple@mail.com"
-                className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+                className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
               />
             </label>
             <Button

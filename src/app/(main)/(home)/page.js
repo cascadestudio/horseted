@@ -1,4 +1,4 @@
-import ProductsSection from "./ProductsSection";
+import ProductsSection from "@/components/ProductsSection";
 import BlogSection from "./BlogSection";
 import { client } from "../../../../sanity/lib/client";
 import Button from "@/components/Button";
@@ -46,7 +46,7 @@ export default async function Home() {
             <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
               Personnalisez votre Horseted
             </h3>
-            <p className="mb-7 lg:mb-0 text-[14px]">
+            <p className="mb-7 lg:mb-0 text-sm">
               Personnalisez votre expérience et trouvez les articles faits pour
               vous ! Ajoutez votre pointure, tailles et préférences
             </p>
@@ -199,7 +199,7 @@ export default async function Home() {
         </div>
         <div className="font-mcqueen text-center leading-7 lg:leading-10 lg:mt-10">
           <p className="font-bold text-[30px]">+200 avis</p>
-          <p className="text-[14px] lg:text-xl">
+          <p className="text-sm lg:text-xl">
             TrustPilot - Apple Store - Play store
           </p>
         </div>

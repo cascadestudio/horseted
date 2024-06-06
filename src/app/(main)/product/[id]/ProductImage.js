@@ -5,7 +5,7 @@ export default async function ProductImage({ media }) {
 
   return (
     <img
-      className="aspect-[280/340] object-cover w-20"
+      className="aspect-[280/340] object-cover h-full w-full"
       src={`data:image/png;base64, ${base64}`}
       alt="Image du produit"
     />
