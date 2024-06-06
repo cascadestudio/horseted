@@ -6,10 +6,18 @@ export function useFetchCategories(parentId) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/getCategories?query=${parentId}`)
+    fetch(
+      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${parentId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        setCategories(data.data);
+        setCategories(data);
         setIsLoading(false);
       });
   }, [parentId]);

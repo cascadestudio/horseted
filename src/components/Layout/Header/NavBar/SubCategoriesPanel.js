@@ -31,7 +31,7 @@ export default function SubCategoriesPanel({ parentId }) {
     return (
       <div
         ref={panelRef}
-        className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex"
+        className="absolute top-[44px] bg-white border border-dark-green rounded-b-[20px] flex z-10"
       >
         <ul className="border-r">
           {subCategories?.map((category) => {
