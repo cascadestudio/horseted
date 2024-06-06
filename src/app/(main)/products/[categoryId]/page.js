@@ -1,3 +1,4 @@
+import ProductCard from "@/components/ProductCard";
 import { getApi } from "@/libs/fetch";
 
 export default async function ProductsPage({ params }) {
@@ -8,8 +9,9 @@ export default async function ProductsPage({ params }) {
   return (
     <>
       <h1>{params.categoryId}</h1>
+
       {products.items.map((product) => {
-        return <h1>{product.title}</h1>;
+        return <ProductCard className="mr-5" product={product} />;
       })}
     </>
   );
