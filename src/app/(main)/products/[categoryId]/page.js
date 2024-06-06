@@ -1,14 +1,13 @@
 import { getApi } from "@/libs/fetch";
 
 export default async function ProductsPage({ params }) {
-  const category = params.category;
-  const products = await getApi(`products?category=${category}`);
+  const products = await getApi(`products?category=${params.categoryId}`);
 
-  console.log(products);
+  // console.log(products);
 
   return (
     <>
-      <h1>{category}</h1>
+      <h1>{params.categoryId}</h1>
       {products.items.map((product) => {
         return <h1>{product.title}</h1>;
       })}

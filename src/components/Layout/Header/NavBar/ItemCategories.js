@@ -12,7 +12,7 @@ export default function ItemCategories({ parentId }) {
             const { name, id } = category;
             return (
               <li key={name} className="">
-                <Link href={`/products/${name}`}>{name}</Link>
+                <Link href={`/products/${id}`}>{name}</Link>
               </li>
             );
           })}
