@@ -1,4 +1,5 @@
 import { useFetchCategories } from "@/libs/hooks";
+import Link from "next/link";
 
 export default function ItemCategories({ parentId }) {
   const [itemCategories] = useFetchCategories(parentId);
@@ -11,7 +12,7 @@ export default function ItemCategories({ parentId }) {
             const { name, id } = category;
             return (
               <li key={name} className="">
-                {name}
+                <Link href={`/products/${name}`}>{name}</Link>
               </li>
             );
           })}
