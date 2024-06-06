@@ -74,9 +74,10 @@ export default function ProductImagesCarousel({ children }) {
     prevArrow: <SamplePrevArrow />,
     beforeChange: (current, next) => setActiveSlide(next),
   };
+  console.log("slide:", activeSlide);
   return (
     <>
-      <div className="flex w-fit max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
+      <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
         <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
           <Slider
             asNavFor={nav1}
