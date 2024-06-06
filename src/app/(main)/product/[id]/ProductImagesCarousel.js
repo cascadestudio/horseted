@@ -74,7 +74,6 @@ export default function ProductImagesCarousel({ children }) {
     prevArrow: <SamplePrevArrow />,
     beforeChange: (current, next) => setActiveSlide(next),
   };
-  console.log("slide:", activeSlide);
   return (
     <>
       <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
