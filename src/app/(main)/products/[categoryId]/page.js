@@ -1,18 +1,18 @@
 "use client";
-import ProductCard from "@/components/ProductCard";
-// import { getApi } from "@/libs/fetch";
+// import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
 
 export default function ProductsPage({ params }) {
-  // const products = await getApi(`products?category=${params.categoryId}`);
-
-  const [sortOption, setSortOption] = useState("");
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [sortOption, setSortOption] = useState("new");
+  const [categoryOption, setCategoryOption] = useState(params.categoryId);
+  const [categories, setCategories] = useState([]);
+  const [categoryParentId, setCategoryParentId] = useState(null);
 
   useEffect(() => {
     fetch(
-      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?category=${params.categoryId}`,
+      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${categoryParentId}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -23,21 +23,55 @@ export default function ProductsPage({ params }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setCategories(data);
+      });
+  }, [categoryParentId]);
+
+  useEffect(() => {
+    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?orderBy=${sortOption}&category=${categoryOption}`;
+    // console.log(url);
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
         setProducts(data);
         setIsLoading(false);
       });
-  }, [sortOption]);
+  }, [sortOption, categoryOption]);
 
   return (
     <>
       <h1>{params.categoryId}</h1>
       <div className="p-5">
         <label htmlFor="sort">Trier par</label>
-        <select name="sort" id="sort">
-          <option value="">Nouveautés</option>
-          <option value="">Populaires</option>
-          <option value="">Prix croissant</option>
+        <select
+          id="sort"
+          onChange={(e) => setSortOption(e.target.value)}
+          value={sortOption}
+        >
+          <option value="new">Nouveautés</option>
+          <option value="popular">Populaires</option>
+          <option value="ascendingPrice">Prix croissant</option>
           <option value="">Prix décroissant</option>
+        </select>
+        <label htmlFor="category">Catégorie</label>
+        <select
+          id="category"
+          onChange={(e) => setCategoryOption(e.target.value)}
+          value={categoryOption}
+        >
+          {categories.map((category) => {
+            return (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            );
+          })}
         </select>
       </div>
 
