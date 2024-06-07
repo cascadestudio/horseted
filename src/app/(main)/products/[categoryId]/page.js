@@ -13,34 +13,51 @@ export default function ProductsPage({ params }) {
   const [orderBy, setOrderBy] = useState(); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
 
+  // Maybe make it global ?
+  const fetchData = async (query) => {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}${query}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    return response.json();
+  };
+
   useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${activeCategory}`;
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    const fetchCategories = async () => {
+      try {
+        const query = `/categories?parentId=${activeCategory}`;
+        const data = await fetchData(query);
         setCategories(data);
-      });
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
   }, [activeCategory]);
 
   useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?orderBy=${orderBy}&category=${activeCategory}`;
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
+    const fetchProducts = async () => {
+      try {
+        const query = `/products?orderBy=${orderBy}&category=${activeCategory}`;
+        const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
-      });
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, [orderBy, activeCategory]);
 
   function handleOrder(value) {
