@@ -2,9 +2,11 @@ export default function ProductFilters({
   orderBy,
   onOrderChange,
   onCategoryChange,
+  categories,
+  activeCategory,
 }) {
   return (
-    <>
+    <div className="flex">
       <div className="p-5">
         <label htmlFor="sort">Trier par</label>
         <select
@@ -18,12 +20,12 @@ export default function ProductFilters({
           <option value="price;desc">Prix décroissant</option>
         </select>
       </div>
-      {/* <div className="p-5">
+      <div className="p-5">
         <label htmlFor="category">Catégorie</label>
         <select
           id="category"
           onChange={(e) => onCategoryChange(e.target.value)}
-          value={categoryOption}
+          value={activeCategory}
         >
           {categories.map((category) => {
             return (
@@ -33,7 +35,7 @@ export default function ProductFilters({
             );
           })}
         </select>
-      </div> */}
-    </>
+      </div>
+    </div>
   );
 }

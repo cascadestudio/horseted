@@ -8,27 +8,13 @@ export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
-  const [categoryParentId, setCategoryParentId] = useState(params.categoryId);
 
+  // Filters states
   const [orderBy, setOrderBy] = useState(); //TODO quand Jojo l'a fait useState("visitCount;desc")
-  const [currentCategory, setCurrentCategory] = useState(params.categoryId);
+  const [activeCategory, setActiveCategory] = useState(params.categoryId);
 
   useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${categoryParentId}`;
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      });
-  }, [categoryParentId]);
-
-  useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?orderBy=${orderBy}&category=${currentCategory}`;
+    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${activeCategory}`;
     fetch(url, {
       headers: {
         "Content-Type": "application/json",
@@ -38,23 +24,42 @@ export default function ProductsPage({ params }) {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setCategories(data);
+      });
+  }, [activeCategory]);
+
+  useEffect(() => {
+    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?orderBy=${orderBy}&category=${activeCategory}`;
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
         setProducts(data);
         setIsLoading(false);
       });
-  }, [orderBy, currentCategory]);
+  }, [orderBy, activeCategory]);
 
   function handleOrder(value) {
     setOrderBy(value);
   }
+  function handleCategory(value) {
+    setActiveCategory(value);
+  }
 
   return (
-    <>
+    <div className="container mx-auto">
       <ProductFilters
         orderBy={orderBy}
         onOrderChange={handleOrder}
-        // onCategoryChange={setCurrentCategory(value)}
+        activeCategory={activeCategory}
+        onCategoryChange={handleCategory}
+        categories={categories}
       />
       {!isLoading && <ProductsList products={products} />}
-    </>
+    </div>
   );
 }
