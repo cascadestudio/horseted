@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ProductFilters from "./ProductFilters";
 import ProductsList from "./ProductList";
+import { fetchData } from "@/libs/fetch";
 
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
@@ -12,23 +13,6 @@ export default function ProductsPage({ params }) {
   // Filters states
   const [orderBy, setOrderBy] = useState(); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
-
-  // Maybe make it global ?
-  const fetchData = async (query) => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}${query}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-        },
-      }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
-    return response.json();
-  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -71,10 +55,10 @@ export default function ProductsPage({ params }) {
     <div className="container mx-auto">
       <ProductFilters
         orderBy={orderBy}
-        onOrderChange={handleOrder}
         activeCategory={activeCategory}
-        onCategoryChange={handleCategory}
         categories={categories}
+        onOrderChange={handleOrder}
+        onCategoryChange={handleCategory}
       />
       {!isLoading && <ProductsList products={products} />}
     </div>

@@ -1,3 +1,5 @@
+import CategorySelect from "./CategorySelect";
+
 export default function ProductFilters({
   orderBy,
   onOrderChange,
@@ -21,21 +23,7 @@ export default function ProductFilters({
         </select>
       </div>
       <div className="p-5">
-        {/* TODO créer un composant pour les categories car plusieurs fetch à faire pour récup les catégories selon click comme nav bar*/}
-        <label htmlFor="category">Catégorie</label>
-        <select
-          id="category"
-          onChange={(e) => onCategoryChange(e.target.value)}
-          value={activeCategory}
-        >
-          {categories.map((category) => {
-            return (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            );
-          })}
-        </select>
+        <CategorySelect onCategoryChange={onCategoryChange} />
       </div>
     </div>
   );
