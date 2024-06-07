@@ -21,6 +21,7 @@ export default function ProductFilters({
         </select>
       </div>
       <div className="p-5">
+        {/* TODO créer un composant pour les categories car plusieurs fetch à faire pour récup les catégories selon click comme nav bar*/}
         <label htmlFor="category">Catégorie</label>
         <select
           id="category"
