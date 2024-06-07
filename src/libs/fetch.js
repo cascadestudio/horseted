@@ -85,3 +85,20 @@ export async function getMe(query) {
 
   return res.json();
 }
+
+// Fetch API
+export function fetchApi(query) {
+  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}${query}`;
+
+  fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      // console.log(data);
+      return data;
+    });
+}
