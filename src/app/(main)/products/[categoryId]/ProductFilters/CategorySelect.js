@@ -24,6 +24,7 @@ export default function CategorySelect({ onCategoryChange, activeCategory }) {
     fetchCategories();
   }, []);
 
+  // TODO: séparer les listes en composants fils
   useEffect(() => {
     const fetchCategories = async () => {
       try {
