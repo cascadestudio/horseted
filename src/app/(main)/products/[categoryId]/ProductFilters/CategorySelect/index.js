@@ -24,8 +24,8 @@ export default function CategorySelect({ onClickProductCategory }) {
     fetchCategories();
   }, []);
 
-  function onClickSubCategory(id) {
-    setActiveSubCategory(id);
+  function onClickSubCategory(id, name) {
+    setActiveSubCategory({ id: id, name: name });
   }
 
   function showParentCategories() {
@@ -45,11 +45,17 @@ export default function CategorySelect({ onClickProductCategory }) {
       </button>
 
       {isParentCategoryDropdown &&
+        activeParentCategory === null &&
         (activeParentCategory === null || activeSubCategory === null) && (
           <div className="flex flex-col">
             {parentCategories.map(({ id, name }) => {
               return (
-                <button onClick={() => setActiveParentCategory(id)} key={id}>
+                <button
+                  onClick={() =>
+                    setActiveParentCategory({ id: id, name: name })
+                  }
+                  key={id}
+                >
                   {name}
                 </button>
               );

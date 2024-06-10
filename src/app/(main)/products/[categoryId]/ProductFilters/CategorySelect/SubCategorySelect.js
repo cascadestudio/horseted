@@ -12,26 +12,31 @@ export default function SubCategorySelect({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const query = `/categories?parentId=${activeParentCategory}`;
+        const query = `/categories?parentId=${activeParentCategory.id}`;
         const data = await fetchData(query);
         setSubCategory(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
-    activeParentCategory && fetchCategories();
+    activeParentCategory !== null && fetchCategories();
   }, [activeParentCategory]);
   return (
     <div>
-      Sub categories
-      <button onClick={() => onClickPrev()}>Previous icon</button>
+      <button onClick={() => onClickPrev()}>
+        <b>
+          {"< "}
+          {activeParentCategory.name}
+        </b>
+      </button>
+
       <div>
         {activeParentCategory !== null && (
           <div className="flex flex-col">
             {subCategory.map(({ id, name }) => {
               return (
                 <button
-                  onClick={() => onClickSubCategory(id)}
+                  onClick={() => onClickSubCategory(id, name)}
                   className={activeSubCategory === id ? "active" : ""}
                   key={id}
                 >

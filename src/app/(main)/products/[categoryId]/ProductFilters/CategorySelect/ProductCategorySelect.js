@@ -11,20 +11,24 @@ export default function ProductCategorySelect({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const query = `/categories?parentId=${activeSubCategory}`;
+        const query = `/categories?parentId=${activeSubCategory.id}`;
         const data = await fetchData(query);
         setProductCategory(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
-    activeSubCategory && fetchCategories();
+    activeSubCategory !== null && fetchCategories();
   }, [activeSubCategory]);
 
   return (
     <div>
-      Product categories
-      <button onClick={() => onClickPrev()}>Previous icon</button>
+      <button onClick={() => onClickPrev()}>
+        <b>
+          {"< "} {activeSubCategory.name}
+        </b>
+      </button>
+
       <div>
         {activeSubCategory !== null && (
           <div className="flex flex-col">
