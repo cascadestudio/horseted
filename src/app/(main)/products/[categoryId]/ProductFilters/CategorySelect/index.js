@@ -4,7 +4,8 @@ import SubCategorySelect from "./SubCategorySelect";
 import ProductCategorySelect from "./ProductCategorySelect";
 
 export default function CategorySelect({ onClickProductCategory }) {
-  const [isCategoryDropdown, setIsCategoryDropdown] = useState(false);
+  const [isParentCategoryDropdown, setIsParentCategoryDropdown] =
+    useState(false);
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
@@ -27,34 +28,53 @@ export default function CategorySelect({ onClickProductCategory }) {
     setActiveSubCategory(id);
   }
 
+  function showParentCategories() {
+    setActiveParentCategory(null);
+  }
+
+  function showSubCategories() {
+    setActiveSubCategory(null);
+  }
+
   return (
     <div>
-      <button onClick={() => setIsCategoryDropdown(!isCategoryDropdown)}>
+      <button
+        onClick={() => setIsParentCategoryDropdown(!isParentCategoryDropdown)}
+      >
         Catégorie
       </button>
 
-      {isCategoryDropdown && (
-        <div className="flex flex-col">
-          {parentCategories.map(({ id, name }) => {
-            return (
-              <button onClick={() => setActiveParentCategory(id)} key={id}>
-                {name}
-              </button>
-            );
-          })}
-        </div>
+      {isParentCategoryDropdown &&
+        (activeParentCategory === null || activeSubCategory === null) && (
+          <div className="flex flex-col">
+            {parentCategories.map(({ id, name }) => {
+              return (
+                <button onClick={() => setActiveParentCategory(id)} key={id}>
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+      {isParentCategoryDropdown &&
+        activeParentCategory !== null &&
+        activeSubCategory === null && (
+          <SubCategorySelect
+            activeParentCategory={activeParentCategory}
+            onClickSubCategory={onClickSubCategory}
+            activeSubCategory={activeSubCategory}
+            onClickPrev={showParentCategories}
+          />
+        )}
+
+      {isParentCategoryDropdown && activeSubCategory !== null && (
+        <ProductCategorySelect
+          activeSubCategory={activeSubCategory}
+          onClickProductCategory={onClickProductCategory}
+          onClickPrev={showSubCategories}
+        />
       )}
-
-      <SubCategorySelect
-        activeParentCategory={activeParentCategory}
-        onClickSubCategory={onClickSubCategory}
-        activeSubCategory={activeSubCategory}
-      />
-
-      <ProductCategorySelect
-        activeSubCategory={activeSubCategory}
-        onClickProductCategory={onClickProductCategory}
-      />
     </div>
   );
 }

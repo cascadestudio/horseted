@@ -5,6 +5,7 @@ export default function SubCategorySelect({
   activeParentCategory,
   onClickSubCategory,
   activeSubCategory,
+  onClickPrev,
 }) {
   const [subCategory, setSubCategory] = useState([]);
 
@@ -22,21 +23,25 @@ export default function SubCategorySelect({
   }, [activeParentCategory]);
   return (
     <div>
-      {activeParentCategory !== null && (
-        <div className="flex flex-col">
-          {subCategory.map(({ id, name }) => {
-            return (
-              <button
-                onClick={() => onClickSubCategory(id)}
-                className={activeSubCategory === id ? "active" : ""}
-                key={id}
-              >
-                {name}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      Sub categories
+      <button onClick={() => onClickPrev()}>Previous icon</button>
+      <div>
+        {activeParentCategory !== null && (
+          <div className="flex flex-col">
+            {subCategory.map(({ id, name }) => {
+              return (
+                <button
+                  onClick={() => onClickSubCategory(id)}
+                  className={activeSubCategory === id ? "active" : ""}
+                  key={id}
+                >
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

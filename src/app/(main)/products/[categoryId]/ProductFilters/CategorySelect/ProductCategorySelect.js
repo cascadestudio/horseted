@@ -4,6 +4,7 @@ import { fetchData } from "@/libs/fetch";
 export default function ProductCategorySelect({
   activeSubCategory,
   onClickProductCategory,
+  onClickPrev,
 }) {
   const [productCategory, setProductCategory] = useState([]);
 
@@ -22,17 +23,21 @@ export default function ProductCategorySelect({
 
   return (
     <div>
-      {activeSubCategory !== null && (
-        <div className="flex flex-col">
-          {productCategory.map(({ id, name }) => {
-            return (
-              <button onClick={() => onClickProductCategory(id)} key={id}>
-                {name}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      Product categories
+      <button onClick={() => onClickPrev()}>Previous icon</button>
+      <div>
+        {activeSubCategory !== null && (
+          <div className="flex flex-col">
+            {productCategory.map(({ id, name }) => {
+              return (
+                <button onClick={() => onClickProductCategory(id)} key={id}>
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
