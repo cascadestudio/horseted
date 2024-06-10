@@ -8,16 +8,22 @@ import { fetchData } from "@/libs/fetch";
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
 
   // Filters states
-  const [orderBy, setOrderBy] = useState(); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
+  const [activeState, setActiveState] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const query = `/products?orderBy=${orderBy}&category=${activeCategory}`;
+        let query = `/products?orderBy=${activeOrder}`;
+        if (activeCategory !== null) {
+          query += `&category=${activeCategory}`;
+        }
+        if (activeState !== "") {
+          query += `&states=${activeState}`;
+        }
         const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
@@ -28,21 +34,25 @@ export default function ProductsPage({ params }) {
     };
 
     fetchProducts();
-  }, [orderBy, activeCategory]);
+  }, [activeOrder, activeCategory, activeState]);
 
-  function handleOrder(value) {
-    setOrderBy(value);
+  function handleOrderChange(value) {
+    setActiveOrder(value);
   }
-  function handleCategory(value) {
+  function handleCategoryChange(value) {
     setActiveCategory(value);
+  }
+  function handleStateChange(value) {
+    setActiveState(value);
   }
 
   return (
     <div className="container mx-auto">
       <ProductFilters
-        orderBy={orderBy}
-        onOrderChange={handleOrder}
-        onClickProductCategory={handleCategory}
+        activeOrder={activeOrder}
+        onOrderChange={handleOrderChange}
+        onCategoryChange={handleCategoryChange}
+        onStateChange={handleStateChange}
       />
       {!isLoading && <ProductsList products={products} />}
     </div>
