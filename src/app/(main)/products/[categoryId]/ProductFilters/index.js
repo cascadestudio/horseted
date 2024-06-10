@@ -3,9 +3,7 @@ import CategorySelect from "./CategorySelect";
 export default function ProductFilters({
   orderBy,
   onOrderChange,
-  onCategoryChange,
-  categories,
-  activeCategory,
+  onClickProductCategory,
 }) {
   return (
     <div className="flex">
@@ -23,7 +21,7 @@ export default function ProductFilters({
         </select>
       </div>
       <div className="p-5">
-        <CategorySelect onCategoryChange={onCategoryChange} />
+        <CategorySelect onClickProductCategory={onClickProductCategory} />
       </div>
     </div>
   );

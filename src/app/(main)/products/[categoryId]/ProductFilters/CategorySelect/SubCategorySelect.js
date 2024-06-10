@@ -13,7 +13,6 @@ export default function SubCategorySelect({
       try {
         const query = `/categories?parentId=${activeParentCategory}`;
         const data = await fetchData(query);
-        console.log("setSubCategory =>", data);
         setSubCategory(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

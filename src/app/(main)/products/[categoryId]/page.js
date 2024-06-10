@@ -15,20 +15,6 @@ export default function ProductsPage({ params }) {
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories?parentId=${activeCategory}`;
-        const data = await fetchData(query);
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, [activeCategory]);
-
-  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const query = `/products?orderBy=${orderBy}&category=${activeCategory}`;
@@ -55,10 +41,8 @@ export default function ProductsPage({ params }) {
     <div className="container mx-auto">
       <ProductFilters
         orderBy={orderBy}
-        activeCategory={activeCategory}
-        categories={categories}
         onOrderChange={handleOrder}
-        onCategoryChange={handleCategory}
+        onClickProductCategory={handleCategory}
       />
       {!isLoading && <ProductsList products={products} />}
     </div>
