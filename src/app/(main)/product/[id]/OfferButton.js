@@ -10,6 +10,7 @@ import { useState } from "react";
 
 export default function OfferButton() {
   const [isOfferModal, setIsOfferModal] = useState(false);
+  const handleClose = () => setIsOfferModal(false);
 
   return (
     <>
@@ -20,7 +21,7 @@ export default function OfferButton() {
       >
         Faire une offre
       </Button>
-      {isOfferModal && <OfferModal />}
+      {isOfferModal && <OfferModal onClose={handleClose} />}
     </>
   );
 }
