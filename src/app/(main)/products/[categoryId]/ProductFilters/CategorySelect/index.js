@@ -1,11 +1,11 @@
 import { fetchData } from "@/libs/fetch";
 import { useEffect, useState } from "react";
+import SubCategorySelect from "./SubCategorySelect";
 
 export default function CategorySelect({ onCategoryChange, activeCategory }) {
   const [isCategoryDropdown, setIsCategoryDropdown] = useState(false);
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
-  const [subCategory, setSubCategory] = useState([]);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
   const [productCategory, setProductCategory] = useState([]);
 
@@ -24,21 +24,6 @@ export default function CategorySelect({ onCategoryChange, activeCategory }) {
     fetchCategories();
   }, []);
 
-  // TODO: séparer les listes en composants fils
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories?parentId=${activeParentCategory}`;
-        const data = await fetchData(query);
-        console.log("setSubCategory =>", data);
-        setSubCategory(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    activeParentCategory && fetchCategories();
-  }, [activeParentCategory]);
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -52,6 +37,10 @@ export default function CategorySelect({ onCategoryChange, activeCategory }) {
     };
     activeSubCategory && fetchCategories();
   }, [activeSubCategory]);
+
+  function onClickSubCategory(id) {
+    setActiveSubCategory(id);
+  }
 
   return (
     <div>
@@ -71,21 +60,11 @@ export default function CategorySelect({ onCategoryChange, activeCategory }) {
         </div>
       )}
 
-      {activeParentCategory !== null && (
-        <div className="flex flex-col">
-          {subCategory.map(({ id, name }) => {
-            return (
-              <button
-                onClick={() => setActiveSubCategory(id)}
-                className={activeSubCategory === id ? "active" : ""}
-                key={id}
-              >
-                {name}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      <SubCategorySelect
+        activeParentCategory={activeParentCategory}
+        onClickSubCategory={onClickSubCategory}
+        activeSubCategory={activeSubCategory}
+      />
 
       {activeSubCategory !== null && (
         <div className="flex flex-col">
