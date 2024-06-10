@@ -1,3 +1,4 @@
+import { useState } from "react";
 import CategorySelect from "./CategorySelect";
 
 export default function ProductFilters({
@@ -6,6 +7,8 @@ export default function ProductFilters({
   onCategoryChange,
   onStateChange,
 }) {
+  const [isStateDropdown, setIsStateDropdown] = useState(false);
+
   return (
     <div className="flex">
       <div className="p-5">
@@ -25,52 +28,59 @@ export default function ProductFilters({
         <CategorySelect onClickProductCategory={onCategoryChange} />
       </div>
       <div className="p-5">
-        <label>
-          Neuf avec emballage
-          <input
-            type="radio"
-            name="productState"
-            value="new_with_packaging"
-            onChange={(e) => onStateChange(e.target.value)}
-          />
-        </label>
-        <label>
-          Neuf sans emballage
-          <input
-            type="radio"
-            name="productState"
-            value="new_without_packaging"
-            onChange={(e) => onStateChange(e.target.value)}
-          />
-        </label>
+        <button onClick={() => setIsStateDropdown(!isStateDropdown)}>
+          État
+        </button>
+        {isStateDropdown && (
+          <div className="flex flex-col">
+            <label>
+              Neuf avec emballage
+              <input
+                type="radio"
+                name="productState"
+                value="new_with_packaging"
+                onChange={(e) => onStateChange(e.target.value)}
+              />
+            </label>
+            <label>
+              Neuf sans emballage
+              <input
+                type="radio"
+                name="productState"
+                value="new_without_packaging"
+                onChange={(e) => onStateChange(e.target.value)}
+              />
+            </label>
 
-        <label>
-          Très bon état
-          <input
-            type="radio"
-            name="productState"
-            value="perfect"
-            onChange={(e) => onStateChange(e.target.value)}
-          />
-        </label>
-        <label>
-          Bon état
-          <input
-            type="radio"
-            name="productState"
-            value="very_good"
-            onChange={(e) => onStateChange(e.target.value)}
-          />
-        </label>
-        <label>
-          Satisfaisant
-          <input
-            type="radio"
-            name="productState"
-            value="good"
-            onChange={(e) => onStateChange(e.target.value)}
-          />
-        </label>
+            <label>
+              Très bon état
+              <input
+                type="radio"
+                name="productState"
+                value="perfect"
+                onChange={(e) => onStateChange(e.target.value)}
+              />
+            </label>
+            <label>
+              Bon état
+              <input
+                type="radio"
+                name="productState"
+                value="very_good"
+                onChange={(e) => onStateChange(e.target.value)}
+              />
+            </label>
+            <label>
+              Satisfaisant
+              <input
+                type="radio"
+                name="productState"
+                value="good"
+                onChange={(e) => onStateChange(e.target.value)}
+              />
+            </label>
+          </div>
+        )}
       </div>
     </div>
   );

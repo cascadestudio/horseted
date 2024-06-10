@@ -54,6 +54,7 @@ export default function ProductsPage({ params }) {
         onCategoryChange={handleCategoryChange}
         onStateChange={handleStateChange}
       />
+      {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}
     </div>
   );

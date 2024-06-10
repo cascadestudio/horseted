@@ -4,8 +4,7 @@ import SubCategorySelect from "./SubCategorySelect";
 import ProductCategorySelect from "./ProductCategorySelect";
 
 export default function CategorySelect({ onClickProductCategory }) {
-  const [isParentCategoryDropdown, setIsParentCategoryDropdown] =
-    useState(false);
+  const [isCategoryDropdown, setIsCategoryDropdown] = useState(false);
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
@@ -38,13 +37,11 @@ export default function CategorySelect({ onClickProductCategory }) {
 
   return (
     <div>
-      <button
-        onClick={() => setIsParentCategoryDropdown(!isParentCategoryDropdown)}
-      >
+      <button onClick={() => setIsCategoryDropdown(!isCategoryDropdown)}>
         Catégorie
       </button>
 
-      {isParentCategoryDropdown &&
+      {isCategoryDropdown &&
         activeParentCategory === null &&
         (activeParentCategory === null || activeSubCategory === null) && (
           <div className="flex flex-col">
@@ -63,7 +60,7 @@ export default function CategorySelect({ onClickProductCategory }) {
           </div>
         )}
 
-      {isParentCategoryDropdown &&
+      {isCategoryDropdown &&
         activeParentCategory !== null &&
         activeSubCategory === null && (
           <SubCategorySelect
@@ -74,7 +71,7 @@ export default function CategorySelect({ onClickProductCategory }) {
           />
         )}
 
-      {isParentCategoryDropdown && activeSubCategory !== null && (
+      {isCategoryDropdown && activeSubCategory !== null && (
         <ProductCategorySelect
           activeSubCategory={activeSubCategory}
           onClickProductCategory={onClickProductCategory}
