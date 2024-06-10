@@ -26,20 +26,48 @@ export default function ProductFilters({
       </div>
       <div className="p-5">
         <label>
-          Bon état
+          Neuf avec emballage
           <input
             type="radio"
             name="productState"
-            value="good"
+            value="new_with_packaging"
             onChange={(e) => onStateChange(e.target.value)}
           />
         </label>
+        <label>
+          Neuf sans emballage
+          <input
+            type="radio"
+            name="productState"
+            value="new_without_packaging"
+            onChange={(e) => onStateChange(e.target.value)}
+          />
+        </label>
+
         <label>
           Très bon état
           <input
             type="radio"
             name="productState"
+            value="perfect"
+            onChange={(e) => onStateChange(e.target.value)}
+          />
+        </label>
+        <label>
+          Bon état
+          <input
+            type="radio"
+            name="productState"
             value="very_good"
+            onChange={(e) => onStateChange(e.target.value)}
+          />
+        </label>
+        <label>
+          Satisfaisant
+          <input
+            type="radio"
+            name="productState"
+            value="good"
             onChange={(e) => onStateChange(e.target.value)}
           />
         </label>
