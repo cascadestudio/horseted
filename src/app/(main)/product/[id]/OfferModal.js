@@ -32,22 +32,54 @@ export default function OfferModal({ onClose }) {
   return (
     <>
       <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div ref={modalRef} className="bg-white p-8 rounded-lg">
-          <div className="h-6 w-6 cursor-pointer" onClick={onClose}>
-            <Image src={closeButton} alt="close" />
+        <div
+          ref={modalRef}
+          className="bg-white py-9 px-8 rounded-[20px] w-[540px]"
+        >
+          <div className="grid grid-cols-[1fr_auto_1fr] border-b border-black pb-6 mb-11">
+            <h1 className="font-mcqueen col-start-2 font-bold text-[28px] leading-[48px]">
+              Faire une offre
+            </h1>
+            <div
+              className="col-start-3 cursor-pointer justify-self-end self-center"
+              onClick={onClose}
+            >
+              <Image className="h-7 w-7" src={closeButton} alt="close" />
+            </div>
           </div>
-          <h1 className="mb-4">Faire une offre</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2" htmlFor="price">
-                Votre offre
+          <form onSubmit={handleSubmit} className="px-16 mb-9">
+            <div className="mb-7">
+              <label
+                className="block font-mcqueen font-semibold mb-2"
+                htmlFor="price"
+              >
+                Votre offre :
+                <div className="flex items-center border-b border-black">
+                  <input
+                    required
+                    type="number"
+                    name="offer"
+                    id="offer"
+                    placeholder="55.90"
+                    className="bg-transparent w-full placeholder:font-normal placeholder:font-poppins placeholder:text-[24px] placeholder:leading-[48px] placeholder:text-grey pt-1"
+                  />
+                  <span className="text-[24px] leading-[48px] font-semibold mr-2">
+                    €
+                  </span>
+                </div>
               </label>
-              <input id="price" type="number" required />
             </div>
-            <div className="flex justify-end gap-2">
-              <Button type="submit">Faire une offre</Button>
-            </div>
+            <Button
+              className="w-full flex justify-center text-xl h-12"
+              type="submit"
+            >
+              Faire une offre
+            </Button>
           </form>
+          <p className="text-center">
+            L’offre sera envoyée au vendeur, qui se réserve le droit de
+            l’accepter, de la refuser ou de faire une contre-offre
+          </p>
         </div>
       </div>
     </>
