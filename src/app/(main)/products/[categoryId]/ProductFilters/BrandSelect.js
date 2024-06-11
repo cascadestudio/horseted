@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/libs/fetch";
 
-export default function BrandSelect({ onBrandChange }) {
+export default function BrandSelect({ onBrandsChange }) {
   const [brands, setBrands] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [checkedBrands, setCheckedBrands] = useState([]);
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -28,6 +29,18 @@ export default function BrandSelect({ onBrandChange }) {
     name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handleCheckboxChange = (e) => {
+    const brand = e.target.value;
+    if (e.target.checked) {
+      setCheckedBrands([...checkedBrands, brand]);
+    } else {
+      setCheckedBrands(
+        checkedBrands.filter((checkedBrand) => checkedBrand !== brand)
+      );
+    }
+    onBrandsChange(checkedBrands);
+  };
+
   return (
     <div className="p-5">
       <button onClick={() => setIsDropdown(!isDropdown)}>Marque</button>
@@ -40,12 +53,13 @@ export default function BrandSelect({ onBrandChange }) {
             onChange={handleFilterChange}
           />
           {filteredBrands.map(({ name }) => (
-            <label>
+            <label key={name}>
               {name}
               <input
                 type="checkbox"
                 value={name}
-                onChange={(e) => onBrandChange(e.target.value)}
+                onChange={(e) => handleCheckboxChange(e)}
+                checked={checkedBrands.includes(name)}
               />
             </label>
           ))}

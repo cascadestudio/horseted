@@ -13,7 +13,7 @@ export default function ProductsPage({ params }) {
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
   const [activeState, setActiveState] = useState("");
-  const [activeBrand, setActiveBrand] = useState("");
+  const [activeBrands, setActiveBrands] = useState("");
   const [activeMaterial, setActiveMaterial] = useState("");
 
   useEffect(() => {
@@ -26,12 +26,13 @@ export default function ProductsPage({ params }) {
         if (activeState !== "") {
           query += `&states=${activeState}`;
         }
-        if (activeBrand !== "") {
-          query += `&brands=${activeBrand}`;
+        if (activeBrands !== "") {
+          query += `&brands=${activeBrands}`;
         }
         if (activeMaterial !== "") {
           query += `&materials=${activeMaterial}`;
         }
+        console.log(query);
         const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
@@ -42,7 +43,7 @@ export default function ProductsPage({ params }) {
     };
 
     fetchProducts();
-  }, [activeOrder, activeCategory, activeState, activeBrand]);
+  }, [activeOrder, activeCategory, activeState, activeBrands]);
 
   function handleOrderChange(value) {
     setActiveOrder(value);
@@ -53,8 +54,8 @@ export default function ProductsPage({ params }) {
   function handleStateChange(value) {
     setActiveState(value);
   }
-  function handleBrandChange(value) {
-    setActiveBrand(value);
+  function handleBrandsChange(value) {
+    setActiveBrands(value.join(";"));
   }
   function handleMaterialChange(value) {
     setActiveMaterial(value);
@@ -67,7 +68,7 @@ export default function ProductsPage({ params }) {
         onOrderChange={handleOrderChange}
         onCategoryChange={handleCategoryChange}
         onStateChange={handleStateChange}
-        onBrandChange={handleBrandChange}
+        onBrandsChange={handleBrandsChange}
         onMaterialChange={handleMaterialChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
