@@ -16,6 +16,7 @@ export default function ProductsPage({ params }) {
   const [activeBrands, setActiveBrands] = useState("");
   const [activeMaterials, setActiveMaterials] = useState("");
   const [activeSizes, setActiveSizes] = useState("");
+  const [activePrices, setActivePrices] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -33,7 +34,10 @@ export default function ProductsPage({ params }) {
         if (activeMaterials !== "") {
           query += `&materials=${activeMaterials}`;
         }
-        console.log(query);
+        if (activePrices !== "") {
+          query += `&price=${activePrices}`;
+        }
+        console.log("query =>", query);
         const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
@@ -44,7 +48,14 @@ export default function ProductsPage({ params }) {
     };
 
     fetchProducts();
-  }, [activeOrder, activeCategory, activeState, activeBrands, activeMaterials]);
+  }, [
+    activeOrder,
+    activeCategory,
+    activeState,
+    activeBrands,
+    activeMaterials,
+    activePrices,
+  ]);
 
   function handleOrderChange(value) {
     setActiveOrder(value);
@@ -64,6 +75,9 @@ export default function ProductsPage({ params }) {
   function handleSizesChange(value) {
     setActiveSizes(value.join(";"));
   }
+  function handlePricesChange(minPrice, maxPrice) {
+    setActivePrices(`${minPrice};${maxPrice}`);
+  }
 
   return (
     <div className="container mx-auto">
@@ -75,6 +89,7 @@ export default function ProductsPage({ params }) {
         onBrandsChange={handleBrandsChange}
         onMaterialsChange={handleMaterialsChange}
         onSizesChange={handleSizesChange}
+        onPricesChange={handlePricesChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}

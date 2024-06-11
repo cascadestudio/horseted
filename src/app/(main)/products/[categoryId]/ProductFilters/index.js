@@ -3,6 +3,7 @@ import CategorySelect from "./CategorySelect";
 import BrandsSelect from "./BrandsSelect";
 import MaterialsSelect from "./MaterialsSelect";
 import SizesSelect from "./SizesSelect";
+import PricesSelect from "./PricesSelect";
 
 export default function ProductFilters({
   activeOrder,
@@ -12,6 +13,7 @@ export default function ProductFilters({
   onBrandsChange,
   onMaterialsChange,
   onSizesChange,
+  onPricesChange,
 }) {
   const [isStateDropdown, setIsStateDropdown] = useState(false);
 
@@ -89,8 +91,9 @@ export default function ProductFilters({
         )}
       </div>
       <BrandsSelect onBrandsChange={onBrandsChange} />
+      <PricesSelect onPricesChange={onPricesChange} />
       <MaterialsSelect onMaterialsChange={onMaterialsChange} />
-      <SizesSelect onSizesChange={onSizesChange} />
+      {/* <SizesSelect onSizesChange={onSizesChange} /> */}
     </div>
   );
 }
