@@ -1,18 +1,20 @@
 import { useState } from "react";
 
 export default function PricesSelect({ onPricesChange }) {
-  const [minPrice, setMinPrice] = useState([]);
-  const [maxPrice, setMaxPrice] = useState([]);
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
   const [isDropdown, setIsDropdown] = useState(false);
 
   const handleMinPriceChange = (event) => {
-    setMinPrice(event.target.value);
-    onPricesChange(minPrice, maxPrice);
+    const value = event.target.value;
+    setMinPrice(value);
+    onPricesChange(value, maxPrice);
   };
 
   const handleMaxPriceChange = (event) => {
-    setMaxPrice(event.target.value);
-    onPricesChange(minPrice, maxPrice);
+    const value = event.target.value;
+    setMaxPrice(value);
+    onPricesChange(minPrice, value);
   };
 
   return (

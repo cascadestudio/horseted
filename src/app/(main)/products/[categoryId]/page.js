@@ -76,7 +76,7 @@ export default function ProductsPage({ params }) {
     setActiveSizes(value.join(";"));
   }
   function handlePricesChange(minPrice, maxPrice) {
-    setActivePrices(`${minPrice};${maxPrice}`);
+    setActivePrices(`${minPrice}-${maxPrice}`);
   }
 
   return (
