@@ -14,6 +14,7 @@ export default function ProductsPage({ params }) {
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
   const [activeState, setActiveState] = useState("");
   const [activeBrand, setActiveBrand] = useState("");
+  const [activeMaterial, setActiveMaterial] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,6 +28,9 @@ export default function ProductsPage({ params }) {
         }
         if (activeBrand !== "") {
           query += `&brands=${activeBrand}`;
+        }
+        if (activeMaterial !== "") {
+          query += `&materials=${activeMaterial}`;
         }
         const data = await fetchData(query);
         setProducts(data);
@@ -50,8 +54,10 @@ export default function ProductsPage({ params }) {
     setActiveState(value);
   }
   function handleBrandChange(value) {
-    console.log(value);
     setActiveBrand(value);
+  }
+  function handleMaterialChange(value) {
+    setActiveMaterial(value);
   }
 
   return (
@@ -62,6 +68,7 @@ export default function ProductsPage({ params }) {
         onCategoryChange={handleCategoryChange}
         onStateChange={handleStateChange}
         onBrandChange={handleBrandChange}
+        onMaterialChange={handleMaterialChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}
