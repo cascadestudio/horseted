@@ -1,5 +1,6 @@
 import { useState } from "react";
 import CategorySelect from "./CategorySelect";
+import BrandSelect from "./BrandSelect";
 
 export default function ProductFilters({
   activeOrder,
@@ -82,6 +83,7 @@ export default function ProductFilters({
           </div>
         )}
       </div>
+      <BrandSelect />
     </div>
   );
 }
