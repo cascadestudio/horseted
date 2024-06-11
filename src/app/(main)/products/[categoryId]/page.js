@@ -15,6 +15,7 @@ export default function ProductsPage({ params }) {
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState("");
   const [activeMaterials, setActiveMaterials] = useState("");
+  const [activeSizes, setActiveSizes] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -60,6 +61,9 @@ export default function ProductsPage({ params }) {
   function handleMaterialsChange(value) {
     setActiveMaterials(value.join(";"));
   }
+  function handleSizesChange(value) {
+    setActiveSizes(value.join(";"));
+  }
 
   return (
     <div className="container mx-auto">
@@ -70,6 +74,7 @@ export default function ProductsPage({ params }) {
         onStateChange={handleStateChange}
         onBrandsChange={handleBrandsChange}
         onMaterialsChange={handleMaterialsChange}
+        onSizesChange={handleSizesChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}

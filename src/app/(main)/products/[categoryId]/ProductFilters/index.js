@@ -1,7 +1,8 @@
 import { useState } from "react";
 import CategorySelect from "./CategorySelect";
-import BrandSelect from "./BrandSelect";
-import MaterialSelect from "./MaterialSelect";
+import BrandsSelect from "./BrandsSelect";
+import MaterialsSelect from "./MaterialsSelect";
+import SizesSelect from "./SizesSelect";
 
 export default function ProductFilters({
   activeOrder,
@@ -10,6 +11,7 @@ export default function ProductFilters({
   onStateChange,
   onBrandsChange,
   onMaterialsChange,
+  onSizesChange,
 }) {
   const [isStateDropdown, setIsStateDropdown] = useState(false);
 
@@ -86,8 +88,9 @@ export default function ProductFilters({
           </div>
         )}
       </div>
-      <BrandSelect onBrandsChange={onBrandsChange} />
-      <MaterialSelect onMaterialsChange={onMaterialsChange} />
+      <BrandsSelect onBrandsChange={onBrandsChange} />
+      <MaterialsSelect onMaterialsChange={onMaterialsChange} />
+      <SizesSelect onSizesChange={onSizesChange} />
     </div>
   );
 }

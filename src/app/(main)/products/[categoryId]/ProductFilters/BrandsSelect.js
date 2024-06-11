@@ -43,7 +43,7 @@ export default function BrandSelect({ onBrandsChange }) {
 
   return (
     <div className="p-5">
-      <button onClick={() => setIsDropdown(!isDropdown)}>Marque</button>
+      <button onClick={() => setIsDropdown(!isDropdown)}>Marques</button>
       {isDropdown && (
         <div className="flex flex-col">
           <input
