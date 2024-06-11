@@ -14,7 +14,7 @@ export default function ProductsPage({ params }) {
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState("");
-  const [activeMaterial, setActiveMaterial] = useState("");
+  const [activeMaterials, setActiveMaterials] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -29,8 +29,8 @@ export default function ProductsPage({ params }) {
         if (activeBrands !== "") {
           query += `&brands=${activeBrands}`;
         }
-        if (activeMaterial !== "") {
-          query += `&materials=${activeMaterial}`;
+        if (activeMaterials !== "") {
+          query += `&materials=${activeMaterials}`;
         }
         console.log(query);
         const data = await fetchData(query);
@@ -43,7 +43,7 @@ export default function ProductsPage({ params }) {
     };
 
     fetchProducts();
-  }, [activeOrder, activeCategory, activeState, activeBrands]);
+  }, [activeOrder, activeCategory, activeState, activeBrands, activeMaterials]);
 
   function handleOrderChange(value) {
     setActiveOrder(value);
@@ -57,8 +57,8 @@ export default function ProductsPage({ params }) {
   function handleBrandsChange(value) {
     setActiveBrands(value.join(";"));
   }
-  function handleMaterialChange(value) {
-    setActiveMaterial(value);
+  function handleMaterialsChange(value) {
+    setActiveMaterials(value.join(";"));
   }
 
   return (
@@ -69,7 +69,7 @@ export default function ProductsPage({ params }) {
         onCategoryChange={handleCategoryChange}
         onStateChange={handleStateChange}
         onBrandsChange={handleBrandsChange}
-        onMaterialChange={handleMaterialChange}
+        onMaterialsChange={handleMaterialsChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}
