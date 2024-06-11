@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import OfferModal from "./OfferModal";
 import { useState } from "react";
 
-export default function OfferButton() {
+export default function OfferButton({ price }) {
   const [isOfferModal, setIsOfferModal] = useState(false);
   const handleClose = () => setIsOfferModal(false);
 
@@ -21,7 +21,7 @@ export default function OfferButton() {
       >
         Faire une offre
       </Button>
-      {isOfferModal && <OfferModal onClose={handleClose} />}
+      {isOfferModal && <OfferModal price={price} onClose={handleClose} />}
     </>
   );
 }
