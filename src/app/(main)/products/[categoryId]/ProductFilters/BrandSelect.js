@@ -4,6 +4,7 @@ import { fetchData } from "@/libs/fetch";
 export default function BrandSelect({ onBrandChange }) {
   const [brands, setBrands] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -19,12 +20,26 @@ export default function BrandSelect({ onBrandChange }) {
     fetchBrands();
   }, []);
 
+  const handleFilterChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredBrands = brands.filter(({ name }) =>
+    name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="p-5">
       <button onClick={() => setIsDropdown(!isDropdown)}>Marque</button>
       {isDropdown && (
         <div className="flex flex-col">
-          {brands.map(({ name }) => (
+          <input
+            type="text"
+            placeholder="Rechercher une marque"
+            value={searchTerm}
+            onChange={handleFilterChange}
+          />
+          {filteredBrands.map(({ name }) => (
             <label>
               {name}
               <input
