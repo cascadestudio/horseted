@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/libs/fetch";
 
-export default function BrandSelect() {
+export default function BrandSelect({ onBrandChange }) {
   const [brands, setBrands] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
 
@@ -10,7 +10,6 @@ export default function BrandSelect() {
       try {
         const query = `/brands`;
         const data = await fetchData(query);
-        console.log(data);
         setBrands(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
@@ -21,7 +20,7 @@ export default function BrandSelect() {
   }, []);
 
   return (
-    <div>
+    <div className="p-5">
       <button onClick={() => setIsDropdown(!isDropdown)}>Marque</button>
       {isDropdown && (
         <div className="flex flex-col">
@@ -31,7 +30,7 @@ export default function BrandSelect() {
               <input
                 type="checkbox"
                 value={name}
-                onChange={(e) => onStateChange(e.target.value)}
+                onChange={(e) => onBrandChange(e.target.value)}
               />
             </label>
           ))}

@@ -7,6 +7,7 @@ export default function ProductFilters({
   onOrderChange,
   onCategoryChange,
   onStateChange,
+  onBrandChange,
 }) {
   const [isStateDropdown, setIsStateDropdown] = useState(false);
 
@@ -83,7 +84,7 @@ export default function ProductFilters({
           </div>
         )}
       </div>
-      <BrandSelect />
+      <BrandSelect onBrandChange={onBrandChange} />
     </div>
   );
 }

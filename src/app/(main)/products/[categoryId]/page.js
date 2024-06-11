@@ -13,6 +13,7 @@ export default function ProductsPage({ params }) {
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(params.categoryId);
   const [activeState, setActiveState] = useState("");
+  const [activeBrand, setActiveBrand] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,6 +25,9 @@ export default function ProductsPage({ params }) {
         if (activeState !== "") {
           query += `&states=${activeState}`;
         }
+        if (activeBrand !== "") {
+          query += `&brands=${activeBrand}`;
+        }
         const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
@@ -34,7 +38,7 @@ export default function ProductsPage({ params }) {
     };
 
     fetchProducts();
-  }, [activeOrder, activeCategory, activeState]);
+  }, [activeOrder, activeCategory, activeState, activeBrand]);
 
   function handleOrderChange(value) {
     setActiveOrder(value);
@@ -45,6 +49,10 @@ export default function ProductsPage({ params }) {
   function handleStateChange(value) {
     setActiveState(value);
   }
+  function handleBrandChange(value) {
+    console.log(value);
+    setActiveBrand(value);
+  }
 
   return (
     <div className="container mx-auto">
@@ -53,6 +61,7 @@ export default function ProductsPage({ params }) {
         onOrderChange={handleOrderChange}
         onCategoryChange={handleCategoryChange}
         onStateChange={handleStateChange}
+        onBrandChange={handleBrandChange}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}
