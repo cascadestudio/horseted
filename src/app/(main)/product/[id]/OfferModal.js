@@ -27,7 +27,7 @@ export default function OfferModal({ price, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const number = parseFloat(e.target.offer.value);
-    if (number < price) {
+    if (number > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
@@ -68,7 +68,7 @@ export default function OfferModal({ price, onClose }) {
                     step="0.01"
                     name="offer"
                     id="offer"
-                    placeholder="55.90"
+                    placeholder={price}
                     className="focus:outline-none bg-transparent w-full font-normal font-poppins text-[24px] leading-[48px] placeholder:text-grey pt-1"
                   />
                   <span className="text-[24px] leading-[48px] font-semibold mr-2">
