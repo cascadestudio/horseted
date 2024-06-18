@@ -85,3 +85,20 @@ export async function getMe(query) {
 
   return res.json();
 }
+
+// Fetch Data from Horsted API
+export const fetchData = async (query) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}${query}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return response.json();
+};

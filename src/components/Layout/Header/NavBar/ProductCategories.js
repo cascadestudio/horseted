@@ -1,7 +1,7 @@
 import { useFetchCategories } from "@/libs/hooks";
 import Link from "next/link";
 
-export default function ItemCategories({ parentId }) {
+export default function ProductCategories({ parentId }) {
   const [itemCategories] = useFetchCategories(parentId);
 
   if (itemCategories.length > 0) {

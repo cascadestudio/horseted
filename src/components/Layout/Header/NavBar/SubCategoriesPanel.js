@@ -1,4 +1,4 @@
-import ItemCategories from "./ItemCategories";
+import ItemCategories from "./ProductCategories";
 import { useEffect, useState, useRef } from "react";
 import { useFetchCategories } from "@/libs/hooks";
 import { useIsClickOutsideElement } from "@/libs/hooks";

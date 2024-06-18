@@ -1,90 +1,98 @@
 "use client";
 // import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
+import ProductFilters from "./ProductFilters";
+import ProductsList from "./ProductList";
+import { fetchData } from "@/libs/fetch";
 
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortOption, setSortOption] = useState("new");
-  const [categoryOption, setCategoryOption] = useState(params.categoryId);
-  const [categories, setCategories] = useState([]);
-  const [categoryParentId, setCategoryParentId] = useState(null);
+
+  // Filters states
+  const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeCategory, setActiveCategory] = useState(params.categoryId);
+  const [activeState, setActiveState] = useState("");
+  const [activeBrands, setActiveBrands] = useState("");
+  const [activeMaterials, setActiveMaterials] = useState("");
+  const [activeSizes, setActiveSizes] = useState("");
+  const [activePrices, setActivePrices] = useState("");
 
   useEffect(() => {
-    fetch(
-      `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${categoryParentId}`,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCategories(data);
-      });
-  }, [categoryParentId]);
-
-  useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/products?orderBy=${sortOption}&category=${categoryOption}`;
-    // console.log(url);
-    fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
+    const fetchProducts = async () => {
+      try {
+        let query = `/products?orderBy=${activeOrder}`;
+        if (activeCategory !== null) {
+          query += `&category=${activeCategory}`;
+        }
+        if (activeState !== "") {
+          query += `&states=${activeState}`;
+        }
+        if (activeBrands !== "") {
+          query += `&brands=${activeBrands}`;
+        }
+        if (activeMaterials !== "") {
+          query += `&materials=${activeMaterials}`;
+        }
+        if (activePrices !== "") {
+          query += `&price=${activePrices}`;
+        }
+        console.log("query =>", query);
+        const data = await fetchData(query);
         setProducts(data);
         setIsLoading(false);
-      });
-  }, [sortOption, categoryOption]);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [
+    activeOrder,
+    activeCategory,
+    activeState,
+    activeBrands,
+    activeMaterials,
+    activePrices,
+  ]);
+
+  function handleOrderChange(value) {
+    setActiveOrder(value);
+  }
+  function handleCategoryChange(value) {
+    setActiveCategory(value);
+  }
+  function handleStateChange(value) {
+    setActiveState(value);
+  }
+  function handleBrandsChange(value) {
+    setActiveBrands(value.join(";"));
+  }
+  function handleMaterialsChange(value) {
+    setActiveMaterials(value.join(";"));
+  }
+  function handleSizesChange(value) {
+    setActiveSizes(value.join(";"));
+  }
+  function handlePricesChange(minPrice, maxPrice) {
+    setActivePrices(`${minPrice}-${maxPrice}`);
+  }
 
   return (
-    <>
-      <h1>{params.categoryId}</h1>
-      <div className="p-5">
-        <label htmlFor="sort">Trier par</label>
-        <select
-          id="sort"
-          onChange={(e) => setSortOption(e.target.value)}
-          value={sortOption}
-        >
-          <option value="new">Nouveautés</option>
-          <option value="popular">Populaires</option>
-          <option value="ascendingPrice">Prix croissant</option>
-          <option value="">Prix décroissant</option>
-        </select>
-        <label htmlFor="category">Catégorie</label>
-        <select
-          id="category"
-          onChange={(e) => setCategoryOption(e.target.value)}
-          value={categoryOption}
-        >
-          {categories.map((category) => {
-            return (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-
-      {!isLoading &&
-        products.items.map((product) => {
-          return (
-            <div key={product.id}>
-              {product.title}
-              {/* TODO product card in client component */}
-              {/* <ProductCard className="mr-5" product={product} />; */}
-            </div>
-          );
-        })}
-    </>
+    <div className="container mx-auto">
+      <ProductFilters
+        activeOrder={activeOrder}
+        onOrderChange={handleOrderChange}
+        onCategoryChange={handleCategoryChange}
+        onStateChange={handleStateChange}
+        onBrandsChange={handleBrandsChange}
+        onMaterialsChange={handleMaterialsChange}
+        onSizesChange={handleSizesChange}
+        onPricesChange={handlePricesChange}
+      />
+      {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
+      {!isLoading && <ProductsList products={products} />}
+    </div>
   );
 }
