@@ -20,6 +20,10 @@ export default function MaterialSelect({ onMaterialsChange }) {
     fetchMaterials();
   }, []);
 
+  useEffect(() => {
+    onMaterialsChange(checkedMaterials);
+  }, [checkedMaterials]);
+
   const handleCheckboxChange = (e) => {
     const material = e.target.value;
     if (e.target.checked) {
@@ -31,7 +35,6 @@ export default function MaterialSelect({ onMaterialsChange }) {
         )
       );
     }
-    onMaterialsChange(checkedMaterials);
   };
 
   return (

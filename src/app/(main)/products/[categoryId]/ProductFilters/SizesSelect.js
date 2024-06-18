@@ -6,8 +6,6 @@ export default function SizesSelect({ onSizesChange, categoryId }) {
   const [isDropdown, setIsDropdown] = useState(false);
   const [checkedSizesId, setCheckedSizesId] = useState([]);
 
-  console.log(checkedSizesId);
-
   useEffect(() => {
     const fetchSizes = async () => {
       try {
@@ -22,6 +20,10 @@ export default function SizesSelect({ onSizesChange, categoryId }) {
     fetchSizes();
   }, []);
 
+  useEffect(() => {
+    onSizesChange(checkedSizesId);
+  }, [checkedSizesId]);
+
   const handleCheckboxChange = (e) => {
     const sizeId = Number(e.target.value);
     if (e.target.checked) {
@@ -31,7 +33,6 @@ export default function SizesSelect({ onSizesChange, categoryId }) {
         checkedSizesId.filter((checkedSizesId) => checkedSizesId !== sizeId)
       );
     }
-    onSizesChange(checkedSizesId);
   };
 
   return (

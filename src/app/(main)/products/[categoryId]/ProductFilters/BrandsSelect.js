@@ -21,6 +21,10 @@ export default function BrandSelect({ onBrandsChange }) {
     fetchBrands();
   }, []);
 
+  useEffect(() => {
+    onBrandsChange(checkedBrands);
+  }, [checkedBrands]);
+
   const handleFilterChange = (event) => {
     setSearchTerm(event.target.value);
   };
@@ -38,7 +42,6 @@ export default function BrandSelect({ onBrandsChange }) {
         checkedBrands.filter((checkedBrand) => checkedBrand !== brand)
       );
     }
-    onBrandsChange(checkedBrands);
   };
 
   return (

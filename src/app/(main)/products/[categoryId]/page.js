@@ -37,6 +37,9 @@ export default function ProductsPage({ params }) {
         if (activePrices !== "") {
           query += `&price=${activePrices}`;
         }
+        if (activeSizes !== "") {
+          query += `&sizes=${activeSizes}`;
+        }
         console.log("query =>", query);
         const data = await fetchData(query);
         setProducts(data);
@@ -55,6 +58,7 @@ export default function ProductsPage({ params }) {
     activeBrands,
     activeMaterials,
     activePrices,
+    activeSizes,
   ]);
 
   function handleOrderChange(value) {
