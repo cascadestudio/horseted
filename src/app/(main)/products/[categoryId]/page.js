@@ -90,6 +90,7 @@ export default function ProductsPage({ params }) {
         onMaterialsChange={handleMaterialsChange}
         onSizesChange={handleSizesChange}
         onPricesChange={handlePricesChange}
+        categoryId={activeCategory}
       />
       {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
       {!isLoading && <ProductsList products={products} />}
