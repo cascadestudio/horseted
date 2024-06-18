@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ProductFilters from "./ProductFilters";
 import ProductsList from "./ProductList";
 import { fetchData } from "@/libs/fetch";
+import ActiveFilterBtn from "./ActiveFilterBtn";
 
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,10 @@ export default function ProductsPage({ params }) {
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
-  const [activeCategory, setActiveCategory] = useState(params.categoryId);
+  const [activeCategory, setActiveCategory] = useState({
+    id: params.categoryId,
+    name: params.categoryId,
+  });
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState("");
   const [activeMaterials, setActiveMaterials] = useState("");
@@ -23,7 +27,7 @@ export default function ProductsPage({ params }) {
       try {
         let query = `/products?orderBy=${activeOrder}`;
         if (activeCategory !== null) {
-          query += `&category=${activeCategory}`;
+          query += `&category=${activeCategory.id}`;
         }
         if (activeState !== "") {
           query += `&states=${activeState}`;
@@ -46,7 +50,6 @@ export default function ProductsPage({ params }) {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setIsLoading(false);
       }
     };
 
@@ -64,8 +67,8 @@ export default function ProductsPage({ params }) {
   function handleOrderChange(value) {
     setActiveOrder(value);
   }
-  function handleCategoryChange(value) {
-    setActiveCategory(value);
+  function handleCategoryChange(id, name) {
+    setActiveCategory({ id: id, name: name });
   }
   function handleStateChange(value) {
     setActiveState(value);
@@ -82,6 +85,12 @@ export default function ProductsPage({ params }) {
   function handlePricesChange(minPrice, maxPrice) {
     setActivePrices(`${minPrice}-${maxPrice}`);
   }
+  function removeCategoryFilter() {
+    setActiveCategory(null);
+  }
+  function removeStateFilter() {
+    setActiveState("");
+  }
 
   return (
     <div className="container mx-auto">
@@ -94,9 +103,22 @@ export default function ProductsPage({ params }) {
         onMaterialsChange={handleMaterialsChange}
         onSizesChange={handleSizesChange}
         onPricesChange={handlePricesChange}
-        categoryId={activeCategory}
+        categoryId={activeCategory?.id}
       />
-      {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
+      <div className="p-5">
+        {activeCategory !== null && (
+          <ActiveFilterBtn
+            filterName={activeCategory.name}
+            onRemoveFilter={removeCategoryFilter}
+          />
+        )}
+        {activeState !== "" && (
+          <ActiveFilterBtn
+            filterName={activeState}
+            onRemoveFilter={removeStateFilter}
+          />
+        )}
+      </div>
       {!isLoading && <ProductsList products={products} />}
     </div>
   );
