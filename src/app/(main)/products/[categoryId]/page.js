@@ -1,10 +1,16 @@
 "use client";
 // import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
-import ProductFilters from "./ProductFilters";
 import ProductsList from "./ProductList";
 import { fetchData } from "@/libs/fetch";
 import ActiveFilterBtn from "./ActiveFilterBtn";
+import SortSelect from "./ProductFilters/SortSelect";
+import StateSelect from "./ProductFilters/StateSelect";
+import BrandsSelect from "./ProductFilters/BrandsSelect";
+import CategorySelect from "./ProductFilters/CategorySelect";
+import PricesSelect from "./ProductFilters/PricesSelect";
+import SizesSelect from "./ProductFilters/SizesSelect";
+import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
@@ -91,23 +97,30 @@ export default function ProductsPage({ params }) {
   function removeStateFilter() {
     setActiveState("");
   }
-  function removeBrandsFilter(brand) {
+  function removeBrandFilter(brand) {
     setActiveBrands(activeBrands.filter((b) => b !== brand));
+  }
+  function removeMaterialFilter(material) {
+    setActiveMaterials(activeMaterials.filter((m) => m !== material));
   }
 
   return (
     <div className="container mx-auto">
-      <ProductFilters
-        activeOrder={activeOrder}
-        onOrderChange={handleOrderChange}
-        onCategoryChange={handleCategoryChange}
-        onStateChange={handleStateChange}
-        onBrandsChange={handleBrandsChange}
-        onMaterialsChange={handleMaterialsChange}
-        onSizesChange={handleSizesChange}
-        onPricesChange={handlePricesChange}
-        categoryId={activeCategory?.id}
-      />
+      <div className="flex">
+        <SortSelect
+          onOrderChange={handleOrderChange}
+          activeOrder={activeOrder}
+        />
+        <StateSelect onStateChange={handleStateChange} />
+        <CategorySelect onClickProductCategory={handleCategoryChange} />
+        <BrandsSelect onBrandsChange={handleBrandsChange} />
+        <PricesSelect onPricesChange={handlePricesChange} />
+        <MaterialsSelect onMaterialsChange={handleMaterialsChange} />
+        <SizesSelect
+          onSizesChange={handleSizesChange}
+          categoryId={activeCategory.id}
+        />
+      </div>
       <div className="p-5">
         {activeCategory !== null && (
           <ActiveFilterBtn
@@ -121,13 +134,23 @@ export default function ProductsPage({ params }) {
             onRemoveFilter={removeStateFilter}
           />
         )}
-        {activeBrands !== "" &&
+        {activeBrands.length > 0 &&
           activeBrands.map((brand) => {
             return (
               <ActiveFilterBtn
                 key={brand}
                 filterName={brand}
-                onRemoveFilter={removeBrandsFilter}
+                onRemoveFilter={removeBrandFilter}
+              />
+            );
+          })}
+        {activeMaterials.length > 0 &&
+          activeMaterials.map((material) => {
+            return (
+              <ActiveFilterBtn
+                key={material}
+                filterName={material}
+                onRemoveFilter={removeMaterialFilter}
               />
             );
           })}
