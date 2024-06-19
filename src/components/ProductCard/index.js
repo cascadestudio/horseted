@@ -59,6 +59,7 @@ async function ProductImage({ product }) {
         className="aspect-[280/340] object-cover w-[280px]"
         src={placeholderImage}
         alt="Image du produit"
+        priority
       />
     );
   }

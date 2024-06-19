@@ -58,6 +58,7 @@ export default async function ProductPage({ params }) {
                   className="aspect-[280/340] max-h-full h-full w-full object-cover"
                   src={placeholderImage}
                   alt="Image du produit"
+                  priority
                 />
               </div>
             )}
