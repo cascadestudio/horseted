@@ -181,6 +181,7 @@ export default function ProductsPage({ params }) {
               />
             );
           })}
+        {/* TODO: remove all filters button */}
       </div>
       {!isLoading && <ProductsList products={products} />}
     </div>

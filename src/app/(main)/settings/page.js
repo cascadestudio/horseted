@@ -14,8 +14,6 @@ export default function SettingsPage() {
     // avatar: me.avatar,
   });
 
-  console.log("me =>", me);
-
   async function patchUser() {
     await fetch(`http://localhost:3000/api/patchUser`, {
       method: "PATCH",
