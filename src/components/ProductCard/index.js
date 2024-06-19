@@ -18,7 +18,9 @@ export default function ProductCard({ product, className }) {
   return (
     <Link
       href={`/product/${product.id}`}
-      className={className + " block border-b border-grey mb-8"}
+      className={
+        className + " block border-b border-grey mb-8 focus:outline-none"
+      }
     >
       <ProductImage product={product} />
       <div className="flex p-5 justify-between">
