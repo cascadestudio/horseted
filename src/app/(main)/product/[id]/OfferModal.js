@@ -1,8 +1,7 @@
 import Button from "@/components/Button";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
-import closeButton from "@/assets/icons/closeButton.svg";
+import CloseButton from "@/assets/icons/CloseButton";
 
 export default function OfferModal({ price, onClose }) {
   const modalRef = useRef();
@@ -27,7 +26,7 @@ export default function OfferModal({ price, onClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const number = parseFloat(e.target.offer.value);
-    if (number < price) {
+    if (number > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
@@ -51,7 +50,7 @@ export default function OfferModal({ price, onClose }) {
               className="col-start-3 cursor-pointer justify-self-end self-center"
               onClick={onClose}
             >
-              <Image className="h-7 w-7" src={closeButton} alt="close" />
+              <CloseButton className="h-7 w-7" />
             </div>
           </div>
           <form onSubmit={handleSubmit} className="lg:px-16 mb-9">
@@ -68,7 +67,7 @@ export default function OfferModal({ price, onClose }) {
                     step="0.01"
                     name="offer"
                     id="offer"
-                    placeholder="55.90"
+                    placeholder={price}
                     className="focus:outline-none bg-transparent w-full font-normal font-poppins text-[24px] leading-[48px] placeholder:text-grey pt-1"
                   />
                   <span className="text-[24px] leading-[48px] font-semibold mr-2">

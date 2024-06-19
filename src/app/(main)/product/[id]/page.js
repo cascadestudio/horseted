@@ -5,13 +5,13 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import ProductImagesCarousel from "./ProductImagesCarousel";
 import ProductImage from "./ProductImage";
-import ShareIcon from "@/assets/icons/ShareIcon.svg";
+import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
-import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon.svg";
+import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import profilePicture from "@/assets/images/profilePicture.jpg";
-import StarIcon from "@/assets/icons/StarIcon.svg";
-import MessageGreenIcon from "@/assets/icons/MessageGreenIcon.svg";
+import StarIcon from "@/assets/icons/StarIcon";
+import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import ProductsSection from "@/components/ProductsSection";
 
 export default async function ProductPage({ params }) {
@@ -58,6 +58,7 @@ export default async function ProductPage({ params }) {
                   className="aspect-[280/340] max-h-full h-full w-full object-cover"
                   src={placeholderImage}
                   alt="Image du produit"
+                  priority
                 />
               </div>
             )}
@@ -77,10 +78,10 @@ export default async function ProductPage({ params }) {
                   <span className="text-sm font-poppins">{favoritCount}</span>
                 </div>
                 <Link href="#">
-                  <Image src={ShareIcon} alt="ShareIcon" />
+                  <ShareIcon />
                 </Link>
                 <Link href="#">
-                  <Image src={ThreeDotsIcon} alt="ThreeDotsIcon" />
+                  <ThreeDotsIcon />
                 </Link>
               </div>
             </div>
@@ -170,31 +171,11 @@ export default async function ProductPage({ params }) {
                     Alexandra-ast
                   </h4>
                   <div className="flex items-center ml-3">
-                    <Image
-                      src={StarIcon}
-                      alt="StarIcon"
-                      className="h-4 w-auto lg:h-6"
-                    />
-                    <Image
-                      src={StarIcon}
-                      alt="StarIcon"
-                      className="h-4 w-auto lg:h-6"
-                    />
-                    <Image
-                      src={StarIcon}
-                      alt="StarIcon"
-                      className="h-4 w-auto lg:h-6"
-                    />
-                    <Image
-                      src={StarIcon}
-                      alt="StarIcon"
-                      className="h-4 w-auto lg:h-6"
-                    />
-                    <Image
-                      src={StarIcon}
-                      alt="StarIcon"
-                      className="h-4 w-auto lg:h-6"
-                    />
+                    <StarIcon className="h-4 w-auto lg:h-6" />
+                    <StarIcon className="h-4 w-auto lg:h-6" />
+                    <StarIcon className="h-4 w-auto lg:h-6" />
+                    <StarIcon className="h-4 w-auto lg:h-6" />
+                    <StarIcon className="h-4 w-auto lg:h-6" />
                     <span className="text-sm lg:text-base ml-2">(6)</span>
                   </div>
                 </div>
@@ -204,7 +185,7 @@ export default async function ProductPage({ params }) {
                   href="#"
                   className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
                 >
-                  <Image src={MessageGreenIcon} alt="Écrire un message" />
+                  <MessageGreenIcon />
                 </Link>
                 <Button
                   href="#"

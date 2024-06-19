@@ -5,10 +5,10 @@ import InstagramIcon from "@/assets/icons/InstagramIcon";
 import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
-import BurstIcon from "@/assets/icons/BurstIcon.svg";
+import BurstIcon from "@/assets/icons/BurstIcon";
 import RightArrow from "@/assets/icons/RightArrow.js";
-import GooglePlayIcon from "@/assets/icons/GooglePlayIcon.svg";
-import AppleIcon from "@/assets/icons/AppleIcon.svg";
+import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
+import AppleIcon from "@/assets/icons/AppleIcon";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -38,11 +38,7 @@ export default function Footer() {
         </div>
         <div className="flex flex-col items-center bg-light-grey border-t border-b border-light-green pb-14 pt-12 lg:pb-[70px] lg:pt-11">
           <div className="flex flex-col mb-7 lg:mb-5">
-            <Image
-              className="self-end mr-3 lg:w-12 lg:-mr-20 lg:-mb-3"
-              src={BurstIcon}
-              alt="Burst Icon"
-            />
+            <BurstIcon className="self-end mr-3 lg:w-12 lg:-mr-20 lg:-mb-3" />
             <p className="text-center -mt-3 font-bold text-2xl lg:text-4xl">
               Achetez et vendez <br />
               votre matériel d’équitation
@@ -55,11 +51,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="flex items-center border border-black bg-white px-9 py-3 rounded-xl mb-3 lg:mb-0"
             >
-              <Image
-                src={GooglePlayIcon}
-                alt="Google Play icon"
-                className="w-8 h-8 mr-4"
-              />
+              <GooglePlayIcon className="w-8 h-8 mr-4" />
               <div>
                 <p className="text-[16px] leading-6 font-mcqueen">
                   Télécharger sur
@@ -75,11 +67,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="flex items-center border border-black bg-white px-9 py-3 rounded-xl"
             >
-              <Image
-                src={AppleIcon}
-                alt="Apple icon"
-                className="w-auto h-8 mr-4"
-              />
+              <AppleIcon className="w-auto h-8 mr-4" />
               <div>
                 <p className="text-[16px] leading-6 font-mcqueen">
                   Télécharger sur

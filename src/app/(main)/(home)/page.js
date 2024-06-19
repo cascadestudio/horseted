@@ -5,10 +5,10 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import missionImage1 from "@/assets/images/missionImage1.jpg";
 import missionImage2 from "@/assets/images/missionImage2.jpg";
-import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons.svg";
-import StarsGroup from "@/assets/icons/StarsGroup.svg";
+import PlayAppStoreIcons from "@/assets/icons/PlayAppStoreIcons";
+import StarsGroup from "@/assets/icons/StarsGroup";
 import appReviewImage1 from "@/assets/images/appReviewImage1.jpg";
-import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon.svg";
+import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon";
 import appReviewImage2 from "@/assets/images/appReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
 import HeroCarousel from "@/components/HeroCarousel";
@@ -122,20 +122,12 @@ export default async function Home() {
       <div className="container mx-auto px-5 pb-14 lg:pb-24">
         <div className="flex flex-col items-center lg:rounded-[56px] lg:border lg:border-black">
           <div className="flex flex-col items-center lg:flex-row lg:justify-between lg:w-full">
-            <Image
-              className="lg:w-[90px] lg:ml-11 lg:mb-7"
-              src={PlayAppStoreIcons}
-              alt="PlayAppStoreIcons"
-            />
+            <PlayAppStoreIcons className="lg:w-[90px] lg:h-[33px] lg:ml-11 lg:mb-7" />
             <div className="flex flex-col items-center lg:mt-11">
               <h3 className="font-mcqueen font-bold text-2xl text-center py-2 lg:text-4xl">
                 Vous hésitez encore ?
               </h3>
-              <Image
-                src={StarsGroup}
-                alt="StarsGroup"
-                className="w-[110px] mb-10 lg:w-[170px]"
-              />
+              <StarsGroup className="w-[110px] mb-10 lg:w-[170px]" />
             </div>
             <div className="hidden lg:flex lg:items-center lg:justify-center lg:py-7 lg:px-4 lg:bg-dark-green lg:rounded-full lg:mb-7 lg:mr-5">
               <p className="font-mcqueen font-bold text-[30px] text-center text-white">
@@ -152,17 +144,13 @@ export default async function Home() {
                 className="rounded-[32px]"
               />
               <div className="block absolute inset-0 via-transparent via-70% bg-gradient-to-tr from-black/70 to-transparent rounded-[32px]"></div>
-              <Image
-                src={WhiteThreeStripesIcon}
-                alt="WhiteThreeStripesIcon"
-                className="absolute top-52 left-8"
-              />
+              <WhiteThreeStripesIcon className="absolute top-52 left-8" />
               <h4 className="absolute top-60 left-10 font-black italic text-[28px] text-white">
                 La meilleure App pour l’équitation
               </h4>
             </div>
             <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
-              <Image src={WhiteThreeStripesIcon} alt="WhiteThreeStripesIcon" />
+              <WhiteThreeStripesIcon />
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
                 eiusmod tempor incididunt ut labore et d
@@ -182,11 +170,7 @@ export default async function Home() {
               </p>
               <div className="mt-7 px-7 pb-3 flex flex-row-reverse justify-between">
                 <p className="font-extrabold text-lg ">Marion J</p>
-                <Image
-                  src={WhiteThreeStripesIcon}
-                  alt="WhiteThreeStripesIcon"
-                  className="rotate-[215deg]"
-                />
+                <WhiteThreeStripesIcon className="rotate-[215deg]" />
               </div>
             </div>
           </div>

@@ -6,10 +6,10 @@ import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
-import LeftArrow from "@/assets/icons/LeftArrow.svg";
+import LeftArrow from "@/assets/icons/LeftArrow";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
-import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
-import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
+import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
+import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
 
 export default function signinPage() {
@@ -45,7 +45,7 @@ export default function signinPage() {
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
             <Link href="/" className="justify-self-start">
-              <Image src={LeftArrow} alt="Prec" className="w-[18px] lg:w-7" />
+              <LeftArrow className="w-[18px] lg:w-7" />
             </Link>
             <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
           </div>
@@ -64,6 +64,7 @@ export default function signinPage() {
                   src={GoogleIcon}
                   alt="Google Icon"
                   className="h-5 w-5 lg:h-6 lg:w-6"
+                  priority
                 />
               </div>
               <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
@@ -153,11 +154,7 @@ export default function signinPage() {
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
           >
-            <Image
-              src={GooglePlayIconWhite}
-              alt="Google Play icon"
-              className="w-8 h-8 mr-[14px]"
-            />
+            <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
               <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur
@@ -173,11 +170,7 @@ export default function signinPage() {
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
           >
-            <Image
-              src={AppleIconWhite}
-              alt="Apple icon"
-              className="w-auto h-8 mr-[14px]"
-            />
+            <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>
               <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur
