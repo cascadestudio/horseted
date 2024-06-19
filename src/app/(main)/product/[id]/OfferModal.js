@@ -1,8 +1,7 @@
 import Button from "@/components/Button";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
-import closeButton from "@/assets/icons/closeButton.svg";
+import CloseButton from "@/assets/icons/CloseButton";
 
 export default function OfferModal({ price, onClose }) {
   const modalRef = useRef();
@@ -51,7 +50,7 @@ export default function OfferModal({ price, onClose }) {
               className="col-start-3 cursor-pointer justify-self-end self-center"
               onClick={onClose}
             >
-              <Image className="h-7 w-7" src={closeButton} alt="close" />
+              <CloseButton className="h-7 w-7" />
             </div>
           </div>
           <form onSubmit={handleSubmit} className="lg:px-16 mb-9">

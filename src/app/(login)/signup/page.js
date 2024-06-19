@@ -6,11 +6,11 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
-import LeftArrow from "@/assets/icons/LeftArrow.svg";
+import LeftArrow from "@/assets/icons/LeftArrow";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
-import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite.svg";
-import AppleIconWhite from "@/assets/icons/AppleIconWhite.svg";
-import tickIcon from "@/assets/icons/tickIcon.svg";
+import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
+import AppleIconWhite from "@/assets/icons/AppleIconWhite";
+import TickIcon from "@/assets/icons/TickIcon";
 import heroImage2 from "@/assets/images/heroImage2.jpg";
 
 export default function signupPage() {
@@ -52,7 +52,7 @@ export default function signupPage() {
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
             <Link href="/" className="justify-self-start">
-              <Image src={LeftArrow} alt="Prec" className="w-[18px] lg:w-7" />
+              <LeftArrow className="w-[18px] lg:w-7" />
             </Link>
             <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
           </div>
@@ -121,9 +121,7 @@ export default function signupPage() {
                     className="appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
                   />
                   {newsletter && (
-                    <Image
-                      src={tickIcon}
-                      alt="Tick Icon"
+                    <TickIcon
                       width={10}
                       height={7}
                       className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer"
@@ -143,9 +141,7 @@ export default function signupPage() {
                     required
                     className="appearance-none peer cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
                   />
-                  <Image
-                    src={tickIcon}
-                    alt="Tick Icon"
+                  <TickIcon
                     width={10}
                     height={7}
                     className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer peer-checked:visible invisible"
@@ -219,11 +215,7 @@ export default function signupPage() {
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
           >
-            <Image
-              src={GooglePlayIconWhite}
-              alt="Google Play icon"
-              className="w-8 h-8 mr-[14px]"
-            />
+            <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
               <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur
@@ -239,11 +231,7 @@ export default function signupPage() {
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
           >
-            <Image
-              src={AppleIconWhite}
-              alt="Apple icon"
-              className="w-auto h-8 mr-[14px]"
-            />
+            <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>
               <p className="text-[12px] leading-[14px] font-mcqueen lg:text-sm ">
                 Télécharger sur

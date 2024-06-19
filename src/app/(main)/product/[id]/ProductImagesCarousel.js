@@ -4,8 +4,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
-import PrevArrow from "@/assets/icons/PrevArrow.svg";
-import NextArrow from "@/assets/icons/NextArrow.svg";
+import PrevArrow from "@/assets/icons/PrevArrow";
+import NextArrow from "@/assets/icons/NextArrow";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -18,7 +18,7 @@ function SampleNextArrow(props) {
       }}
       onClick={onClick}
     >
-      <Image
+      <NextArrow
         style={{
           position: "absolute",
           height: "12px",
@@ -26,8 +26,6 @@ function SampleNextArrow(props) {
           left: "10px",
           width: "auto",
         }}
-        src={NextArrow}
-        alt="Suivant"
       />
     </div>
   );
@@ -44,7 +42,7 @@ function SamplePrevArrow(props) {
       }}
       onClick={onClick}
     >
-      <Image
+      <PrevArrow
         style={{
           position: "absolute",
           height: "12px",
@@ -52,8 +50,6 @@ function SamplePrevArrow(props) {
           left: "8px",
           width: "auto",
         }}
-        src={PrevArrow}
-        alt="Precedent"
       />
     </div>
   );
