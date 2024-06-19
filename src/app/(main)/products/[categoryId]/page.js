@@ -17,9 +17,9 @@ export default function ProductsPage({ params }) {
     name: params.categoryId,
   });
   const [activeState, setActiveState] = useState("");
-  const [activeBrands, setActiveBrands] = useState("");
-  const [activeMaterials, setActiveMaterials] = useState("");
-  const [activeSizes, setActiveSizes] = useState("");
+  const [activeBrands, setActiveBrands] = useState([]);
+  const [activeMaterials, setActiveMaterials] = useState([]);
+  const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
 
   useEffect(() => {
@@ -32,17 +32,17 @@ export default function ProductsPage({ params }) {
         if (activeState !== "") {
           query += `&states=${activeState}`;
         }
-        if (activeBrands !== "") {
-          query += `&brands=${activeBrands}`;
+        if (activeBrands.length > 0) {
+          query += `&brands=${activeBrands.join(";")}`;
         }
-        if (activeMaterials !== "") {
-          query += `&materials=${activeMaterials}`;
+        if (activeMaterials.length > 0) {
+          query += `&materials=${activeMaterials.join(";")}`;
         }
         if (activePrices !== "") {
           query += `&price=${activePrices}`;
         }
-        if (activeSizes !== "") {
-          query += `&sizes=${activeSizes}`;
+        if (activeSizes.length > 0) {
+          query += `&sizes=${activeSizes.join(";")}`;
         }
         console.log("query =>", query);
         const data = await fetchData(query);
@@ -74,13 +74,13 @@ export default function ProductsPage({ params }) {
     setActiveState(value);
   }
   function handleBrandsChange(value) {
-    setActiveBrands(value.join(";"));
+    setActiveBrands(value);
   }
   function handleMaterialsChange(value) {
-    setActiveMaterials(value.join(";"));
+    setActiveMaterials(value);
   }
   function handleSizesChange(value) {
-    setActiveSizes(value.join(";"));
+    setActiveSizes(value);
   }
   function handlePricesChange(minPrice, maxPrice) {
     setActivePrices(`${minPrice}-${maxPrice}`);
@@ -90,6 +90,9 @@ export default function ProductsPage({ params }) {
   }
   function removeStateFilter() {
     setActiveState("");
+  }
+  function removeBrandsFilter(brand) {
+    setActiveBrands(activeBrands.filter((b) => b !== brand));
   }
 
   return (
@@ -118,6 +121,16 @@ export default function ProductsPage({ params }) {
             onRemoveFilter={removeStateFilter}
           />
         )}
+        {activeBrands !== "" &&
+          activeBrands.map((brand) => {
+            return (
+              <ActiveFilterBtn
+                key={brand}
+                filterName={brand}
+                onRemoveFilter={removeBrandsFilter}
+              />
+            );
+          })}
       </div>
       {!isLoading && <ProductsList products={products} />}
     </div>
