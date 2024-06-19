@@ -1,9 +1,16 @@
 "use client";
 // import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
-import ProductFilters from "./ProductFilters";
 import ProductsList from "./ProductList";
 import { fetchData } from "@/libs/fetch";
+import ActiveFilterBtn from "./ActiveFilterBtn";
+import SortSelect from "./ProductFilters/SortSelect";
+import StateSelect from "./ProductFilters/StateSelect";
+import BrandsSelect from "./ProductFilters/BrandsSelect";
+import CategorySelect from "./ProductFilters/CategorySelect";
+import PricesSelect from "./ProductFilters/PricesSelect";
+import SizesSelect from "./ProductFilters/SizesSelect";
+import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 
 export default function ProductsPage({ params }) {
   const [products, setProducts] = useState([]);
@@ -11,11 +18,14 @@ export default function ProductsPage({ params }) {
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
-  const [activeCategory, setActiveCategory] = useState(params.categoryId);
+  const [activeCategory, setActiveCategory] = useState({
+    id: params.categoryId,
+    name: params.categoryId,
+  });
   const [activeState, setActiveState] = useState("");
-  const [activeBrands, setActiveBrands] = useState("");
-  const [activeMaterials, setActiveMaterials] = useState("");
-  const [activeSizes, setActiveSizes] = useState("");
+  const [activeBrands, setActiveBrands] = useState([]);
+  const [activeMaterials, setActiveMaterials] = useState([]);
+  const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
 
   useEffect(() => {
@@ -23,19 +33,23 @@ export default function ProductsPage({ params }) {
       try {
         let query = `/products?orderBy=${activeOrder}`;
         if (activeCategory !== null) {
-          query += `&category=${activeCategory}`;
+          query += `&category=${activeCategory.id}`;
         }
         if (activeState !== "") {
           query += `&states=${activeState}`;
         }
-        if (activeBrands !== "") {
-          query += `&brands=${activeBrands}`;
+        if (activeBrands.length > 0) {
+          query += `&brands=${activeBrands.join(";")}`;
         }
-        if (activeMaterials !== "") {
-          query += `&materials=${activeMaterials}`;
+        if (activeMaterials.length > 0) {
+          query += `&materials=${activeMaterials.join(";")}`;
         }
         if (activePrices !== "") {
           query += `&price=${activePrices}`;
+        }
+        if (activeSizes.length > 0) {
+          const activeSizeIds = activeSizes.map((size) => size.id);
+          query += `&sizes=${activeSizeIds.join(";")}`;
         }
         console.log("query =>", query);
         const data = await fetchData(query);
@@ -43,7 +57,6 @@ export default function ProductsPage({ params }) {
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
-        setIsLoading(false);
       }
     };
 
@@ -55,43 +68,121 @@ export default function ProductsPage({ params }) {
     activeBrands,
     activeMaterials,
     activePrices,
+    activeSizes,
   ]);
 
   function handleOrderChange(value) {
     setActiveOrder(value);
   }
-  function handleCategoryChange(value) {
-    setActiveCategory(value);
+  function handleCategoryChange(id, name) {
+    setActiveCategory({ id: id, name: name });
   }
   function handleStateChange(value) {
     setActiveState(value);
   }
   function handleBrandsChange(value) {
-    setActiveBrands(value.join(";"));
+    setActiveBrands(value);
   }
   function handleMaterialsChange(value) {
-    setActiveMaterials(value.join(";"));
+    setActiveMaterials(value);
   }
   function handleSizesChange(value) {
-    setActiveSizes(value.join(";"));
+    setActiveSizes(value);
   }
   function handlePricesChange(minPrice, maxPrice) {
     setActivePrices(`${minPrice}-${maxPrice}`);
   }
+  function removeCategoryFilter() {
+    setActiveCategory(null);
+  }
+  function removeStateFilter() {
+    setActiveState("");
+  }
+  function removeBrandFilter(brand) {
+    setActiveBrands(activeBrands.filter((b) => b !== brand));
+  }
+  function removeMaterialFilter(material) {
+    setActiveMaterials(activeMaterials.filter((m) => m !== material));
+  }
+  function removeSizeFilter(size) {
+    setActiveSizes(activeSizes.filter((s) => s.name !== size));
+  }
 
   return (
     <div className="container mx-auto">
-      <ProductFilters
-        activeOrder={activeOrder}
-        onOrderChange={handleOrderChange}
-        onCategoryChange={handleCategoryChange}
-        onStateChange={handleStateChange}
-        onBrandsChange={handleBrandsChange}
-        onMaterialsChange={handleMaterialsChange}
-        onSizesChange={handleSizesChange}
-        onPricesChange={handlePricesChange}
-      />
-      {/* TODO afficher les filtres sélectionné + possibilité de les enlever au clic */}
+      <div className="flex">
+        <SortSelect
+          onOrderChange={handleOrderChange}
+          activeOrder={activeOrder}
+        />
+        <StateSelect
+          activeState={activeState}
+          onStateChange={handleStateChange}
+        />
+        <CategorySelect onClickProductCategory={handleCategoryChange} />
+        <BrandsSelect
+          activeBrands={activeBrands}
+          onBrandsChange={handleBrandsChange}
+        />
+        <PricesSelect
+          activePrices={activePrices}
+          onPricesChange={handlePricesChange}
+        />
+        <MaterialsSelect
+          activeMaterials={activeMaterials}
+          onMaterialsChange={handleMaterialsChange}
+        />
+        <SizesSelect
+          activeSizes={activeSizes}
+          onSizesChange={handleSizesChange}
+          categoryId={activeCategory.id}
+        />
+      </div>
+      <div className="p-5">
+        {activeCategory !== null && (
+          <ActiveFilterBtn
+            filterName={activeCategory.name}
+            onRemoveFilter={removeCategoryFilter}
+          />
+        )}
+        {activeState !== "" && (
+          <ActiveFilterBtn
+            filterName={activeState}
+            onRemoveFilter={removeStateFilter}
+          />
+        )}
+        {activeBrands.length > 0 &&
+          activeBrands.map((brand) => {
+            return (
+              <ActiveFilterBtn
+                key={brand}
+                filterName={brand}
+                onRemoveFilter={removeBrandFilter}
+              />
+            );
+          })}
+        {activeMaterials.length > 0 &&
+          activeMaterials.map((material) => {
+            return (
+              <ActiveFilterBtn
+                key={material}
+                filterName={material}
+                onRemoveFilter={removeMaterialFilter}
+              />
+            );
+          })}
+        {activeSizes.length > 0 &&
+          activeSizes.map((size) => {
+            return (
+              <ActiveFilterBtn
+                key={size.id}
+                filterName={size.name}
+                onRemoveFilter={removeSizeFilter}
+              />
+            );
+          })}
+        {/* TODO: remove all filters button */}
+      </div>
       {!isLoading && <ProductsList products={products} />}
     </div>
   );

@@ -34,7 +34,10 @@ export default function ProductCategorySelect({
           <div className="flex flex-col">
             {productCategory.map(({ id, name }) => {
               return (
-                <button onClick={() => onClickProductCategory(id)} key={id}>
+                <button
+                  onClick={() => onClickProductCategory(id, name)}
+                  key={id}
+                >
                   {name}
                 </button>
               );

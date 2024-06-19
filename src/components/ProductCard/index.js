@@ -1,10 +1,12 @@
-import { getProductImage } from "@/libs/fetch";
+"use client";
+import { fetchData } from "@/libs/fetch";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Link from "next/link";
 import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
+import { useEffect, useState } from "react";
 
-export default async function ProductCard({ product, className }) {
+export default function ProductCard({ product, className }) {
   const { title, price, favoritCount, shipping } = product;
   const shippingSizeTranslations = {
     small: "Petit",
@@ -40,16 +42,27 @@ export default async function ProductCard({ product, className }) {
   );
 }
 
-async function ProductImage({ product }) {
-  if (product.hasOwnProperty("medias")) {
-    const base64 = await getProductImage(
-      `medias/${product.medias[0].files.default}`
-    );
+function ProductImage({ product }) {
+  const [image, setImage] = useState(null);
+  useEffect(() => {
+    const fetchImage = async () => {
+      try {
+        const query = `/medias/${product.medias[0].files.default}`;
+        const data = await fetchData(query);
+        setImage(`data:image/png;base64, ${data}`);
+      } catch (error) {
+        // It'ok to not have an image
+      }
+    };
 
+    fetchImage();
+  }, []);
+
+  if (product.hasOwnProperty("medias")) {
     return (
       <img
         className="aspect-[280/340] object-cover w-[280px]"
-        src={`data:image/png;base64, ${base64}`}
+        src={image}
         alt="Image du produit"
       />
     );

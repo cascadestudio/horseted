@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/libs/fetch";
 
-export default function SizesSelect({ onSizesChange }) {
+export default function SizesSelect({
+  activeSizes,
+  onSizesChange,
+  categoryId,
+}) {
   const [sizes, setSizes] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
-  const [checkedSizes, setCheckedSizes] = useState([]);
 
   useEffect(() => {
     const fetchSizes = async () => {
       try {
-        const query = `/sizes`;
+        const query = `/categories/${categoryId}/sizes`;
         const data = await fetchData(query);
         setSizes(data);
       } catch (error) {
@@ -20,16 +23,13 @@ export default function SizesSelect({ onSizesChange }) {
     fetchSizes();
   }, []);
 
-  const handleCheckboxChange = (e) => {
-    const size = e.target.value;
+  const handleCheckboxChange = (e, value) => {
+    const id = Number(e.target.value);
     if (e.target.checked) {
-      setCheckedSizes([...checkedSizes, size]);
+      onSizesChange([...activeSizes, { id: id, name: value }]);
     } else {
-      setCheckedSizes(
-        checkedSizes.filter((checkedSize) => checkedSize !== size)
-      );
+      onSizesChange(activeSizes.filter((activeSize) => activeSize !== size));
     }
-    onSizesChange(checkedSizes);
   };
 
   return (
@@ -37,17 +37,19 @@ export default function SizesSelect({ onSizesChange }) {
       <button onClick={() => setIsDropdown(!isDropdown)}>Tailles</button>
       {isDropdown && (
         <div className="flex flex-col">
-          {sizes.map(({ name }) => (
-            <label key={name}>
-              {name}
-              <input
-                type="checkbox"
-                value={name}
-                onChange={(e) => handleCheckboxChange(e)}
-                checked={checkedSizes.includes(name)}
-              />
-            </label>
-          ))}
+          {sizes.map(({ id, value }) => {
+            return (
+              <label key={id}>
+                {value}
+                <input
+                  type="checkbox"
+                  value={id}
+                  onChange={(e) => handleCheckboxChange(e, value)}
+                  checked={activeSizes.map((size) => size.id).includes(id)}
+                />
+              </label>
+            );
+          })}
         </div>
       )}
     </div>

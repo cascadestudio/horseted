@@ -36,7 +36,7 @@ export default function CategorySelect({ onClickProductCategory }) {
   }
 
   return (
-    <div>
+    <div className="p-5">
       <button onClick={() => setIsCategoryDropdown(!isCategoryDropdown)}>
         Catégorie
       </button>
