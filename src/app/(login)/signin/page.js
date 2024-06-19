@@ -64,6 +64,7 @@ export default function signinPage() {
                   src={GoogleIcon}
                   alt="Google Icon"
                   className="h-5 w-5 lg:h-6 lg:w-6"
+                  priority
                 />
               </div>
               <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
