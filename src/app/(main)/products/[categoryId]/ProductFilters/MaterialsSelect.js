@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/libs/fetch";
 
-export default function MaterialSelect({ onMaterialsChange }) {
+export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   const [materials, setMaterials] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
-  const [checkedMaterials, setCheckedMaterials] = useState([]);
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -20,17 +19,13 @@ export default function MaterialSelect({ onMaterialsChange }) {
     fetchMaterials();
   }, []);
 
-  useEffect(() => {
-    onMaterialsChange(checkedMaterials);
-  }, [checkedMaterials]);
-
   const handleCheckboxChange = (e) => {
     const material = e.target.value;
     if (e.target.checked) {
-      setCheckedMaterials([...checkedMaterials, material]);
+      onMaterialsChange([...activeMaterials, material]);
     } else {
-      setCheckedMaterials(
-        checkedMaterials.filter(
+      onMaterialsChange(
+        activeMaterials.filter(
           (checkedMaterial) => checkedMaterial !== material
         )
       );
@@ -49,7 +44,7 @@ export default function MaterialSelect({ onMaterialsChange }) {
                 type="checkbox"
                 value={name}
                 onChange={(e) => handleCheckboxChange(e)}
-                checked={checkedMaterials.includes(name)}
+                checked={activeMaterials.includes(name)}
               />
             </label>
           ))}

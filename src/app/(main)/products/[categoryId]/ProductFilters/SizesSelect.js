@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { fetchData } from "@/libs/fetch";
 
-export default function SizesSelect({ onSizesChange, categoryId }) {
+export default function SizesSelect({
+  activeSizes,
+  onSizesChange,
+  categoryId,
+}) {
   const [sizes, setSizes] = useState([]);
   const [isDropdown, setIsDropdown] = useState(false);
-  const [checkedSizesId, setCheckedSizesId] = useState([]);
 
   useEffect(() => {
     const fetchSizes = async () => {
@@ -20,18 +23,12 @@ export default function SizesSelect({ onSizesChange, categoryId }) {
     fetchSizes();
   }, []);
 
-  useEffect(() => {
-    onSizesChange(checkedSizesId);
-  }, [checkedSizesId]);
-
-  const handleCheckboxChange = (e) => {
-    const sizeId = Number(e.target.value);
+  const handleCheckboxChange = (e, value) => {
+    const id = Number(e.target.value);
     if (e.target.checked) {
-      setCheckedSizesId([...checkedSizesId, sizeId]);
+      onSizesChange([...activeSizes, { id: id, name: value }]);
     } else {
-      setCheckedSizesId(
-        checkedSizesId.filter((checkedSizesId) => checkedSizesId !== sizeId)
-      );
+      onSizesChange(activeSizes.filter((activeSize) => activeSize !== size));
     }
   };
 
@@ -47,8 +44,8 @@ export default function SizesSelect({ onSizesChange, categoryId }) {
                 <input
                   type="checkbox"
                   value={id}
-                  onChange={(e) => handleCheckboxChange(e)}
-                  checked={checkedSizesId.includes(id)}
+                  onChange={(e) => handleCheckboxChange(e, value)}
+                  checked={activeSizes.map((size) => size.id).includes(id)}
                 />
               </label>
             );

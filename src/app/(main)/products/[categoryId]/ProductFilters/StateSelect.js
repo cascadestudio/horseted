@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function StateSelect({ onStateChange }) {
+export default function StateSelect({ onStateChange, activeState }) {
   const [isStateDropdown, setIsStateDropdown] = useState(false);
 
   return (
@@ -15,6 +15,7 @@ export default function StateSelect({ onStateChange }) {
               name="productState"
               value="new_with_packaging"
               onChange={(e) => onStateChange(e.target.value)}
+              checked={activeState === "new_with_packaging"}
             />
           </label>
           <label>
@@ -24,6 +25,7 @@ export default function StateSelect({ onStateChange }) {
               name="productState"
               value="new_without_packaging"
               onChange={(e) => onStateChange(e.target.value)}
+              checked={activeState === "new_without_packaging"}
             />
           </label>
 
@@ -34,6 +36,7 @@ export default function StateSelect({ onStateChange }) {
               name="productState"
               value="perfect"
               onChange={(e) => onStateChange(e.target.value)}
+              checked={activeState === "perfect"}
             />
           </label>
           <label>
@@ -43,6 +46,7 @@ export default function StateSelect({ onStateChange }) {
               name="productState"
               value="very_good"
               onChange={(e) => onStateChange(e.target.value)}
+              checked={activeState === "very_good"}
             />
           </label>
           <label>
@@ -52,6 +56,7 @@ export default function StateSelect({ onStateChange }) {
               name="productState"
               value="good"
               onChange={(e) => onStateChange(e.target.value)}
+              checked={activeState === "good"}
             />
           </label>
         </div>

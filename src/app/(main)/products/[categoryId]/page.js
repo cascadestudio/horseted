@@ -48,7 +48,8 @@ export default function ProductsPage({ params }) {
           query += `&price=${activePrices}`;
         }
         if (activeSizes.length > 0) {
-          query += `&sizes=${activeSizes.join(";")}`;
+          const activeSizeIds = activeSizes.map((size) => size.id);
+          query += `&sizes=${activeSizeIds.join(";")}`;
         }
         console.log("query =>", query);
         const data = await fetchData(query);
@@ -103,6 +104,9 @@ export default function ProductsPage({ params }) {
   function removeMaterialFilter(material) {
     setActiveMaterials(activeMaterials.filter((m) => m !== material));
   }
+  function removeSizeFilter(size) {
+    setActiveSizes(activeSizes.filter((s) => s.name !== size));
+  }
 
   return (
     <div className="container mx-auto">
@@ -111,12 +115,25 @@ export default function ProductsPage({ params }) {
           onOrderChange={handleOrderChange}
           activeOrder={activeOrder}
         />
-        <StateSelect onStateChange={handleStateChange} />
+        <StateSelect
+          activeState={activeState}
+          onStateChange={handleStateChange}
+        />
         <CategorySelect onClickProductCategory={handleCategoryChange} />
-        <BrandsSelect onBrandsChange={handleBrandsChange} />
-        <PricesSelect onPricesChange={handlePricesChange} />
-        <MaterialsSelect onMaterialsChange={handleMaterialsChange} />
+        <BrandsSelect
+          activeBrands={activeBrands}
+          onBrandsChange={handleBrandsChange}
+        />
+        <PricesSelect
+          activePrices={activePrices}
+          onPricesChange={handlePricesChange}
+        />
+        <MaterialsSelect
+          activeMaterials={activeMaterials}
+          onMaterialsChange={handleMaterialsChange}
+        />
         <SizesSelect
+          activeSizes={activeSizes}
           onSizesChange={handleSizesChange}
           categoryId={activeCategory.id}
         />
@@ -151,6 +168,16 @@ export default function ProductsPage({ params }) {
                 key={material}
                 filterName={material}
                 onRemoveFilter={removeMaterialFilter}
+              />
+            );
+          })}
+        {activeSizes.length > 0 &&
+          activeSizes.map((size) => {
+            return (
+              <ActiveFilterBtn
+                key={size.id}
+                filterName={size.name}
+                onRemoveFilter={removeSizeFilter}
               />
             );
           })}
