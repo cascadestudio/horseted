@@ -100,5 +100,12 @@ export const fetchData = async (query) => {
   if (!response.ok) {
     throw new Error("Failed to fetch data");
   }
-  return response.json();
+  if (query.startsWith("/medias")) {
+    const blob = await response.blob();
+    const text = await blob.arrayBuffer();
+    const base64 = Buffer.from(text).toString("base64");
+    return base64;
+  } else {
+    return response.json();
+  }
 };
