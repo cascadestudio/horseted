@@ -84,7 +84,6 @@ export default function signinPage() {
                   name="email"
                   id="email"
                   placeholder="exemple@mail.com"
-                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
                 />
               </label>
               <label htmlFor="password">
@@ -98,7 +97,6 @@ export default function signinPage() {
                   name="password"
                   id="password"
                   placeholder="Mot de passe"
-                  className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
                 />
               </label>
               <Button

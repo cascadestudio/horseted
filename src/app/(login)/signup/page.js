@@ -74,7 +74,6 @@ export default function signupPage() {
                 name="email"
                 id="email"
                 placeholder="exemple@mail.com"
-                className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
               />
             </label>
             <label htmlFor="password">
@@ -88,7 +87,6 @@ export default function signupPage() {
                 name="password"
                 id="password"
                 placeholder="Mot de passe"
-                className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2"
               />
             </label>
             <label htmlFor="username">
@@ -106,7 +104,7 @@ export default function signupPage() {
                   name="username"
                   id="username"
                   placeholder="sophiemarceau"
-                  className="bg-transparent w-full placeholder:font-normal placeholder:text-sm placeholder:text-grey pt-1 pb-2 pl-1"
+                  className="border-none pl-1"
                 />
               </div>
             </label>

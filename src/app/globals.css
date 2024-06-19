@@ -6,12 +6,33 @@
   :root {
     --header-height: 115px;
   }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
   }
+
   input[type="number"] {
     -moz-appearance: textfield;
+  }
+
+  input {
+    background-color: transparent;
+    border-bottom: 1px solid black;
+    width: 100%;
+    padding-top: 0.25rem;
+    padding-bottom: 0.5rem;
+    outline: none;
+    font-weight: 400;
+    font-size: small;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input::placeholder {
+    color: "#ADA89F";
   }
 
   @screen lg {

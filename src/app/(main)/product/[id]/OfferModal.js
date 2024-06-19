@@ -68,7 +68,7 @@ export default function OfferModal({ price, onClose }) {
                     name="offer"
                     id="offer"
                     placeholder={price}
-                    className="focus:outline-none bg-transparent w-full font-normal font-poppins text-[24px] leading-[48px] placeholder:text-grey pt-1"
+                    className="border-none font-poppins text-[24px] leading-[48px] pb-0"
                   />
                   <span className="text-[24px] leading-[48px] font-semibold mr-2">
                     €
