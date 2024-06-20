@@ -12,7 +12,9 @@ export default function ProductCategories({ parentId }) {
             const { name, id } = category;
             return (
               <li key={name} className="">
-                <Link href={`/products/${id}`}>{name}</Link>
+                <Link href={`/articles?categoryId=${id}&categoryName=${name}`}>
+                  {name}
+                </Link>
               </li>
             );
           })}

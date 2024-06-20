@@ -16,6 +16,8 @@ import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 export default function ProductsPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
+  const categoryIdQuery = searchParams.get("categoryId");
+  const categoryNameQuery = searchParams.get("categoryName");
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,8 +25,8 @@ export default function ProductsPage() {
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState({
-    id: null,
-    name: null,
+    id: categoryIdQuery,
+    name: categoryNameQuery,
   });
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
@@ -41,6 +43,13 @@ export default function ProductsPage() {
     setActiveSizes([]);
     setActivePrices("");
   }
+
+  useEffect(() => {
+    setActiveCategory({
+      id: categoryIdQuery,
+      name: categoryNameQuery,
+    });
+  }, [categoryNameQuery, categoryIdQuery]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -65,7 +74,7 @@ export default function ProductsPage() {
           const activeSizeIds = activeSizes.map((size) => size.id);
           query += `&sizes=${activeSizeIds.join(";")}`;
         }
-        if (searchQuery !== "") {
+        if (searchQuery !== null) {
           query += `&terms=${searchQuery}`;
         }
         console.log("query =>", query);
@@ -153,7 +162,7 @@ export default function ProductsPage() {
         <SizesSelect
           activeSizes={activeSizes}
           onSizesChange={handleSizesChange}
-          categoryId={activeCategory.id}
+          categoryId={activeCategory?.id}
         />
       </div>
       <div className="p-5">
