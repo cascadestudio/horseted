@@ -6,22 +6,19 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { fetchData } from "@/libs/fetch";
 
 const auth = getAuth(firebase_app);
-
 export const AuthContext = createContext({});
-
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
   async function fetchUser(accessToken) {
     try {
       const query = `/users/me`;
       const data = await fetchData(query, accessToken);
-      setUser({ ...user, ...data });
+      return data;
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error(`Error fetching ${query}`, error);
     }
   }
 
@@ -29,7 +26,9 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        fetchUser(user.accessToken);
+        fetchUser(user.accessToken).then((data) =>
+          setUser({ ...user, ...data })
+        );
       } else {
         setUser(null);
       }

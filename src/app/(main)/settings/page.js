@@ -4,14 +4,11 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useState } from "react";
 
 export default function SettingsPage() {
-  const { me, user } = useAuthContext();
-  const [currentMe, setCurrentMe] = useState({
-    id: me.id,
-    description: me.description,
-    // lastName: me.lastName,
-    // birthDate: me.birthDate,
-    // description: me.description,
-    // avatar: me.avatar,
+  const { user } = useAuthContext();
+  const [localUser, setLocalUser] = useState({
+    username: user.username,
+    email: user.email,
+    description: user.description,
   });
 
   async function patchUser() {
@@ -21,7 +18,7 @@ export default function SettingsPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        firebaseToken: user.accessToken,
+        firebaseToken: accessToken,
         user: currentMe,
       }),
     });
@@ -32,19 +29,37 @@ export default function SettingsPage() {
     await patchUser();
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setLocalUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <section>
       <h1>Paramètres</h1>
-      {me.username}
       <form
         onSubmit={handleForm}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
       >
+        <label htmlFor="username">
+          <input
+            value={localUser.username}
+            onChange={handleChange}
+            required
+            type="text"
+            name="username"
+            id="username"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
           <input
-            value={user.email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={localUser.email}
+            onChange={handleChange}
             required
             type="email"
             name="email"
@@ -53,12 +68,10 @@ export default function SettingsPage() {
           />
         </label>
         <label htmlFor="description">
-          <p className="mt-[18px] font-mcqueen font-semibold">description :</p>
+          <p className="mt-[18px] font-mcqueen font-semibold">Présentation :</p>
           <input
-            value={user.description}
-            onChange={(e) =>
-              setCurrentMe({ ...currentMe, description: e.target.value })
-            }
+            value={localUser.description}
+            onChange={handleChange}
             required
             type="text"
             name="description"
