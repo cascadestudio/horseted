@@ -1,8 +1,10 @@
 "use client";
 // import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
-import ProductsList from "./ProductList";
 import { fetchData } from "@/libs/fetch";
+import { useSearchParams } from "next/navigation";
+
+import ProductsList from "./ProductList";
 import ActiveFilterBtn from "./ActiveFilterBtn";
 import SortSelect from "./ProductFilters/SortSelect";
 import StateSelect from "./ProductFilters/StateSelect";
@@ -12,15 +14,20 @@ import PricesSelect from "./ProductFilters/PricesSelect";
 import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 
-export default function ProductsPage({ params }) {
+export default function ProductsPage() {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search");
+
+  console.log(searchQuery);
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState({
-    id: params.categoryId,
-    name: params.categoryId,
+    id: null,
+    name: null,
   });
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
