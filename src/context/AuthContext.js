@@ -3,6 +3,7 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
+import { fetchData } from "@/libs/fetch";
 
 const auth = getAuth(firebase_app);
 
@@ -12,16 +13,16 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [me, setMe] = useState({});
-
   const [loading, setLoading] = useState(true);
 
   async function fetchUser(accessToken) {
-    await fetch(`http://localhost:3000/api/getUser?accessToken=${accessToken}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMe(data.data);
-      });
+    try {
+      const query = `/users/me`;
+      const data = await fetchData(query, accessToken);
+      setUser({ ...user, ...data });
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
   }
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, me }}>
+    <AuthContext.Provider value={{ user }}>
       {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );
