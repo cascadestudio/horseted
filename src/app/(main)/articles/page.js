@@ -12,8 +12,10 @@ import CategorySelect from "./ProductFilters/CategorySelect";
 import PricesSelect from "./ProductFilters/PricesSelect";
 import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
+import { useRouter } from "next/navigation";
 
 export default function ProductsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
   const categoryIdQuery = searchParams.get("categoryId");
@@ -55,7 +57,7 @@ export default function ProductsPage() {
     const fetchProducts = async () => {
       try {
         let query = `/products?orderBy=${activeOrder}`;
-        if (activeCategory !== null) {
+        if (activeCategory.id !== null) {
           query += `&category=${activeCategory.id}`;
         }
         if (activeState !== "") {
@@ -125,6 +127,9 @@ export default function ProductsPage() {
   function removeStateFilter() {
     setActiveState("");
   }
+  function removeSearchTermFilter() {
+    router.push("/articles");
+  }
   function removeBrandFilter(brand) {
     setActiveBrands(activeBrands.filter((b) => b !== brand));
   }
@@ -159,14 +164,16 @@ export default function ProductsPage() {
           activeMaterials={activeMaterials}
           onMaterialsChange={handleMaterialsChange}
         />
-        <SizesSelect
-          activeSizes={activeSizes}
-          onSizesChange={handleSizesChange}
-          categoryId={activeCategory?.id}
-        />
+        {activeCategory?.id !== null && (
+          <SizesSelect
+            activeSizes={activeSizes}
+            onSizesChange={handleSizesChange}
+            categoryId={activeCategory.id}
+          />
+        )}
       </div>
       <div className="p-5">
-        {activeCategory !== null && (
+        {activeCategory?.id !== null && (
           <ActiveFilterBtn
             filterName={activeCategory.name}
             onRemoveFilter={removeCategoryFilter}
@@ -176,6 +183,12 @@ export default function ProductsPage() {
           <ActiveFilterBtn
             filterName={activeState}
             onRemoveFilter={removeStateFilter}
+          />
+        )}
+        {searchQuery !== null && (
+          <ActiveFilterBtn
+            filterName={searchQuery}
+            onRemoveFilter={removeSearchTermFilter}
           />
         )}
         {activeBrands.length > 0 &&
