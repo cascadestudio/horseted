@@ -1,5 +1,4 @@
 "use client";
-// import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
 import { fetchData } from "@/libs/fetch";
 import { useSearchParams } from "next/navigation";
@@ -18,8 +17,6 @@ export default function ProductsPage() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  console.log(searchQuery);
-
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,6 +31,16 @@ export default function ProductsPage() {
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
+
+  function resetFilters() {
+    setActiveOrder("");
+    setActiveCategory({ id: null, name: null });
+    setActiveState("");
+    setActiveBrands([]);
+    setActiveMaterials([]);
+    setActiveSizes([]);
+    setActivePrices("");
+  }
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -58,6 +65,9 @@ export default function ProductsPage() {
           const activeSizeIds = activeSizes.map((size) => size.id);
           query += `&sizes=${activeSizeIds.join(";")}`;
         }
+        if (searchQuery !== "") {
+          query += `&terms=${searchQuery}`;
+        }
         console.log("query =>", query);
         const data = await fetchData(query);
         setProducts(data);
@@ -76,6 +86,7 @@ export default function ProductsPage() {
     activeMaterials,
     activePrices,
     activeSizes,
+    searchQuery,
   ]);
 
   function handleOrderChange(value) {
@@ -188,7 +199,12 @@ export default function ProductsPage() {
               />
             );
           })}
-        {/* TODO: remove all filters button */}
+        <button
+          className="bg-white text-gray-700 rounded-lg px-4 py-2 mt-4 hover:bg-gray-100"
+          onClick={() => resetFilters()}
+        >
+          Effacer les filtres
+        </button>
       </div>
       {!isLoading && <ProductsList products={products} />}
     </div>
