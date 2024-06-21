@@ -1,32 +1,36 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
-import { useState } from "react";
+import { fetchData } from "@/libs/fetch";
+import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
   const { user } = useAuthContext();
   const [localUser, setLocalUser] = useState({
-    username: user.username,
-    email: user.email,
-    description: user.description,
+    username: user?.username || "",
+    email: user?.email || "",
+    description: user?.description || "",
   });
 
-  async function patchUser() {
-    await fetch(`http://localhost:3000/api/patchUser`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebaseToken: accessToken,
-        user: currentMe,
-      }),
-    });
-  }
+  useEffect(() => {
+    if (user) {
+      setLocalUser({
+        username: user.username || "",
+        email: user.email || "",
+        description: user.description || "",
+      });
+    }
+  }, [user]);
 
-  const handleForm = async (event) => {
-    event.preventDefault();
-    await patchUser();
+  const handleForm = async (e) => {
+    e.preventDefault();
+    const data = await fetchData(
+      `/users/${user.id}`,
+      user.accessToken,
+      "PATCH",
+      localUser
+    );
+    console.log(data);
   };
 
   const handleChange = (e) => {
