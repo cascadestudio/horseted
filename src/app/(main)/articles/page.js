@@ -26,10 +26,7 @@ export default function ProductsPage() {
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
-  const [activeCategory, setActiveCategory] = useState({
-    id: categoryIdQuery,
-    name: categoryNameQuery,
-  });
+  const [activeCategory, setActiveCategory] = useState(null);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
   const [activeMaterials, setActiveMaterials] = useState([]);
@@ -38,7 +35,7 @@ export default function ProductsPage() {
 
   function resetFilters() {
     setActiveOrder("");
-    setActiveCategory({ id: null, name: null });
+    setActiveCategory(null);
     setActiveState("");
     setActiveBrands([]);
     setActiveMaterials([]);
@@ -47,17 +44,19 @@ export default function ProductsPage() {
   }
 
   useEffect(() => {
-    setActiveCategory({
-      id: categoryIdQuery,
-      name: categoryNameQuery,
-    });
+    if (categoryIdQuery !== null && categoryNameQuery !== null) {
+      setActiveCategory({
+        id: categoryIdQuery,
+        name: categoryNameQuery,
+      });
+    }
   }, [categoryNameQuery, categoryIdQuery]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let query = `/products?orderBy=${activeOrder}`;
-        if (activeCategory.id !== null) {
+        if (activeCategory !== null) {
           query += `&category=${activeCategory.id}`;
         }
         if (activeState !== "") {
@@ -164,7 +163,7 @@ export default function ProductsPage() {
           activeMaterials={activeMaterials}
           onMaterialsChange={handleMaterialsChange}
         />
-        {activeCategory?.id !== null && (
+        {activeCategory !== null && (
           <SizesSelect
             activeSizes={activeSizes}
             onSizesChange={handleSizesChange}
@@ -173,7 +172,7 @@ export default function ProductsPage() {
         )}
       </div>
       <div className="p-5">
-        {activeCategory?.id !== null && (
+        {activeCategory !== null && (
           <ActiveFilterBtn
             filterName={activeCategory.name}
             onRemoveFilter={removeCategoryFilter}

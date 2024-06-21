@@ -39,20 +39,20 @@
 // }
 
 // Get Categories
-export async function getCategories(query) {
-  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${query}`;
-  const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-    },
-  });
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+// export async function getCategories(query) {
+//   const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/categories?parentId=${query}`;
+//   const res = await fetch(url, {
+//     headers: {
+//       "Content-Type": "application/json",
+//       "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
+//     },
+//   });
+//   if (!res.ok) {
+//     throw new Error("Failed to fetch data");
+//   }
 
-  return res.json();
-}
+//   return res.json();
+// }
 
 // Get User
 // export async function getUsers(query) {
@@ -103,7 +103,7 @@ export const fetchData = async (query, accessToken) => {
     }
   );
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error(`Failed to fetch ${query}`);
   }
   if (query.startsWith("/medias")) {
     const blob = await response.blob();
