@@ -7,7 +7,8 @@ import { useEffect, useState } from "react";
 export default function SettingsPage() {
   const { user } = useAuthContext();
   const [localUser, setLocalUser] = useState({
-    username: user?.username || "",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
     email: user?.email || "",
     description: user?.description || "",
   });
@@ -15,9 +16,10 @@ export default function SettingsPage() {
   useEffect(() => {
     if (user) {
       setLocalUser({
-        username: user.username || "",
-        email: user.email || "",
-        description: user.description || "",
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: user?.email || "",
+        description: user?.description || "",
       });
     }
   }, [user]);
@@ -44,21 +46,11 @@ export default function SettingsPage() {
   return (
     <section>
       <h1>Paramètres</h1>
+      {user.username}
       <form
         onSubmit={handleForm}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
       >
-        <label htmlFor="username">
-          <input
-            value={localUser.username}
-            onChange={handleChange}
-            required
-            type="text"
-            name="username"
-            id="username"
-            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
-          />
-        </label>
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
           <input
@@ -68,6 +60,30 @@ export default function SettingsPage() {
             type="email"
             name="email"
             id="email"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
+        <label htmlFor="firstName">
+          <p className="mt-[18px] font-mcqueen font-semibold">Prénom :</p>
+          <input
+            value={localUser.firstName}
+            onChange={handleChange}
+            required
+            type="text"
+            name="firstName"
+            id="firstName"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
+        <label htmlFor="lastName">
+          <p className="mt-[18px] font-mcqueen font-semibold">Nom :</p>
+          <input
+            value={localUser.lastName}
+            onChange={handleChange}
+            required
+            type="text"
+            name="lastName"
+            id="lastName"
             className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
           />
         </label>
