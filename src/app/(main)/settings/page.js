@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
   const { user } = useAuthContext();
-  const [localUser, setLocalUser] = useState({
+  const [formData, setFormData] = useState({
+    avatar: user?.avatar || null,
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
@@ -15,7 +16,8 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (user) {
-      setLocalUser({
+      setFormData({
+        avatar: user?.avatar || null,
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
         email: user?.email || "",
@@ -30,14 +32,20 @@ export default function SettingsPage() {
       `/users/${user.id}`,
       user.accessToken,
       "PATCH",
-      localUser
+      formData
     );
     console.log(data);
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setLocalUser((prev) => ({
+    const { name, value, files } = e.target;
+    if (name === "avatar") {
+      setFormData((prev) => ({
+        ...prev,
+        avatar: files ? files[0] : null,
+      }));
+    }
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -51,10 +59,21 @@ export default function SettingsPage() {
         onSubmit={handleForm}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
       >
+        <label htmlFor="avatar">
+          <p className="mt-[18px] font-mcqueen font-semibold">Avatar :</p>
+          <input
+            onChange={handleChange}
+            type="file"
+            name="avatar"
+            id="avatar"
+            accept="image/*"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
           <input
-            value={localUser.email}
+            value={formData.email}
             onChange={handleChange}
             required
             type="email"
@@ -66,7 +85,7 @@ export default function SettingsPage() {
         <label htmlFor="firstName">
           <p className="mt-[18px] font-mcqueen font-semibold">Prénom :</p>
           <input
-            value={localUser.firstName}
+            value={formData.firstName}
             onChange={handleChange}
             required
             type="text"
@@ -78,7 +97,7 @@ export default function SettingsPage() {
         <label htmlFor="lastName">
           <p className="mt-[18px] font-mcqueen font-semibold">Nom :</p>
           <input
-            value={localUser.lastName}
+            value={formData.lastName}
             onChange={handleChange}
             required
             type="text"
@@ -90,7 +109,7 @@ export default function SettingsPage() {
         <label htmlFor="description">
           <p className="mt-[18px] font-mcqueen font-semibold">Présentation :</p>
           <input
-            value={localUser.description}
+            value={formData.description}
             onChange={handleChange}
             required
             type="text"
