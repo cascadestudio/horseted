@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import BurgerIcon from "./BurgerIcon";
 import NavBar from "./NavBar";
 import Account from "./Account";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -13,7 +14,9 @@ export default function Header() {
       <div className="container mx-auto px-5">
         <div className="flex justify-between items-center gap-x-7 py-5 ">
           <BurgerIcon className="lg:hidden" />
-          <HorsetedLogo className="h-8 lg:h-auto" />
+          <Link href="/">
+            <HorsetedLogo className="h-8 lg:h-auto" />
+          </Link>
           <SearchBar className="hidden lg:block" />
           <Button className="hidden lg:block">Vendre</Button>
           <Account />

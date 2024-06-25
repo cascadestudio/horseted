@@ -1,8 +1,9 @@
 "use client";
-// import ProductCard from "@/components/ProductCard";
 import { useState, useEffect } from "react";
-import ProductsList from "./ProductList";
 import { fetchData } from "@/libs/fetch";
+import { useSearchParams } from "next/navigation";
+
+import ProductsList from "./ProductList";
 import ActiveFilterBtn from "./ActiveFilterBtn";
 import SortSelect from "./ProductFilters/SortSelect";
 import StateSelect from "./ProductFilters/StateSelect";
@@ -11,16 +12,23 @@ import CategorySelect from "./ProductFilters/CategorySelect";
 import PricesSelect from "./ProductFilters/PricesSelect";
 import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
+import { useRouter } from "next/navigation";
 
-export default function ProductsPage({ params }) {
+export default function ProductsPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get("search");
+  const categoryIdQuery = searchParams.get("categoryId");
+  const categoryNameQuery = searchParams.get("categoryName");
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState({
-    id: params.categoryId,
-    name: params.categoryId,
+    id: categoryIdQuery,
+    name: categoryNameQuery,
   });
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
@@ -28,11 +36,28 @@ export default function ProductsPage({ params }) {
   const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
 
+  function resetFilters() {
+    setActiveOrder("");
+    setActiveCategory({ id: null, name: null });
+    setActiveState("");
+    setActiveBrands([]);
+    setActiveMaterials([]);
+    setActiveSizes([]);
+    setActivePrices("");
+  }
+
+  useEffect(() => {
+    setActiveCategory({
+      id: categoryIdQuery,
+      name: categoryNameQuery,
+    });
+  }, [categoryNameQuery, categoryIdQuery]);
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let query = `/products?orderBy=${activeOrder}`;
-        if (activeCategory !== null) {
+        if (activeCategory.id !== null) {
           query += `&category=${activeCategory.id}`;
         }
         if (activeState !== "") {
@@ -50,6 +75,9 @@ export default function ProductsPage({ params }) {
         if (activeSizes.length > 0) {
           const activeSizeIds = activeSizes.map((size) => size.id);
           query += `&sizes=${activeSizeIds.join(";")}`;
+        }
+        if (searchQuery !== null) {
+          query += `&terms=${searchQuery}`;
         }
         console.log("query =>", query);
         const data = await fetchData(query);
@@ -69,6 +97,7 @@ export default function ProductsPage({ params }) {
     activeMaterials,
     activePrices,
     activeSizes,
+    searchQuery,
   ]);
 
   function handleOrderChange(value) {
@@ -97,6 +126,9 @@ export default function ProductsPage({ params }) {
   }
   function removeStateFilter() {
     setActiveState("");
+  }
+  function removeSearchTermFilter() {
+    router.push("/articles");
   }
   function removeBrandFilter(brand) {
     setActiveBrands(activeBrands.filter((b) => b !== brand));
@@ -132,14 +164,16 @@ export default function ProductsPage({ params }) {
           activeMaterials={activeMaterials}
           onMaterialsChange={handleMaterialsChange}
         />
-        <SizesSelect
-          activeSizes={activeSizes}
-          onSizesChange={handleSizesChange}
-          categoryId={activeCategory.id}
-        />
+        {activeCategory?.id !== null && (
+          <SizesSelect
+            activeSizes={activeSizes}
+            onSizesChange={handleSizesChange}
+            categoryId={activeCategory.id}
+          />
+        )}
       </div>
       <div className="p-5">
-        {activeCategory !== null && (
+        {activeCategory?.id !== null && (
           <ActiveFilterBtn
             filterName={activeCategory.name}
             onRemoveFilter={removeCategoryFilter}
@@ -149,6 +183,12 @@ export default function ProductsPage({ params }) {
           <ActiveFilterBtn
             filterName={activeState}
             onRemoveFilter={removeStateFilter}
+          />
+        )}
+        {searchQuery !== null && (
+          <ActiveFilterBtn
+            filterName={searchQuery}
+            onRemoveFilter={removeSearchTermFilter}
           />
         )}
         {activeBrands.length > 0 &&
@@ -181,7 +221,12 @@ export default function ProductsPage({ params }) {
               />
             );
           })}
-        {/* TODO: remove all filters button */}
+        <button
+          className="bg-white text-gray-700 rounded-lg px-4 py-2 mt-4 hover:bg-gray-100"
+          onClick={() => resetFilters()}
+        >
+          Effacer les filtres
+        </button>
       </div>
       {!isLoading && <ProductsList products={products} />}
     </div>

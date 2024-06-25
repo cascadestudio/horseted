@@ -23,6 +23,5 @@ export async function POST(req) {
       console.log(error);
     });
 
-  console.log("res =>", res);
   return Response.json(res);
 }

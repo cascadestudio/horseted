@@ -1,8 +1,6 @@
 export async function PATCH(req) {
   const { firebaseToken, user } = await req.json();
 
-  // console.log(user);
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/${user.id}`,
     {
@@ -22,6 +20,5 @@ export async function PATCH(req) {
     }
   );
   const data = await res.json();
-  console.log("data =>", data);
   return Response.json({ data });
 }
