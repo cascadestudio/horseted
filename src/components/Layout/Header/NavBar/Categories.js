@@ -1,5 +1,4 @@
 "use client";
-
 import SubCategoriesPanel from "./SubCategoriesPanel";
 import { useState } from "react";
 

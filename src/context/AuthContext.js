@@ -3,32 +3,32 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
+import { fetchData } from "@/libs/fetch";
 
 const auth = getAuth(firebase_app);
-
 export const AuthContext = createContext({});
-
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [me, setMe] = useState({});
-
   const [loading, setLoading] = useState(true);
-
   async function fetchUser(accessToken) {
-    await fetch(`http://localhost:3000/api/getUser?accessToken=${accessToken}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setMe(data.data);
-      });
+    try {
+      const query = `/users/me`;
+      const data = await fetchData(query, accessToken);
+      return data;
+    } catch (error) {
+      console.error(`Error fetching ${query}`, error);
+    }
   }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        fetchUser(user.accessToken);
+        fetchUser(user.accessToken).then((data) =>
+          setUser({ ...user, ...data })
+        );
       } else {
         setUser(null);
       }
@@ -39,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, me }}>
+    <AuthContext.Provider value={{ user }}>
       {loading ? <div>Loading...</div> : children}
     </AuthContext.Provider>
   );

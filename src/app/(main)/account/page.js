@@ -2,10 +2,12 @@
 import { useAuthContext } from "@/context/AuthContext";
 import Button from "@/components/Button";
 export default function AccountPage() {
-  const { me } = useAuthContext();
+  const { user } = useAuthContext();
   return (
     <>
-      {me.username}
+      {user.username}
+      <br />
+      {user.description}
       <Button href="/settings">Modifier mon profil</Button>
     </>
   );

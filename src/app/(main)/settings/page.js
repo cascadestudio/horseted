@@ -1,50 +1,80 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
-import { useState } from "react";
+import { fetchData } from "@/libs/fetch";
+import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
-  const { me, user } = useAuthContext();
-  const [currentMe, setCurrentMe] = useState({
-    id: me.id,
-    description: me.description,
-    // lastName: me.lastName,
-    // birthDate: me.birthDate,
-    // description: me.description,
-    // avatar: me.avatar,
+  const { user } = useAuthContext();
+  const [formData, setFormData] = useState({
+    avatar: user?.avatar || null,
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    email: user?.email || "",
+    description: user?.description || "",
   });
 
-  async function patchUser() {
-    await fetch(`http://localhost:3000/api/patchUser`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebaseToken: user.accessToken,
-        user: currentMe,
-      }),
-    });
-  }
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        avatar: user?.avatar || null,
+        firstName: user?.firstName || "",
+        lastName: user?.lastName || "",
+        email: user?.email || "",
+        description: user?.description || "",
+      });
+    }
+  }, [user]);
 
-  const handleForm = async (event) => {
-    event.preventDefault();
-    await patchUser();
+  const handleForm = async (e) => {
+    e.preventDefault();
+    const data = await fetchData(
+      `/users/${user.id}`,
+      user.accessToken,
+      "PATCH",
+      formData
+    );
+    console.log(data);
+  };
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "avatar") {
+      setFormData((prev) => ({
+        ...prev,
+        avatar: files ? files[0] : null,
+      }));
+    }
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
     <section>
       <h1>Paramètres</h1>
-      {me.username}
+      {user.username}
       <form
         onSubmit={handleForm}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
       >
+        <label htmlFor="avatar">
+          <p className="mt-[18px] font-mcqueen font-semibold">Avatar :</p>
+          <input
+            onChange={handleChange}
+            type="file"
+            name="avatar"
+            id="avatar"
+            accept="image/*"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
           <input
-            value={user.email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
             type="email"
             name="email"
@@ -52,13 +82,35 @@ export default function SettingsPage() {
             className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
           />
         </label>
-        <label htmlFor="description">
-          <p className="mt-[18px] font-mcqueen font-semibold">description :</p>
+        <label htmlFor="firstName">
+          <p className="mt-[18px] font-mcqueen font-semibold">Prénom :</p>
           <input
-            value={user.description}
-            onChange={(e) =>
-              setCurrentMe({ ...currentMe, description: e.target.value })
-            }
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+            type="text"
+            name="firstName"
+            id="firstName"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
+        <label htmlFor="lastName">
+          <p className="mt-[18px] font-mcqueen font-semibold">Nom :</p>
+          <input
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            type="text"
+            name="lastName"
+            id="lastName"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+        </label>
+        <label htmlFor="description">
+          <p className="mt-[18px] font-mcqueen font-semibold">Présentation :</p>
+          <input
+            value={formData.description}
+            onChange={handleChange}
             required
             type="text"
             name="description"
