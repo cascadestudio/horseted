@@ -18,7 +18,7 @@ export const AuthContextProvider = ({ children }) => {
       const data = await fetchData(query, accessToken);
       return data;
     } catch (error) {
-      console.error(`Error fetching ${query}`, error);
+      console.error(`Error fetching user`, error);
     }
   }
 

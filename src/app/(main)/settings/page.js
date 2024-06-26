@@ -2,6 +2,7 @@
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import { fetchData } from "@/libs/fetch";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SettingsPage() {
@@ -65,6 +66,12 @@ export default function SettingsPage() {
     );
     console.log(data);
   };
+
+  const router = useRouter();
+  async function handleDeleteAccount() {
+    const data = await fetchData(`/users/me`, user.accessToken, "DELETE");
+    return router.push("/");
+  }
 
   return (
     <section>
@@ -164,6 +171,12 @@ export default function SettingsPage() {
           Submit
         </Button>
       </form>
+      <Button
+        className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
+        onClick={handleDeleteAccount}
+      >
+        Delete account
+      </Button>
     </section>
   );
 }
