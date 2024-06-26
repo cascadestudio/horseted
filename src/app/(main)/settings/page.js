@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function SettingsPage() {
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({
-    avatar: user?.avatar || null,
+    // avatar: user?.avatar || null,
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
@@ -17,7 +17,7 @@ export default function SettingsPage() {
   useEffect(() => {
     if (user) {
       setFormData({
-        avatar: user?.avatar || null,
+        // avatar: user?.avatar || null,
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
         email: user?.email || "",
@@ -25,17 +25,6 @@ export default function SettingsPage() {
       });
     }
   }, [user]);
-
-  const handleForm = async (e) => {
-    e.preventDefault();
-    const data = await fetchData(
-      `/users/${user.id}`,
-      user.accessToken,
-      "PATCH",
-      formData
-    );
-    console.log(data);
-  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -51,12 +40,36 @@ export default function SettingsPage() {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formDataToSend = new FormData();
+
+    for (const key in formData) {
+      if (formData[key] !== null) {
+        formDataToSend.append(key, formData[key]);
+      }
+    }
+
+    for (let [key, value] of formDataToSend.entries()) {
+      console.log(`${key}:`, value);
+    }
+
+    const data = await fetchData(
+      `/users/${user.id}`,
+      user.accessToken,
+      "PATCH",
+      formDataToSend
+    );
+    console.log(data);
+  };
+
   return (
     <section>
       <h1>Paramètres</h1>
       {user.username}
       <form
-        onSubmit={handleForm}
+        onSubmit={handleSubmit}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
       >
         <label htmlFor="avatar">
