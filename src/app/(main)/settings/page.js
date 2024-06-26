@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 export default function SettingsPage() {
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({
-    // avatar: user?.avatar || null,
+    avatar: user?.avatar || null,
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
@@ -17,7 +17,7 @@ export default function SettingsPage() {
   useEffect(() => {
     if (user) {
       setFormData({
-        // avatar: user?.avatar || null,
+        avatar: user?.avatar || null,
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
         email: user?.email || "",
@@ -56,7 +56,7 @@ export default function SettingsPage() {
     }
 
     const data = await fetchData(
-      `/users/${user.id}`,
+      `/users/me`,
       user.accessToken,
       "PATCH",
       formDataToSend
