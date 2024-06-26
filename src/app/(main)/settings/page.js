@@ -8,6 +8,7 @@ export default function SettingsPage() {
   const { user } = useAuthContext();
   const [formData, setFormData] = useState({
     avatar: user?.avatar || null,
+    city: user?.city || "",
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
     email: user?.email || "",
@@ -18,6 +19,7 @@ export default function SettingsPage() {
     if (user) {
       setFormData({
         avatar: user?.avatar || null,
+        city: user?.city || "",
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
         email: user?.email || "",
@@ -82,6 +84,30 @@ export default function SettingsPage() {
             accept="image/*"
             className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
           />
+        </label>
+        <label htmlFor="city">
+          <p className="mt-[18px] font-mcqueen font-semibold">Ville :</p>
+          <input
+            value={formData.city}
+            onChange={handleChange}
+            list="cities"
+            name="city"
+            id="city"
+            className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
+          />
+          <datalist id="cities">
+            <option value="Paris" />
+            <option value="Lille" />
+            <option value="Marseille" />
+            <option value="Lyon" />
+            <option value="Nantes" />
+            <option value="Brest" />
+            <option value="Toulouse" />
+            <option value="Montpellier" />
+            <option value="Nice" />
+            <option value="Strasbourg" />
+            <option value="Lille" />
+          </datalist>
         </label>
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
