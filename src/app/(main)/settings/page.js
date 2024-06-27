@@ -5,29 +5,30 @@ import { fetchData } from "@/libs/fetch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
+import { updateEmail } from "firebase/auth";
 
 function SettingsPage() {
   const { user } = useAuthContext();
+  console.log("user", user);
   const router = useRouter();
-
   const [formData, setFormData] = useState({
-    avatar: user?.avatar || null,
-    city: user?.city || "",
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
-    email: user?.email || "",
+    email: user?.auth.email || "",
     description: user?.description || "",
+    avatar: user?.avatar || null,
+    city: user?.city || "",
   });
 
   useEffect(() => {
     if (user) {
       setFormData({
-        avatar: user?.avatar || null,
-        city: user?.city || "",
         firstName: user?.firstName || "",
         lastName: user?.lastName || "",
-        email: user?.email || "",
+        email: user?.auth.email || "",
         description: user?.description || "",
+        avatar: user?.avatar || null,
+        city: user?.city || "",
       });
     }
   }, [user]);
@@ -54,12 +55,20 @@ function SettingsPage() {
     for (const key in formData) {
       if (formData[key] !== null) {
         formDataToSend.append(key, formData[key]);
+        if (key === "email") {
+          try {
+            await updateEmail(user.auth, formData[key]);
+            console.log("Email updated successfully.");
+          } catch (error) {
+            console.log(`Failed to update email: ${error.message}`);
+          }
+        }
       }
     }
 
-    for (let [key, value] of formDataToSend.entries()) {
-      console.log(`${key}:`, value);
-    }
+    // for (let [key, value] of formDataToSend.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
 
     const data = await fetchData(
       `/users/me`,

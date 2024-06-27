@@ -31,7 +31,7 @@ export async function fetchData(
         }),
   };
 
-  console.log("url", url, "options", options);
+  // console.log("url", url, "options", options);
 
   const response = await fetch(url, options);
 

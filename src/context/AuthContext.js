@@ -1,5 +1,4 @@
 "use client";
-
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
@@ -23,12 +22,16 @@ export const AuthContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        fetchUser(user.accessToken).then((data) =>
-          setUser({ ...user, ...data })
-        );
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      if (firebaseUser) {
+        setUser(firebaseUser);
+
+        try {
+          const apiUser = await fetchUser(firebaseUser.accessToken);
+          setUser({ auth: firebaseUser, ...apiUser });
+        } catch (error) {
+          console.error("Failed to fetch additional user data:", error);
+        }
       } else {
         setUser(null);
       }
