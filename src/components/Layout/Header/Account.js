@@ -1,5 +1,4 @@
 "use client";
-
 import { useAuthContext } from "@/context/AuthContext";
 import MyAccountDropDown from "./MyAccountDropDown";
 import Link from "next/link";

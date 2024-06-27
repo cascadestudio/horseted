@@ -1,4 +1,4 @@
-import { getApi } from "@/libs/fetch";
+import { fetchData } from "@/libs/fetch";
 import OfferButton from "./OfferButton";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
@@ -15,7 +15,7 @@ import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import ProductsSection from "@/components/ProductsSection";
 
 export default async function ProductPage({ params }) {
-  const product = await getApi(`products/${params.id}`);
+  const product = await fetchData(`/products/${params.id}`);
   const {
     title,
     price,

@@ -10,8 +10,8 @@ export async function fetchData(
   }
 
   const headers = {
-    "Content-Type":
-      method === "PATCH" ? "multipart/form-data" : "application/json",
+    // "Content-Type":
+    //   method === "PATCH" ? "multipart/form-data" : "application/json",
     "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
     ...(query.startsWith("/users") &&
       accessToken && {
@@ -24,10 +24,14 @@ export async function fetchData(
   const options = {
     ...(method && { method: method }),
     headers: headers,
-    ...(body && { body: JSON.stringify(body) }),
+    ...(body && method === "PATCH"
+      ? { body: body }
+      : body && {
+          body: JSON.stringify(body),
+        }),
   };
 
-  console.log("url", url, "options", options);
+  // console.log("url", url, "options", options);
 
   const response = await fetch(url, options);
 

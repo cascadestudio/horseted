@@ -9,8 +9,6 @@ export default function SearchBar({ className }) {
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && searchTerm.trim() !== "") {
       router.push(`/articles?search=${encodeURIComponent(searchTerm)}`);
-    } else {
-      router.push(`/articles`);
     }
   };
 
