@@ -11,6 +11,7 @@ export const useAuthContext = () => useContext(AuthContext);
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
   async function fetchUser(accessToken) {
     try {
       const query = `/users/me`;
@@ -24,8 +25,6 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
-        setUser(firebaseUser);
-
         try {
           const apiUser = await fetchUser(firebaseUser.accessToken);
           setUser({ auth: firebaseUser, ...apiUser });
