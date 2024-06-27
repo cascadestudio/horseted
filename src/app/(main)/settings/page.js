@@ -4,8 +4,9 @@ import { useAuthContext } from "@/context/AuthContext";
 import { fetchData } from "@/libs/fetch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import withAuth from "@/hoc/withAuth";
 
-export default function SettingsPage() {
+function SettingsPage() {
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -28,8 +29,6 @@ export default function SettingsPage() {
         email: user?.email || "",
         description: user?.description || "",
       });
-    } else {
-      router.push("/");
     }
   }, [user]);
 
@@ -186,3 +185,5 @@ export default function SettingsPage() {
       </section>
     );
 }
+
+export default withAuth(SettingsPage);

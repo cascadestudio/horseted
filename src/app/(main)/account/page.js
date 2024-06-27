@@ -1,16 +1,11 @@
 "use client";
 import { useAuthContext } from "@/context/AuthContext";
+import withAuth from "@/hoc/withAuth";
+
 import Button from "@/components/Button";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-export default function AccountPage() {
+
+function AccountPage() {
   const { user } = useAuthContext();
-  const router = useRouter();
-  useEffect(() => {
-    if (user === null) {
-      router.push("/");
-    }
-  }, [user]);
 
   if (user)
     return (
@@ -22,3 +17,5 @@ export default function AccountPage() {
       </>
     );
 }
+
+export default withAuth(AccountPage);
