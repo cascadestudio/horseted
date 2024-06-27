@@ -1,7 +1,7 @@
-import { getProductImage } from "@/libs/fetch";
+import { fetchData } from "@/libs/fetch";
 
 export default async function ProductImage({ media }) {
-  const base64 = await getProductImage(`medias/${media.files.default}`);
+  const base64 = await fetchData(`/medias/${media.files.default}`);
 
   return (
     <img
