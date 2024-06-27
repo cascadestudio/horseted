@@ -9,7 +9,7 @@ import { updateEmail } from "firebase/auth";
 
 function SettingsPage() {
   const { user } = useAuthContext();
-  console.log("user", user);
+  // console.log("user", user);
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
@@ -55,7 +55,7 @@ function SettingsPage() {
     for (const key in formData) {
       if (formData[key] !== null) {
         formDataToSend.append(key, formData[key]);
-        if (key === "email") {
+        if (key === "email" && formData[key] !== user?.auth.email) {
           try {
             await updateEmail(user.auth, formData[key]);
             console.log("Email updated successfully.");
@@ -72,7 +72,7 @@ function SettingsPage() {
 
     const data = await fetchData(
       `/users/me`,
-      user.accessToken,
+      user.auth.accessToken,
       "PATCH",
       formDataToSend
     );
