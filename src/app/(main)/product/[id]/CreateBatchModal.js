@@ -8,8 +8,10 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import Image from "next/image";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
+import ProductCard from "@/components/ProductCard";
 
-export default function CreateBatchModal({ onClose }) {
+export default function CreateBatchModal({ userData, userProducts, onClose }) {
+  // console.log(userProducts);
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
@@ -43,10 +45,9 @@ export default function CreateBatchModal({ onClose }) {
         <div className="bg-white">
           <div className="flex justify-between container mx-auto px-5 py-2">
             <div className="flex items-center">
-              <CloseButton
-                onClick={onClose}
-                className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10"
-              />
+              <div onClick={onClose}>
+                <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
+              </div>
               <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
                 Créer un lot
               </span>
@@ -71,9 +72,10 @@ export default function CreateBatchModal({ onClose }) {
             </div>
           </div>
         </div>
-        <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto">
-          {/* Replace with actual content: list of articles */}
-          <p>List of articles will go here...</p>
+        <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-4">
+          {userProducts.items.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 lg:py-6">

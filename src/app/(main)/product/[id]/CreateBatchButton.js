@@ -4,7 +4,8 @@ import { useState } from "react";
 import Button from "@/components/Button";
 import CreateBatchModal from "./CreateBatchModal";
 
-export default function CreateBatchButton() {
+export default function CreateBatchButton({ userData, userProducts }) {
+  console.log(userProducts);
   const [isCreateBatchModalOpen, setIsCreateBatchModalOpen] = useState(false);
 
   const handleOpenCreateBatchModal = () => {
@@ -12,6 +13,7 @@ export default function CreateBatchButton() {
   };
 
   const handleCloseCreateBatchModal = () => {
+    console.log("CreateBatchModal closed");
     setIsCreateBatchModalOpen(false);
   };
 
@@ -24,7 +26,11 @@ export default function CreateBatchButton() {
         Créer un lot
       </Button>
       {isCreateBatchModalOpen && (
-        <CreateBatchModal onClose={handleCloseCreateBatchModal} />
+        <CreateBatchModal
+          userData={userData}
+          userProducts={userProducts}
+          onClose={handleCloseCreateBatchModal}
+        />
       )}
     </>
   );
