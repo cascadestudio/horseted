@@ -1,5 +1,13 @@
-import Layout from "@/components/Layout";
+import ClientStripeProvider from "@/components/ClientStripeProvider";
+import Footer from "@/components/Layout/Footer";
+import Header from "@/components/Layout/Header";
 
 export default function HomeLayout({ children }) {
-  return <Layout>{children}</Layout>;
+  return (
+    <ClientStripeProvider>
+      <Header />
+      {children}
+      <Footer />
+    </ClientStripeProvider>
+  );
 }

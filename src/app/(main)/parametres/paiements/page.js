@@ -3,7 +3,7 @@ import { useState } from "react";
 import AddPaymentCardModal from "./AddPaymentCardModal";
 
 export default function PaymentSettings() {
-  const [isModal, setIsModal] = useState(false);
+  const [isModal, setIsModal] = useState(true);
   return (
     <div>
       <h2 className="font-mcqueen font-bold text-xl mb-5">Mode de paiement</h2>
