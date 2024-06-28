@@ -8,7 +8,7 @@ const pages = [
   { title: "Personnalisation", path: "personalisation" },
   {
     title: "Paiements & encaissements",
-    path: "paiements-encaissements",
+    path: "paiements",
   },
   { title: "Adresses", path: "adresses" },
   { title: "Notifications", path: "notifications" },
