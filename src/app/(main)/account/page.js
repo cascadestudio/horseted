@@ -13,7 +13,7 @@ function AccountPage() {
         {user?.username}
         <br />
         {user?.description}
-        <Button href="/settings">Modifier mon profil</Button>
+        <Button href="/parametres">Modifier mon profil</Button>
       </>
     );
 }
