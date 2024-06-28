@@ -8,7 +8,6 @@ import { updateEmail } from "firebase/auth";
 
 export default function Settings() {
   const { user } = useAuthContext();
-  // console.log("user", user);
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
