@@ -1,81 +1,44 @@
-import ClientStripeProvider from "@/components/ClientStripeProvider";
+import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-const PaymentForm = () => {
+const CheckoutForm = ({ onTokenReceived }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     if (!stripe || !elements) {
+      setError("Stripe has not loaded yet.");
+      setLoading(false);
       return;
     }
 
     const cardElement = elements.getElement(CardElement);
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
+    const { error, token } = await stripe.createToken(cardElement);
 
     if (error) {
-      console.log("[error]", error);
+      setError(error.message);
+      setLoading(false);
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
+      onTokenReceived(token);
+      setLoading(false);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-gray-100 p-6 rounded-lg shadow-md"
-    >
-      <h2 className="text-xl font-semibold mb-4">Ajouter une carte bancaire</h2>
-      <div className="mb-4">
-        <label className="block mb-2 font-bold">Nom complet :</label>
-        <input
-          type="text"
-          placeholder="Ex : Sophie Marceau"
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block mb-2 font-bold">Numéro de carte :</label>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: "16px",
-                color: "#32325d",
-                "::placeholder": {
-                  color: "#a0aec0",
-                },
-              },
-              invalid: {
-                color: "#fa755a",
-                iconColor: "#fa755a",
-              },
-            },
-          }}
-          className="w-full p-2 border border-gray-300 rounded"
-        />
-      </div>
-      <button
-        type="submit"
-        disabled={!stripe}
-        className="bg-green-500 text-white font-bold py-2 px-4 rounded"
-      >
-        Enregistrer
+    <form onSubmit={handleSubmit}>
+      <CardElement />
+      {error && <div role="alert">{error}</div>}
+      <button type="submit" disabled={!stripe || loading}>
+        {loading ? "Processing..." : "Pay"}
       </button>
     </form>
   );
 };
 
-const WrappedPaymentForm = () => (
-  <ClientStripeProvider>
-    <PaymentForm />
-  </ClientStripeProvider>
-);
-
-export default WrappedPaymentForm;
+export default CheckoutForm;
