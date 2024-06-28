@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-const CheckoutForm = ({ onTokenReceived }) => {
+const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -25,7 +25,7 @@ const CheckoutForm = ({ onTokenReceived }) => {
       setError(error.message);
       setLoading(false);
     } else {
-      onTokenReceived(token);
+      console.log("token", token.id);
       setLoading(false);
     }
   };

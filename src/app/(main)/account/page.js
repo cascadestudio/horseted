@@ -6,7 +6,6 @@ import Button from "@/components/Button";
 
 function AccountPage() {
   const { user } = useAuthContext();
-
   if (user)
     return (
       <>
