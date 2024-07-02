@@ -9,13 +9,14 @@ import Image from "next/image";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
+import ProductImage from "./ProductImage";
 
 export default function CreateBatchModal({ userData, userProducts, onClose }) {
-  // console.log(userProducts);
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
   const [isBatchSummaryModalOpen, setIsBatchSummaryModalOpen] = useState(false);
+  const [batch, setBatch] = useState([]);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -38,6 +39,24 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
   const handleCloseBatchSummaryModal = () => {
     setIsBatchSummaryModalOpen(false);
   };
+
+  const handleAddToBatch = (product) => {
+    setBatch((prevBatch) => {
+      if (prevBatch.find((p) => p.id === product.id)) {
+        return prevBatch.filter((p) => p.id !== product.id);
+      }
+      return [...prevBatch, product];
+    });
+  };
+
+  const isProductInBatch = (productId) => {
+    return batch.some((product) => product.id === productId);
+  };
+
+  const totalBatchPrice = batch.reduce(
+    (total, product) => total + product.price,
+    0
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-light-grey">
@@ -76,14 +95,32 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
           {userProducts.items.map((product) => (
             <div key={product.id}>
               <ProductCard product={product} className="border-none" />
-              <Button variant="transparent-green">Ajouter</Button>
+              <Button
+                onClick={() => handleAddToBatch(product)}
+                variant={
+                  isProductInBatch(product.id)
+                    ? "transparent-red"
+                    : "transparent-green"
+                }
+              >
+                {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
+              </Button>
             </div>
           ))}
         </div>
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 lg:py-6">
-            <span className="font-bold text-lg">Total: 100€</span>
-            <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
+            <span className="font-bold text-lg">
+              Total: {totalBatchPrice} €
+            </span>
+            <div className="flex items-center mt-4">
+              {batch.map((product) =>
+                // <ProductImage key={product.id} media={product.media} />
+                console.log(product)
+              )}
+              <span className="ml-2">Produits ajoutés: {batch.length}</span>
+              <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
+            </div>
           </div>
         </div>
       </div>

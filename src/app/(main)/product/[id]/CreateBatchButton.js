@@ -5,7 +5,6 @@ import Button from "@/components/Button";
 import CreateBatchModal from "./CreateBatchModal";
 
 export default function CreateBatchButton({ userData, userProducts }) {
-  console.log(userProducts);
   const [isCreateBatchModalOpen, setIsCreateBatchModalOpen] = useState(false);
 
   const handleOpenCreateBatchModal = () => {
