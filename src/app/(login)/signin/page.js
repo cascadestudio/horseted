@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
@@ -13,16 +12,6 @@ import heroImage1 from "@/assets/images/heroImage1.jpg";
 import SigninForm from "./signinForm";
 
 export default function signinPage() {
-  const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const passwordResetSent = searchParams.get("passwordResetSent");
-    if (passwordResetSent === "true") {
-      setShowPasswordResetAlert(true);
-    }
-  }, []);
-
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
       <div className="lg:w-1/2">
@@ -55,7 +44,9 @@ export default function signinPage() {
                 Continuer avec Google
               </span>
             </a>
-            <SigninForm showPasswordResetAlert={showPasswordResetAlert} />
+            <Suspense fallback={<div>Loading...</div>}>
+              <SigninForm />
+            </Suspense>
           </div>
           <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
             Inscription

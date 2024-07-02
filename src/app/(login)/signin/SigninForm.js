@@ -1,10 +1,23 @@
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import signIn from "@/libs/firebase/auth/signin";
+import Button from "@/components/Button";
+import Link from "next/link";
 
-export default function SigninForm({ showPasswordResetAlert }) {
+export default function SigninForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
+
+  useEffect(() => {
+    const passwordResetSent = searchParams.get("passwordResetSent");
+    if (passwordResetSent === "true") {
+      setShowPasswordResetAlert(true);
+    }
+  }, []);
 
   const handleForm = async (event) => {
     event.preventDefault();
