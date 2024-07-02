@@ -6,14 +6,13 @@ import Button from "@/components/Button";
 
 function AccountPage() {
   const { user } = useAuthContext();
-
   if (user)
     return (
       <>
         {user?.username}
         <br />
         {user?.description}
-        <Button href="/settings">Modifier mon profil</Button>
+        <Button href="/parametres">Modifier mon profil</Button>
       </>
     );
 }
