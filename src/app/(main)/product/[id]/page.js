@@ -13,6 +13,7 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import ProductsSection from "@/components/ProductsSection";
+import CreateBatchButton from "./CreateBatchButton";
 
 export default async function ProductPage({ params }) {
   const product = await fetchData(`/products/${params.id}`);
@@ -32,6 +33,13 @@ export default async function ProductPage({ params }) {
     state,
     medias,
   } = product;
+
+  const userData = await fetchData(`/users/${userId}`);
+
+  const userProducts = await fetchData(
+    `/products?orderBy=createdAt;desc&fromId=${userId}`
+  );
+
   const formattedDate = new Intl.DateTimeFormat("fr-FR", {
     year: "numeric",
     month: "long",
@@ -109,9 +117,10 @@ export default async function ProductPage({ params }) {
                 </h4>
                 <p className="text-sm">Économisez sur les frais de livraison</p>
               </div>
-              <Button href="#" className="text-sm whitespace-nowrap h-8 ml-5">
-                Créer un lot
-              </Button>
+              <CreateBatchButton
+                userData={userData}
+                userProducts={userProducts}
+              />
             </div>
             <table className="table-auto mt-5">
               <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
