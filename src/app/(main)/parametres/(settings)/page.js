@@ -4,12 +4,10 @@ import { useAuthContext } from "@/context/AuthContext";
 import { fetchData } from "@/libs/fetch";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import withAuth from "@/hoc/withAuth";
 import { updateEmail } from "firebase/auth";
 
-function SettingsPage() {
+export default function Settings() {
   const { user } = useAuthContext();
-  // console.log("user", user);
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
@@ -87,7 +85,6 @@ function SettingsPage() {
   if (user)
     return (
       <section>
-        <h1>Paramètres</h1>
         {user?.username}
         <form
           onSubmit={handleSubmit}
@@ -194,5 +191,3 @@ function SettingsPage() {
       </section>
     );
 }
-
-export default withAuth(SettingsPage);

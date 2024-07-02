@@ -1,17 +1,18 @@
-import ItemCategories from "./ProductCategories";
+import ProductCategories from "./ProductCategories";
 import { useEffect, useState, useRef } from "react";
-import { useFetchCategories } from "@/libs/hooks";
+import { fetchData } from "@/libs/fetch";
 import { useIsClickOutsideElement } from "@/libs/hooks";
 
 export default function SubCategoriesPanel({ parentId }) {
   const panelRef = useRef();
-  const [subCategories, isLoading] = useFetchCategories(parentId);
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
   const isSubCategories = subCategories.length > 0;
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(panelRef);
   const [isClickDropdown, setIsClickDropdown] = useState(false);
 
+  console.log(selectedSubCategoriesId);
   function handleClick(id) {
     setSelectedSubCategoriesId(id);
     if (isClickOutside) {
@@ -23,10 +24,24 @@ export default function SubCategoriesPanel({ parentId }) {
   }
 
   useEffect(() => {
-    if (isSubCategories && !isLoading) {
+    const fetchSubCategories = async () => {
+      const query = `/categories?parentId=${parentId}`;
+      try {
+        const data = await fetchData(query);
+        setSubCategories(data);
+      } catch (error) {
+        console.error(`Error fetching ${query}:`, error);
+      }
+    };
+
+    fetchSubCategories();
+  }, []);
+
+  useEffect(() => {
+    if (subCategories.length > 0) {
       setSelectedSubCategoriesId(subCategories[0].id);
     }
-  }, [isLoading]);
+  }, [subCategories]);
 
   if (isSubCategories && !isClickOutside) {
     return (
@@ -56,7 +71,7 @@ export default function SubCategoriesPanel({ parentId }) {
           })}
         </ul>
         {selectedSubCategoriesId !== null && (
-          <ItemCategories parentId={selectedSubCategoriesId} />
+          <ProductCategories parentId={selectedSubCategoriesId} />
         )}
       </div>
     );

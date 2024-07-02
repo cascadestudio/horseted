@@ -1,8 +1,23 @@
-import { useFetchCategories } from "@/libs/hooks";
+import { useEffect, useState } from "react";
+import { fetchData } from "@/libs/fetch";
 import Link from "next/link";
 
 export default function ProductCategories({ parentId }) {
-  const [itemCategories] = useFetchCategories(parentId);
+  const [itemCategories, setItemCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchItemCategories = async () => {
+      const query = `/categories?parentId=${parentId}`;
+      try {
+        const data = await fetchData(query);
+        setItemCategories(data);
+      } catch (error) {
+        console.error(`Error fetching ${query}:`, error);
+      }
+    };
+
+    fetchItemCategories();
+  }, [parentId]);
 
   if (itemCategories.length > 0) {
     return (

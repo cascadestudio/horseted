@@ -1,8 +1,11 @@
 import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
-import { mcqueen, raleway, poppins, baseMetadata } from "@/libs/utils";
+import { mcqueen, raleway, poppins } from "@/libs/utils";
 
-export const metadata = baseMetadata;
+export const metadata = {
+  title: "Horseted",
+  description: "Horseted",
+};
 
 export default function RootLayout({ children }) {
   return (

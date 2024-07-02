@@ -39,8 +39,3 @@ export const poppins = Poppins({
   variable: "--font-poppins",
   weight: ["400", "700"],
 });
-
-export const baseMetadata = {
-  title: "Horseted",
-  description: "Horseted",
-};

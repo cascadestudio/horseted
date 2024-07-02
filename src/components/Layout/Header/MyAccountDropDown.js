@@ -53,7 +53,7 @@ export default function MyAccountDropDown() {
               <Link href="/orders">Commandes</Link>
             </li>
             <li>
-              <Link href="/settings">Paramètres</Link>
+              <Link href="/parametres">Paramètres</Link>
             </li>
             <button onClick={() => handleSignout()}>Se déconnecter</button>
           </ul>
