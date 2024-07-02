@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
-import ProductImage from "./ProductImage";
+import ClientProductImage from "@/components/ClientProductImage";
 
 export default function CreateBatchModal({ userData, userProducts, onClose }) {
   const modalRef = useRef();
@@ -122,8 +122,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
             <span>{shippingPrice} € - Livraison à domicile</span>
             <div className="flex items-center mt-4">
               {batch.map((product) => (
-                //TODO replace by <ProductImage />
-                <div>{product.title}</div>
+                <ClientProductImage product={product} key={product.id} />
               ))}
               <span className="ml-2">Produits ajoutés: {batch.length}</span>
               <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
