@@ -9,7 +9,7 @@ import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
-import SigninForm from "./signinForm";
+import SigninForm from "./SigninForm";
 
 export default function signinPage() {
   return (
