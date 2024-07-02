@@ -13,8 +13,10 @@ export default function Button({
       ? "bg-white text-light-green border border-light-green"
       : variant === "black"
       ? "bg-transparent text-black border border-black"
-      : variant === "transparent"
+      : variant === "transparent-green"
       ? "bg-transparent text-light-green border border-light-green"
+      : variant === "transparent-red"
+      ? "bg-transparent text-red border border-red"
       : "bg-light-green text-white"
   }`;
 

@@ -74,7 +74,10 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
         </div>
         <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-4">
           {userProducts.items.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div key={product.id}>
+              <ProductCard product={product} className="border-none" />
+              <Button variant="transparent-green">Ajouter</Button>
+            </div>
           ))}
         </div>
         <div className="border-t border-black bg-white">
