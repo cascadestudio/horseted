@@ -1,9 +1,9 @@
-import { fetchData } from "@/libs/fetch";
+import fetch from "@/utils/fetch";
 import Categories from "./Categories";
 import Link from "next/link";
 
 export default async function NavBar({ className }) {
-  const categories = await fetchData("/categories");
+  const categories = await fetch("/categories");
 
   return (
     <nav

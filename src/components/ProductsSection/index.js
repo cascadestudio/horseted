@@ -1,4 +1,4 @@
-import { fetchData } from "@/libs/fetch";
+import fetch from "@/utils/fetch";
 import ProductCard from "@/components/ProductCard";
 import ProductsCarousel from "@/components/ProductsCarousel";
 import Button from "@/components/Button";
@@ -7,7 +7,7 @@ import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
 
 export default async function ProductsSection({ title }) {
-  const products = await fetchData("/products?category=206");
+  const products = await fetch("/products?category=206");
   const fullConfig = resolveConfig(tailwindConfig);
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">

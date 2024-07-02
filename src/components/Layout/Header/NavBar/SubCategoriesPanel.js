@@ -1,7 +1,7 @@
 import ProductCategories from "./ProductCategories";
 import { useEffect, useState, useRef } from "react";
-import { fetchData } from "@/libs/fetch";
-import { useIsClickOutsideElement } from "@/libs/hooks";
+import fetch from "@/utils/fetch";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 
 export default function SubCategoriesPanel({ parentId }) {
   const panelRef = useRef();
@@ -27,7 +27,7 @@ export default function SubCategoriesPanel({ parentId }) {
     const fetchSubCategories = async () => {
       const query = `/categories?parentId=${parentId}`;
       try {
-        const data = await fetchData(query);
+        const data = await fetch(query);
         setSubCategories(data);
       } catch (error) {
         console.error(`Error fetching ${query}:`, error);

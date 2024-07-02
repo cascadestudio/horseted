@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useIsClickOutsideElement } from "@/libs/hooks";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 import CloseButton from "@/assets/icons/CloseButton";
 
 export default function BatchSummaryModal({ onClose }) {

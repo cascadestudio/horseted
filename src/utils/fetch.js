@@ -1,5 +1,5 @@
 // Fetch Data from Horsted API
-export async function fetchData(
+export default async function fetchHorseted(
   query,
   accessToken = null,
   method = null,
@@ -41,12 +41,15 @@ export async function fetchData(
 
   if (query.startsWith("/medias")) {
     const blob = await response.blob();
-    const imageObjectURL = URL.createObjectURL(blob);
-    return imageObjectURL;
 
-    // const text = await blob.arrayBuffer();
-    // const base64 = Buffer.from(text).toString("base64");
-    // return base64;
+    if (accessToken !== null) {
+      const imageObjectURL = URL.createObjectURL(blob);
+      return imageObjectURL;
+    } else {
+      const text = await blob.arrayBuffer();
+      const base64 = Buffer.from(text).toString("base64");
+      return base64;
+    }
   } else {
     return response.json();
   }

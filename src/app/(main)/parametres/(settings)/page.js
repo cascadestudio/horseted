@@ -1,7 +1,8 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
-import { fetchData } from "@/libs/fetch";
+import fetch from "@/utils/fetch";
+import getImage from "@/utils/getImage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { updateEmail } from "firebase/auth";
@@ -33,11 +34,11 @@ export default function Settings() {
     }
     if (user.avatar !== null) {
       const fetchAvatar = async () => {
-        const avatar = await fetchData(
-          `/medias/${user.avatar.files.thumbnail200}`,
+        const avatar = await getImage(
+          user.avatar.files.thumbnail200,
+          "client",
           user.auth.accessToken
         );
-        console.log("avatar", avatar);
         setAvatarSrc(avatar);
         setFormData((prev) => ({
           ...prev,
@@ -85,7 +86,7 @@ export default function Settings() {
     //   console.log(`${key}:`, value);
     // }
 
-    const data = await fetchData(
+    const data = await fetch(
       `/users/me`,
       user.auth.accessToken,
       "PATCH",
@@ -95,7 +96,7 @@ export default function Settings() {
   };
 
   async function handleDeleteAccount() {
-    const data = await fetchData(`/users/me`, user.accessToken, "DELETE");
+    const data = await fetch(`/users/me`, user.accessToken, "DELETE");
     return router.push("/");
   }
 

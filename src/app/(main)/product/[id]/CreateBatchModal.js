@@ -6,7 +6,7 @@ import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
 import profilePicture from "@/assets/images/profilePicture.jpg";
 import Image from "next/image";
-import { useIsClickOutsideElement } from "@/libs/hooks";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 

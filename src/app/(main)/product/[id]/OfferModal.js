@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import { useIsClickOutsideElement } from "@/libs/hooks";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 import { useRef, useState, useEffect } from "react";
 import CloseButton from "@/assets/icons/CloseButton";
 

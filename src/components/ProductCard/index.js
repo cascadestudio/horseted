@@ -1,5 +1,5 @@
 "use client";
-import { fetchData } from "@/libs/fetch";
+import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Link from "next/link";
@@ -49,12 +49,9 @@ function ProductImage({ product }) {
   useEffect(() => {
     const fetchImage = async () => {
       try {
-        const query = `/medias/${product.medias[0].files.default}`;
-        const image = await fetchData(query);
+        const image = await getImage(product.medias[0].files.default, "client");
         setImageSrc(image);
-      } catch (error) {
-        // It'ok to not have an image
-      }
+      } catch (error) {}
     };
 
     fetchImage();

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchData } from "@/libs/fetch";
+import fetch from "@/utils/fetch";
 import Link from "next/link";
 
 export default function ProductCategories({ parentId }) {
@@ -9,7 +9,7 @@ export default function ProductCategories({ parentId }) {
     const fetchItemCategories = async () => {
       const query = `/categories?parentId=${parentId}`;
       try {
-        const data = await fetchData(query);
+        const data = await fetch(query);
         setItemCategories(data);
       } catch (error) {
         console.error(`Error fetching ${query}:`, error);
