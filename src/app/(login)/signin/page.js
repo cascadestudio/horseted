@@ -1,7 +1,6 @@
 "use client";
-import signIn from "@/libs/firebase/auth/signin";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
@@ -11,11 +10,9 @@ import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
+import SigninForm from "./signinForm";
 
 export default function signinPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
   const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
   const searchParams = useSearchParams();
 
@@ -25,19 +22,6 @@ export default function signinPage() {
       setShowPasswordResetAlert(true);
     }
   }, []);
-
-  const handleForm = async (event) => {
-    event.preventDefault();
-
-    const { result, error } = await signIn(email, password);
-
-    if (error) {
-      return console.log(error);
-    }
-
-    // else successful
-    return router.push("/");
-  };
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
@@ -71,53 +55,7 @@ export default function signinPage() {
                 Continuer avec Google
               </span>
             </a>
-            <form
-              onSubmit={handleForm}
-              className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
-            >
-              <label htmlFor="email">
-                <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
-                <input
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="exemple@mail.com"
-                />
-              </label>
-              <label htmlFor="password">
-                <p className="mt-[18px] font-mcqueen font-semibold">
-                  Mot de passe :
-                </p>
-                <input
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  type="password"
-                  name="password"
-                  id="password"
-                  placeholder="Mot de passe"
-                />
-              </label>
-              <Button
-                className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
-                type="submit"
-              >
-                Se connecter
-              </Button>
-              <Link
-                href="/forgot-password"
-                className="font-mcqueen font-bold text-[13px] leading-[48px] mb-[30px] flex justify-center lg:text-[16px]"
-              >
-                Mot de passe oublié ?
-              </Link>
-              {showPasswordResetAlert && (
-                <div className=" bg-[#EAF3E8] border border-light-green text-sm font-normal text-center h-16 rounded-[65px] flex items-center justify-center mb-8 p-6 lg:mb-0">
-                  Un e-mail vous a été envoyé pour réinitialiser votre mot de
-                  passe
-                </div>
-              )}
-            </form>
+            <SigninForm showPasswordResetAlert={showPasswordResetAlert} />
           </div>
           <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
             Inscription
