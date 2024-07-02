@@ -1,7 +1,8 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
+import getImage from "@/utils/getImage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { updateEmail } from "firebase/auth";
@@ -18,6 +19,8 @@ export default function Settings() {
     city: user?.city || "",
   });
 
+  const [avatarSrc, setAvatarSrc] = useState("");
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -28,6 +31,21 @@ export default function Settings() {
         avatar: user?.avatar || null,
         city: user?.city || "",
       });
+    }
+    if (user.avatar !== null) {
+      const fetchAvatar = async () => {
+        const avatar = await getImage(
+          user.avatar.files.thumbnail200,
+          "client",
+          user.auth.accessToken
+        );
+        setAvatarSrc(avatar);
+        setFormData((prev) => ({
+          ...prev,
+          avatar: avatar,
+        }));
+      };
+      fetchAvatar();
     }
   }, [user]);
 
@@ -68,7 +86,7 @@ export default function Settings() {
     //   console.log(`${key}:`, value);
     // }
 
-    const data = await fetchData(
+    const data = await fetchHorseted(
       `/users/me`,
       user.auth.accessToken,
       "PATCH",
@@ -78,7 +96,7 @@ export default function Settings() {
   };
 
   async function handleDeleteAccount() {
-    const data = await fetchData(`/users/me`, user.accessToken, "DELETE");
+    const data = await fetchHorseted(`/users/me`, user.accessToken, "DELETE");
     return router.push("/");
   }
 
@@ -86,6 +104,11 @@ export default function Settings() {
     return (
       <section>
         {user?.username}
+        <img
+          src={avatarSrc}
+          alt="Fetched from API"
+          className="max-w-full h-auto"
+        />
         <form
           onSubmit={handleSubmit}
           className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"

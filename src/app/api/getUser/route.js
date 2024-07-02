@@ -2,7 +2,7 @@ export async function GET(request) {
   const searchParams = request.nextUrl.searchParams;
   const accessToken = searchParams.get("accessToken");
 
-  const res = await fetch(
+  const res = await fetchHorseted(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/me`,
     {
       headers: {

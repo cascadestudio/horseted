@@ -3,7 +3,7 @@
 import { getAuth, signOut } from "firebase/auth";
 import Button from "@/components/Button";
 import { useRef, useState } from "react";
-import { useIsClickOutsideElement } from "@/libs/hooks";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 

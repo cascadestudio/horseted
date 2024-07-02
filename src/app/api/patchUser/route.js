@@ -1,7 +1,7 @@
 export async function PATCH(req) {
   const { firebaseToken, user } = await req.json();
 
-  const res = await fetch(
+  const res = await fetchHorseted(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users/${user.id}`,
     {
       method: "PATCH",

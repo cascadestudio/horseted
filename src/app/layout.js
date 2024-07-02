@@ -1,6 +1,6 @@
 import "./globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
-import { mcqueen, raleway, poppins } from "@/libs/utils";
+import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
 export const metadata = {
   title: "Horseted",

@@ -1,11 +1,11 @@
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 import Image from "next/image";
 import GreenThreeStripesIcon from "@/assets/icons/GreenThreeStripesIcon";
 import categoryImage from "@/assets/images/categoryImage.jpg";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/RightArrow";
 export default async function CategoriesSection() {
-  const categories = await fetchData("/categories");
+  const categories = await fetchHorseted("/categories");
   return (
     <section className=" bg-light-grey">
       <div className="container mx-auto px-5 pb-8 lg:pb-24">

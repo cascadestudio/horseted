@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function SizesSelect({
   activeSizes,
@@ -13,7 +13,7 @@ export default function SizesSelect({
     const fetchSizes = async () => {
       try {
         const query = `/categories/${categoryId}/sizes`;
-        const data = await fetchData(query);
+        const data = await fetchHorseted(query);
         setSizes(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

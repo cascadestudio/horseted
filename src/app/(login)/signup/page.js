@@ -21,7 +21,8 @@ export default function signupPage() {
   const router = useRouter();
 
   async function postUser(firebaseToken) {
-    const response = await fetch(`http://localhost:3000/api/postUser`, {
+    // TODO: Refactor
+    const response = await fetchHorseted(`http://localhost:3000/api/postUser`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
