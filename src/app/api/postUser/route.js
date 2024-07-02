@@ -1,6 +1,6 @@
 export async function POST(req) {
   const { firebaseToken, username, newsLetter } = await req.json();
-  const res = await fetch(
+  const res = await fetchHorseted(
     `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}/users`,
     {
       method: "POST",

@@ -1,4 +1,4 @@
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 import OfferButton from "./OfferButton";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
@@ -16,7 +16,7 @@ import ProductsSection from "@/components/ProductsSection";
 import CreateBatchButton from "./CreateBatchButton";
 
 export default async function ProductPage({ params }) {
-  const product = await fetchData(`/products/${params.id}`);
+  const product = await fetchHorseted(`/products/${params.id}`);
   const {
     title,
     price,
@@ -34,9 +34,9 @@ export default async function ProductPage({ params }) {
     medias,
   } = product;
 
-  const userData = await fetchData(`/users/${userId}`);
+  const userData = await fetchHorseted(`/users/${userId}`);
 
-  const userProducts = await fetchData(
+  const userProducts = await fetchHorseted(
     `/products?orderBy=createdAt;desc&fromId=${userId}`
   );
 

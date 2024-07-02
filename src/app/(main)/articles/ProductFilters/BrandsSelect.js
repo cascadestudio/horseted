@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function BrandSelect({ activeBrands, onBrandsChange }) {
   const [brands, setBrands] = useState([]);
@@ -10,7 +10,7 @@ export default function BrandSelect({ activeBrands, onBrandsChange }) {
     const fetchBrands = async () => {
       try {
         const query = `/brands`;
-        const data = await fetchData(query);
+        const data = await fetchHorseted(query);
         setBrands(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

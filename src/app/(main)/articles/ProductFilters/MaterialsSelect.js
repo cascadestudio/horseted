@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchData } from "@/libs/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   const [materials, setMaterials] = useState([]);
@@ -9,7 +9,7 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
     const fetchMaterials = async () => {
       try {
         const query = `/materials`;
-        const data = await fetchData(query);
+        const data = await fetchHorseted(query);
         setMaterials(data);
       } catch (error) {
         console.error("Error fetching categories:", error);
