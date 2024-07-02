@@ -45,13 +45,13 @@ export default function ProductCard({ product, className }) {
 }
 
 function ProductImage({ product }) {
-  const [image, setImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
   useEffect(() => {
     const fetchImage = async () => {
       try {
         const query = `/medias/${product.medias[0].files.default}`;
-        const data = await fetchData(query);
-        setImage(`data:image/png;base64, ${data}`);
+        const image = await fetchData(query);
+        setImageSrc(image);
       } catch (error) {
         // It'ok to not have an image
       }
@@ -64,7 +64,7 @@ function ProductImage({ product }) {
     return (
       <img
         className="aspect-[280/340] object-cover w-[280px]"
-        src={image}
+        src={imageSrc}
         alt="Image du produit"
       />
     );

@@ -18,6 +18,8 @@ export default function Settings() {
     city: user?.city || "",
   });
 
+  const [avatarSrc, setAvatarSrc] = useState("");
+
   useEffect(() => {
     if (user) {
       setFormData({
@@ -28,6 +30,21 @@ export default function Settings() {
         avatar: user?.avatar || null,
         city: user?.city || "",
       });
+    }
+    if (user.avatar !== null) {
+      const fetchAvatar = async () => {
+        const avatar = await fetchData(
+          `/medias/${user.avatar.files.thumbnail200}`,
+          user.auth.accessToken
+        );
+        console.log("avatar", avatar);
+        setAvatarSrc(avatar);
+        setFormData((prev) => ({
+          ...prev,
+          avatar: avatar,
+        }));
+      };
+      fetchAvatar();
     }
   }, [user]);
 
@@ -86,6 +103,11 @@ export default function Settings() {
     return (
       <section>
         {user?.username}
+        <img
+          src={avatarSrc}
+          alt="Fetched from API"
+          className="max-w-full h-auto"
+        />
         <form
           onSubmit={handleSubmit}
           className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"

@@ -41,9 +41,12 @@ export async function fetchData(
 
   if (query.startsWith("/medias")) {
     const blob = await response.blob();
-    const text = await blob.arrayBuffer();
-    const base64 = Buffer.from(text).toString("base64");
-    return base64;
+    const imageObjectURL = URL.createObjectURL(blob);
+    return imageObjectURL;
+
+    // const text = await blob.arrayBuffer();
+    // const base64 = Buffer.from(text).toString("base64");
+    // return base64;
   } else {
     return response.json();
   }
