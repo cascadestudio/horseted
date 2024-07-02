@@ -39,18 +39,5 @@ export default async function fetchHorseted(
     throw new Error(`Failed to fetch ${query}`);
   }
 
-  if (query.startsWith("/medias")) {
-    const blob = await response.blob();
-
-    if (accessToken !== null) {
-      const imageObjectURL = URL.createObjectURL(blob);
-      return imageObjectURL;
-    } else {
-      const text = await blob.arrayBuffer();
-      const base64 = Buffer.from(text).toString("base64");
-      return base64;
-    }
-  } else {
-    return response.json();
-  }
+  return response.json();
 }

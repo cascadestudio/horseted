@@ -28,6 +28,7 @@ export default async function getImage(requestedImage, rendering, accessToken) {
     const imageObjectURL = URL.createObjectURL(blob);
     return imageObjectURL;
   }
+
   if (rendering === "server") {
     const text = await blob.arrayBuffer();
     const base64 = Buffer.from(text).toString("base64");
