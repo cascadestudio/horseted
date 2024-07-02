@@ -1,9 +1,9 @@
-import fetch from "@/utils/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 import Categories from "./Categories";
 import Link from "next/link";
 
 export default async function NavBar({ className }) {
-  const categories = await fetch("/categories");
+  const categories = await fetchHorseted("/categories");
 
   return (
     <nav

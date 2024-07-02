@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import fetch from "@/utils/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function ProductCategorySelect({
   activeSubCategory,
@@ -12,7 +12,7 @@ export default function ProductCategorySelect({
     const fetchCategories = async () => {
       try {
         const query = `/categories?parentId=${activeSubCategory.id}`;
-        const data = await fetch(query);
+        const data = await fetchHorseted(query);
         setProductCategory(data);
       } catch (error) {
         console.error("Error fetching categories:", error);

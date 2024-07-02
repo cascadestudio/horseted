@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import fetch from "@/utils/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 import { useSearchParams } from "next/navigation";
 
 import ProductsList from "./ProductList";
@@ -77,7 +77,7 @@ export default function ProductsPage() {
         if (searchQuery !== null) {
           query += `&terms=${searchQuery}`;
         }
-        const data = await fetch(query);
+        const data = await fetchHorseted(query);
         setProducts(data);
         setIsLoading(false);
       } catch (error) {

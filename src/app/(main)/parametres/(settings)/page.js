@@ -1,7 +1,7 @@
 "use client";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
-import fetch from "@/utils/fetch";
+import fetchHorseted from "@/utils/fetchHorseted";
 import getImage from "@/utils/getImage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -86,7 +86,7 @@ export default function Settings() {
     //   console.log(`${key}:`, value);
     // }
 
-    const data = await fetch(
+    const data = await fetchHorseted(
       `/users/me`,
       user.auth.accessToken,
       "PATCH",
@@ -96,7 +96,7 @@ export default function Settings() {
   };
 
   async function handleDeleteAccount() {
-    const data = await fetch(`/users/me`, user.accessToken, "DELETE");
+    const data = await fetchHorseted(`/users/me`, user.accessToken, "DELETE");
     return router.push("/");
   }
 
