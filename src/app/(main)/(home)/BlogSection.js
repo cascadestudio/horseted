@@ -21,6 +21,7 @@ export default function BlogSection({ articles }) {
                   body={body}
                   image={image}
                   link={slug.current}
+                  key={title}
                 />
               );
             })
