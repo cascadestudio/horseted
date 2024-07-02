@@ -17,6 +17,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
     useIsClickOutsideElement(modalRef);
   const [isBatchSummaryModalOpen, setIsBatchSummaryModalOpen] = useState(false);
   const [batch, setBatch] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -47,6 +48,11 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
       }
       return [...prevBatch, product];
     });
+    const largestItem = batch.reduce((prev, current) => {
+      return prev.shippingSize > current.shippingSize ? prev : current;
+    }, product);
+    setShippingPrice(largestItem.shipping);
+    console.log(largestItem.shipping);
   };
 
   const isProductInBatch = (productId) => {
@@ -113,11 +119,12 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
             <span className="font-bold text-lg">
               Total: {totalBatchPrice} €
             </span>
+            <span>{shippingPrice} € - Livraison à domicile</span>
             <div className="flex items-center mt-4">
-              {batch.map((product) =>
-                // <ProductImage key={product.id} media={product.media} />
-                console.log(product)
-              )}
+              {batch.map((product) => (
+                //TODO replace by <ProductImage />
+                <div>{product.title}</div>
+              ))}
               <span className="ml-2">Produits ajoutés: {batch.length}</span>
               <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
             </div>
