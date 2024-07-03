@@ -9,13 +9,15 @@ import Image from "next/image";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
+import ClientProductImage from "@/components/ClientProductImage";
 
 export default function CreateBatchModal({ userData, userProducts, onClose }) {
-  // console.log(userProducts);
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
   const [isBatchSummaryModalOpen, setIsBatchSummaryModalOpen] = useState(false);
+  const [batch, setBatch] = useState([]);
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -38,6 +40,29 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
   const handleCloseBatchSummaryModal = () => {
     setIsBatchSummaryModalOpen(false);
   };
+
+  const handleAddToBatch = (product) => {
+    setBatch((prevBatch) => {
+      if (prevBatch.find((p) => p.id === product.id)) {
+        return prevBatch.filter((p) => p.id !== product.id);
+      }
+      return [...prevBatch, product];
+    });
+    const largestItem = batch.reduce((prev, current) => {
+      return prev.shippingSize > current.shippingSize ? prev : current;
+    }, product);
+    setShippingPrice(largestItem.shipping);
+    console.log(largestItem.shipping);
+  };
+
+  const isProductInBatch = (productId) => {
+    return batch.some((product) => product.id === productId);
+  };
+
+  const totalBatchPrice = batch.reduce(
+    (total, product) => total + product.price,
+    0
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-light-grey">
@@ -74,13 +99,34 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
         </div>
         <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-4">
           {userProducts.items.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <div key={product.id}>
+              <ProductCard product={product} className="border-none" />
+              <Button
+                onClick={() => handleAddToBatch(product)}
+                variant={
+                  isProductInBatch(product.id)
+                    ? "transparent-red"
+                    : "transparent-green"
+                }
+              >
+                {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
+              </Button>
+            </div>
           ))}
         </div>
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 lg:py-6">
-            <span className="font-bold text-lg">Total: 100€</span>
-            <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
+            <span className="font-bold text-lg">
+              Total: {totalBatchPrice} €
+            </span>
+            <span>{shippingPrice} € - Livraison à domicile</span>
+            <div className="flex items-center mt-4">
+              {batch.map((product) => (
+                <ClientProductImage product={product} key={product.id} />
+              ))}
+              <span className="ml-2">Produits ajoutés: {batch.length}</span>
+              <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
+            </div>
           </div>
         </div>
       </div>
