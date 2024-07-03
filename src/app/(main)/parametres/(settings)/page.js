@@ -15,22 +15,24 @@ export default function Settings() {
     lastName: user?.lastName || "",
     email: user?.auth.email || "",
     description: user?.description || "",
-    avatar: user?.avatar || null,
+    avatar: {
+      files: user?.avatar?.files || null,
+      src: "",
+    },
     city: user?.city || "",
   });
 
-  const [avatarSrc, setAvatarSrc] = useState("");
+  console.log(formData);
 
   const fetchAvatar = async () => {
-    const avatar = await getImage(
+    const avatarSrc = await getImage(
       user.avatar.files.thumbnail200,
       "client",
       user.auth.accessToken
     );
-    setAvatarSrc(avatar);
     setFormData((prev) => ({
       ...prev,
-      avatar: avatar,
+      avatar: { ...prev.avatar, src: avatarSrc },
     }));
   };
 
@@ -41,7 +43,10 @@ export default function Settings() {
         lastName: user?.lastName || "",
         email: user?.auth.email || "",
         description: user?.description || "",
-        avatar: user?.avatar || null,
+        avatar: {
+          files: user?.avatar?.files || null,
+          src: "",
+        },
         city: user?.city || "",
       });
     }
@@ -52,12 +57,12 @@ export default function Settings() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "avatar") {
-      setFormData((prev) => ({
-        ...prev,
-        avatar: files ? files[0] : null,
-      }));
-    }
+    // if (name === "avatar") {
+    //   setFormData((prev) => ({
+    //     ...prev,
+    //     avatar: files ? files[0] : null,
+    //   }));
+    // }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -69,9 +74,9 @@ export default function Settings() {
     if (file) {
       const formdata = new FormData();
       formdata.append("avatar", file);
-      for (let [key, value] of formdata.entries()) {
-        console.log(`${key}:`, value);
-      }
+      // for (let [key, value] of formdata.entries()) {
+      //   console.log(`${key}:`, value);
+      // }
       const response = await fetchHorseted(
         `/users/me`,
         user.auth.accessToken,
@@ -125,7 +130,7 @@ export default function Settings() {
     <section>
       {user?.username}
       <img
-        src={avatarSrc}
+        src={formData.avatar.src}
         alt="Fetched from API"
         className="max-w-full h-auto"
       />
