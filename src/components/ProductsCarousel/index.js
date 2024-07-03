@@ -31,7 +31,7 @@ export default function ProductsCarousel({ children }) {
     speed: 500,
     beforeChange: (current, next) => setSlideIndex(next),
     initialSlide: 0,
-    slidesToShow: 4.4,
+    slidesToShow: 4.2,
     slidesToScroll: 4,
     appendDots: (dots) => (
       <ul>
@@ -69,7 +69,7 @@ export default function ProductsCarousel({ children }) {
       {
         breakpoint: lgBreakpoint,
         settings: {
-          slidesToShow: 1.4,
+          slidesToShow: 1.1,
           slidesToScroll: 1,
         },
       },

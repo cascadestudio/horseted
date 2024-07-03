@@ -99,8 +99,8 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
         </div>
         <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-4">
           {userProducts.items.map((product) => (
-            <div key={product.id}>
-              <ProductCard product={product} className="border-none" />
+            <div key={product.id} className="flex flex-col items-center mb-10">
+              <ProductCard product={product} className="border-none mb-0" />
               <Button
                 onClick={() => handleAddToBatch(product)}
                 variant={
@@ -108,6 +108,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
                     ? "transparent-red"
                     : "transparent-green"
                 }
+                className="w-full max-w-[280px]"
               >
                 {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
               </Button>
@@ -116,15 +117,19 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
         </div>
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 lg:py-6">
-            <span className="font-bold text-lg">
-              Total: {totalBatchPrice} €
-            </span>
-            <span>{shippingPrice} € - Livraison à domicile</span>
+            <div className="flex flex-col">
+              <span className="font-bold text-lg">{totalBatchPrice} €</span>
+              <span>{shippingPrice} € - Livraison à domicile</span>
+            </div>
             <div className="flex items-center mt-4">
               {batch.map((product) => (
-                <ClientProductImage product={product} key={product.id} />
+                <ClientProductImage
+                  product={product}
+                  key={product.id}
+                  className="w-10 h-12 mr-1"
+                />
               ))}
-              <span className="ml-2">Produits ajoutés: {batch.length}</span>
+              <span className="mx-7">{batch.length} articles</span>
               <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
             </div>
           </div>

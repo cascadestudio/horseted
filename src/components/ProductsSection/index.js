@@ -37,7 +37,7 @@ export default async function ProductsSection({ title }) {
                 }`}
                 key={product.id}
               >
-                <ProductCard className="mr-5" product={product} />
+                <ProductCard className="mb-8 mr-6 lg:mr-12" product={product} />
               </div>
             );
           })}

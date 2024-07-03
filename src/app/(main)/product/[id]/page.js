@@ -48,7 +48,7 @@ export default async function ProductPage({ params }) {
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 ">
-        <div className="border-b border-grey py-10 flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:mb-11 lg:py-12">
+        <div className="border-b border-grey py-10 flex flex-col items-center mb-10 lg:flex-row lg:items-start lg:justify-center lg:mb-11 lg:py-12">
           <div className="w-full lg:w-3/5">
             {product.hasOwnProperty("medias") ? (
               <ProductImagesCarousel>

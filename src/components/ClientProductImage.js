@@ -3,7 +3,7 @@ import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 
-export default function ProductImage({ product }) {
+export default function ProductImage({ product, className }) {
   const [imageSrc, setImageSrc] = useState(null);
   useEffect(() => {
     const fetchImage = async () => {
@@ -19,7 +19,7 @@ export default function ProductImage({ product }) {
   if (product.hasOwnProperty("medias")) {
     return (
       <img
-        className="aspect-[280/340] object-cover w-[280px]"
+        className={`aspect-[280/340] object-cover ${className}`}
         src={imageSrc}
         alt="Image du produit"
       />
@@ -27,7 +27,7 @@ export default function ProductImage({ product }) {
   } else {
     return (
       <Image
-        className="aspect-[280/340] object-cover w-[280px]"
+        className={`aspect-[280/340] object-cover ${className}`}
         src={placeholderImage}
         alt="Image du produit"
         priority

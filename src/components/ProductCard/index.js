@@ -18,11 +18,12 @@ export default function ProductCard({ product, className }) {
     <Link
       href={`/product/${product.id}`}
       className={
-        className + " block border-b border-grey mb-8 focus:outline-none"
+        className +
+        " flex flex-col items-center border-b border-grey focus:outline-none"
       }
     >
-      <ClientProductImage product={product} />
-      <div className="flex p-5 justify-between">
+      <ClientProductImage product={product} className="w-[280px] h-[340px]" />
+      <div className="flex  w-full p-5 justify-between self-start">
         <div className="max-w-[82%]">
           <p className="font-poppins font-bold">{price} €</p>
           <h4 className="text-lg font-extrabold text-light-green truncate">
