@@ -6,6 +6,8 @@ import getImage from "@/utils/getImage";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { updateEmail } from "firebase/auth";
+import Image from "next/image";
+import placeholderImage from "@/assets/images/placeholder.svg";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -17,7 +19,7 @@ export default function Settings() {
     description: user?.description || "",
     avatar: {
       files: user?.avatar?.files || null,
-      src: "",
+      src: null,
     },
     city: user?.city || "",
   });
@@ -129,11 +131,24 @@ export default function Settings() {
   return (
     <section>
       {user?.username}
-      <img
-        src={formData.avatar.src}
-        alt="Fetched from API"
-        className="max-w-full h-auto"
-      />
+      {user.avatar.src !== null ? (
+        <Image
+          src={formData.avatar.src}
+          className="w-auto h-40 rounded-full"
+          width={200}
+          height={200}
+          alt="Avatar"
+        />
+      ) : (
+        <Image
+          className="rounded-full"
+          width={200}
+          height={200}
+          src={placeholderImage}
+          alt="Avatar"
+          priority
+        />
+      )}
       <form
         onSubmit={handleSubmit}
         className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
