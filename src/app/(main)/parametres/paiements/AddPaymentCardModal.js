@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useAuthContext } from "@/context/AuthContext";
 
-const CheckoutForm = () => {
+const AddPaymentCardModal = ({ isNewPaymentMethod }) => {
+  const { user } = useAuthContext();
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -25,14 +28,16 @@ const CheckoutForm = () => {
       setError(error.message);
       setLoading(false);
     } else {
-      console.log("token", token.id);
       setLoading(false);
+      await postPaymentMethod(token.id, user);
+      isNewPaymentMethod();
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <CardElement />
+      4242 4242 4242 4242 12/34 123 77777
       {error && <div role="alert">{error}</div>}
       <button type="submit" disabled={!stripe || loading}>
         {loading ? "Processing..." : "Pay"}
@@ -41,4 +46,18 @@ const CheckoutForm = () => {
   );
 };
 
-export default CheckoutForm;
+export default AddPaymentCardModal;
+
+async function postPaymentMethod(cardToken, user) {
+  const query = `/users/me/payment_methods`;
+  const body = {
+    cardToken: cardToken,
+  };
+  const response = await fetchHorseted(
+    query,
+    user.auth.accessToken,
+    "POST",
+    body
+  );
+  console.log(response);
+}

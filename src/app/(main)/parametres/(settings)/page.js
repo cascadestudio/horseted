@@ -50,12 +50,6 @@ export default function Settings() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formDataToSend = prepareFormData(formData);
-    await updateUserDetails(formDataToSend, user, router, setFormData);
-  };
-
   const handleDeleteAccount = async () => {
     await deleteUserAccount(user.auth.accessToken, router);
   };
@@ -143,7 +137,7 @@ function prepareFormData(formData) {
   return formDataToSend;
 }
 
-async function updateUserDetails(formDataToSend, user, router, setFormData) {
+async function updateUserDetails(formDataToSend, user) {
   if (formDataToSend.get("email") !== user?.auth.email) {
     try {
       await updateEmail(user.auth, formDataToSend.get("email"));
