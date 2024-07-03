@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./styles/globals.css";
 import { AuthContextProvider } from "@/context/AuthContext";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
