@@ -10,8 +10,6 @@ export default async function fetchHorseted(
   }
 
   const headers = {
-    // "Content-Type":
-    //   method === "PATCH" ? "multipart/form-data" : "application/json",
     "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
     ...(query.startsWith("/users") &&
       accessToken && {
@@ -30,8 +28,6 @@ export default async function fetchHorseted(
           body: JSON.stringify(body),
         }),
   };
-
-  // console.log("url", url, "options", options);
 
   const response = await fetch(url, options);
 
