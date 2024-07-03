@@ -30,6 +30,11 @@ export default function Settings() {
     setFormData(initializeFormData(user));
   }, [user]);
 
+  useEffect(() => {
+    const formDataToSend = prepareFormData(formData);
+    updateUserDetails(formDataToSend, user, router, setFormData);
+  }, [formData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -59,7 +64,7 @@ export default function Settings() {
     <section>
       {user?.username}
       <AvatarDisplay avatarSrc={avatarSrc} />
-      <form onSubmit={handleSubmit} className="form-container">
+      <form className="form-container">
         <AvatarInput onChange={handleAvatarChange} />
         <TextInput
           label="Ville"
@@ -97,9 +102,6 @@ export default function Settings() {
           onChange={handleChange}
           required
         />
-        <Button className="submit-button" type="submit">
-          Submit
-        </Button>
       </form>
       <Button className="delete-button" onClick={handleDeleteAccount}>
         Delete account
@@ -156,8 +158,6 @@ async function updateUserDetails(formDataToSend, user, router, setFormData) {
     "PATCH",
     formDataToSend
   );
-  console.log(data);
-  setFormData(initializeFormData(user)); // Ensure form data is updated after the server response
 }
 
 async function deleteUserAccount(token, router) {
