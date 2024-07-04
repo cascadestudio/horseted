@@ -96,23 +96,36 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
             </div>
           </div>
         </div>
-        <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto grid grid-cols-1 lg:grid-cols-4">
-          {userProducts.items.map((product) => (
-            <div key={product.id} className="flex flex-col items-center mb-10">
-              <ProductCard product={product} className="border-none mb-0" />
-              <Button
-                onClick={() => handleAddToBatch(product)}
-                variant={
-                  isProductInBatch(product.id)
-                    ? "transparent-red"
-                    : "transparent-green"
-                }
-                className="w-full max-w-[280px]"
+        <div className="container mx-auto px-5 pt-5">
+          <h2 className="text-[24px] font-bold font-mcqueen">
+            La sellerie de {userData.username}
+          </h2>
+          <p className="font-mcqueen font-medium text-lg">
+            {userProducts.items.length} articles
+          </p>
+        </div>
+        <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 justify-between">
+            {userProducts.items.map((product) => (
+              <div
+                key={product.id}
+                className="flex flex-col items-center mb-10 w-[280px] justify-self-center"
               >
-                {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
-              </Button>
-            </div>
-          ))}
+                <ProductCard product={product} className="border-none mb-0" />
+                <Button
+                  onClick={() => handleAddToBatch(product)}
+                  variant={
+                    isProductInBatch(product.id)
+                      ? "transparent-red"
+                      : "transparent-green"
+                  }
+                  className="w-full max-w-[280px]"
+                >
+                  {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
+                </Button>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 h-28 lg:py-6">
