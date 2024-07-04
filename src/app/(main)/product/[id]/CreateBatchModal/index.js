@@ -52,7 +52,6 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
       return prev.shippingSize > current.shippingSize ? prev : current;
     }, product);
     setShippingPrice(largestItem.shipping);
-    console.log(largestItem.shipping);
   };
 
   const isProductInBatch = (productId) => {
@@ -116,7 +115,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
           ))}
         </div>
         <div className="border-t border-black bg-white">
-          <div className="flex justify-between items-center container mx-auto px-5 py-2 lg:py-6">
+          <div className="flex justify-between items-center container mx-auto px-5 py-2 h-28 lg:py-6">
             <div className="flex flex-col">
               <span className="font-bold text-lg">{totalBatchPrice} €</span>
               <span>{shippingPrice} € - Livraison à domicile</span>
@@ -126,7 +125,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
                 <ClientProductImage
                   product={product}
                   key={product.id}
-                  className="w-10 h-12 mr-1"
+                  className="w-10 h-12 mr-1 hidden lg:block"
                   size="small"
                 />
               ))}
