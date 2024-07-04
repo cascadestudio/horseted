@@ -12,12 +12,11 @@ const CheckOutPage = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
   const [product, setProduct] = useState({});
-  const { user } = useAuthContext();
-  console.log(user);
+  const { user, accessToken } = useAuthContext();
 
   useEffect(() => {
     getProduct(productId, setProduct);
-    // getPaymentMethods(productId, setProduct)
+    postOrders(accessToken, productId);
   }, []);
 
   return (
@@ -33,9 +32,13 @@ async function getProduct(productId, setProduct) {
   setProduct(product);
 }
 
-// async function getPaymentMethods(productId, setProduct) {
-//   const product = await fetchHorseted(`/users/${user.id}/payment_methods`);
-//   setProduct(product);
-// }
+async function postOrders(accessToken, productId) {
+  productId = parseInt(productId);
+  const body = {
+    productIds: [productId],
+  };
+  const response = await fetchHorseted(`/orders`, accessToken, "POST", body);
+  console.log("response", response);
+}
 
 export default withAuth(CheckOutPage);

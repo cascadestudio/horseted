@@ -1,28 +1,27 @@
-// Fetch Data from Horsted API
 export default async function fetchHorseted(
   query,
   accessToken = null,
-  method = null,
+  method = "GET",
   body = null
 ) {
-  if (!process.env.NEXT_PUBLIC_HORSETED_API_KEY) {
+  const apiKey = process.env.NEXT_PUBLIC_HORSETED_API_KEY;
+  const baseUrl = process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL;
+
+  if (!apiKey) {
     throw new Error("NEXT_PUBLIC_HORSETED_API_KEY is not set");
   }
 
   const headers = {
+    "API-Key": apiKey,
     ...(method === "POST" && { "Content-Type": "application/json" }),
-    "API-Key": process.env.NEXT_PUBLIC_HORSETED_API_KEY,
-    ...(query.startsWith("/users") &&
-      accessToken && {
-        Authorization: `Bearer ${accessToken}`,
-      }),
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
   };
 
-  const url = `${process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL}${query}`;
+  const url = `${baseUrl}${query}`;
 
   const options = {
-    ...(method && { method: method }),
-    headers: headers,
+    method,
+    headers,
     ...(body && method === "PATCH"
       ? { body: body }
       : body && {
@@ -30,19 +29,23 @@ export default async function fetchHorseted(
         }),
   };
 
-  // console.log(
-  //   "Try to fetch Horseted API with ",
-  //   "url =>",
-  //   url,
-  //   "and options =>",
-  //   options
-  // );
+  // console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
 
-  const response = await fetch(url, options);
+  try {
+    const response = await fetch(url, options);
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch ${query}`);
+    if (!response.ok) {
+      const errorResponse = await response.json();
+      throw new Error(
+        `Failed to fetch ${query}: ${
+          errorResponse.message || response.statusText
+        }`
+      );
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching Horseted API:", error);
+    throw error;
   }
-
-  return response.json();
 }
