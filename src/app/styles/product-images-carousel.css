@@ -1,0 +1,15 @@
+.slick-track {
+  height: 100%;
+}
+.slick-slide > div {
+  height: 100%;
+}
+.main-slider .slick-list {
+  border-radius: 25px;
+  @screen lg {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}

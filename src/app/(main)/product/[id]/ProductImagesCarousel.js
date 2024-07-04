@@ -3,9 +3,9 @@ import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Image from "next/image";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import NextArrow from "@/assets/icons/NextArrow";
+import "@/app/styles/product-images-carousel.css";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -120,23 +120,6 @@ export default function ProductImagesCarousel({ children }) {
           </Slider>
         </div>
       </div>
-      <style>{`
-        .slick-track {
-          height: 100%;
-        }
-        .slick-slide > div {
-          height: 100%;
-        }
-        .main-slider .slick-list {
-          border-radius: 25px;
-          @media (min-width: 1024px) {
-            border-top-right-radius: 25px;
-            border-bottom-right-radius: 25px;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-          }
-        }
-      `}</style>
     </>
   );
 }
