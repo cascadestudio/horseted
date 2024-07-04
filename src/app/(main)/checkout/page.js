@@ -6,22 +6,23 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
+import AddressModal from "./AddressModal";
 
 const CheckOutPage = () => {
-  // TODO : Click on "Payer" => POST /orders
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
   const [product, setProduct] = useState({});
   const { user, accessToken } = useAuthContext();
-
+  // TODO: get shipping method then post orders payment
   useEffect(() => {
     getProduct(productId, setProduct);
-    postOrders(accessToken, productId);
+    // postOrders(accessToken, productId);
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto">
       {product.title}
+      <AddressModal />
       <PaymentMethods />
     </div>
   );
@@ -38,7 +39,7 @@ async function postOrders(accessToken, productId) {
     productIds: [productId],
   };
   const response = await fetchHorseted(`/orders`, accessToken, "POST", body);
-  console.log("response", response);
+  // console.log("response", response);
 }
 
 export default withAuth(CheckOutPage);

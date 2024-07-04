@@ -57,4 +57,5 @@ async function getPaymentMethods(user, setPaymentMethods) {
     "GET"
   );
   setPaymentMethods(paymentMethods);
+  // console.log("paymentMethods", paymentMethods);
 }
