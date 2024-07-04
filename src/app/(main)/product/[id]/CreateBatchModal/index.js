@@ -127,6 +127,7 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
                   product={product}
                   key={product.id}
                   className="w-10 h-12 mr-1"
+                  size="small"
                 />
               ))}
               <span className="mx-7">{batch.length} articles</span>
