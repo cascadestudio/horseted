@@ -53,7 +53,7 @@ export default async function Home() {
           </div>
           <Button
             variant="transparent-green"
-            className="justify-center text-white border-white"
+            className=" text-white border-white"
           >
             Personnaliser <RightArrow color="white" className="ml-2" />
           </Button>

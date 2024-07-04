@@ -130,8 +130,15 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
         <div className="border-t border-black bg-white">
           <div className="flex justify-between items-center container mx-auto px-5 py-2 h-28 lg:py-6">
             <div className="flex flex-col">
-              <span className="font-bold text-lg">{totalBatchPrice} €</span>
-              <span>{shippingPrice} € - Livraison à domicile</span>
+              <span className="font-poppins font-semibold text-[28px] leading-10">
+                {totalBatchPrice} €
+              </span>
+              <div>
+                <span className="font-poppins font-medium text-sm">
+                  {shippingPrice} €
+                </span>
+                <span className="text-sm"> - Livraison à domicile</span>
+              </div>
             </div>
             <div className="flex items-center mt-4">
               {batch.map((product) => (
@@ -142,14 +149,29 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
                   size="small"
                 />
               ))}
-              <span className="mx-7">{batch.length} articles</span>
-              <Button onClick={handleOpenBatchSummaryModal}>Voir le lot</Button>
+              <div className="mx-7">
+                <span className="text-sm font-poppins font-medium">
+                  {batch.length}
+                </span>{" "}
+                <span className="text-sm font-medium">articles</span>
+              </div>
+              <Button
+                onClick={handleOpenBatchSummaryModal}
+                className="text-sm whitespace-nowrap"
+              >
+                Voir le lot
+              </Button>
             </div>
           </div>
         </div>
       </div>
       {isBatchSummaryModalOpen && (
-        <BatchSummaryModal onClose={handleCloseBatchSummaryModal} />
+        <BatchSummaryModal
+          batch={batch}
+          totalBatchPrice={totalBatchPrice}
+          shippingPrice={shippingPrice}
+          onClose={handleCloseBatchSummaryModal}
+        />
       )}
     </div>
   );
