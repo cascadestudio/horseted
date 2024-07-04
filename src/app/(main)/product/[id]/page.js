@@ -104,7 +104,7 @@ export default async function ProductPage({ params }) {
               5,90€ <span className="font-sans">- Livraison à domicile</span>
             </p>
             <Button
-              href="/checkout"
+              href={`/checkout?productId=${params.id}`}
               className="w-full flex justify-center mb-3 h-[52px]"
             >
               Acheter
