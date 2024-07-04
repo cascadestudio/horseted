@@ -32,7 +32,7 @@ export default function ClientProductImage({ product, className, size }) {
   if (product.hasOwnProperty("medias")) {
     return (
       <img
-        className={`aspect-[280/340] object-cover ${className}`}
+        className={`aspect-[280/340] object-cover rounded-md ${className}`}
         src={imageSrc}
         alt="Image du produit"
       />
@@ -40,7 +40,7 @@ export default function ClientProductImage({ product, className, size }) {
   } else {
     return (
       <Image
-        className={`aspect-[280/340] object-cover ${className}`}
+        className={`aspect-[280/340] object-cover rounded-md ${className}`}
         src={placeholderImage}
         alt="Image du produit"
         priority
