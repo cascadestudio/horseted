@@ -8,12 +8,8 @@ export default function AddressModal() {
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
-    getAdress(accessToken, setFormData);
-  }, []);
-
-  useEffect(() => {
-    // TODO: patch adress
-    console.log("formData", formData);
+    // TODO: post and patch address when UI is ready
+    // console.log("formData", formData);
   }, [formData]);
 
   const handleChange = (e) => {
@@ -78,9 +74,4 @@ export default function AddressModal() {
       </form>
     </div>
   );
-}
-
-async function getAdress(accessToken, setFormData) {
-  const adresses = await fetchHorseted(`/users/me/addresses`, accessToken);
-  setFormData(adresses[0]);
 }

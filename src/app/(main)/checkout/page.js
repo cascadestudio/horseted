@@ -2,36 +2,44 @@
 
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@/context/AuthContext";
+import { Suspense, useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
-import AddressModal from "./AddressModal";
+import Delivery from "./Delivery";
+import Address from "./Address";
 
 const CheckOutPage = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const [product, setProduct] = useState({});
-  const { user, accessToken } = useAuthContext();
+  const [product, setProduct] = useState(null);
+  const [activeAddress, setActiveAddress] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   // TODO: get shipping method then post orders payment
   useEffect(() => {
-    getProduct(productId, setProduct);
+    getProduct();
     // postOrders(accessToken, productId);
   }, []);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="container mx-auto">
-      {product.title}
-      <AddressModal />
+      <h1 className="font-mcqueen font-bold text-2xl mb-5">{product.title}</h1>
+      <Address setActiveAddress={setActiveAddress} />
+      <Delivery activeAddress={activeAddress} productIds={productId} />
       <PaymentMethods />
     </div>
   );
-};
 
-async function getProduct(productId, setProduct) {
-  const product = await fetchHorseted(`/products/${productId}`);
-  setProduct(product);
-}
+  async function getProduct() {
+    const product = await fetchHorseted(`/products/${productId}`);
+    setProduct(product);
+    setLoading(false);
+  }
+};
 
 async function postOrders(accessToken, productId) {
   productId = parseInt(productId);
