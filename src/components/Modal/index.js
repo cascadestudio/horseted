@@ -41,7 +41,7 @@ export default function Modal({
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div
         ref={modalRef}
-        className="bg-light-grey py-9 px-8 rounded-[20px] max-w-[540px] mx-5"
+        className="bg-light-grey py-9 px-8 rounded-[20px] sm:w-[540px] mx-5"
       >
         <div className="grid grid-cols-[1fr_auto_1fr] border-b border-black pb-6 mb-11">
           <h1 className="font-mcqueen col-start-2 font-bold text-[22px] lg:text-[28px] lg:leading-[48px]">

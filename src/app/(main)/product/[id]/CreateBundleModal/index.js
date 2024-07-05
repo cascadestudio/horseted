@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import BatchSummaryModal from "./BatchSummaryModal";
+import BundleSummaryModal from "./BundleSummaryModal";
 import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
 import profilePicture from "@/assets/images/profilePicture.jpg";
@@ -10,13 +10,15 @@ import { useIsClickOutsideElement } from "@/utils/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
+import { formatNumber } from "@/utils/formatNumber";
 
-export default function CreateBatchModal({ userData, userProducts, onClose }) {
+export default function CreateBundleModal({ userData, userProducts, onClose }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
-  const [isBatchSummaryModalOpen, setIsBatchSummaryModalOpen] = useState(false);
-  const [batch, setBatch] = useState([]);
+  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
+    useState(false);
+  const [bundle, setBundle] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(0);
 
   useEffect(() => {
@@ -33,36 +35,36 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
     };
   }, []);
 
-  const handleOpenBatchSummaryModal = () => {
-    setIsBatchSummaryModalOpen(true);
+  const handleOpenBundleSummaryModal = () => {
+    setIsBundleSummaryModalOpen(true);
   };
 
-  const handleCloseBatchSummaryModal = () => {
-    setIsBatchSummaryModalOpen(false);
+  const handleCloseBundleSummaryModal = () => {
+    setIsBundleSummaryModalOpen(false);
   };
 
-  const handleAddToBatch = (product) => {
-    setBatch((prevBatch) => {
-      if (prevBatch.find((p) => p.id === product.id)) {
-        return prevBatch.filter((p) => p.id !== product.id);
+  const handleAddToBundle = (product) => {
+    setBundle((prevBundle) => {
+      if (prevBundle.find((p) => p.id === product.id)) {
+        return prevBundle.filter((p) => p.id !== product.id);
       }
-      return [...prevBatch, product];
+      return [...prevBundle, product];
     });
-    const largestItem = batch.reduce((prev, current) => {
+    const largestItem = bundle.reduce((prev, current) => {
       return prev.shippingSize > current.shippingSize ? prev : current;
     }, product);
-    setShippingPrice(largestItem.shipping);
+    // setShippingPrice(largestItem.shipping);
+    setShippingPrice(5.99); // TODO: Calculate shipping price
   };
 
-  const isProductInBatch = (productId) => {
-    return batch.some((product) => product.id === productId);
+  const isProductInBundle = (productId) => {
+    return bundle.some((product) => product.id === productId);
   };
 
-  const totalBatchPrice = batch.reduce(
+  const bundlePrice = bundle.reduce(
     (total, product) => total + product.price,
     0
   );
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-light-grey">
       <div ref={modalRef} className="w-full h-full flex flex-col">
@@ -105,23 +107,23 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
           </p>
         </div>
         <div className="flex-grow container mx-auto px-5 pt-5 overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 justify-between">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-12 gap-y-8 justify-between">
             {userProducts.items.map((product) => (
               <div
                 key={product.id}
-                className="flex flex-col items-center mb-10 w-[280px] justify-self-center"
+                className="flex flex-col items-center mb-0 w-[280px] justify-self-center"
               >
                 <ProductCard product={product} className="border-none mb-0" />
                 <Button
-                  onClick={() => handleAddToBatch(product)}
+                  onClick={() => handleAddToBundle(product)}
                   variant={
-                    isProductInBatch(product.id)
+                    isProductInBundle(product.id)
                       ? "transparent-red"
                       : "transparent-green"
                   }
-                  className="w-full max-w-[280px]"
+                  className="w-full max-w-[280px] text-xl"
                 >
-                  {isProductInBatch(product.id) ? "Retirer" : "Ajouter"}
+                  {isProductInBundle(product.id) ? "Retirer" : "Ajouter"}
                 </Button>
               </div>
             ))}
@@ -131,17 +133,17 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
           <div className="flex justify-between items-center container mx-auto px-5 py-2 h-28 lg:py-6">
             <div className="flex flex-col">
               <span className="font-poppins font-semibold text-[28px] leading-10">
-                {totalBatchPrice} €
+                {formatNumber(bundlePrice)} €
               </span>
               <div>
                 <span className="font-poppins font-medium text-sm">
-                  {shippingPrice} €
+                  {formatNumber(shippingPrice)} €
                 </span>
                 <span className="text-sm"> - Livraison à domicile</span>
               </div>
             </div>
             <div className="flex items-center mt-4">
-              {batch.map((product) => (
+              {bundle.map((product) => (
                 <ClientProductImage
                   product={product}
                   key={product.id}
@@ -151,13 +153,13 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
               ))}
               <div className="mx-7">
                 <span className="text-sm font-poppins font-medium">
-                  {batch.length}
+                  {bundle.length}
                 </span>{" "}
                 <span className="text-sm font-medium">articles</span>
               </div>
               <Button
-                onClick={handleOpenBatchSummaryModal}
-                className="text-sm whitespace-nowrap"
+                onClick={handleOpenBundleSummaryModal}
+                className="text-sm"
               >
                 Voir le lot
               </Button>
@@ -165,12 +167,12 @@ export default function CreateBatchModal({ userData, userProducts, onClose }) {
           </div>
         </div>
       </div>
-      {isBatchSummaryModalOpen && (
-        <BatchSummaryModal
-          batch={batch}
-          totalBatchPrice={totalBatchPrice}
+      {isBundleSummaryModalOpen && (
+        <BundleSummaryModal
+          bundle={bundle}
+          bundlePrice={bundlePrice}
           shippingPrice={shippingPrice}
-          onClose={handleCloseBatchSummaryModal}
+          onClose={handleCloseBundleSummaryModal}
         />
       )}
     </div>

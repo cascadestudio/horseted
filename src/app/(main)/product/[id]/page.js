@@ -13,7 +13,7 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import ProductsSection from "@/components/ProductsSection";
-import CreateBatchButton from "./CreateBatchButton";
+import CreateBundleButton from "./CreateBundleButton";
 
 export default async function ProductPage({ params }) {
   const product = await fetchHorseted(`/products/${params.id}`);
@@ -117,7 +117,7 @@ export default async function ProductPage({ params }) {
                 </h4>
                 <p className="text-sm">Économisez sur les frais de livraison</p>
               </div>
-              <CreateBatchButton
+              <CreateBundleButton
                 userData={userData}
                 userProducts={userProducts}
               />
