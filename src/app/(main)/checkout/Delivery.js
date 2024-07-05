@@ -5,25 +5,45 @@ import { useEffect, useState } from "react";
 export default function Delivery({ activeAddress, productIds }) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
-  const [activeServicePoint, setActiveServicePoint] = useState([]);
+  const [shippingMethods, setShippingMethods] = useState([]);
+  const [activeServicePointId, setActiveServicePointId] = useState(null);
 
   useEffect(() => {
     if (activeAddress && productIds) {
       getServicePoints();
-      // getShippingMethods();
+      getShippingMethods();
     }
   }, [activeAddress, productIds]);
+
+  useEffect(() => {
+    if (activeServicePointId) {
+      getShippingMethods();
+    }
+  }, [activeServicePointId]);
 
   return (
     <div>
       <h2 className="font-mcqueen font-bold text-xl mb-5">
         Options de livraison
       </h2>
-
+      {shippingMethods?.length > 0 ? (
+        shippingMethods.map((shippingMethod) => {
+          return <p key={shippingMethod.id}>{shippingMethod.name}</p>;
+        })
+      ) : (
+        <p>Aucune option de livraison</p>
+      )}
       <h2 className="font-mcqueen font-bold text-xl mb-5">Point relai :</h2>
       {servicePoints?.length > 0 ? (
         servicePoints.map((servicePoint) => {
-          return <p key={servicePoint.id}>{servicePoint.name}</p>;
+          return (
+            <button
+              onClick={() => setActiveServicePointId(servicePoint.id)}
+              key={servicePoint.id}
+            >
+              {servicePoint.name}
+            </button>
+          );
         })
       ) : (
         <p>Aucun point relai</p>
@@ -44,9 +64,9 @@ export default function Delivery({ activeAddress, productIds }) {
     let query = `/delivery/shipping_methods`;
     query += `?postal_code=${activeAddress.postalCode}`;
     query += `&product_ids=${productIds}`;
-    query += `&service_point=${activeServicePoint.id}`;
-    const servicePoints = await fetchHorseted(query, accessToken);
-    setServicePoints(servicePoints.slice(0, 10));
-    // console.log("servicePoints =>", servicePoints);
+    if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
+    const shippingMethods = await fetchHorseted(query, accessToken);
+    setShippingMethods(shippingMethods);
+    console.log("shippingMethods =>", shippingMethods);
   }
 }
