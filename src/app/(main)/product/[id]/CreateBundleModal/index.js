@@ -11,6 +11,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
+import OfferModal from "../OfferModal";
 
 export default function CreateBundleModal({ userData, userProducts, onClose }) {
   const modalRef = useRef();
@@ -18,6 +19,7 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
     useIsClickOutsideElement(modalRef);
   const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
     useState(false);
+  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [bundle, setBundle] = useState([]);
   const [shippingPrice, setShippingPrice] = useState(0);
 
@@ -41,6 +43,15 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
 
   const handleCloseBundleSummaryModal = () => {
     setIsBundleSummaryModalOpen(false);
+  };
+
+  const handleOpenOfferModal = () => {
+    setIsOfferModalOpen(true);
+    setIsBundleSummaryModalOpen(false);
+  };
+
+  const handleCloseOfferModal = () => {
+    setIsOfferModalOpen(false);
   };
 
   const handleAddToBundle = (product) => {
@@ -173,7 +184,11 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
           bundlePrice={bundlePrice}
           shippingPrice={shippingPrice}
           onClose={handleCloseBundleSummaryModal}
+          onOpenOfferModal={handleOpenOfferModal}
         />
+      )}
+      {isOfferModalOpen && (
+        <OfferModal price={bundlePrice} onClose={handleCloseOfferModal} />
       )}
     </div>
   );

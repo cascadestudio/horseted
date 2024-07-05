@@ -9,6 +9,7 @@ export default function BundleSummaryModal({
   onClose,
   bundlePrice,
   shippingPrice,
+  onOpenOfferModal,
 }) {
   return (
     <Modal title="Votre lot" onClose={onClose}>
@@ -40,7 +41,13 @@ export default function BundleSummaryModal({
       <Button href="/checkout" className="w-full h-[52px] mb-2 text-xl">
         Acheter
       </Button>
-      <OfferButton price={bundlePrice} className="mb-2" />
+      <Button
+        onClick={onOpenOfferModal}
+        variant="transparent-green"
+        className="w-full h-[52px] mb-2 text-xl"
+      >
+        Faire une offre
+      </Button>
       <Button variant="transparent-green" className="w-full h-[52px] text-xl">
         Envoyer un message
       </Button>

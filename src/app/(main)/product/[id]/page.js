@@ -51,6 +51,7 @@ export default async function ProductPage({ params }) {
         <div className="border-b border-grey py-10 flex flex-col items-center mb-10 lg:flex-row lg:items-start lg:justify-center lg:mb-11 lg:py-12">
           <div className="w-full lg:w-3/5">
             {product.hasOwnProperty("medias") ? (
+              //Envoyer les medias en props (map dans carousel)
               <ProductImagesCarousel>
                 {medias.map((media) => {
                   return (
@@ -213,5 +214,6 @@ export default async function ProductPage({ params }) {
       <ProductsSection title="Sellerie de" />
       <ProductsSection title="Articles similaires" />
     </div>
+    //TODO ajouter && isOfferModal && <OfferModal />
   );
 }
