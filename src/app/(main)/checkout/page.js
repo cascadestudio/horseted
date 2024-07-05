@@ -18,6 +18,10 @@ const CheckOutPage = () => {
   const [orderId, setOrderId] = useState(null);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
+  const [shippingMethods, setShippingMethods] = useState([]);
+  const [activeServicePointId, setActiveServicePointId] = useState(null);
+
+  console.log("shippingMethods", shippingMethods);
 
   useEffect(() => {
     getProduct();
@@ -25,20 +29,21 @@ const CheckOutPage = () => {
   }, []);
 
   async function handlePayment() {
-    // TODO: gather all info then post orders payment
     const body = {
-      offerId: orderId,
-      paymentMethod: "string",
+      // offerId: null, // required if offer exist
+      paymentMethod: activePaymentMethodId,
       address: {
-        city: "string",
-        street: "string",
-        postalCode: "string",
+        city: activeAddress.city,
+        street: activeAddress.street,
+        postalCode: activeAddress.postalCode,
       },
-      shippingMethod: 0,
-      servicePoint: 0,
+      shippingMethod: shippingMethods[0].id,
+      // servicePoint: activeServicePointId,
     };
+    console.log("body", body);
+
     const payment = await fetchHorseted(
-      `/orders/${orderId}/payments`,
+      `/orders/${orderId}/payment`,
       accessToken,
       "POST",
       body
@@ -54,14 +59,23 @@ const CheckOutPage = () => {
     <div className="container mx-auto">
       <h1 className="font-mcqueen font-bold text-2xl mb-5">{product.title}</h1>
       <Address setActiveAddress={setActiveAddress} />
-      <Delivery activeAddress={activeAddress} productIds={productId} />
+      <Delivery
+        activeAddress={activeAddress}
+        productIds={productId}
+        shippingMethods={shippingMethods}
+        setShippingMethods={setShippingMethods}
+        activeServicePointId={activeServicePointId}
+        setActiveServicePointId={setActiveServicePointId}
+      />
       <PaymentMethods
         activePaymentMethodId={activePaymentMethodId}
         setActivePaymentMethodId={setActivePaymentMethodId}
       />
-      <button className="bg-black text-white" onClick={() => handlePayment()}>
-        Payer
-      </button>
+      {activePaymentMethodId ? (
+        <button className="bg-black text-white" onClick={() => handlePayment()}>
+          Payer
+        </button>
+      ) : null}
     </div>
   );
 
@@ -77,7 +91,6 @@ const CheckOutPage = () => {
       productIds: [productId],
     };
     const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
-    console.log("order", order);
     setOrderId(order.id);
   }
 };

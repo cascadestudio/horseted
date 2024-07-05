@@ -19,6 +19,12 @@ export default function PaymentMethods({
   }, []);
 
   useEffect(() => {
+    if (paymentMethods.length > 0) {
+      initActivePaymentMethodId();
+    }
+  }, [paymentMethods]);
+
+  useEffect(() => {
     if (isNewPaymentMethod) {
       getPaymentMethods(user, setPaymentMethods);
       setIsNewPaymentMethod(false);
@@ -31,6 +37,17 @@ export default function PaymentMethods({
       (paymentMethod) => paymentMethod.id === paymentMethodId
     );
     setActivePaymentMethodId(newActivePaymentMethod.id);
+  };
+
+  const initActivePaymentMethodId = () => {
+    const defautlPaymentMethod = paymentMethods.find(
+      (paymentMethod) => paymentMethod.isDefault
+    );
+    if (defautlPaymentMethod) {
+      setActivePaymentMethodId(defautlPaymentMethod.id);
+    } else {
+      setActivePaymentMethodId(paymentMethods[0].id);
+    }
   };
 
   return (

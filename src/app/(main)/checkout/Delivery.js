@@ -2,11 +2,16 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 
-export default function Delivery({ activeAddress, productIds }) {
+export default function Delivery({
+  activeAddress,
+  productIds,
+  shippingMethods,
+  setShippingMethods,
+  activeServicePointId,
+  setActiveServicePointId,
+}) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
-  const [shippingMethods, setShippingMethods] = useState([]);
-  const [activeServicePointId, setActiveServicePointId] = useState(null);
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -67,6 +72,6 @@ export default function Delivery({ activeAddress, productIds }) {
     if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    console.log("shippingMethods =>", shippingMethods);
+    // console.log("shippingMethods =>", shippingMethods);
   }
 }
