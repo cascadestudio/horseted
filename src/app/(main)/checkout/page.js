@@ -13,10 +13,11 @@ const CheckOutPage = () => {
   const { accessToken } = useAuthContext();
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
-  const [product, setProduct] = useState(null);
-  const [activeAddress, setActiveAddress] = useState(null);
-  const [orderId, setOrderId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState(null);
+  const [orderId, setOrderId] = useState(null);
+  const [activeAddress, setActiveAddress] = useState(null);
+  const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
 
   useEffect(() => {
     getProduct();
@@ -54,7 +55,10 @@ const CheckOutPage = () => {
       <h1 className="font-mcqueen font-bold text-2xl mb-5">{product.title}</h1>
       <Address setActiveAddress={setActiveAddress} />
       <Delivery activeAddress={activeAddress} productIds={productId} />
-      <PaymentMethods />
+      <PaymentMethods
+        activePaymentMethodId={activePaymentMethodId}
+        setActivePaymentMethodId={setActivePaymentMethodId}
+      />
       <button className="bg-black text-white" onClick={() => handlePayment()}>
         Payer
       </button>

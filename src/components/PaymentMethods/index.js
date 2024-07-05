@@ -5,7 +5,10 @@ import AddPaymentCardModal from "./AddPaymentCardModal";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 
-export default function PaymentMethods() {
+export default function PaymentMethods({
+  activePaymentMethodId,
+  setActivePaymentMethodId,
+}) {
   const { user } = useAuthContext();
   const [isModal, setIsModal] = useState(true);
   const [isNewPaymentMethod, setIsNewPaymentMethod] = useState(false);
@@ -22,18 +25,35 @@ export default function PaymentMethods() {
     }
   }, [isNewPaymentMethod]);
 
+  const handlePaymentMethodChange = (e) => {
+    const paymentMethodId = e.target.value;
+    const newActivePaymentMethod = paymentMethods.find(
+      (paymentMethod) => paymentMethod.id === paymentMethodId
+    );
+    setActivePaymentMethodId(newActivePaymentMethod.id);
+  };
+
   return (
     <div>
       <h2 className="font-mcqueen font-bold text-xl mb-5">Mode de paiement</h2>
-      {paymentMethods.map((method) => (
-        <div
-          key={method.id}
-          className="flex items-center justify-between p-5 border border-light-green rounded-xl mb-5"
-        >
-          {method.brand}
-          {method.last4}
-        </div>
-      ))}
+      {paymentMethods.map((paymentMethod) => {
+        const { id, brand, last4 } = paymentMethod;
+        return (
+          <label
+            key={id}
+            className="flex items-center justify-between p-5 border border-light-green rounded-xl mb-5"
+          >
+            <input
+              type="radio"
+              value={id}
+              checked={activePaymentMethodId === id}
+              onChange={handlePaymentMethodChange}
+            />
+            {brand}
+            {last4}
+          </label>
+        );
+      })}
       <button
         onClick={() => setIsModal(true)}
         className="flex items-center justify-center p-2 bg-light-green rounded-full hover:bg-dark-green"
