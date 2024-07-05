@@ -2,24 +2,48 @@
 
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
 import Delivery from "./Delivery";
 import Address from "./Address";
+import { useAuthContext } from "@/context/AuthContext";
 
 const CheckOutPage = () => {
+  const { accessToken } = useAuthContext();
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
   const [product, setProduct] = useState(null);
   const [activeAddress, setActiveAddress] = useState(null);
+  const [orderId, setOrderId] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // TODO: get shipping method then post orders payment
   useEffect(() => {
     getProduct();
-    // postOrders(accessToken, productId);
+    postOrders(accessToken, productId);
   }, []);
+
+  async function handlePayment() {
+    // TODO: gather all info then post orders payment
+    const body = {
+      offerId: orderId,
+      paymentMethod: "string",
+      address: {
+        city: "string",
+        street: "string",
+        postalCode: "string",
+      },
+      shippingMethod: 0,
+      servicePoint: 0,
+    };
+    const payment = await fetchHorseted(
+      `/orders/${orderId}/payments`,
+      accessToken,
+      "POST",
+      body
+    );
+    console.log("payment", payment);
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -31,6 +55,9 @@ const CheckOutPage = () => {
       <Address setActiveAddress={setActiveAddress} />
       <Delivery activeAddress={activeAddress} productIds={productId} />
       <PaymentMethods />
+      <button className="bg-black text-white" onClick={() => handlePayment()}>
+        Payer
+      </button>
     </div>
   );
 
@@ -39,15 +66,16 @@ const CheckOutPage = () => {
     setProduct(product);
     setLoading(false);
   }
-};
 
-async function postOrders(accessToken, productId) {
-  productId = parseInt(productId);
-  const body = {
-    productIds: [productId],
-  };
-  const response = await fetchHorseted(`/orders`, accessToken, "POST", body);
-  // console.log("response", response);
-}
+  async function postOrders(accessToken, productId) {
+    productId = parseInt(productId);
+    const body = {
+      productIds: [productId],
+    };
+    const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
+    console.log("order", order);
+    setOrderId(order.id);
+  }
+};
 
 export default withAuth(CheckOutPage);
