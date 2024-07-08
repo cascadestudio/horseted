@@ -8,6 +8,7 @@ import PaymentMethods from "@/components/PaymentMethods";
 import Delivery from "./Delivery";
 import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
+import { initializeSocket, getSocket } from "@/libs/socket";
 
 const CheckOutPage = () => {
   const { accessToken } = useAuthContext();
@@ -22,6 +23,7 @@ const CheckOutPage = () => {
 
   useEffect(() => {
     getProduct();
+    const socket = initializeSocket();
   }, []);
 
   async function handlePayment() {
