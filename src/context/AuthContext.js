@@ -10,6 +10,7 @@ export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
   async function fetchUser(accessToken) {
@@ -28,6 +29,7 @@ export const AuthContextProvider = ({ children }) => {
         try {
           const apiUser = await fetchUser(firebaseUser.accessToken);
           setUser({ auth: firebaseUser, ...apiUser });
+          setAccessToken(firebaseUser.accessToken);
         } catch (error) {
           console.error("Failed to fetch additional user data:", error);
         }
@@ -41,7 +43,7 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, accessToken, loading }}>
       {children}
     </AuthContext.Provider>
   );
