@@ -25,7 +25,7 @@ const CheckOutPage = () => {
 
   useEffect(() => {
     getProduct();
-    postOrders(accessToken, productId);
+    postOrders(accessToken, productId); //au moment du paiement
   }, []);
 
   async function handlePayment() {
@@ -38,7 +38,7 @@ const CheckOutPage = () => {
         postalCode: activeAddress.postalCode,
       },
       shippingMethod: shippingMethods[0].id,
-      // servicePoint: activeServicePointId,
+      // servicePoint: activeServicePointId, // not required
     };
     console.log("body", body);
 
