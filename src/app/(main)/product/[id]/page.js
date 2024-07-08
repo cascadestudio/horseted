@@ -14,6 +14,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import ProductsSection from "@/components/ProductsSection";
 import CreateBundleButton from "./CreateBundleButton";
+import { formatDate } from "@/utils/formatDate";
 
 export default async function ProductPage({ params }) {
   const product = await fetchHorseted(`/products/${params.id}`);
@@ -40,11 +41,8 @@ export default async function ProductPage({ params }) {
     `/products?orderBy=createdAt;desc&fromId=${userId}`
   );
 
-  const formattedDate = new Intl.DateTimeFormat("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(createdAt));
+  const formattedDate = formatDate(createdAt);
+
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 ">
