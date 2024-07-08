@@ -22,10 +22,7 @@ export default async function ProductsSection({ title }) {
             className="border-none px-0 font-bold whitespace-nowrap pr-0 lg:border-solid lg:px-5"
           >
             Voir tout
-            <RightArrow
-              color={fullConfig.theme.colors["light-green"]}
-              className="ml-2"
-            />
+            <RightArrow color={"white"} className="ml-2" />
           </Button>
         </div>
         <ProductsCarousel>
@@ -37,7 +34,7 @@ export default async function ProductsSection({ title }) {
                 }`}
                 key={product.id}
               >
-                <ProductCard className="mr-5" product={product} />
+                <ProductCard className="mb-8 mr-6 lg:mr-12" product={product} />
               </div>
             );
           })}

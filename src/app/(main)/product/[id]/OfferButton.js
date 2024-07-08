@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import OfferModal from "./OfferModal";
 import { useState } from "react";
 
-export default function OfferButton({ price }) {
+export default function OfferButton({ price, className }) {
   const [isOfferModal, setIsOfferModal] = useState(false);
   const handleClose = () => setIsOfferModal(false);
 
@@ -17,7 +17,7 @@ export default function OfferButton({ price }) {
       <Button
         onClick={() => setIsOfferModal(true)}
         variant="transparent-green"
-        className="w-full flex justify-center h-[52px]"
+        className={`w-full flex justify-center h-[52px] text-xl ${className}`}
       >
         Faire une offre
       </Button>

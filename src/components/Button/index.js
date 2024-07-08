@@ -8,7 +8,7 @@ export default function Button({
   href,
   onClick,
 }) {
-  const style = `${className} flex items-center w-fit font-mcqueen font-semibold rounded-xl h-11 px-7 ${
+  const style = `${className} flex justify-center items-center text-center whitespace-nowrap font-mcqueen font-semibold rounded-xl h-11 px-7 ${
     variant === "white"
       ? "bg-white text-light-green border border-light-green"
       : variant === "black"
