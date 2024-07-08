@@ -5,23 +5,17 @@
 "use client";
 
 import Button from "@/components/Button";
-import OfferModal from "./OfferModal";
-import { useState } from "react";
 
-export default function OfferButton({ price, className }) {
-  const [isOfferModal, setIsOfferModal] = useState(false);
-  const handleClose = () => setIsOfferModal(false);
-
+export default function OfferButton({ onOpen, className }) {
   return (
     <>
       <Button
-        onClick={() => setIsOfferModal(true)}
+        onClick={onOpen}
         variant="transparent-green"
         className={`w-full flex justify-center h-[52px] text-xl ${className}`}
       >
         Faire une offre
       </Button>
-      {isOfferModal && <OfferModal price={price} onClose={handleClose} />}
     </>
   );
 }

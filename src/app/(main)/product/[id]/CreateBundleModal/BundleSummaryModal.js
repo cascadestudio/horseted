@@ -2,7 +2,6 @@ import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
-import OfferButton from "../OfferButton";
 
 export default function BundleSummaryModal({
   bundle,

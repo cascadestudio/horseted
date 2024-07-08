@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import BundleSummaryModal from "./BundleSummaryModal";
 import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
 import profilePicture from "@/assets/images/profilePicture.jpg";
@@ -36,23 +35,6 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
       document.body.style.overflow = "";
     };
   }, []);
-
-  const handleOpenBundleSummaryModal = () => {
-    setIsBundleSummaryModalOpen(true);
-  };
-
-  const handleCloseBundleSummaryModal = () => {
-    setIsBundleSummaryModalOpen(false);
-  };
-
-  const handleOpenOfferModal = () => {
-    setIsOfferModalOpen(true);
-    setIsBundleSummaryModalOpen(false);
-  };
-
-  const handleCloseOfferModal = () => {
-    setIsOfferModalOpen(false);
-  };
 
   const handleAddToBundle = (product) => {
     setBundle((prevBundle) => {
@@ -178,18 +160,6 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
           </div>
         </div>
       </div>
-      {isBundleSummaryModalOpen && (
-        <BundleSummaryModal
-          bundle={bundle}
-          bundlePrice={bundlePrice}
-          shippingPrice={shippingPrice}
-          onClose={handleCloseBundleSummaryModal}
-          onOpenOfferModal={handleOpenOfferModal}
-        />
-      )}
-      {isOfferModalOpen && (
-        <OfferModal price={bundlePrice} onClose={handleCloseOfferModal} />
-      )}
     </div>
   );
 }

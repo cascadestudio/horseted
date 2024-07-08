@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import NextArrow from "@/assets/icons/NextArrow";
 import "@/app/styles/product-images-carousel.css";
+import ClientProductImage from "@/components/ClientProductImage";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -55,7 +56,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default function ProductImagesCarousel({ children }) {
+export default function ProductImagesCarousel({ product, medias }) {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -87,7 +88,7 @@ export default function ProductImagesCarousel({ children }) {
             infinite={true}
             className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >
-            {children.map((child, index) => (
+            {medias.map((media, index) => (
               <div
                 key={index}
                 className={`cursor-pointer [&_img]:aspect-[172/172] [&_img]:rounded-lg ${
@@ -96,7 +97,7 @@ export default function ProductImagesCarousel({ children }) {
                     : ""
                 }`}
               >
-                {child}
+                <ClientProductImage product={product} media={media} />
               </div>
             ))}
           </Slider>
@@ -109,12 +110,12 @@ export default function ProductImagesCarousel({ children }) {
             ref={(slider) => (sliderRef1 = slider)}
             className="relative h-full [&>*]:h-full"
           >
-            {children.map((child, index) => (
+            {medias.map((media, index) => (
               <div
                 className="h-full w-full [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
-                {child}
+                <ClientProductImage product={product} media={media} />
               </div>
             ))}
           </Slider>
