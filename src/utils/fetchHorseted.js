@@ -29,7 +29,7 @@ export default async function fetchHorseted(
         }),
   };
 
-  // console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
+  console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
 
   try {
     const response = await fetch(url, options);

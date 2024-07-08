@@ -15,20 +15,17 @@ const CheckOutPage = () => {
   const productId = searchParams.get("productId");
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
-  const [orderId, setOrderId] = useState(null);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePointId, setActiveServicePointId] = useState(null);
 
-  console.log("shippingMethods", shippingMethods);
-
   useEffect(() => {
     getProduct();
-    postOrders(accessToken, productId); //au moment du paiement
   }, []);
 
   async function handlePayment() {
+    const orderId = await postOrders(accessToken, productId);
     const body = {
       // offerId: null, // required if offer exist
       paymentMethod: activePaymentMethodId,
@@ -91,7 +88,7 @@ const CheckOutPage = () => {
       productIds: [productId],
     };
     const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
-    setOrderId(order.id);
+    return order.id;
   }
 };
 
