@@ -8,7 +8,7 @@ import PaymentMethods from "@/components/PaymentMethods";
 import Delivery from "./Delivery";
 import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
-import { initializeSocket, getSocket } from "@/libs/socket";
+import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 
 const CheckOutPage = () => {
   const { accessToken } = useAuthContext();
@@ -23,7 +23,6 @@ const CheckOutPage = () => {
 
   useEffect(() => {
     getProduct();
-    const socket = initializeSocket();
   }, []);
 
   async function handlePayment() {
@@ -90,7 +89,6 @@ const CheckOutPage = () => {
       shippingMethod: shippingMethods[0].id,
       // servicePoint: activeServicePointId, // not required
     };
-    // console.log("body", body);
     const paymentResponse = await fetchHorseted(
       `/orders/${orderId}/payment`,
       accessToken,
@@ -105,17 +103,18 @@ const CheckOutPage = () => {
       console.log("Payment successful");
     }
     if (paymentResponse.status === "requires_action") {
-      const url = new URL(paymentResponse.nextAction.url);
-      // console.log("url", url);
-      getPaymentIntentIdFromUrl(url);
+      const paymentIntenturl = paymentResponse.nextAction.url;
+      const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
+      handleSocketPayment(paymentIntentId);
+      window.open(paymentIntenturl, "_blank");
     }
   }
 
   function getPaymentIntentIdFromUrl(url) {
-    const params = new URLSearchParams(url.search);
-    // console.log("params", params);
+    const urlObject = new URL(url);
+    const params = new URLSearchParams(urlObject.search);
     const paymentIntentId = params.get("payment_intent");
-    console.log("paymentIntentId", paymentIntentId);
+    return paymentIntentId;
   }
 };
 
