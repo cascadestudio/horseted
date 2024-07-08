@@ -9,6 +9,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
+import { TextInput } from "@/components/input";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -189,21 +190,6 @@ const AvatarInput = ({ onChange }) => (
       id="avatar"
       accept="image/*"
       className="input"
-    />
-  </label>
-);
-
-const TextInput = ({ label, name, value, onChange, list, required }) => (
-  <label htmlFor={name}>
-    <p className="label">{label} :</p>
-    <input
-      value={value}
-      onChange={onChange}
-      list={list}
-      name={name}
-      id={name}
-      required={required}
-      className="bg-transparent border-b border-black w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2"
     />
   </label>
 );

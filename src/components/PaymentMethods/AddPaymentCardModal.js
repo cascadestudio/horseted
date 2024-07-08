@@ -59,5 +59,5 @@ async function postPaymentMethod(cardToken, user) {
     "POST",
     body
   );
-  console.log(response);
+  // console.log(response);
 }
