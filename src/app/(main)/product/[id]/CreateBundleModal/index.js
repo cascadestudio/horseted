@@ -10,17 +10,22 @@ import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
-import OfferModal from "../OfferModal";
 
-export default function CreateBundleModal({ userData, userProducts, onClose }) {
+export default function CreateBundleModal({
+  userData,
+  userProducts,
+  bundle,
+  setBundle,
+  bundlePrice,
+  setBundlePrice,
+  onClose,
+  onOpenBundleSummaryModal,
+  shippingPrice,
+  setShippingPrice,
+}) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
-  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
-    useState(false);
-  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
-  const [bundle, setBundle] = useState([]);
-  const [shippingPrice, setShippingPrice] = useState(0);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -38,26 +43,30 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
 
   const handleAddToBundle = (product) => {
     setBundle((prevBundle) => {
+      let newBundle;
       if (prevBundle.find((p) => p.id === product.id)) {
-        return prevBundle.filter((p) => p.id !== product.id);
+        newBundle = prevBundle.filter((p) => p.id !== product.id);
+      } else {
+        newBundle = [...prevBundle, product];
       }
-      return [...prevBundle, product];
+
+      const newBundlePrice = newBundle.reduce((total, p) => total + p.price, 0);
+      setBundlePrice(newBundlePrice);
+
+      const largestItem = newBundle.reduce((prev, current) => {
+        return prev.shippingSize > current.shippingSize ? prev : current;
+      }, product);
+
+      setShippingPrice(5.99); // TODO: Calculate shipping price
+
+      return newBundle;
     });
-    const largestItem = bundle.reduce((prev, current) => {
-      return prev.shippingSize > current.shippingSize ? prev : current;
-    }, product);
-    // setShippingPrice(largestItem.shipping);
-    setShippingPrice(5.99); // TODO: Calculate shipping price
   };
 
   const isProductInBundle = (productId) => {
     return bundle.some((product) => product.id === productId);
   };
 
-  const bundlePrice = bundle.reduce(
-    (total, product) => total + product.price,
-    0
-  );
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-light-grey">
       <div ref={modalRef} className="w-full h-full flex flex-col">
@@ -151,7 +160,8 @@ export default function CreateBundleModal({ userData, userProducts, onClose }) {
                 <span className="text-sm font-medium">articles</span>
               </div>
               <Button
-                onClick={handleOpenBundleSummaryModal}
+                onClick={onOpenBundleSummaryModal}
+                bundle={bundle}
                 className="text-sm"
               >
                 Voir le lot

@@ -5,7 +5,6 @@ import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Button from "@/components/Button";
 import ProductImagesCarousel from "./ProductImagesCarousel";
-import ClientProductImage from "@/components/ClientProductImage";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
@@ -14,7 +13,6 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
-import ProductsSection from "@/components/ProductsSection";
 import OfferButton from "./OfferButton";
 import OfferModal from "./OfferModal";
 import CreateBundleButton from "./CreateBundleButton";
@@ -31,6 +29,9 @@ export default function ProductPageClient({
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
   const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
     useState(false);
+  const [bundle, setBundle] = useState([]);
+  const [bundlePrice, setBundlePrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
@@ -213,14 +214,18 @@ export default function ProductPageClient({
           </section>
         </div>
       </div>
-      <ProductsSection title="Sellerie de" />
-      <ProductsSection title="Articles similaires" />
       {isCreateBundleModalOpen && (
         <CreateBundleModal
           userData={userData}
           userProducts={userProducts}
           onClose={handleCloseCreateBundleModal}
           onOpenBundleSummaryModal={handleOpenBundleSummaryModal}
+          bundle={bundle}
+          setBundle={setBundle}
+          bundlePrice={bundlePrice}
+          setBundlePrice={setBundlePrice}
+          shippingPrice={shippingPrice}
+          setShippingPrice={setShippingPrice}
         />
       )}
       {isBundleSummaryModalOpen && (
