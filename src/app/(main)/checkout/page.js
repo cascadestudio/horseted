@@ -25,27 +25,12 @@ const CheckOutPage = () => {
   }, []);
 
   async function handlePayment() {
-    const orderId = await postOrders(accessToken, productId);
-    const body = {
-      // offerId: null, // required if offer exist
-      paymentMethod: activePaymentMethodId,
-      address: {
-        city: activeAddress.city,
-        street: activeAddress.street,
-        postalCode: activeAddress.postalCode,
-      },
-      shippingMethod: shippingMethods[0].id,
-      // servicePoint: activeServicePointId, // not required
-    };
-    console.log("body", body);
+    const orderId = await postOrders();
+    // console.log("orderId", orderId);
+    const paymentResponse = await ordersPayment(orderId);
+    // console.log("paymentResponse", paymentResponse);
 
-    const payment = await fetchHorseted(
-      `/orders/${orderId}/payment`,
-      accessToken,
-      "POST",
-      body
-    );
-    console.log("payment", payment);
+    handlePaymentResponse(paymentResponse);
   }
 
   if (loading) {
@@ -82,13 +67,53 @@ const CheckOutPage = () => {
     setLoading(false);
   }
 
-  async function postOrders(accessToken, productId) {
-    productId = parseInt(productId);
+  async function postOrders() {
+    const parsedProductId = parseInt(productId);
     const body = {
-      productIds: [productId],
+      productIds: [parsedProductId],
     };
     const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
     return order.id;
+  }
+
+  async function ordersPayment(orderId) {
+    const body = {
+      // offerId: null, // required if offer exist
+      paymentMethod: activePaymentMethodId,
+      address: {
+        city: activeAddress.city,
+        street: activeAddress.street,
+        postalCode: activeAddress.postalCode,
+      },
+      shippingMethod: shippingMethods[0].id,
+      // servicePoint: activeServicePointId, // not required
+    };
+    // console.log("body", body);
+    const paymentResponse = await fetchHorseted(
+      `/orders/${orderId}/payment`,
+      accessToken,
+      "POST",
+      body
+    );
+    return paymentResponse;
+  }
+
+  function handlePaymentResponse(paymentResponse) {
+    if (paymentResponse.status === "success") {
+      console.log("Payment successful");
+    }
+    if (paymentResponse.status === "requires_action") {
+      const url = new URL(paymentResponse.nextAction.url);
+      // console.log("url", url);
+      getPaymentIntentIdFromUrl(url);
+    }
+  }
+
+  function getPaymentIntentIdFromUrl(url) {
+    const params = new URLSearchParams(url.search);
+    // console.log("params", params);
+    const paymentIntentId = params.get("payment_intent");
+    console.log("paymentIntentId", paymentIntentId);
   }
 };
 
