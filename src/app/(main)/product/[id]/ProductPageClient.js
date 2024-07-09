@@ -25,6 +25,9 @@ export default function ProductPageClient({
 }) {
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
+  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
+    useState(false);
+  const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
 
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
@@ -40,6 +43,26 @@ export default function ProductPageClient({
   const handleCloseCreateBundleModal = () => {
     console.log("close create bundle modal");
     setIsCreateBundleModalOpen(false);
+  };
+
+  const handleOpenBundleSummaryModal = () => {
+    console.log("open bundle summary modal");
+    setIsBundleSummaryModalOpen(true);
+  };
+  const handleCloseBundleSummaryModal = () => {
+    console.log("close bundle summary modal");
+    setIsBundleSummaryModalOpen(false);
+  };
+
+  const handleOpenBundleOfferModal = () => {
+    console.log("open bundle offer modal");
+    setIsBundleOfferModalOpen(true);
+    console.log("close bundle summary modal");
+    setIsBundleSummaryModalOpen(false);
+  };
+  const handleCloseBundleOfferModal = () => {
+    console.log("close bundle offer modal");
+    setIsBundleOfferModalOpen(false);
   };
 
   const {
@@ -237,6 +260,12 @@ export default function ProductPageClient({
           shippingPrice={shippingPrice}
           setShippingPrice={setShippingPrice}
           isCreateBundleModalOpen={isCreateBundleModalOpen}
+          isBundleSummaryModalOpen={isBundleSummaryModalOpen}
+          handleOpenBundleSummaryModal={handleOpenBundleSummaryModal}
+          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
+          handleCloseBundleOfferModal={handleCloseBundleOfferModal}
+          isBundleOfferModalOpen={isBundleOfferModalOpen}
+          handleCloseBundleSummaryModal={handleCloseBundleSummaryModal}
         />
       )}
       {isOfferModalOpen && (

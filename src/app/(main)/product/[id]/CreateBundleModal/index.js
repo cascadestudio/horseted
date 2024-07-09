@@ -24,40 +24,22 @@ export default function CreateBundleModal({
   shippingPrice,
   setShippingPrice,
   isCreateBundleModalOpen,
+  isBundleSummaryModalOpen,
+  isBundleOfferModalOpen,
+  handleOpenBundleSummaryModal,
+  handleCloseBundleSummaryModal,
+  handleOpenBundleOfferModal,
+  handleCloseBundleOfferModal,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
 
-  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
-    useState(false);
-  const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
-
-  const handleOpenBundleSummaryModal = () => {
-    console.log("open bundle summary modal");
-    setIsBundleSummaryModalOpen(true);
-  };
-  const handleCloseBundleSummaryModal = () => {
-    console.log("close bundle summary modal");
-    setIsBundleSummaryModalOpen(false);
-  };
-
-  const handleOpenBundleOfferModal = () => {
-    console.log("open bundle offer modal");
-    setIsBundleOfferModalOpen(true);
-    console.log("close bundle summary modal");
-    setIsBundleSummaryModalOpen(false);
-  };
-  const handleCloseBundleOfferModal = () => {
-    console.log("close bundle offer modal");
-    setIsBundleOfferModalOpen(false);
-  };
-
   useEffect(() => {
     if (
       isClickOutside &&
-      !isBundleOfferModalOpen &&
-      !isBundleSummaryModalOpen
+      !isBundleSummaryModalOpen &&
+      !isBundleOfferModalOpen
     ) {
       onCloseCreateBundleModal();
       setIsClickOutside(false);
@@ -65,8 +47,8 @@ export default function CreateBundleModal({
   }, [
     isClickOutside,
     onCloseCreateBundleModal,
-    isBundleOfferModalOpen,
     isBundleSummaryModalOpen,
+    isBundleOfferModalOpen,
   ]);
 
   useEffect(() => {
