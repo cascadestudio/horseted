@@ -229,7 +229,7 @@ export default function ProductPageClient({
         <CreateBundleModal
           userData={userData}
           userProducts={userProducts}
-          onClose={handleCloseCreateBundleModal}
+          onCloseCreateBundleModal={handleCloseCreateBundleModal}
           bundle={bundle}
           setBundle={setBundle}
           bundlePrice={bundlePrice}

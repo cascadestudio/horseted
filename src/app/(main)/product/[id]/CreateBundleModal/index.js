@@ -20,7 +20,7 @@ export default function CreateBundleModal({
   setBundle,
   bundlePrice,
   setBundlePrice,
-  onClose,
+  onCloseCreateBundleModal,
   shippingPrice,
   setShippingPrice,
   isCreateBundleModalOpen,
@@ -54,11 +54,20 @@ export default function CreateBundleModal({
   };
 
   useEffect(() => {
-    if (isClickOutside && !isBundleOfferModalOpen) {
-      onClose();
+    if (
+      isClickOutside &&
+      !isBundleOfferModalOpen &&
+      !isBundleSummaryModalOpen
+    ) {
+      onCloseCreateBundleModal();
       setIsClickOutside(false);
     }
-  }, [isClickOutside, onClose, isBundleOfferModalOpen]);
+  }, [
+    isClickOutside,
+    onCloseCreateBundleModal,
+    isBundleOfferModalOpen,
+    isBundleSummaryModalOpen,
+  ]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -99,7 +108,7 @@ export default function CreateBundleModal({
         <div className="bg-white">
           <div className="flex justify-between container mx-auto px-5 py-2">
             <div className="flex items-center">
-              <div onClick={onClose}>
+              <div onClick={onCloseCreateBundleModal}>
                 <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
               </div>
               <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
@@ -201,7 +210,7 @@ export default function CreateBundleModal({
           bundle={bundle}
           bundlePrice={bundlePrice}
           shippingPrice={shippingPrice}
-          onClose={handleCloseBundleSummaryModal}
+          onCloseBundleSummaryModal={handleCloseBundleSummaryModal}
           onOpenBundleSummaryModal={handleOpenBundleSummaryModal}
           onOpenOfferModal={handleOpenBundleOfferModal}
         />
