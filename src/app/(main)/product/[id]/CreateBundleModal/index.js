@@ -11,7 +11,7 @@ import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
 import BundleSummaryModal from "./BundleSummaryModal";
-import OfferModal from "../OfferModal";
+import OfferModal from "../ProductInfoSection/OfferModal";
 
 export default function CreateBundleModal({
   userData,
