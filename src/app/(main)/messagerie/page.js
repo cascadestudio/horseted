@@ -8,6 +8,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 function ThreadsPage() {
   const { accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
+  const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
 
@@ -17,14 +18,26 @@ function ThreadsPage() {
 
   useEffect(() => {
     if (threads.length !== 0) {
+      setThreadId(threads[0].id);
       getMessages(threads[0].id);
       getProduct(threads[0].productId);
     }
   }, [threads]);
 
   function handleThreadClick(id, productId) {
+    setThreadId(id);
     getMessages(id);
     getProduct(productId);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`formData => ${key}: ${value}`);
+    // }
+    await postMessage(formData);
+    getMessages(threadId);
   }
 
   return (
@@ -62,6 +75,26 @@ function ThreadsPage() {
         ) : (
           <p>Pas de messages</p>
         )}
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col space-y-4 p-4 border border-gray-300 rounded-md"
+        >
+          <label htmlFor="message" className="text-lg font-semibold">
+            Message:
+          </label>
+          <textarea
+            id="content"
+            name="content"
+            className="p-2 border border-gray-300 rounded-md"
+            rows="4"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+          >
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );
@@ -69,7 +102,6 @@ function ThreadsPage() {
   async function getThreads() {
     const threads = await fetchHorseted("/threads", accessToken);
     setThreads(threads);
-    // console.log(threads);
   }
 
   async function getMessages(id) {
@@ -78,13 +110,21 @@ function ThreadsPage() {
       accessToken
     );
     setMessages(messages);
-    console.log("messages =>", messages);
   }
 
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
     setProduct(product);
-    console.log("product =>", product);
+  }
+
+  async function postMessage(formData) {
+    const response = await fetchHorseted(
+      `/threads/${threadId}/messages`,
+      accessToken,
+      "POST",
+      formData
+    );
+    console.log("postMessageresponse =>", response);
   }
 }
 
