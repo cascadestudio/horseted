@@ -22,7 +22,9 @@ export default function Header() {
           <Account />
           <HeartIcon className="hidden lg:block" />
           <span className="bg-black h-5 w-px hidden lg:block"></span>
-          <MessageIcon />
+          <Link href="/messagerie">
+            <MessageIcon />
+          </Link>
         </div>
         <SearchBar className="lg:hidden mt-4" />
       </div>
