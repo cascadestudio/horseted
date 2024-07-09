@@ -6,6 +6,7 @@ import { useAuthContext } from "@/context/AuthContext";
 export default function Address({ setActiveAddress }) {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
+  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     getAdress(accessToken, setAddresses);
@@ -18,17 +19,19 @@ export default function Address({ setActiveAddress }) {
   }, [addresses]);
 
   return (
-    <div>
-      <h2 className="font-mcqueen font-bold text-xl mb-5">Addresse</h2>
-      {addresses?.length > 0 ? (
-        addresses.map((address) => {
-          return <p key={address.id}>{address.fullName}</p>;
-        })
-      ) : (
-        <p>Aucune adresse</p>
-      )}
-      <AddressModal />
-    </div>
+    <>
+      <div className="g-block flex justify-between">
+        <h2 className="font-mcqueen font-bold text-xl mb-5">Addresse</h2>
+        {addresses?.length > 0 ? (
+          addresses.map((address) => {
+            return <p key={address.id}>{address.fullName}</p>;
+          })
+        ) : (
+          <p>Aucune adresse</p>
+        )}
+      </div>
+      {isModal && <AddressModal />}
+    </>
   );
 }
 

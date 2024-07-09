@@ -9,6 +9,8 @@ import Delivery from "./Delivery";
 import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
+import ClientProductImage from "@/components/ClientProductImage";
+import User from "./User";
 
 const CheckOutPage = () => {
   const { accessToken } = useAuthContext();
@@ -37,10 +39,24 @@ const CheckOutPage = () => {
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="font-mcqueen font-bold text-2xl mb-5">{product.title}</h1>
+    <div className="container mx-auto py-10">
+      <h1 className="font-mcqueen font-bold text-2xl mb-4">Votre commande</h1>
+      <div className="g-block flex justify-between">
+        <div>
+          <h2 className="font-bold text-lg">{product.title}</h2>
+          <p>1 article</p>
+          <ClientProductImage
+            product={product}
+            size="small"
+            className="w-10 mt-5"
+          />
+        </div>
+        <p className="font-bold text-lg">{product.price}€</p>
+      </div>
+      <User />
       <Address setActiveAddress={setActiveAddress} />
       <Delivery
+        productSize={product.shipping}
         activeAddress={activeAddress}
         productIds={productId}
         shippingMethods={shippingMethods}

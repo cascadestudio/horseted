@@ -1,6 +1,7 @@
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
+import OptionBlock from "@/components/input/OptionBlock";
 
 export default function Delivery({
   activeAddress,
@@ -9,9 +10,12 @@ export default function Delivery({
   setShippingMethods,
   activeServicePointId,
   setActiveServicePointId,
+  productSize,
 }) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
+  const [activeDeliveryMethod, setActiveDeliveryMethod] =
+    useState("service_point");
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -26,18 +30,43 @@ export default function Delivery({
     }
   }, [activeServicePointId]);
 
+  function handleDeliveryMethod(e) {
+    setActiveDeliveryMethod(e.target.value);
+  }
+
+  if (shippingMethods.length === 0) {
+    return <p>loading...</p>;
+  }
+
   return (
-    <div>
-      <h2 className="font-mcqueen font-bold text-xl mb-5">
-        Options de livraison
-      </h2>
-      {shippingMethods?.length > 0 ? (
-        shippingMethods.map((shippingMethod) => {
-          return <p key={shippingMethod.id}>{shippingMethod.name}</p>;
-        })
-      ) : (
-        <p>Aucune option de livraison</p>
-      )}
+    <div className="g-block">
+      <div className="flex justify-between">
+        <h2 className="font-mcqueen font-bold text-xl mb-5">
+          Options de livraison
+        </h2>
+        <p>{productSize}</p>
+      </div>
+      <OptionBlock
+        defaultValue="service_point"
+        checked={activeDeliveryMethod === "service_point"}
+        onChange={handleDeliveryMethod}
+      >
+        <p className="font-bold">Envoi en Point relais</p>
+        <p>À partir de {shippingMethods[0].price}€</p>
+      </OptionBlock>
+      <OptionBlock
+        defaultValue="home"
+        checked={activeDeliveryMethod === "home"}
+        onChange={handleDeliveryMethod}
+      >
+        <p className="font-bold">Envoi à domicile</p>
+        <p>À partir de {shippingMethods[0].price}€</p>
+      </OptionBlock>
+
+      {shippingMethods.map((shippingMethod) => {
+        return <p key={shippingMethod.id}>{shippingMethod.name}</p>;
+      })}
+
       <h2 className="font-mcqueen font-bold text-xl mb-5">Point relai :</h2>
       {servicePoints?.length > 0 ? (
         servicePoints.map((servicePoint) => {
@@ -72,6 +101,6 @@ export default function Delivery({
     if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    // console.log("shippingMethods =>", shippingMethods);
+    console.log("shippingMethods =>", shippingMethods);
   }
 }

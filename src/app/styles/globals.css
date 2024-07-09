@@ -40,4 +40,12 @@
       --header-height: 130px;
     }
   }
+
+  .g-block {
+    background-color: white;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    border: 1px solid #ada89f;
+    margin-bottom: 1rem;
+  }
 }
