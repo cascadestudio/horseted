@@ -27,9 +27,7 @@ const CheckOutPage = () => {
 
   async function handlePayment() {
     const orderId = await postOrders();
-    // console.log("orderId", orderId);
     const paymentResponse = await ordersPayment(orderId);
-    // console.log("paymentResponse", paymentResponse);
 
     handlePaymentResponse(paymentResponse);
   }
@@ -104,9 +102,9 @@ const CheckOutPage = () => {
     }
     if (paymentResponse.status === "requires_action") {
       const paymentIntenturl = paymentResponse.nextAction.url;
+      window.open(paymentIntenturl, "_blank");
       const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
       handleSocketPayment(paymentIntentId);
-      window.open(paymentIntenturl, "_blank");
     }
   }
 
