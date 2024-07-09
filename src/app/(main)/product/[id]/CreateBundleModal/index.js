@@ -32,24 +32,6 @@ export default function CreateBundleModal({
   handleCloseBundleOfferModal,
 }) {
   const modalRef = useRef();
-  const [isClickOutside, setIsClickOutside] =
-    useIsClickOutsideElement(modalRef);
-
-  useEffect(() => {
-    if (
-      isClickOutside &&
-      !isBundleSummaryModalOpen &&
-      !isBundleOfferModalOpen
-    ) {
-      onCloseCreateBundleModal();
-      setIsClickOutside(false);
-    }
-  }, [
-    isClickOutside,
-    onCloseCreateBundleModal,
-    isBundleSummaryModalOpen,
-    isBundleOfferModalOpen,
-  ]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";

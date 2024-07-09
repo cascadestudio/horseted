@@ -37,31 +37,24 @@ export default function ProductPageClient({
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
 
   const handleOpenCreateBundleModal = () => {
-    console.log("open create bundle modal");
     setIsCreateBundleModalOpen(true);
   };
   const handleCloseCreateBundleModal = () => {
-    console.log("close create bundle modal");
     setIsCreateBundleModalOpen(false);
   };
 
   const handleOpenBundleSummaryModal = () => {
-    console.log("open bundle summary modal");
     setIsBundleSummaryModalOpen(true);
   };
   const handleCloseBundleSummaryModal = () => {
-    console.log("close bundle summary modal");
     setIsBundleSummaryModalOpen(false);
   };
 
   const handleOpenBundleOfferModal = () => {
-    console.log("open bundle offer modal");
     setIsBundleOfferModalOpen(true);
-    console.log("close bundle summary modal");
     setIsBundleSummaryModalOpen(false);
   };
   const handleCloseBundleOfferModal = () => {
-    console.log("close bundle offer modal");
     setIsBundleOfferModalOpen(false);
   };
 
