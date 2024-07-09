@@ -13,9 +13,8 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
-import OfferModal from "./OfferModal";
 import CreateBundleModal from "./CreateBundleModal";
-import BundleSummaryModal from "./CreateBundleModal/BundleSummaryModal";
+import OfferModal from "./OfferModal";
 
 export default function ProductPageClient({
   product,
@@ -26,8 +25,8 @@ export default function ProductPageClient({
 }) {
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
-  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
-    useState(false);
+  const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
+
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
@@ -35,12 +34,23 @@ export default function ProductPageClient({
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
 
-  const handleOpenCreateBundleModal = () => setIsCreateBundleModalOpen(true);
-  const handleCloseCreateBundleModal = () => setIsCreateBundleModalOpen(false);
+  const handleOpenCreateBundleModal = () => {
+    console.log("open create bundle modal");
+    setIsCreateBundleModalOpen(true);
+  };
+  const handleCloseCreateBundleModal = () => {
+    console.log("close create bundle modal");
+    setIsCreateBundleModalOpen(false);
+  };
 
-  const handleOpenBundleSummaryModal = () => setIsBundleSummaryModalOpen(true);
-  const handleCloseBundleSummaryModal = () =>
-    setIsBundleSummaryModalOpen(false);
+  const handleOpenBundleOfferModal = () => {
+    console.log("open bundle offer modal");
+    setIsBundleOfferModalOpen(true);
+  };
+  const handleCloseBundleOfferModal = () => {
+    console.log("close bundle offer modal");
+    setIsBundleOfferModalOpen(false);
+  };
 
   const {
     title,
@@ -230,26 +240,25 @@ export default function ProductPageClient({
           userData={userData}
           userProducts={userProducts}
           onClose={handleCloseCreateBundleModal}
-          onOpenBundleSummaryModal={handleOpenBundleSummaryModal}
           bundle={bundle}
           setBundle={setBundle}
           bundlePrice={bundlePrice}
           setBundlePrice={setBundlePrice}
           shippingPrice={shippingPrice}
           setShippingPrice={setShippingPrice}
-        />
-      )}
-      {isBundleSummaryModalOpen && (
-        <BundleSummaryModal
-          bundle={bundle}
-          bundlePrice={bundlePrice}
-          shippingPrice={shippingPrice}
-          onClose={handleCloseBundleSummaryModal}
-          onOpenOfferModal={handleOpenOfferModal}
+          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
+          isBundleOfferModalOpen={isBundleOfferModalOpen}
         />
       )}
       {isOfferModalOpen && (
         <OfferModal price={price} onClose={handleCloseOfferModal} />
+      )}
+      {isCreateBundleModalOpen && isBundleOfferModalOpen && (
+        <OfferModal
+          price={bundlePrice}
+          onClose={handleCloseBundleOfferModal}
+          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
+        />
       )}
     </div>
   );

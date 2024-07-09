@@ -10,6 +10,7 @@ import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
+import BundleSummaryModal from "./BundleSummaryModal";
 
 export default function CreateBundleModal({
   userData,
@@ -19,20 +20,28 @@ export default function CreateBundleModal({
   bundlePrice,
   setBundlePrice,
   onClose,
-  onOpenBundleSummaryModal,
   shippingPrice,
   setShippingPrice,
+  handleOpenBundleOfferModal,
+  isBundleOfferModalOpen,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(modalRef);
 
+  const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
+    useState(false);
+
+  const handleOpenBundleSummaryModal = () => setIsBundleSummaryModalOpen(true);
+  const handleCloseBundleSummaryModal = () =>
+    setIsBundleSummaryModalOpen(false);
+
   useEffect(() => {
-    if (isClickOutside) {
+    if (isClickOutside && !isBundleOfferModalOpen) {
       onClose();
       setIsClickOutside(false);
     }
-  }, [isClickOutside, onClose]);
+  }, [isClickOutside, onClose, isBundleOfferModalOpen]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -160,7 +169,7 @@ export default function CreateBundleModal({
                 <span className="text-sm font-medium">articles</span>
               </div>
               <Button
-                onClick={onOpenBundleSummaryModal}
+                onClick={handleOpenBundleSummaryModal}
                 bundle={bundle}
                 className="text-sm"
               >
@@ -170,6 +179,16 @@ export default function CreateBundleModal({
           </div>
         </div>
       </div>
+      {isBundleSummaryModalOpen && (
+        <BundleSummaryModal
+          bundle={bundle}
+          bundlePrice={bundlePrice}
+          shippingPrice={shippingPrice}
+          onClose={handleCloseBundleSummaryModal}
+          onOpenBundleSummaryModal={handleOpenBundleSummaryModal}
+          onOpenOfferModal={handleOpenBundleOfferModal}
+        />
+      )}
     </div>
   );
 }
