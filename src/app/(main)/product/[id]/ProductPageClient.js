@@ -13,9 +13,7 @@ import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarIcon from "@/assets/icons/StarIcon";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
-import OfferButton from "./OfferButton";
 import OfferModal from "./OfferModal";
-import CreateBundleButton from "./CreateBundleButton";
 import CreateBundleModal from "./CreateBundleModal";
 import BundleSummaryModal from "./CreateBundleModal/BundleSummaryModal";
 
@@ -24,6 +22,7 @@ export default function ProductPageClient({
   userData,
   userProducts,
   params,
+  className,
 }) {
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
@@ -116,7 +115,14 @@ export default function ProductPageClient({
             >
               Acheter
             </Button>
-            <OfferButton price={price} onOpen={handleOpenOfferModal} />
+            <Button
+              onClick={handleOpenOfferModal}
+              price={price}
+              variant="transparent-green"
+              className={`w-full flex justify-center h-[52px] text-xl ${className}`}
+            >
+              Faire une offre
+            </Button>
             <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
               <div>
                 <h4 className="font-mcqueen font-bold text-lg leading-5">
@@ -124,7 +130,12 @@ export default function ProductPageClient({
                 </h4>
                 <p className="text-sm">Économisez sur les frais de livraison</p>
               </div>
-              <CreateBundleButton onOpen={handleOpenCreateBundleModal} />
+              <Button
+                onClick={handleOpenCreateBundleModal}
+                className="text-sm whitespace-nowrap h-8 ml-5"
+              >
+                Créer un lot
+              </Button>
             </div>
             <table className="table-auto mt-5">
               <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
