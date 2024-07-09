@@ -13,6 +13,7 @@ import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
+import { formatNumber } from "@/utils/formatNumber";
 
 export default function ProductPageClient({
   product,
@@ -29,7 +30,7 @@ export default function ProductPageClient({
 
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
-  const [shippingPrice, setShippingPrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(5.9);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
@@ -72,6 +73,8 @@ export default function ProductPageClient({
 
   const formattedDate = formatDate(createdAt);
 
+  const { username, review } = userData;
+
   return (
     <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
@@ -103,7 +106,8 @@ export default function ProductPageClient({
         {price} €
       </p>
       <p className="font-poppins text-light-green text-sm mb-2">
-        5,90€ <span className="font-sans">- Livraison à domicile</span>
+        {formatNumber(shippingPrice)} €{" "}
+        <span className="font-sans">- Livraison à domicile</span>
       </p>
       <Button
         href={`/checkout?productId=${params.id}`}
@@ -168,6 +172,7 @@ export default function ProductPageClient({
           <tr>
             <td>Taille</td>
             <td>
+              {/* TODO: add size */}
               <Link href="#">16 ans</Link>
             </td>
           </tr>
@@ -188,7 +193,7 @@ export default function ProductPageClient({
           />
           <div className="flex flex-col justify-center">
             <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3">
-              Alexandra-ast
+              {username}
             </h4>
             <div className="flex items-center ml-3">
               <StarIcon className="h-4 w-auto lg:h-6" />
@@ -196,7 +201,9 @@ export default function ProductPageClient({
               <StarIcon className="h-4 w-auto lg:h-6" />
               <StarIcon className="h-4 w-auto lg:h-6" />
               <StarIcon className="h-4 w-auto lg:h-6" />
-              <span className="text-sm lg:text-base ml-2">(6)</span>
+              <span className="text-sm lg:text-base ml-2">
+                ({review.count})
+              </span>
             </div>
           </div>
         </div>
@@ -218,7 +225,8 @@ export default function ProductPageClient({
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal
-          userData={userData}
+          username={username}
+          review={review}
           userProducts={userProducts}
           onCloseCreateBundleModal={handleCloseCreateBundleModal}
           bundle={bundle}

@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
 import profilePicture from "@/assets/images/profilePicture.jpg";
 import Image from "next/image";
-import { useIsClickOutsideElement } from "@/utils/hooks";
 import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
@@ -14,7 +13,8 @@ import BundleSummaryModal from "./BundleSummaryModal";
 import OfferModal from "../ProductInfoSection/OfferModal";
 
 export default function CreateBundleModal({
-  userData,
+  username,
+  review,
   userProducts,
   bundle,
   setBundle,
@@ -86,14 +86,14 @@ export default function CreateBundleModal({
                 className="h-14 w-14 rounded-full"
               />
               <div className="ml-4">
-                <h4 className="font-bold">Alexandra-ast</h4>
+                <h4 className="font-bold">{username}</h4>
                 <div className="flex items-center">
                   <StarIcon className="h-3 w-auto lg:h-5" />
                   <StarIcon className="h-3 w-auto lg:h-5" />
                   <StarIcon className="h-3 w-auto lg:h-5" />
                   <StarIcon className="h-3 w-auto lg:h-5" />
                   <StarIcon className="h-3 w-auto lg:h-5" />
-                  <span className="text-sm ml-2">(6)</span>
+                  <span className="text-sm ml-2">({review.count})</span>
                 </div>
               </div>
             </div>
@@ -101,7 +101,7 @@ export default function CreateBundleModal({
         </div>
         <div className="container mx-auto px-5 pt-5">
           <h2 className="text-[24px] font-bold font-mcqueen">
-            La sellerie de {userData.username}
+            La sellerie de {username}
           </h2>
           <p className="font-mcqueen font-medium text-lg">
             {userProducts.items.length} articles
