@@ -107,7 +107,7 @@ export default function ProductPageClient({
       </p>
       <Button
         href={`/checkout?productId=${params.id}`}
-        className="w-full flex justify-center mb-3 h-[52px]"
+        className="w-full mb-3 h-[52px] text-lg"
       >
         Acheter
       </Button>
@@ -115,7 +115,7 @@ export default function ProductPageClient({
         onClick={handleOpenOfferModal}
         price={price}
         variant="transparent-green"
-        className={`w-full flex justify-center h-[52px] text-xl ${className}`}
+        className={`w-full h-[52px] text-xl ${className}`}
       >
         Faire une offre
       </Button>
@@ -128,7 +128,7 @@ export default function ProductPageClient({
         </div>
         <Button
           onClick={handleOpenCreateBundleModal}
-          className="text-sm whitespace-nowrap h-8 ml-5"
+          className="text-sm h-8 ml-5"
         >
           Créer un lot
         </Button>
@@ -209,7 +209,7 @@ export default function ProductPageClient({
           </Link>
           <Button
             href="#"
-            className="text-xs lg:text-sm whitespace-nowrap h-8 px-4 py-2 flex justify-center max-w-24 lg:max-w-[110px]"
+            className="text-xs lg:text-sm h-8 px-4 py-2 max-w-24 lg:max-w-[110px]"
           >
             Voir le profil
           </Button>

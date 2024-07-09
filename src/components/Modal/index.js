@@ -57,10 +57,7 @@ export default function Modal({
         <form onSubmit={handleSubmit} className="lg:px-16 mb-9">
           {children}
           {buttonText && (
-            <Button
-              className="w-full flex justify-center text-xl h-12 mt-4"
-              type="submit"
-            >
+            <Button className="w-full text-xl h-12 mt-4" type="submit">
               {buttonText}
             </Button>
           )}

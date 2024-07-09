@@ -16,7 +16,7 @@ export default async function ProductsSection({ title }) {
           <Button
             href="/products"
             variant="transparent-green"
-            className="border-none px-0 font-bold whitespace-nowrap pr-0 lg:border-solid lg:px-5"
+            className="border-none px-0 font-bold pr-0 lg:border-solid lg:px-5"
           >
             Voir tout
             <RightArrow className="ml-2" />
