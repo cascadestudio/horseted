@@ -11,6 +11,7 @@ import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
 import BundleSummaryModal from "./BundleSummaryModal";
+import OfferModal from "../OfferModal";
 
 export default function CreateBundleModal({
   userData,
@@ -22,8 +23,7 @@ export default function CreateBundleModal({
   onClose,
   shippingPrice,
   setShippingPrice,
-  handleOpenBundleOfferModal,
-  isBundleOfferModalOpen,
+  isCreateBundleModalOpen,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -31,10 +31,27 @@ export default function CreateBundleModal({
 
   const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
     useState(false);
+  const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
 
-  const handleOpenBundleSummaryModal = () => setIsBundleSummaryModalOpen(true);
-  const handleCloseBundleSummaryModal = () =>
+  const handleOpenBundleSummaryModal = () => {
+    console.log("open bundle summary modal");
+    setIsBundleSummaryModalOpen(true);
+  };
+  const handleCloseBundleSummaryModal = () => {
+    console.log("close bundle summary modal");
     setIsBundleSummaryModalOpen(false);
+  };
+
+  const handleOpenBundleOfferModal = () => {
+    console.log("open bundle offer modal");
+    setIsBundleOfferModalOpen(true);
+    console.log("close bundle summary modal");
+    setIsBundleSummaryModalOpen(false);
+  };
+  const handleCloseBundleOfferModal = () => {
+    console.log("close bundle offer modal");
+    setIsBundleOfferModalOpen(false);
+  };
 
   useEffect(() => {
     if (isClickOutside && !isBundleOfferModalOpen) {
@@ -187,6 +204,13 @@ export default function CreateBundleModal({
           onClose={handleCloseBundleSummaryModal}
           onOpenBundleSummaryModal={handleOpenBundleSummaryModal}
           onOpenOfferModal={handleOpenBundleOfferModal}
+        />
+      )}
+      {isCreateBundleModalOpen && isBundleOfferModalOpen && (
+        <OfferModal
+          price={bundlePrice}
+          onClose={handleCloseBundleOfferModal}
+          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
         />
       )}
     </div>

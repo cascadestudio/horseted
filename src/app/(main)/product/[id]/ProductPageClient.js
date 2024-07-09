@@ -25,7 +25,6 @@ export default function ProductPageClient({
 }) {
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
-  const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
 
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
@@ -41,15 +40,6 @@ export default function ProductPageClient({
   const handleCloseCreateBundleModal = () => {
     console.log("close create bundle modal");
     setIsCreateBundleModalOpen(false);
-  };
-
-  const handleOpenBundleOfferModal = () => {
-    console.log("open bundle offer modal");
-    setIsBundleOfferModalOpen(true);
-  };
-  const handleCloseBundleOfferModal = () => {
-    console.log("close bundle offer modal");
-    setIsBundleOfferModalOpen(false);
   };
 
   const {
@@ -246,19 +236,11 @@ export default function ProductPageClient({
           setBundlePrice={setBundlePrice}
           shippingPrice={shippingPrice}
           setShippingPrice={setShippingPrice}
-          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
-          isBundleOfferModalOpen={isBundleOfferModalOpen}
+          isCreateBundleModalOpen={isCreateBundleModalOpen}
         />
       )}
       {isOfferModalOpen && (
         <OfferModal price={price} onClose={handleCloseOfferModal} />
-      )}
-      {isCreateBundleModalOpen && isBundleOfferModalOpen && (
-        <OfferModal
-          price={bundlePrice}
-          onClose={handleCloseBundleOfferModal}
-          handleOpenBundleOfferModal={handleOpenBundleOfferModal}
-        />
       )}
     </div>
   );
