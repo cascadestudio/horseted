@@ -51,14 +51,16 @@ export default function OfferModal({ price, onClose }) {
         de la refuser ou de faire une contre-offre
       </p>
       {showAlert && (
-        <div className="bg-light-grey text-red mx-5 px-5 py-4 rounded-[20px] absolute bottom-5 lg:bottom-20 flex gap-8 items-center">
-          <span className="text-xl lg:text-[36px] lg:leading-[48px] font-bold font-mcqueen text-center rounded-full aspect-square h-6 w-6 lg:h-[54px] lg:w-[54px] bg-red bg-opacity-10 border border-red flex items-center justify-center">
-            !
-          </span>
-          <p className="text-center font-bold">
-            Vous ne pouvez pas faire une offre supérieure au montant de
-            l’article
-          </p>
+        <div className="fixed inset-x-0 bottom-5 flex justify-center">
+          <div className="bg-light-grey text-red mx-5 px-5 py-4 rounded-[20px] absolute bottom-5  lg:bottom-20 flex gap-8 items-center">
+            <span className="text-xl lg:text-[36px] lg:leading-[48px] font-bold font-mcqueen text-center rounded-full aspect-square h-6 w-6 lg:h-[54px] lg:w-[54px] bg-red bg-opacity-10 border border-red flex items-center justify-center">
+              !
+            </span>
+            <p className="text-center font-bold">
+              Vous ne pouvez pas faire une offre supérieure au montant de
+              l’article
+            </p>
+          </div>
         </div>
       )}
     </Modal>
