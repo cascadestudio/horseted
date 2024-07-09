@@ -40,7 +40,7 @@ const AddPaymentCardModal = ({ isNewPaymentMethod }) => {
       4242 4242 4242 4242 12/34 123 77777
       {error && <div role="alert">{error}</div>}
       <button type="submit" disabled={!stripe || loading}>
-        {loading ? "Processing..." : "Pay"}
+        {loading ? "Processing..." : "Ajouter la carte"}
       </button>
     </form>
   );

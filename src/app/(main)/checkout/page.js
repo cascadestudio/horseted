@@ -8,6 +8,7 @@ import PaymentMethods from "@/components/PaymentMethods";
 import Delivery from "./Delivery";
 import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
+import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 
 const CheckOutPage = () => {
   const { accessToken } = useAuthContext();
@@ -15,40 +16,20 @@ const CheckOutPage = () => {
   const productId = searchParams.get("productId");
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
-  const [orderId, setOrderId] = useState(null);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePointId, setActiveServicePointId] = useState(null);
 
-  console.log("shippingMethods", shippingMethods);
-
   useEffect(() => {
     getProduct();
-    postOrders(accessToken, productId); //au moment du paiement
   }, []);
 
   async function handlePayment() {
-    const body = {
-      // offerId: null, // required if offer exist
-      paymentMethod: activePaymentMethodId,
-      address: {
-        city: activeAddress.city,
-        street: activeAddress.street,
-        postalCode: activeAddress.postalCode,
-      },
-      shippingMethod: shippingMethods[0].id,
-      // servicePoint: activeServicePointId, // not required
-    };
-    console.log("body", body);
+    const orderId = await postOrders();
+    const paymentResponse = await ordersPayment(orderId);
 
-    const payment = await fetchHorseted(
-      `/orders/${orderId}/payment`,
-      accessToken,
-      "POST",
-      body
-    );
-    console.log("payment", payment);
+    handlePaymentResponse(paymentResponse);
   }
 
   if (loading) {
@@ -85,13 +66,53 @@ const CheckOutPage = () => {
     setLoading(false);
   }
 
-  async function postOrders(accessToken, productId) {
-    productId = parseInt(productId);
+  async function postOrders() {
+    const parsedProductId = parseInt(productId);
     const body = {
-      productIds: [productId],
+      productIds: [parsedProductId],
     };
     const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
-    setOrderId(order.id);
+    return order.id;
+  }
+
+  async function ordersPayment(orderId) {
+    const body = {
+      // offerId: null, // required if offer exist
+      paymentMethod: activePaymentMethodId,
+      address: {
+        city: activeAddress.city,
+        street: activeAddress.street,
+        postalCode: activeAddress.postalCode,
+      },
+      shippingMethod: shippingMethods[0].id,
+      // servicePoint: activeServicePointId, // not required
+    };
+    const paymentResponse = await fetchHorseted(
+      `/orders/${orderId}/payment`,
+      accessToken,
+      "POST",
+      body
+    );
+    return paymentResponse;
+  }
+
+  function handlePaymentResponse(paymentResponse) {
+    if (paymentResponse.status === "success") {
+      console.log("Payment successful");
+    }
+    if (paymentResponse.status === "requires_action") {
+      const paymentIntenturl = paymentResponse.nextAction.url;
+      window.open(paymentIntenturl, "_blank");
+      const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
+      handleSocketPayment(paymentIntentId);
+    }
+  }
+
+  function getPaymentIntentIdFromUrl(url) {
+    const urlObject = new URL(url);
+    const params = new URLSearchParams(urlObject.search);
+    const paymentIntentId = params.get("payment_intent");
+    return paymentIntentId;
   }
 };
 
