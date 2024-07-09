@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import NextArrow from "@/assets/icons/NextArrow";
-import "@/app/styles/product-images-carousel.css";
+import "./product-images-carousel.css";
 import ClientProductImage from "@/components/ClientProductImage";
 
 function SampleNextArrow(props) {
