@@ -8,7 +8,7 @@ import Link from "next/link";
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import profilePicture from "@/assets/images/profilePicture.jpg";
-import StarIcon from "@/assets/icons/StarIcon";
+import StarRating from "@/components/StarRating";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
@@ -74,7 +74,6 @@ export default function ProductPageClient({
   const formattedDate = formatDate(createdAt);
 
   const { username, review } = userData;
-
   return (
     <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
@@ -195,16 +194,11 @@ export default function ProductPageClient({
             <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3">
               {username}
             </h4>
-            <div className="flex items-center ml-3">
-              <StarIcon className="h-4 w-auto lg:h-6" />
-              <StarIcon className="h-4 w-auto lg:h-6" />
-              <StarIcon className="h-4 w-auto lg:h-6" />
-              <StarIcon className="h-4 w-auto lg:h-6" />
-              <StarIcon className="h-4 w-auto lg:h-6" />
-              <span className="text-sm lg:text-base ml-2">
-                ({review.count})
-              </span>
-            </div>
+            <StarRating
+              className="ml-3"
+              rating={review.rating}
+              count={review.count}
+            />
           </div>
         </div>
         <div className="flex items-center">
