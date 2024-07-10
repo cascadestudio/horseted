@@ -2,17 +2,16 @@ import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
-import OfferButton from "../OfferButton";
 
 export default function BundleSummaryModal({
   bundle,
-  onClose,
+  onCloseBundleSummaryModal,
   bundlePrice,
   shippingPrice,
   onOpenOfferModal,
 }) {
   return (
-    <Modal title="Votre lot" onClose={onClose}>
+    <Modal title="Votre lot" onClose={onCloseBundleSummaryModal}>
       <div className="flex justify-between items-center mb-6">
         <span>{bundle.length} Articles</span>
         <div className="flex space-x-2">

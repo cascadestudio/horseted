@@ -160,7 +160,7 @@ export default function signupPage() {
               </label>
             </div>
             <Button
-              className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
+              className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
               type="submit"
             >
               Créer un compte
@@ -190,7 +190,7 @@ export default function signupPage() {
           <Button
             href="/signin"
             variant="transparent-green"
-            className="w-full flex justify-center font-mcqueen font-semibold text-xl h-[52px] lg:w-[335px] lg:self-center"
+            className="w-full text-xl h-[52px] lg:w-[335px] lg:self-center"
           >
             Se connecter
           </Button>

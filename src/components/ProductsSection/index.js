@@ -3,12 +3,9 @@ import ProductCard from "@/components/ProductCard";
 import ProductsCarousel from "@/components/ProductsCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
-import resolveConfig from "tailwindcss/resolveConfig";
-import tailwindConfig from "../../../tailwind.config.js";
 
 export default async function ProductsSection({ title }) {
   const products = await fetchHorseted("/products?category=206");
-  const fullConfig = resolveConfig(tailwindConfig);
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
       <div className="container mx-auto px-5">
@@ -18,11 +15,11 @@ export default async function ProductsSection({ title }) {
           </h3>
           <Button
             href="/products"
-            variant={"transparent"}
-            className="border-none px-0 font-bold whitespace-nowrap pr-0 lg:border-solid lg:px-5"
+            variant="transparent-green"
+            className="border-none px-0 font-bold pr-0 lg:border-solid lg:px-5"
           >
             Voir tout
-            <RightArrow color={"white"} className="ml-2" />
+            <RightArrow className="ml-2" />
           </Button>
         </div>
         <ProductsCarousel>

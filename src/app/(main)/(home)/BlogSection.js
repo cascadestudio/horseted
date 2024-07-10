@@ -29,10 +29,7 @@ export default function BlogSection({ articles }) {
             <div className="p-4 text-red-500">No posts found</div>
           )}
         </div>
-        <Button
-          className="hidden lg:font-mcqueen lg:font-semibold lg:flex lg:items-center lg:mt-10"
-          href="#"
-        >
+        <Button className="hidden lg:mt-10" href="#">
           Tous les articles
           <RightArrow color="white" className="ml-2" />
         </Button>
