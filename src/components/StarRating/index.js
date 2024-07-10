@@ -9,7 +9,6 @@ export default function StarRating({
   showCount = true,
 }) {
   const fullStars = Math.floor(rating);
-  console.log("Full stars:", fullStars);
   const hasHalfStar = rating % 1 !== 0;
 
   return (
@@ -20,7 +19,6 @@ export default function StarRating({
           fillPercentage = 100;
         } else if (index === fullStars && hasHalfStar) {
           fillPercentage = (rating % 1) * 100;
-          console.log("Fill percentage:", fillPercentage);
         }
         return (
           <StarIcon
