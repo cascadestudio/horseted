@@ -176,8 +176,8 @@ export default function ProductPageClient({
             alt="Photo de profil"
             className="h-14 w-14 object-cover rounded-full"
           />
-          <div className="flex flex-col justify-center">
-            <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3">
+          <div className="flex flex-col justify-center min-w-0">
+            <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate">
               {username}
             </h4>
             <StarRating
