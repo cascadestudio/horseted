@@ -59,7 +59,7 @@ export default function SigninForm() {
         />
       </label>
       <Button
-        className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
+        className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
         type="submit"
       >
         Se connecter

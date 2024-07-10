@@ -31,10 +31,8 @@ export default async function Home() {
             matériel sur Horseted
           </p>
           <div className="mt-5 flex flex-col items-center w-full px-9 lg:px-0 lg:mt-10 lg:flex-row gap-2">
-            <Button className="w-full justify-center lg:w-auto">
-              Vendre un article
-            </Button>
-            <Button variant="white" className="w-full justify-center lg:w-auto">
+            <Button className="w-full lg:w-auto">Vendre un article</Button>
+            <Button variant="white" className="w-full lg:w-auto">
               Parcourir les articles
             </Button>
           </div>
@@ -83,10 +81,7 @@ export default async function Home() {
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur
           </p>
-          <Button
-            variant={"black"}
-            className="w-full justify-center mb-7 lg:w-auto lg:mb-24"
-          >
+          <Button variant={"black"} className="w-full mb-7 lg:w-auto lg:mb-24">
             En savoir plus
           </Button>
           <Image

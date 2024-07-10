@@ -57,7 +57,7 @@ export default function signinPage() {
           <Button
             href="/signup"
             variant="transparent-green"
-            className="w-full flex justify-center font-mcqueen font-semibold text-xl h-[52px] lg:w-[335px] lg:self-center"
+            className="w-full text-xl h-[52px] lg:w-[335px] lg:self-center"
           >
             S’inscrire
           </Button>
