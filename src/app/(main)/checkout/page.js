@@ -5,15 +5,15 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
-import Delivery from "./Delivery";
-import Address from "./Address";
+import DeliveryMethods from "./DeliveryMethods";
+import AddressForm from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
-import User from "./User";
+import UserForm from "./User";
 
 const CheckOutPage = () => {
-  const { accessToken } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
   const [loading, setLoading] = useState(true);
@@ -53,9 +53,9 @@ const CheckOutPage = () => {
         </div>
         <p className="font-bold text-lg">{product.price}€</p>
       </div>
-      <User />
-      <Address setActiveAddress={setActiveAddress} />
-      <Delivery
+      <UserForm user={user} />
+      <AddressForm setActiveAddress={setActiveAddress} />
+      <DeliveryMethods
         productSize={product.shipping}
         activeAddress={activeAddress}
         productIds={productId}

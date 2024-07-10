@@ -1,5 +1,5 @@
 export const TextInput = ({ label, name, value, onChange, list, required }) => (
-  <label htmlFor={name}>
+  <label htmlFor={name} className="w-full mx-2">
     <p className="label">{label} :</p>
     <input
       value={value || ""}

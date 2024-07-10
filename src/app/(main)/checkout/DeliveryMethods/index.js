@@ -2,6 +2,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
+import ServicePointsModal from "./ServicePointsModal";
 
 export default function Delivery({
   activeAddress,
@@ -16,6 +17,9 @@ export default function Delivery({
   const [servicePoints, setServicePoints] = useState([]);
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
+  const [isServicePointsModal, setIsServicePointsModal] = useState(false);
+
+  //  console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -39,50 +43,53 @@ export default function Delivery({
   }
 
   return (
-    <div className="g-block">
-      <div className="flex justify-between">
-        <h2 className="font-mcqueen font-bold text-xl mb-5">
-          Options de livraison
-        </h2>
-        <p>{productSize}</p>
-      </div>
-      <OptionBlock
-        defaultValue="service_point"
-        checked={activeDeliveryMethod === "service_point"}
-        onChange={handleDeliveryMethod}
-      >
-        <p className="font-bold">Envoi en Point relais</p>
-        <p>À partir de {shippingMethods[0].price}€</p>
-      </OptionBlock>
-      <OptionBlock
-        defaultValue="home"
-        checked={activeDeliveryMethod === "home"}
-        onChange={handleDeliveryMethod}
-      >
-        <p className="font-bold">Envoi à domicile</p>
-        <p>À partir de {shippingMethods[0].price}€</p>
-      </OptionBlock>
-
-      {shippingMethods.map((shippingMethod) => {
-        return <p key={shippingMethod.id}>{shippingMethod.name}</p>;
-      })}
-
-      <h2 className="font-mcqueen font-bold text-xl mb-5">Point relai :</h2>
-      {servicePoints?.length > 0 ? (
-        servicePoints.map((servicePoint) => {
+    <>
+      <div className="g-block">
+        <div className="flex justify-between">
+          <h2 className="font-mcqueen font-bold text-xl mb-2">
+            Options de livraison
+          </h2>
+          <p>{productSize}</p>
+        </div>
+        {shippingMethods.map((shippingMethod) => {
+          const { id, name, price } = shippingMethod;
           return (
-            <button
-              onClick={() => setActiveServicePointId(servicePoint.id)}
-              key={servicePoint.id}
+            <OptionBlock
+              key={id}
+              defaultValue={name}
+              checked={activeDeliveryMethod === name}
+              onChange={handleDeliveryMethod}
             >
-              {servicePoint.name}
-            </button>
+              <p className="font-bold">{name}</p>
+              <p>À partir de {price}€</p>
+            </OptionBlock>
           );
-        })
-      ) : (
-        <p>Aucun point relai</p>
+        })}
+        {servicePoints?.length > 0 && (
+          <div>
+            <h2 className="font-mcqueen font-bold text-xl mb-5">
+              Point relai :
+            </h2>
+            <div className="flex justify-between">
+              <div>{servicePoints[0].name}</div>
+              <button
+                className="text-dark-green underline"
+                onClick={() => setIsServicePointsModal(true)}
+              >
+                Changer le point relai
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      {isServicePointsModal && (
+        <ServicePointsModal
+          servicePoints={servicePoints}
+          setActiveServicePointId={setActiveServicePointId}
+          setIsServicePointsModal={setIsServicePointsModal}
+        />
       )}
-    </div>
+    </>
   );
 
   async function getServicePoints() {
@@ -101,6 +108,6 @@ export default function Delivery({
     if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    console.log("shippingMethods =>", shippingMethods);
+    // console.log("shippingMethods =>", shippingMethods);
   }
 }
