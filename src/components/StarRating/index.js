@@ -2,7 +2,12 @@
 
 import StarIcon from "@/assets/icons/StarIcon";
 
-export default function StarRating({ className, rating, count }) {
+export default function StarRating({
+  className,
+  rating,
+  count,
+  showCount = true,
+}) {
   const fullStars = Math.floor(rating);
   console.log("Full stars:", fullStars);
   const hasHalfStar = rating % 1 !== 0;
@@ -27,7 +32,9 @@ export default function StarRating({ className, rating, count }) {
           />
         );
       })}
-      <span className="text-sm lg:text-base ml-2">({count})</span>
+      {showCount && (
+        <span className="text-sm lg:text-base ml-2">({count})</span>
+      )}
     </div>
   );
 }
