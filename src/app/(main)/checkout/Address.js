@@ -21,7 +21,9 @@ export default function Address({ setActiveAddress }) {
   return (
     <>
       <div className="g-block flex justify-between">
-        <h2 className="font-mcqueen font-bold text-xl mb-5">Addresse</h2>
+        <h2 className="font-mcqueen font-bold text-xl mb-5">
+          Addresse (attendre UI)
+        </h2>
         {addresses?.length > 0 ? (
           addresses.map((address) => {
             return <p key={address.id}>{address.fullName}</p>;

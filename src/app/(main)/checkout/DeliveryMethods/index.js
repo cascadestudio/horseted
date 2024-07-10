@@ -2,24 +2,23 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
-import ServicePointsModal from "./ServicePointsModal";
+import ServicePoint from "./ServicePoint";
 
 export default function Delivery({
   activeAddress,
   productIds,
   shippingMethods,
   setShippingMethods,
-  activeServicePointId,
-  setActiveServicePointId,
+  activeServicePoint,
+  setActiveServicePoint,
   productSize,
 }) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
-  const [isServicePointsModal, setIsServicePointsModal] = useState(false);
 
-  //  console.log("shippingMethods =>", shippingMethods);
+  // console.log("servicePoints =>", servicePoints);
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -29,10 +28,16 @@ export default function Delivery({
   }, [activeAddress, productIds]);
 
   useEffect(() => {
-    if (activeServicePointId) {
+    if (activeServicePoint) {
       getShippingMethods();
     }
-  }, [activeServicePointId]);
+  }, [activeServicePoint]);
+
+  useEffect(() => {
+    if (servicePoints.length > 0) {
+      setActiveServicePoint(servicePoints[0]);
+    }
+  }, [servicePoints]);
 
   function handleDeliveryMethod(e) {
     setActiveDeliveryMethod(e.target.value);
@@ -65,30 +70,14 @@ export default function Delivery({
             </OptionBlock>
           );
         })}
-        {servicePoints?.length > 0 && (
-          <div>
-            <h2 className="font-mcqueen font-bold text-xl mb-5">
-              Point relai :
-            </h2>
-            <div className="flex justify-between">
-              <div>{servicePoints[0].name}</div>
-              <button
-                className="text-dark-green underline"
-                onClick={() => setIsServicePointsModal(true)}
-              >
-                Changer le point relai
-              </button>
-            </div>
-          </div>
+        {servicePoints?.length > 0 && activeServicePoint && (
+          <ServicePoint
+            servicePoints={servicePoints}
+            setActiveServicePoint={setActiveServicePoint}
+            activeServicePoint={activeServicePoint}
+          />
         )}
       </div>
-      {isServicePointsModal && (
-        <ServicePointsModal
-          servicePoints={servicePoints}
-          setActiveServicePointId={setActiveServicePointId}
-          setIsServicePointsModal={setIsServicePointsModal}
-        />
-      )}
     </>
   );
 
@@ -105,7 +94,7 @@ export default function Delivery({
     let query = `/delivery/shipping_methods`;
     query += `?postal_code=${activeAddress.postalCode}`;
     query += `&product_ids=${productIds}`;
-    if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
+    if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
     // console.log("shippingMethods =>", shippingMethods);

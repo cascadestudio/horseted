@@ -1,9 +1,6 @@
-const OptionBlock = ({ children, defaultValue, checked, onChange, key }) => {
+const OptionBlock = ({ children, defaultValue, checked, onChange }) => {
   return (
-    <label
-      key={key}
-      className="flex items-center justify-between p-5 border border-darker-grey rounded-lg mb-5 bg-light-grey cursor-pointer"
-    >
+    <label className="flex items-center justify-between p-5 border border-darker-grey rounded-lg mb-5 bg-light-grey cursor-pointer">
       <div>{children}</div>
       <input
         className="w-5"

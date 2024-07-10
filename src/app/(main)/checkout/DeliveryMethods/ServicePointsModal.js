@@ -2,7 +2,7 @@ import Modal from "@/components/Modal";
 
 export default function ServicePointsModal({
   servicePoints,
-  setActiveServicePointId,
+  setActiveServicePoint,
   setIsServicePointsModal,
 }) {
   return (
@@ -13,7 +13,7 @@ export default function ServicePointsModal({
       {servicePoints.map((servicePoint) => {
         return (
           <button
-            onClick={() => setActiveServicePointId(servicePoint.id)}
+            onClick={() => setActiveServicePoint(servicePoint)}
             key={servicePoint.id}
           >
             {servicePoint.name}

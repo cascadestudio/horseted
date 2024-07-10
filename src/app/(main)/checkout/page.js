@@ -21,7 +21,7 @@ const CheckOutPage = () => {
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
-  const [activeServicePointId, setActiveServicePointId] = useState(null);
+  const [activeServicePoint, setActiveServicePoint] = useState(null);
 
   useEffect(() => {
     getProduct();
@@ -30,7 +30,6 @@ const CheckOutPage = () => {
   async function handlePayment() {
     const orderId = await postOrders();
     const paymentResponse = await ordersPayment(orderId);
-
     handlePaymentResponse(paymentResponse);
   }
 
@@ -61,8 +60,8 @@ const CheckOutPage = () => {
         productIds={productId}
         shippingMethods={shippingMethods}
         setShippingMethods={setShippingMethods}
-        activeServicePointId={activeServicePointId}
-        setActiveServicePointId={setActiveServicePointId}
+        activeServicePoint={activeServicePoint}
+        setActiveServicePoint={setActiveServicePoint}
       />
       <PaymentMethods
         activePaymentMethodId={activePaymentMethodId}
