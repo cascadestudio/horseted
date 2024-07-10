@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ServicePointsModal from "./ServicePointsModal";
 import capitalizeText from "@/utils/capitalizeText";
-import Image from "next/image";
 
 export default function ServicePoint({
   servicePoints,
@@ -20,15 +19,13 @@ export default function ServicePoint({
         </h2>
         <div className="flex justify-between ">
           <div>
-            <div className="flex gap-x-1">
-              {carrier === "colissimo" && (
-                <Image
-                  src="/colissimo.svg"
-                  width={15}
-                  height={15}
-                  alt="Colissimo"
-                />
-              )}
+            <div className="flex gap-x-2">
+              <img
+                src={`/logos/${carrier}.svg`}
+                width="15"
+                height="15"
+                alt={carrier}
+              />
               <p className="font-semibold">{capitalizeText(name)}</p>
             </div>
             <p className="text-sm">

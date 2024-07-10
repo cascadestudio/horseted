@@ -1,9 +1,19 @@
-import React, { useState } from "react";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { useState } from "react";
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
+import Modal from "@/components/Modal";
 
-const AddPaymentCardModal = ({ isNewPaymentMethod }) => {
+const AddPaymentCardModal = ({
+  isNewPaymentMethod,
+  setIsAddPaymentCardModal,
+}) => {
   const { user } = useAuthContext();
   const stripe = useStripe();
   const elements = useElements();
@@ -20,9 +30,11 @@ const AddPaymentCardModal = ({ isNewPaymentMethod }) => {
       return;
     }
 
-    const cardElement = elements.getElement(CardElement);
+    const cardNumberElement = elements.getElement(CardNumberElement);
+    const cardExpiryElement = elements.getElement(CardExpiryElement);
+    const cardCvcElement = elements.getElement(CardCvcElement);
 
-    const { error, token } = await stripe.createToken(cardElement);
+    const { error, token } = await stripe.createToken(cardNumberElement);
 
     if (error) {
       setError(error.message);
@@ -34,15 +46,85 @@ const AddPaymentCardModal = ({ isNewPaymentMethod }) => {
     }
   };
 
+  const elementOptions = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: "Arial, sans-serif",
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4",
+        },
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+    },
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      4242 4242 4242 4242 12/34 123 77777
+    <Modal
+      title="Ajouter un moyen de paiement"
+      className="flex flex-col align-center "
+      onSubmit={handleSubmit}
+      buttonText="Ajouter"
+      onClose={() => {
+        setIsAddPaymentCardModal(false);
+      }}
+    >
+      <div className="flex gap-x-2 m-auto">
+        <img src={`/logos/visa.svg`} width="50" alt="visa" />
+        <img src={`/logos/mastercard.svg`} width="40" alt="mastercard" />
+      </div>
+
+      <div>
+        <label
+          htmlFor="cardNumber"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Card Number
+        </label>
+        <CardNumberElement
+          id="cardNumber"
+          options={elementOptions}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
+        <label
+          htmlFor="cardExpiry"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Expiry Date
+        </label>
+        <CardExpiryElement
+          id="cardExpiry"
+          options={elementOptions}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+      <div>
+        <label
+          htmlFor="cardCvc"
+          className="block text-sm font-medium text-gray-700"
+        >
+          CVC
+        </label>
+        <CardCvcElement
+          id="cardCvc"
+          options={elementOptions}
+          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        />
+      </div>
+
+      {/* <CardElement options={cardElementOptions} /> */}
       {error && <div role="alert">{error}</div>}
-      <button type="submit" disabled={!stripe || loading}>
+      {/* <button type="submit" disabled={!stripe || loading}>
         {loading ? "Processing..." : "Ajouter la carte"}
-      </button>
-    </form>
+      </button> */}
+    </Modal>
   );
 };
 
