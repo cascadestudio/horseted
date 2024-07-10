@@ -69,6 +69,7 @@ export default function ProductPageClient({
     color,
     category,
     state,
+    size,
   } = product;
 
   const formattedDate = formatDate(createdAt);
@@ -140,46 +141,31 @@ export default function ProductPageClient({
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>
             <td>Catégorie</td>
-            <td>
-              <Link href="#">{category.name}</Link>
-            </td>
+            <td>{category && <Link href="#">{category.name}</Link>}</td>
           </tr>
           <tr>
             <td>État</td>
-            <td>
-              <Link href="#">{state}</Link>
-            </td>
+            <td>{state && <Link href="#">{state}</Link>}</td>
           </tr>
           <tr>
             <td>Couleurs</td>
-            <td>
-              <Link href="#">{color.name}</Link>
-            </td>
+            <td>{color && <Link href="#">{color.name}</Link>}</td>
           </tr>
           <tr>
             <td>Marque</td>
-            <td>
-              <Link href="#">{brand}</Link>
-            </td>
+            <td>{brand && <Link href="#">{brand}</Link>}</td>
           </tr>
           <tr>
             <td>Matières</td>
-            <td>
-              <Link href="#">{material}</Link>
-            </td>
+            <td>{material && <Link href="#">{material}</Link>}</td>
           </tr>
           <tr>
             <td>Taille</td>
-            <td>
-              {/* TODO: add size */}
-              <Link href="#">16 ans</Link>
-            </td>
+            <td>{size && <Link href="#">{size.value}</Link>}</td>
           </tr>
           <tr>
             <td>Taille du colis</td>
-            <td>
-              <Link href="#">{shipping}</Link>
-            </td>
+            <td>{shipping && <Link href="#">{shipping}</Link>}</td>
           </tr>
         </tbody>
       </table>
@@ -222,6 +208,7 @@ export default function ProductPageClient({
           username={username}
           review={review}
           userProducts={userProducts}
+          isCreateBundleModalOpen={isCreateBundleModalOpen}
           onCloseCreateBundleModal={handleCloseCreateBundleModal}
           bundle={bundle}
           setBundle={setBundle}
@@ -229,13 +216,12 @@ export default function ProductPageClient({
           setBundlePrice={setBundlePrice}
           shippingPrice={shippingPrice}
           setShippingPrice={setShippingPrice}
-          isCreateBundleModalOpen={isCreateBundleModalOpen}
           isBundleSummaryModalOpen={isBundleSummaryModalOpen}
           handleOpenBundleSummaryModal={handleOpenBundleSummaryModal}
+          handleCloseBundleSummaryModal={handleCloseBundleSummaryModal}
+          isBundleOfferModalOpen={isBundleOfferModalOpen}
           handleOpenBundleOfferModal={handleOpenBundleOfferModal}
           handleCloseBundleOfferModal={handleCloseBundleOfferModal}
-          isBundleOfferModalOpen={isBundleOfferModalOpen}
-          handleCloseBundleSummaryModal={handleCloseBundleSummaryModal}
         />
       )}
       {isOfferModalOpen && (
