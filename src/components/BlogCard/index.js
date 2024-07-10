@@ -6,10 +6,12 @@ import { PortableText } from "@portabletext/react";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
 
-export default function BlogCard({ title, image, body, link }) {
+export default function BlogCard({ title, image, body, link, className }) {
   const fullConfig = resolveConfig(tailwindConfig);
   return (
-    <div className="border border-light-green rounded-md max-w-[350px]">
+    <div
+      className={`border border-light-green rounded-md max-w-[350px] ${className}`}
+    >
       <div className="flex items-center justify-center w-full p-1">
         <Image
           className="w-full h-52 object-cover rounded-md"

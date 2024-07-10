@@ -14,7 +14,7 @@ export default async function NavBar({ className }) {
         <div className="h-8 flex items-center border-l border-black [&>*]:block [&>*]:py-3 [&>*]:px-6 ">
           <Link href="/aide">Aide</Link>
           <Link href="/a-propos">À propos</Link>
-          <Link href="/articles">Articles</Link>
+          <Link href="/blog">Blog</Link>
         </div>
       </div>
     </nav>
