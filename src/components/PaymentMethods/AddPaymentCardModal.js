@@ -9,6 +9,7 @@ import {
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
+import Checkbox from "../input/Checkbox";
 
 const AddPaymentCardModal = ({
   isNewPaymentMethod,
@@ -19,6 +20,7 @@ const AddPaymentCardModal = ({
   const elements = useElements();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isDefaultCard, setIsDefaultCard] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -47,21 +49,21 @@ const AddPaymentCardModal = ({
   };
 
   const elementOptions = {
-    style: {
-      base: {
-        color: "#32325d",
-        fontFamily: "Arial, sans-serif",
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#aab7c4",
-        },
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a",
-      },
-    },
+    // style: {
+    //   base: {
+    //     color: "#32325d",
+    //     fontFamily: "Arial, sans-serif",
+    //     fontSmoothing: "antialiased",
+    //     fontSize: "16px",
+    //     "::placeholder": {
+    //       color: "#aab7c4",
+    //     },
+    //   },
+    //   invalid: {
+    //     color: "#fa755a",
+    //     iconColor: "#fa755a",
+    //   },
+    // },
   };
 
   return (
@@ -74,56 +76,51 @@ const AddPaymentCardModal = ({
         setIsAddPaymentCardModal(false);
       }}
     >
-      <div className="flex gap-x-2 m-auto">
+      <div className="flex gap-x-2 m-auto mb-5">
         <img src={`/logos/visa.svg`} width="50" alt="visa" />
         <img src={`/logos/mastercard.svg`} width="40" alt="mastercard" />
       </div>
-
-      <div>
-        <label
-          htmlFor="cardNumber"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Card Number
+      <div className="mb-5">
+        <label htmlFor="cardNumber" className="font-mcqueen font-semibold">
+          Numéro de carte :
         </label>
         <CardNumberElement
           id="cardNumber"
           options={elementOptions}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          className="input"
         />
       </div>
-      <div>
-        <label
-          htmlFor="cardExpiry"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Expiry Date
-        </label>
-        <CardExpiryElement
-          id="cardExpiry"
-          options={elementOptions}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
+      <div className="grid grid-cols-2 gap-5 mb-5">
+        <div className="mb-5">
+          <label htmlFor="cardExpiry" className="font-mcqueen font-semibold">
+            Date exp :
+          </label>
+          <CardExpiryElement
+            id="cardExpiry"
+            options={elementOptions}
+            className="input"
+          />
+        </div>
+        <div className="mb-5">
+          <label htmlFor="cardCvc" className="font-mcqueen font-semibold">
+            CSV :
+          </label>
+          <CardCvcElement
+            id="cardCvc"
+            options={elementOptions}
+            className="input"
+          />
+        </div>
       </div>
-      <div>
-        <label
-          htmlFor="cardCvc"
-          className="block text-sm font-medium text-gray-700"
-        >
-          CVC
-        </label>
-        <CardCvcElement
-          id="cardCvc"
-          options={elementOptions}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-        />
-      </div>
-
-      {/* <CardElement options={cardElementOptions} /> */}
       {error && <div role="alert">{error}</div>}
-      {/* <button type="submit" disabled={!stripe || loading}>
-        {loading ? "Processing..." : "Ajouter la carte"}
-      </button> */}
+      <label className="font-semibold cursor-pointer flex mx-auto mb-5">
+        <Checkbox
+          checked={isDefaultCard === true}
+          onChange={() => setIsDefaultCard(!isDefaultCard)}
+          className="mr-2"
+        />
+        Enregistrer carte par défaut*
+      </label>
     </Modal>
   );
 };
