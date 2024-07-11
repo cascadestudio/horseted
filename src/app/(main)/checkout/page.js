@@ -11,6 +11,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
 import UserForm from "./User";
+import Button from "@/components/Button";
 
 const CheckOutPage = () => {
   const { user, accessToken } = useAuthContext();
@@ -39,39 +40,66 @@ const CheckOutPage = () => {
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="font-mcqueen font-bold text-2xl mb-4">Votre commande</h1>
-      <div className="g-block flex justify-between">
-        <div>
-          <h2 className="font-bold text-lg">{product.title}</h2>
-          <p>1 article</p>
-          <ClientProductImage
-            product={product}
-            size="small"
-            className="w-10 mt-5"
+      <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
+        Votre commande
+      </h1>
+      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
+        <div className="col-span-2">
+          <div className="g-block flex justify-between">
+            <div>
+              <h2 className="font-bold text-lg">{product.title}</h2>
+              <p>1 article</p>
+              <ClientProductImage
+                product={product}
+                size="small"
+                className="w-10 mt-5"
+              />
+            </div>
+            <p className="font-bold text-lg">{product.price}€</p>
+          </div>
+          <UserForm user={user} />
+          <AddressForm setActiveAddress={setActiveAddress} />
+          <DeliveryMethods
+            productSize={product.shipping}
+            activeAddress={activeAddress}
+            productIds={productId}
+            shippingMethods={shippingMethods}
+            setShippingMethods={setShippingMethods}
+            activeServicePoint={activeServicePoint}
+            setActiveServicePoint={setActiveServicePoint}
+          />
+          <PaymentMethods
+            activePaymentMethodId={activePaymentMethodId}
+            setActivePaymentMethodId={setActivePaymentMethodId}
           />
         </div>
-        <p className="font-bold text-lg">{product.price}€</p>
+        <div className="col-span-1">
+          <div className="g-block">
+            <h2 className="font-bold mb-7">Résumé de la commande</h2>
+            <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
+              <p>Commande</p>
+              <p className="justify-self-end">32,30 €</p>
+              <p>Frais de port</p>
+              <p className="justify-self-end">32,30 €</p>
+              <p className="font-extrabold">Total</p>
+              <p className="font-extrabold justify-self-end">32,30 €</p>
+            </div>
+            {activePaymentMethodId ? (
+              <>
+                <Button
+                  className="mt-12 w-full"
+                  onClick={() => handlePayment()}
+                >
+                  Payer
+                </Button>
+                <p className="mt-3 font-semibold text-center">
+                  Paiement sécurisé
+                </p>
+              </>
+            ) : null}
+          </div>
+        </div>
       </div>
-      <UserForm user={user} />
-      <AddressForm setActiveAddress={setActiveAddress} />
-      <DeliveryMethods
-        productSize={product.shipping}
-        activeAddress={activeAddress}
-        productIds={productId}
-        shippingMethods={shippingMethods}
-        setShippingMethods={setShippingMethods}
-        activeServicePoint={activeServicePoint}
-        setActiveServicePoint={setActiveServicePoint}
-      />
-      <PaymentMethods
-        activePaymentMethodId={activePaymentMethodId}
-        setActivePaymentMethodId={setActivePaymentMethodId}
-      />
-      {activePaymentMethodId ? (
-        <button className="bg-black text-white" onClick={() => handlePayment()}>
-          Payer
-        </button>
-      ) : null}
     </div>
   );
 
