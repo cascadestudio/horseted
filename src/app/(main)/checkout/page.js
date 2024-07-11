@@ -16,19 +16,31 @@ import Button from "@/components/Button";
 const CheckOutPage = () => {
   const { user, accessToken } = useAuthContext();
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
+  // const productIds = searchParams.get("productIds");
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
+  const [productIds, setProductIds] = useState([]);
 
-  // console.log("shippingMethods =>", shippingMethods);
+  // console.log("products =>", products);
 
   useEffect(() => {
-    getProduct();
-  }, []);
+    const productIdsParam = searchParams.get("productIds");
+    if (productIdsParam) {
+      const productIdsParamArray = productIdsParam.split(";");
+      setProductIds(productIdsParamArray);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    productIds.map((productId) => {
+      getProduct(productId);
+    });
+  }, [productIds]);
 
   async function handlePayment() {
     const orderId = await postOrders();
@@ -49,27 +61,32 @@ const CheckOutPage = () => {
         <div className="col-span-2">
           <div className="g-block flex justify-between">
             <div>
-              <h2 className="font-bold text-lg">{product.title}</h2>
-              <p>1 article</p>
-              <ClientProductImage
-                product={product}
-                size="small"
-                className="w-10 mt-5"
-              />
+              <h2 className="font-bold text-lg">
+                {products.length > 1 ? "Lot d’articles" : product?.title}
+              </h2>
+              <p>{products.length} article</p>
+              {products.map((product) => (
+                <ClientProductImage
+                  key={product.id}
+                  product={product}
+                  size="small"
+                  className="w-10 mt-5"
+                />
+              ))}
             </div>
-            <p className="font-bold text-lg">{product.price}€</p>
+            <p className="font-bold text-lg">{product?.price}€</p>
           </div>
           <UserForm user={user} />
           <AddressForm setActiveAddress={setActiveAddress} />
-          <DeliveryMethods
+          {/* <DeliveryMethods
             productSize={product.shipping}
             activeAddress={activeAddress}
-            productIds={productId}
+            productIds={productIds}
             shippingMethods={shippingMethods}
             setShippingMethods={setShippingMethods}
             activeServicePoint={activeServicePoint}
             setActiveServicePoint={setActiveServicePoint}
-          />
+          /> */}
           <PaymentMethods
             activePaymentMethodId={activePaymentMethodId}
             setActivePaymentMethodId={setActivePaymentMethodId}
@@ -80,12 +97,12 @@ const CheckOutPage = () => {
             <h2 className="font-bold mb-7">Résumé de la commande</h2>
             <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
               <p>Commande</p>
-              <p className="justify-self-end">{product?.price} €</p>
+              {/* <p className="justify-self-end">{product?.price} €</p> */}
               <p>Frais de port</p>
               <p className="justify-self-end">{shippingMethods[0]?.price} €</p>
               <p className="font-extrabold">Total</p>
               <p className="font-extrabold justify-self-end">
-                {product?.price + shippingMethods[0]?.price} €
+                {/* {product?.price + shippingMethods[0]?.price} € */}
               </p>
             </div>
             {activePaymentMethodId ? (
@@ -107,9 +124,9 @@ const CheckOutPage = () => {
     </div>
   );
 
-  async function getProduct() {
+  async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
-    setProduct(product);
+    setProducts((prevProducts) => [...prevProducts, product]);
     setLoading(false);
   }
 
