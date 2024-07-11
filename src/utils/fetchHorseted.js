@@ -13,7 +13,10 @@ export default async function fetchHorseted(
 
   const headers = {
     "API-Key": apiKey,
-    // ...(method === "POST" && { "Content-Type": "application/json" }), //Problems with POST /threads cause formdata body
+    ...(method === "POST" &&
+      query === "/users/me/payment_methods" && {
+        "Content-Type": "application/json",
+      }), //Problems with POST /threads cause formdata body
     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
   };
 
@@ -27,7 +30,8 @@ export default async function fetchHorseted(
       ? { body: body }
       : body && {
           body: JSON.stringify(body),
-          //  body: JSON.stringify(body), "Content-Type": "application/json"
+          // body: JSON.stringify(body),
+          // "Content-Type": "application/json",
         }),
   };
 

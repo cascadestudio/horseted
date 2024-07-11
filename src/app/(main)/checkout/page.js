@@ -24,6 +24,8 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
 
+  // console.log("shippingMethods =>", shippingMethods);
+
   useEffect(() => {
     getProduct();
   }, []);
@@ -78,11 +80,13 @@ const CheckOutPage = () => {
             <h2 className="font-bold mb-7">Résumé de la commande</h2>
             <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
               <p>Commande</p>
-              <p className="justify-self-end">32,30 €</p>
+              <p className="justify-self-end">{product?.price} €</p>
               <p>Frais de port</p>
-              <p className="justify-self-end">32,30 €</p>
+              <p className="justify-self-end">{shippingMethods[0]?.price} €</p>
               <p className="font-extrabold">Total</p>
-              <p className="font-extrabold justify-self-end">32,30 €</p>
+              <p className="font-extrabold justify-self-end">
+                {product?.price + shippingMethods[0]?.price} €
+              </p>
             </div>
             {activePaymentMethodId ? (
               <>

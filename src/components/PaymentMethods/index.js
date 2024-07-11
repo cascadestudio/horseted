@@ -87,15 +87,15 @@ export default function PaymentMethods({
       )}
     </div>
   );
-}
 
-async function getPaymentMethods(user, setPaymentMethods) {
-  const query = `/users/me/payment_methods`;
-  const paymentMethods = await fetchHorseted(
-    query,
-    user.auth.accessToken,
-    "GET"
-  );
-  setPaymentMethods(paymentMethods);
-  // console.log("paymentMethods", paymentMethods);
+  async function getPaymentMethods() {
+    const query = `/users/me/payment_methods`;
+    const paymentMethods = await fetchHorseted(
+      query,
+      user.auth.accessToken,
+      "GET"
+    );
+    setPaymentMethods(paymentMethods);
+    // console.log("paymentMethods", paymentMethods);
+  }
 }

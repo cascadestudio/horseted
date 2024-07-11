@@ -33,8 +33,6 @@ const AddPaymentCardModal = ({
     }
 
     const cardNumberElement = elements.getElement(CardNumberElement);
-    const cardExpiryElement = elements.getElement(CardExpiryElement);
-    const cardCvcElement = elements.getElement(CardCvcElement);
 
     const { error, token } = await stripe.createToken(cardNumberElement);
 
@@ -43,27 +41,10 @@ const AddPaymentCardModal = ({
       setLoading(false);
     } else {
       setLoading(false);
-      await postPaymentMethod(token.id, user);
+      setIsAddPaymentCardModal(false);
+      await postPaymentMethod(token.id, isDefaultCard);
       isNewPaymentMethod();
     }
-  };
-
-  const elementOptions = {
-    // style: {
-    //   base: {
-    //     color: "#32325d",
-    //     fontFamily: "Arial, sans-serif",
-    //     fontSmoothing: "antialiased",
-    //     fontSize: "16px",
-    //     "::placeholder": {
-    //       color: "#aab7c4",
-    //     },
-    //   },
-    //   invalid: {
-    //     color: "#fa755a",
-    //     iconColor: "#fa755a",
-    //   },
-    // },
   };
 
   return (
@@ -84,32 +65,20 @@ const AddPaymentCardModal = ({
         <label htmlFor="cardNumber" className="font-mcqueen font-semibold">
           Numéro de carte :
         </label>
-        <CardNumberElement
-          id="cardNumber"
-          options={elementOptions}
-          className="input"
-        />
+        <CardNumberElement id="cardNumber" className="input" />
       </div>
       <div className="grid grid-cols-2 gap-5 mb-5">
         <div className="mb-5">
           <label htmlFor="cardExpiry" className="font-mcqueen font-semibold">
             Date exp :
           </label>
-          <CardExpiryElement
-            id="cardExpiry"
-            options={elementOptions}
-            className="input"
-          />
+          <CardExpiryElement id="cardExpiry" className="input" />
         </div>
         <div className="mb-5">
           <label htmlFor="cardCvc" className="font-mcqueen font-semibold">
             CSV :
           </label>
-          <CardCvcElement
-            id="cardCvc"
-            options={elementOptions}
-            className="input"
-          />
+          <CardCvcElement id="cardCvc" className="input" />
         </div>
       </div>
       {error && <div role="alert">{error}</div>}
@@ -123,20 +92,21 @@ const AddPaymentCardModal = ({
       </label>
     </Modal>
   );
+
+  async function postPaymentMethod(cardToken, isDefaultCard) {
+    const query = `/users/me/payment_methods`;
+    const body = {
+      cardToken: cardToken,
+      isDefault: isDefaultCard,
+    };
+    const response = await fetchHorseted(
+      query,
+      user.auth.accessToken,
+      "POST",
+      body
+    );
+    // console.log(response);
+  }
 };
 
 export default AddPaymentCardModal;
-
-async function postPaymentMethod(cardToken, user) {
-  const query = `/users/me/payment_methods`;
-  const body = {
-    cardToken: cardToken,
-  };
-  const response = await fetchHorseted(
-    query,
-    user.auth.accessToken,
-    "POST",
-    body
-  );
-  // console.log(response);
-}
