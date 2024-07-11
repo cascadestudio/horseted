@@ -11,43 +11,21 @@ export default function ProductsCarousel({ children, cardType }) {
   const parseBreakpoint = (breakpoint) => {
     return parseInt(breakpoint.replace("px", ""), 10);
   };
+  const xxlBreakpoint = parseBreakpoint(fullConfig.theme.screens["2xl"]);
   const xlBreakpoint = parseBreakpoint(fullConfig.theme.screens.xl);
   const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
   const smBreakpoint = parseBreakpoint(fullConfig.theme.screens.sm);
-  const [isLgScreen, setIsLgScreen] = useState(false);
   const [isMdScreen, setIsMdScreen] = useState(false);
-  const [isSmScreen, setIsSmScreen] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setIsLgScreen(window.innerWidth < xlBreakpoint);
       setIsMdScreen(window.innerWidth < lgBreakpoint);
-      setIsSmScreen(window.innerWidth < smBreakpoint);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const [slideIndex, setSlideIndex] = useState(0);
   let sliderRef = useRef(null);
-
-  const getSlidesToShow = () => {
-    if (cardType === "article") {
-      return 2.2;
-    } else if (cardType === "product") {
-      return 4.2;
-    }
-    return 4.2;
-  };
-
-  const getSlidesToScroll = () => {
-    if (cardType === "article") {
-      return 1;
-    } else if (cardType === "product") {
-      return 4;
-    }
-    return 4;
-  };
 
   var settings = {
     arrows: false,
@@ -56,8 +34,8 @@ export default function ProductsCarousel({ children, cardType }) {
     speed: 500,
     beforeChange: (current, next) => setSlideIndex(next),
     initialSlide: 0,
-    slidesToShow: getSlidesToShow(),
-    slidesToScroll: getSlidesToScroll(),
+    slidesToShow: 4.2,
+    slidesToScroll: cardType === "article" ? 1 : 4,
     appendDots: (dots) => (
       <ul>
         {dots.map((dot, index) => (
@@ -92,16 +70,30 @@ export default function ProductsCarousel({ children, cardType }) {
     ),
     responsive: [
       {
+        breakpoint: xxlBreakpoint,
+        settings: {
+          slidesToShow: cardType === "article" ? 3.2 : 4.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
+        },
+      },
+      {
+        breakpoint: xlBreakpoint,
+        settings: {
+          slidesToShow: cardType === "article" ? 2.6 : 4.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
+        },
+      },
+      {
         breakpoint: lgBreakpoint,
         settings: {
-          slidesToShow: 2.2,
-          slidesToScroll: 1,
+          slidesToShow: cardType === "article" ? 1.6 : 4.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
         },
       },
       {
         breakpoint: smBreakpoint,
         settings: {
-          slidesToShow: 1.1,
+          slidesToShow: cardType === "article" ? 1 : 1.1,
           slidesToScroll: 1,
         },
       },
