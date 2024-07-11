@@ -93,7 +93,7 @@ export default function ProductsCarousel({ children, cardType }) {
       {
         breakpoint: smBreakpoint,
         settings: {
-          slidesToShow: cardType === "article" ? 1 : 1.1,
+          slidesToShow: cardType === "article" ? 1 : 1.2,
           slidesToScroll: 1,
         },
       },
