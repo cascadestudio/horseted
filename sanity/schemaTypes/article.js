@@ -1,6 +1,7 @@
 export const article = {
   name: "article",
   title: "Articles",
+  description: "📌 : sur la page d'accueil",
   type: "document",
   fields: [
     {
@@ -41,12 +42,28 @@ export const article = {
       type: "blockContent",
       validation: (Rule) => Rule.required(),
     },
+    {
+      name: "isFeatured",
+      title: "📌 Sur la page d'accueil",
+      type: "boolean",
+      description:
+        "Indique si l'article doit être mis en avant sur la page d'accueil dans la section 'Astuces, Conseils et Tendances Équestres'. Recommandation : toujours avoir 3 articles sur la page d'accueil.",
+      initialValue: false,
+    },
   ],
 
   preview: {
     select: {
       title: "title",
       media: "image",
+      isFeatured: "isFeatured",
+    },
+    prepare({ title, media, isFeatured }) {
+      return {
+        title: title,
+        media: media,
+        subtitle: isFeatured ? "📌" : "",
+      };
     },
   },
 };

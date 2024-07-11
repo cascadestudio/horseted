@@ -26,7 +26,7 @@ export default function BlogSection({ articles }) {
               );
             })
           ) : (
-            <div className="p-4 text-red-500">Pas d'article trouvé</div>
+            <div className="p-4">Pas d'article trouvé</div>
           )}
         </div>
         <Button className="hidden lg:mt-10" href="#">
