@@ -1,6 +1,6 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import ProductCard from "@/components/ProductCard";
-import ProductsCarousel from "@/components/ProductsCarousel";
+import CardCarousel from "@/components/CardCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
@@ -22,7 +22,7 @@ export default async function ProductsSection({ title }) {
             <RightArrow className="ml-2" />
           </Button>
         </div>
-        <ProductsCarousel>
+        <CardCarousel cardType="product">
           {products.items.map((product, index) => {
             return (
               <div
@@ -35,7 +35,7 @@ export default async function ProductsSection({ title }) {
               </div>
             );
           })}
-        </ProductsCarousel>
+        </CardCarousel>
       </div>
     </section>
   );
