@@ -86,7 +86,7 @@ export default function ProductsCarousel({ children, cardType }) {
       {
         breakpoint: lgBreakpoint,
         settings: {
-          slidesToShow: cardType === "article" ? 1.6 : 4.2,
+          slidesToShow: cardType === "article" ? 1.6 : 3.2,
           slidesToScroll: cardType === "article" ? 1 : 4,
         },
       },
