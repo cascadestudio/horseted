@@ -83,7 +83,10 @@ export default async function Home() {
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur
           </p>
-          <Button variant={"black"} className="w-full mb-7 lg:w-auto lg:mb-24">
+          <Button
+            variant="transparent-black"
+            className="w-full mb-7 lg:w-auto lg:mb-24"
+          >
             En savoir plus
           </Button>
           <Image

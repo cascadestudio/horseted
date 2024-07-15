@@ -4,6 +4,9 @@ import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function BlogSection({ category, articles }) {
+  const categoryArticles = articles.filter((article) =>
+    article.categories?.some((cat) => cat._ref === category._id)
+  );
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
       <div className="flex items-center justify-between flex-nowrap mb-4 lg:mb-5">
@@ -20,8 +23,8 @@ export default async function BlogSection({ category, articles }) {
         </Button>
       </div>
       <CardCarousel cardType="article">
-        {articles?.length > 0 ? (
-          articles.map((article) => {
+        {categoryArticles?.length > 0 ? (
+          categoryArticles.map((article) => {
             const { title, image, body, slug } = article;
             return (
               <BlogCard

@@ -1,5 +1,6 @@
-import BlogSection from "./BlogSection";
+import CategoryBlogSection from "./CategoryBlogSection";
 import { client } from "../../../../sanity/lib/client";
+import Button from "@/components/Button";
 
 export default async function BlogPage() {
   const articles = await client.fetch(`*[_type == "article"]`);
@@ -25,9 +26,21 @@ export default async function BlogPage() {
         <span className="font-semibold text-sm leading-[48px] uppercase tracking-[0.2em]">
           Sujets :
         </span>
+        <div className="flex flex-wrap gap-3 mb-10">
+          {categories.length > 0 &&
+            categories.map((category) => (
+              <Button
+                key={category._id}
+                variant="transparent-grey"
+                className="mb-2"
+              >
+                {category.title}
+              </Button>
+            ))}
+        </div>
         {categories.length > 0 ? (
           categories.map((category) => (
-            <BlogSection
+            <CategoryBlogSection
               key={category._id}
               category={category}
               articles={articles}

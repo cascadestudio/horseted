@@ -26,7 +26,7 @@ export default function Footer() {
                 l’argent dès maintenant !
               </p>
             </div>
-            <Button href="/sellproduct" variant="black">
+            <Button href="/sellproduct" variant="transparent-black">
               Vendre un équipement{" "}
               <RightArrow color="black" className="lg:ml-3" />
             </Button>
