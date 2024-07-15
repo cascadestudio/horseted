@@ -109,7 +109,9 @@ export default function ProductsCarousel({ children, cardType }) {
         }}
         {...settings}
       >
-        {children.slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)}
+        {children.length > 1
+          ? children.slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)
+          : children}
       </Slider>
     </div>
   );

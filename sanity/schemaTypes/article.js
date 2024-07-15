@@ -12,7 +12,7 @@ export const article = {
     },
     {
       name: "slug",
-      title: "Identifiant",
+      title: "URL",
       type: "slug",
       options: {
         source: "title",

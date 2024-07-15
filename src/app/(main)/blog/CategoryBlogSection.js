@@ -5,7 +5,7 @@ import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function BlogSection({ category, articles }) {
   const categoryArticles = articles.filter((article) =>
-    article.categories?.some((cat) => cat._ref === category._id)
+    article.categories?.some((cat) => cat._id === category._id)
   );
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">

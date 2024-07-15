@@ -8,5 +8,14 @@ export const category = {
       title: "Nom de la catégorie",
       type: "string",
     },
+    {
+      name: "slug",
+      title: "URL",
+      type: "slug",
+      options: {
+        source: "title",
+        maxLength: 96,
+      },
+    },
   ],
 };

@@ -1,9 +1,12 @@
 import CategoryBlogSection from "./CategoryBlogSection";
 import { client } from "../../../../sanity/lib/client";
 import Button from "@/components/Button";
+import Link from "next/link";
 
 export default async function BlogPage() {
-  const articles = await client.fetch(`*[_type == "article"]`);
+  const articles = await client.fetch(
+    `*[_type == "article"]{..., categories[]->{_id, title, slug}}`
+  );
   const categories = await client.fetch(`*[_type == "category"]`);
   return (
     <div className="bg-light-grey">
@@ -29,13 +32,19 @@ export default async function BlogPage() {
         <div className="flex flex-wrap gap-3 mb-10">
           {categories.length > 0 &&
             categories.map((category) => (
-              <Button
+              <Link
                 key={category._id}
-                variant="transparent-grey"
-                className="mb-2"
+                href={`/blog/${category.slug.current}`}
+                passHref
               >
-                {category.title}
-              </Button>
+                <Button
+                  key={category._id}
+                  variant="transparent-grey"
+                  className="mb-2"
+                >
+                  {category.title}
+                </Button>
+              </Link>
             ))}
         </div>
         {categories.length > 0 ? (
