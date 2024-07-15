@@ -21,8 +21,8 @@ async function getData(slug) {
 }
 
 export default async function CategoryPage({ params }) {
-  const { slug } = params;
-  const { articles, category, notFound } = await getData(slug);
+  const { categorySlug } = params;
+  const { articles, category, notFound } = await getData(categorySlug);
 
   if (notFound) {
     return <div>Category not found</div>;

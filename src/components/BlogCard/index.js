@@ -26,7 +26,10 @@ export default function BlogCard({ title, image, body, link, className }) {
         <div className="mb-5 prose line-clamp-3 lg:prose-lg">
           <PortableText value={body} />
         </div>
-        <Link className="flex items-center text-light-green" href={link}>
+        <Link
+          className="flex items-center text-light-green"
+          href={`/blog/articles/${link}`}
+        >
           Lire l'article
           <RightArrow
             color={fullConfig.theme.colors["light-green"]}
