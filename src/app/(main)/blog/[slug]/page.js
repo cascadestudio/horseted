@@ -1,10 +1,9 @@
-import { client } from "../../../../sanity/lib/client";
+import { client } from "../../../../../sanity/lib/client";
 import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
-export async function getServerSideProps(context) {
-  const { slug } = context.params;
+async function getData(slug) {
   const categories = await client.fetch(`*[_type == "category"]`);
   const matchedCategory = categories.find((cat) => cat.slug.current === slug);
 
@@ -18,15 +17,17 @@ export async function getServerSideProps(context) {
     `*[_type == "article" && "${matchedCategory._id}" in categories[]._ref]`
   );
 
-  return {
-    props: {
-      articles,
-      category: matchedCategory,
-    },
-  };
+  return { articles, category: matchedCategory };
 }
 
-export default function CategoryPage({ articles, category }) {
+export default async function CategoryPage({ params }) {
+  const { slug } = params;
+  const { articles, category, notFound } = await getData(slug);
+
+  if (notFound) {
+    return <div>Category not found</div>;
+  }
+
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 py-12">
