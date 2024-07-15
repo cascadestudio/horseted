@@ -22,9 +22,25 @@ export default async function BlogSection({ category, articles }) {
           <RightArrow className="ml-2" />
         </Button>
       </div>
-      <CardCarousel cardType="article">
-        {categoryArticles?.length > 0 ? (
-          categoryArticles.map((article) => {
+      {categoryArticles.length < 4 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-12">
+          {categoryArticles.map((article) => {
+            const { title, image, body, slug } = article;
+            return (
+              <BlogCard
+                title={title}
+                body={body}
+                image={image}
+                link={slug.current}
+                key={title}
+                className="mb-8"
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <CardCarousel cardType="article">
+          {categoryArticles.map((article) => {
             const { title, image, body, slug } = article;
             return (
               <BlogCard
@@ -36,11 +52,9 @@ export default async function BlogSection({ category, articles }) {
                 className="mb-8 mr-6 lg:mr-12"
               />
             );
-          })
-        ) : (
-          <div className="p-4 text-red-500">Pas d'article trouvé</div>
-        )}
-      </CardCarousel>
+          })}
+        </CardCarousel>
+      )}
     </section>
   );
 }

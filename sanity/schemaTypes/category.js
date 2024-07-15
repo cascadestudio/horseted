@@ -7,6 +7,7 @@ export const category = {
       name: "title",
       title: "Nom de la catégorie",
       type: "string",
+      validation: (Rule) => Rule.required(),
     },
     {
       name: "slug",
@@ -16,6 +17,7 @@ export const category = {
         source: "title",
         maxLength: 96,
       },
+      validation: (Rule) => Rule.required(),
     },
   ],
 };

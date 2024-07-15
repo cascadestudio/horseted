@@ -3,21 +3,26 @@ import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
-async function getData(slug) {
-  const categories = await client.fetch(`*[_type == "category"]`);
-  const matchedCategory = categories.find((cat) => cat.slug.current === slug);
-
-  if (!matchedCategory) {
-    return {
-      notFound: true,
-    };
-  }
-
-  const articles = await client.fetch(
-    `*[_type == "article" && "${matchedCategory._id}" in categories[]._ref]`
+async function getData(categorySlug) {
+  const category = await client.fetch(
+    `*[_type == "category" && slug.current == $categorySlug][0]{
+      _id,
+      title,
+      "articles": *[_type == "article" && references(^._id)]{
+        title,
+        body,
+        image,
+        slug
+      }
+    }`,
+    { categorySlug }
   );
 
-  return { articles, category: matchedCategory };
+  if (!category) {
+    return { notFound: true };
+  }
+
+  return { articles: category.articles, category: category };
 }
 
 export default async function CategoryPage({ params }) {
@@ -25,7 +30,7 @@ export default async function CategoryPage({ params }) {
   const { articles, category, notFound } = await getData(categorySlug);
 
   if (notFound) {
-    return <div>Category not found</div>;
+    return <div>Catégorie introuvable</div>;
   }
 
   return (
