@@ -14,10 +14,9 @@ export default function BlogCard({ title, image, body, link, className }) {
     >
       <div className="flex items-center justify-center w-full p-1">
         <Image
-          className="w-full object-cover rounded-md"
+          className="w-full h-auto object-cover rounded-md"
           src={urlForImage(image)}
           alt={title}
-          layout="responsive"
           height={210}
           width={350}
         />

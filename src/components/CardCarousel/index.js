@@ -34,7 +34,7 @@ export default function ProductsCarousel({ children, cardType }) {
     speed: 500,
     beforeChange: (current, next) => setSlideIndex(next),
     initialSlide: 0,
-    slidesToShow: 4.2,
+    slidesToShow: cardType === "article" ? 3.6 : 4.2,
     slidesToScroll: cardType === "article" ? 1 : 4,
     appendDots: (dots) => (
       <ul>
@@ -58,13 +58,14 @@ export default function ProductsCarousel({ children, cardType }) {
           width: "100%",
           height: "7px",
           cursor: "pointer",
-          background: isMdScreen
-            ? i === Math.ceil(slideIndex)
+          background:
+            isMdScreen || cardType === "article"
+              ? i === Math.ceil(slideIndex)
+                ? fullConfig.theme.colors["light-green"]
+                : "white"
+              : i === Math.ceil(slideIndex / 4)
               ? fullConfig.theme.colors["light-green"]
-              : "white"
-            : i === Math.ceil(slideIndex / 4)
-            ? fullConfig.theme.colors["light-green"]
-            : "white",
+              : "white",
         }}
       />
     ),
@@ -108,7 +109,7 @@ export default function ProductsCarousel({ children, cardType }) {
         }}
         {...settings}
       >
-        {children.slice(0, isMdScreen ? 4 : 16)}
+        {children.slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)}
       </Slider>
     </div>
   );
