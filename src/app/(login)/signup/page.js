@@ -13,6 +13,7 @@ import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import TickIcon from "@/assets/icons/TickIcon";
 import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -20,21 +21,6 @@ export default function signupPage() {
   const [username, setUsername] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
-
-  async function postUser(firebaseToken) {
-    // TODO: Refactor
-    const response = await fetchHorseted(`http://localhost:3000/api/postUser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebaseToken: firebaseToken,
-        username: username,
-        newsLetter: newsletter,
-      }),
-    });
-  }
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -47,6 +33,16 @@ export default function signupPage() {
     }
     return router.push("/");
   };
+
+  async function postUser(firebaseToken) {
+    const query = "/users";
+    const body = {
+      username: username,
+      newsLetter: newsletter,
+    };
+    const response = await fetchHorseted(query, firebaseToken, "POST", body);
+    // console.log("response =>", response);
+  }
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">

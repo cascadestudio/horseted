@@ -13,6 +13,8 @@ export const AuthContextProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // console.log("user =>", user);
+
   async function fetchUser(accessToken) {
     try {
       const query = `/users/me`;
