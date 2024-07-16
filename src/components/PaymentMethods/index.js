@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import AddPaymentCardModal from "./AddPaymentCardModal";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
+import OptionBlock from "../input/OptionBlock";
 
 export default function PaymentMethods({
   activePaymentMethodId,
   setActivePaymentMethodId,
 }) {
   const { user } = useAuthContext();
-  const [isModal, setIsModal] = useState(true);
+  const [isAddPaymentCardModal, setIsAddPaymentCardModal] = useState(false);
   const [isNewPaymentMethod, setIsNewPaymentMethod] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([]);
 
@@ -51,34 +52,36 @@ export default function PaymentMethods({
   };
 
   return (
-    <div>
+    <div className="g-block">
       <h2 className="font-mcqueen font-bold text-xl mb-5">Mode de paiement</h2>
       {paymentMethods.map((paymentMethod) => {
         const { id, brand, last4 } = paymentMethod;
         return (
-          <label
+          <OptionBlock
             key={id}
-            className="flex items-center justify-between p-5 border border-light-green rounded-xl mb-5"
+            defaultValue={id}
+            checked={activePaymentMethodId === id}
+            onChange={handlePaymentMethodChange}
           >
-            <input
-              type="radio"
-              value={id}
-              checked={activePaymentMethodId === id}
-              onChange={handlePaymentMethodChange}
-            />
-            {brand}
-            {last4}
-          </label>
+            <div className="flex gap-x-2">
+              <img src={`/logos/${brand}.svg`} width="50" alt={brand} />
+              <p>**** **** **** *{last4}</p>
+            </div>
+          </OptionBlock>
         );
       })}
       <button
-        onClick={() => setIsModal(true)}
-        className="flex items-center justify-center p-2 bg-light-green rounded-full hover:bg-dark-green"
+        onClick={() => setIsAddPaymentCardModal(true)}
+        className="flex items-center py-3 px-5 border border-darker-grey rounded-lg mb-5 bg-light-grey w-full"
       >
-        + Ajouter une carte bancaire
+        <span className="mr-5 w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+          +
+        </span>
+        Ajouter un moyen de paiement
       </button>
-      {isModal && (
+      {isAddPaymentCardModal && (
         <AddPaymentCardModal
+          setIsAddPaymentCardModal={setIsAddPaymentCardModal}
           isNewPaymentMethod={() => setIsNewPaymentMethod(true)}
         />
       )}

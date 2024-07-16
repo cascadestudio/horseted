@@ -11,7 +11,7 @@ import Link from "next/link";
 export default function Header() {
   return (
     <header className="lg:border-b border-b-light-green h-[var(--header-height)]">
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto">
         <div className="flex justify-between items-center gap-x-7 py-5 ">
           <BurgerIcon className="lg:hidden" />
           <Link href="/">

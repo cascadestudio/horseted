@@ -11,6 +11,7 @@ export default function Modal({
   onSubmit,
   children,
   buttonText,
+  className,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -54,7 +55,7 @@ export default function Modal({
             <CloseButton className="h-7 w-7" />
           </div>
         </div>
-        <form onSubmit={handleSubmit} className="lg:px-16 mb-9">
+        <form onSubmit={handleSubmit} className={"lg:px-16 mb-9 " + className}>
           {children}
           {buttonText && (
             <Button className="w-full text-xl h-12 mt-4" type="submit">

@@ -6,7 +6,7 @@ export default function HomeLayout({ children }) {
   return (
     <StripeProvider>
       <Header />
-      {children}
+      <main className="bg-light-grey">{children}</main>
       <Footer />
     </StripeProvider>
   );
