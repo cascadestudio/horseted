@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default async function BlogPage() {
   const articles = await client.fetch(
-    `*[_type == "article"]{..., categories[]->{_id, title, slug}}`
+    `*[_type == "article"]{..., categories->{_id, title, slug}}`
   );
   const categories = await client.fetch(`*[_type == "category"]`);
   return (
@@ -29,7 +29,7 @@ export default async function BlogPage() {
         <span className="font-semibold text-sm leading-[48px] uppercase tracking-[0.2em]">
           Sujets :
         </span>
-        <div className="flex flex-wrap gap-3 mb-10">
+        <div className="flex flex-wrap gap-3 mb-8">
           {categories.length > 0 &&
             categories.map((category) => (
               <Link

@@ -30,10 +30,10 @@ export const article = {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "categories",
-      title: "Catégories",
-      type: "array",
-      of: [{ type: "reference", to: { type: "category" } }],
+      name: "category",
+      title: "Catégorie",
+      type: "reference",
+      to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
     },
     {
