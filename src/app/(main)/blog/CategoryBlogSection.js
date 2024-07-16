@@ -4,9 +4,8 @@ import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
 export default async function BlogSection({ category, articles }) {
-  console.log(articles[0].categories);
   const categoryArticles = articles.filter(
-    (article) => article.categories && article.categories._id === category._id
+    (article) => article.category && article.category._id === category._id
   );
 
   return (
