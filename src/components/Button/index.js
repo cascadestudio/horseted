@@ -18,7 +18,7 @@ export default function Button({
       : variant === "transparent-red"
       ? "bg-transparent text-red border border-red"
       : variant === "transparent-grey"
-      ? "bg-transparent text-medium-grey border border-medium-grey"
+      ? "bg-transparent text-medium-grey border border-medium-grey hover:bg-transparent-green hover:text-light-green hover:border-light-green"
       : "bg-light-green text-white"
   }`;
 
