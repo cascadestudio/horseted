@@ -7,7 +7,6 @@ export default async function BlogSection({ category, articles }) {
   const categoryArticles = articles.filter(
     (article) => article.category && article.category._id === category._id
   );
-
   return (
     <section className="pb-8 bg-light-grey">
       <div className="flex items-center justify-between flex-nowrap mb-4 lg:mb-5">
@@ -15,7 +14,7 @@ export default async function BlogSection({ category, articles }) {
           {category.title}
         </h3>
         <Button
-          href="/blog"
+          href={`/actualites/${category.slug.current}`}
           variant="transparent-green"
           className="border-none px-0 font-bold pr-0 lg:border-solid lg:px-5"
         >

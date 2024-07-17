@@ -28,7 +28,7 @@ export default function BlogCard({ title, image, body, link, className }) {
         </div>
         <Link
           className="flex items-center text-light-green"
-          href={`/blog/articles/${link}`}
+          href={`/actualites/articles/${link}`}
         >
           Lire l'article
           <RightArrow

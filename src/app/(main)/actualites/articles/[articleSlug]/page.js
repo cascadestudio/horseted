@@ -1,5 +1,6 @@
 import { client } from "../../../../../../sanity/lib/client";
 import Image from "next/image";
+import { urlForImage } from "../../../../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
@@ -10,7 +11,7 @@ async function getArticleData(slug) {
     title,
     body,
     image,
-    "categories": categories[]->{title, _id, slug}
+    "category": category->{title, _id, slug}
   }`,
     { slug }
   );
@@ -30,7 +31,9 @@ export default async function ArticlePage({ params }) {
     return <div>Article not found</div>;
   }
 
-  const { title, body, image, categories } = article;
+  const { title, body, image, category } = article;
+
+  console.log(article);
 
   return (
     <div className="bg-light-grey">
@@ -41,7 +44,7 @@ export default async function ArticlePage({ params }) {
         <div className="mb-8">
           {image && (
             <Image
-              src={image}
+              src={urlForImage(image)}
               alt={title}
               width={800}
               height={400}
@@ -57,18 +60,16 @@ export default async function ArticlePage({ params }) {
             Categories:
           </h3>
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category._id}
-                href={`/blog/${category.slug.current}`}
-                variant="transparent-grey"
-              >
-                {category.title}
-              </Button>
-            ))}
+            <Button
+              key={category._id}
+              href={`/actualites/${category.slug.current}`}
+              variant="transparent-grey"
+            >
+              {category.title}
+            </Button>
           </div>
         </div>
-        <Button href="/blog" className="mt-10">
+        <Button href="/actualites" className="mt-10">
           Tous les articles
           <RightArrow color="white" className="ml-2" />
         </Button>

@@ -34,7 +34,7 @@ export default async function BlogPage() {
             categories.map((category) => (
               <Link
                 key={category._id}
-                href={`/blog/${category.slug.current}`}
+                href={`/actualites/${category.slug.current}`}
                 passHref
               >
                 <Button key={category._id} variant="transparent-grey">
