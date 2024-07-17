@@ -12,6 +12,7 @@ import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
 import UserForm from "./User";
 import Button from "@/components/Button";
+import StripeProvider from "@/components/StripeProvider";
 
 const CheckOutPage = () => {
   const { user, accessToken } = useAuthContext();
@@ -53,32 +54,33 @@ const CheckOutPage = () => {
   }
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
-        Votre commande
-      </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
-        <div className="col-span-2">
-          <div className="g-block flex justify-between">
-            <div>
-              <h2 className="font-bold text-lg">
-                {products.length > 1 ? "Lot d’articles" : product?.title}
-              </h2>
-              <p>{products.length} article</p>
-              {products.map((product) => (
-                <ClientProductImage
-                  key={product.id}
-                  product={product}
-                  size="small"
-                  className="w-10 mt-5"
-                />
-              ))}
+    <StripeProvider>
+      <div className="container mx-auto py-10">
+        <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
+          Votre commande
+        </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
+          <div className="col-span-2">
+            <div className="g-block flex justify-between">
+              <div>
+                <h2 className="font-bold text-lg">
+                  {products.length > 1 ? "Lot d’articles" : product?.title}
+                </h2>
+                <p>{products.length} article</p>
+                {products.map((product) => (
+                  <ClientProductImage
+                    key={product.id}
+                    product={product}
+                    size="small"
+                    className="w-10 mt-5"
+                  />
+                ))}
+              </div>
+              <p className="font-bold text-lg">{product?.price}€</p>
             </div>
-            <p className="font-bold text-lg">{product?.price}€</p>
-          </div>
-          <UserForm user={user} />
-          <AddressForm setActiveAddress={setActiveAddress} />
-          {/* <DeliveryMethods
+            <UserForm user={user} />
+            <AddressForm setActiveAddress={setActiveAddress} />
+            {/* <DeliveryMethods
             productSize={product.shipping}
             activeAddress={activeAddress}
             productIds={productIds}
@@ -87,41 +89,44 @@ const CheckOutPage = () => {
             activeServicePoint={activeServicePoint}
             setActiveServicePoint={setActiveServicePoint}
           /> */}
-          <PaymentMethods
-            activePaymentMethodId={activePaymentMethodId}
-            setActivePaymentMethodId={setActivePaymentMethodId}
-          />
-        </div>
-        <div className="col-span-1">
-          <div className="g-block">
-            <h2 className="font-bold mb-7">Résumé de la commande</h2>
-            <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
-              <p>Commande</p>
-              {/* <p className="justify-self-end">{product?.price} €</p> */}
-              <p>Frais de port</p>
-              <p className="justify-self-end">{shippingMethods[0]?.price} €</p>
-              <p className="font-extrabold">Total</p>
-              <p className="font-extrabold justify-self-end">
-                {/* {product?.price + shippingMethods[0]?.price} € */}
-              </p>
-            </div>
-            {activePaymentMethodId ? (
-              <>
-                <Button
-                  className="mt-12 w-full"
-                  onClick={() => handlePayment()}
-                >
-                  Payer
-                </Button>
-                <p className="mt-3 font-semibold text-center">
-                  Paiement sécurisé
+            <PaymentMethods
+              activePaymentMethodId={activePaymentMethodId}
+              setActivePaymentMethodId={setActivePaymentMethodId}
+            />
+          </div>
+          <div className="col-span-1">
+            <div className="g-block">
+              <h2 className="font-bold mb-7">Résumé de la commande</h2>
+              <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
+                <p>Commande</p>
+                {/* <p className="justify-self-end">{product?.price} €</p> */}
+                <p>Frais de port</p>
+                <p className="justify-self-end">
+                  {shippingMethods[0]?.price} €
                 </p>
-              </>
-            ) : null}
+                <p className="font-extrabold">Total</p>
+                <p className="font-extrabold justify-self-end">
+                  {/* {product?.price + shippingMethods[0]?.price} € */}
+                </p>
+              </div>
+              {activePaymentMethodId ? (
+                <>
+                  <Button
+                    className="mt-12 w-full"
+                    onClick={() => handlePayment()}
+                  >
+                    Payer
+                  </Button>
+                  <p className="mt-3 font-semibold text-center">
+                    Paiement sécurisé
+                  </p>
+                </>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </StripeProvider>
   );
 
   async function getProduct(productId) {

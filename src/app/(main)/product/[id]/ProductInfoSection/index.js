@@ -110,16 +110,19 @@ export default function ProductPageClient({
         <span className="font-sans">- Livraison à domicile</span>
       </p>
       <Button
-        href={`/checkout?productId=${params.id}`}
         className="w-full mb-3 h-[52px] text-lg"
+        isAuthProtected
+        href={`/checkout?productIds=${params.id}`}
       >
         Acheter
       </Button>
+
       <Button
         onClick={handleOpenOfferModal}
         price={price}
         variant="transparent-green"
         className={`w-full h-[52px] text-xl ${className}`}
+        isAuthProtected
       >
         Faire une offre
       </Button>
