@@ -2,6 +2,7 @@ import BlogCard from "@/components/BlogCard";
 import CardCarousel from "@/components/CardCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
+import resolveConfig from "tailwindcss/resolveConfig";
 
 export default async function BlogSection({ category, articles }) {
   const categoryArticles = articles.filter(
@@ -22,25 +23,10 @@ export default async function BlogSection({ category, articles }) {
           <RightArrow className="ml-2" />
         </Button>
       </div>
-      {categoryArticles.length < 4 ? (
-        <div className="grid grid-cols-1 gap-6 justify-items-center sm:justify-items-start mb-8 md:grid-cols-[350px_350px] md:gap-8 lg:gap-[30px] xl:grid-cols-[350px_350px_350px] xl:gap-[38px] 2xl:gap-[66px]">
-          {categoryArticles.map((article) => {
-            const { title, image, body, slug } = article;
-            return (
-              <BlogCard
-                title={title}
-                body={body}
-                image={image}
-                link={slug.current}
-                key={title}
-              />
-            );
-          })}
-        </div>
-      ) : (
-        <div>
-          {/* <div className="grid grid-cols-1 justify-items-center mb-8 gap-6 sm:hidden">
-            {categoryArticles.slice(0, 4).map((article) => {
+      <div className="hidden lg:block">
+        {categoryArticles.length < 4 ? (
+          <div className="grid grid-cols-1 gap-6 justify-items-center sm:justify-items-start mb-8 md:grid-cols-[350px_350px] md:gap-8 lg:gap-[30px] xl:grid-cols-[350px_350px_350px] xl:gap-[38px] 2xl:gap-[66px]">
+            {categoryArticles.map((article) => {
               const { title, image, body, slug } = article;
               return (
                 <BlogCard
@@ -52,8 +38,8 @@ export default async function BlogSection({ category, articles }) {
                 />
               );
             })}
-          </div> */}
-          {/* <div className="hidden sm:block"> */}
+          </div>
+        ) : (
           <CardCarousel cardType="article">
             {categoryArticles.map((article) => {
               const { title, image, body, slug } = article;
@@ -69,9 +55,25 @@ export default async function BlogSection({ category, articles }) {
               );
             })}
           </CardCarousel>
-          {/* </div> */}
-        </div>
-      )}
+        )}
+      </div>
+      <div className="block lg:hidden">
+        <CardCarousel cardType="article">
+          {categoryArticles.map((article) => {
+            const { title, image, body, slug } = article;
+            return (
+              <BlogCard
+                title={title}
+                body={body}
+                image={image}
+                link={slug.current}
+                key={title}
+                className="mb-8"
+              />
+            );
+          })}
+        </CardCarousel>
+      </div>
     </section>
   );
 }
