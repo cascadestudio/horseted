@@ -1,4 +1,5 @@
 "use client";
+import capitalizeText from "@/utils/capitalizeText";
 import SubCategoriesPanel from "./SubCategoriesPanel";
 import { useState } from "react";
 
@@ -18,7 +19,7 @@ export default function CategoriesNav({ categories }) {
                 isActive && " border-b-2 border-dark-green text-dark-green"
               }`}
             >
-              {name}
+              {capitalizeText(name)}
             </button>
             {isActive && <SubCategoriesPanel parentId={id} />}
           </li>
