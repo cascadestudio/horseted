@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/context/AuthContext";
+import Spinner from "@/components/Spinner";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
@@ -13,9 +14,7 @@ const withAuth = (WrappedComponent) => {
       }
     }, [user, loading, router]);
 
-    if (loading) {
-      return <p>Loading...</p>;
-    }
+    if (loading) return <Spinner />;
 
     if (!user) {
       return null;

@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
+import Spinner from "@/components/Spinner";
 
 export default function ClientProductImage({ product, className, size }) {
   const [imageSrc, setImageSrc] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchImage = async () => {
       try {
@@ -23,11 +26,17 @@ export default function ClientProductImage({ product, className, size }) {
           image = await getImage(product.medias[0].files.default, "client");
         }
         setImageSrc(image);
-      } catch (error) {}
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchImage();
   }, []);
+
+  if (isLoading) return <Spinner />;
 
   if (product.hasOwnProperty("medias")) {
     return (
