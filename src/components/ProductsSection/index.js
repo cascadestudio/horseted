@@ -4,8 +4,13 @@ import ProductsCarousel from "@/components/ProductsCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
-export default async function ProductsSection({ title }) {
-  const products = await fetchHorseted("/products?category=206");
+export default async function ProductsSection({ title, orderBy, categoryId }) {
+  let query = "/products";
+  if (orderBy) query += `?orderBy=${orderBy}`;
+  if (categoryId) query += `?category=${categoryId}`;
+
+  const productsData = await fetchHorseted(query);
+  const products = productsData.items.slice(0, 16);
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
       <div className="container mx-auto px-5">
@@ -23,7 +28,7 @@ export default async function ProductsSection({ title }) {
           </Button>
         </div>
         <ProductsCarousel>
-          {products.items.map((product, index) => {
+          {products.map((product, index) => {
             return (
               <div
                 className={`block ${index >= 4 ? "hidden md:block" : ""} ${

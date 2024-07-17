@@ -2,7 +2,7 @@
 import SubCategoriesPanel from "./SubCategoriesPanel";
 import { useState } from "react";
 
-export default function Categories({ categories }) {
+export default function CategoriesNav({ categories }) {
   const [selectedSubCategories, setSelectedSubCategories] = useState(null);
 
   return (

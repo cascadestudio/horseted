@@ -12,7 +12,7 @@ export default function SubCategoriesPanel({ parentId }) {
     useIsClickOutsideElement(panelRef);
   const [isClickDropdown, setIsClickDropdown] = useState(false);
 
-  console.log(selectedSubCategoriesId);
+  // console.log(selectedSubCategoriesId);
   function handleClick(id) {
     setSelectedSubCategoriesId(id);
     if (isClickOutside) {
