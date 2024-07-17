@@ -3,13 +3,13 @@ import Image from "next/image";
 import { urlForImage } from "../../../../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import Button from "@/components/Button";
-import RightArrow from "@/assets/icons/RightArrow";
 import BurstIcon from "@/assets/icons/BurstIcon";
 import FacebookIconNoBorder from "@/assets/icons/FacebookIconNoBorder";
 import LinkedInIconNoBorder from "@/assets/icons/LinkedInIconNoBorder";
 import XIcon from "@/assets/icons/XIcon";
 import WhatsAppIcon from "@/assets/icons/WhatsAppIcon";
 import MailIcon from "@/assets/icons/MailIcon";
+import CategoryBlogSection from "../../CategoryBlogSection";
 
 async function getArticleData(slug) {
   const articles = await client.fetch(
@@ -81,17 +81,13 @@ export default async function ArticlePage({ params }) {
           <PortableText value={body} />
         </div>
         <div className="mb-10">
-          <h3 className="font-mcqueen font-semibold text-lg mb-3">
-            Categories:
-          </h3>
           <div className="flex flex-wrap gap-2">
-            <Button
-              key={category._id}
-              href={`/actualites/${category.slug.current}`}
-              variant="transparent-grey"
-            >
-              {category.title}
-            </Button>
+            <div className="mb-10">
+              <h3 className="font-mcqueen font-semibold text-lg mb-3">
+                Sur le même sujet
+              </h3>
+              {/* <CategoryBlogSection category={category}  /> */}
+            </div>
           </div>
         </div>
       </div>

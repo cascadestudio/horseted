@@ -2,9 +2,8 @@ import BlogCard from "@/components/BlogCard";
 import CardCarousel from "@/components/CardCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
-import resolveConfig from "tailwindcss/resolveConfig";
 
-export default async function BlogSection({ category, articles }) {
+export default async function CategoryBlogSection({ category, articles }) {
   const categoryArticles = articles.filter(
     (article) => article.category && article.category._id === category._id
   );
