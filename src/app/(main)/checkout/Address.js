@@ -8,6 +8,8 @@ export default function Address({ setActiveAddress }) {
   const [addresses, setAddresses] = useState([]);
   const [isModal, setIsModal] = useState(false);
 
+  console.log("addresses =>", addresses);
+
   useEffect(() => {
     getAdress(accessToken, setAddresses);
   }, []);
@@ -21,9 +23,7 @@ export default function Address({ setActiveAddress }) {
   return (
     <>
       <div className="g-block flex justify-between">
-        <h2 className="font-mcqueen font-bold text-xl mb-5">
-          Addresse (attendre UI)
-        </h2>
+        <h2 className="font-mcqueen font-bold text-xl mb-5">Addresse</h2>
         {addresses?.length > 0 ? (
           addresses.map((address) => {
             return <p key={address.id}>{address.fullName}</p>;
@@ -31,8 +31,9 @@ export default function Address({ setActiveAddress }) {
         ) : (
           <p>Aucune adresse</p>
         )}
+        <button onClick={() => setIsModal(true)}>Ajouter une adresse</button>
       </div>
-      {isModal && <AddressModal />}
+      {isModal && <AddressModal setIsModal={setIsModal} />}
     </>
   );
 }

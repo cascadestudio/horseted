@@ -2,8 +2,9 @@ import { TextInput } from "@/components/input";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import Modal from "@/components/Modal";
 
-export default function AddressModal() {
+export default function AddressModal({ setIsModal }) {
   const { user, accessToken } = useAuthContext();
   const [formData, setFormData] = useState({});
 
@@ -18,7 +19,7 @@ export default function AddressModal() {
   };
 
   return (
-    <div>
+    <Modal onClose={() => setIsModal(false)}>
       <h1>Ajouter une adresse</h1>
       <form className="form-container">
         <TextInput
@@ -72,6 +73,6 @@ export default function AddressModal() {
         />
         {/* TODO: isDefault toggle button */}
       </form>
-    </div>
+    </Modal>
   );
 }

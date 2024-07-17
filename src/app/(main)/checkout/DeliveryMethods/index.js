@@ -43,10 +43,6 @@ export default function Delivery({
     setActiveDeliveryMethod(e.target.value);
   }
 
-  if (shippingMethods.length === 0) {
-    return <p>loading...</p>;
-  }
-
   return (
     <>
       <div className="g-block">
@@ -97,6 +93,6 @@ export default function Delivery({
     if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    // console.log("shippingMethods =>", shippingMethods);
+    console.log("shippingMethods =>", shippingMethods);
   }
 }

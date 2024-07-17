@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
 import DeliveryMethods from "./DeliveryMethods";
-import AddressForm from "./Address";
+import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
@@ -25,7 +25,7 @@ const CheckOutPage = () => {
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
 
-  console.log("shippingMethods =>", shippingMethods);
+  // console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -83,7 +83,7 @@ const CheckOutPage = () => {
               <p className="font-bold text-lg">{productsPriceSum()} €</p>
             </div>
             <UserForm user={user} />
-            <AddressForm setActiveAddress={setActiveAddress} />
+            <Address setActiveAddress={setActiveAddress} />
             <DeliveryMethods
               productSize={products[0].shipping}
               activeAddress={activeAddress}
