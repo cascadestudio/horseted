@@ -44,13 +44,15 @@ export default async function BlogPage() {
             ))}
         </div>
         {categories.length > 0 ? (
-          categories.map((category) => (
-            <CategoryBlogSection
-              key={category._id}
-              category={category}
-              articles={articles}
-            />
-          ))
+          categories
+            .slice(0, 1)
+            .map((category) => (
+              <CategoryBlogSection
+                key={category._id}
+                category={category}
+                articles={articles}
+              />
+            ))
         ) : (
           <div className="p-4 text-red-500">Pas d'article trouvé</div>
         )}

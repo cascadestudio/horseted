@@ -39,7 +39,7 @@ export default async function BlogSection({ category, articles }) {
         </div>
       ) : (
         <div>
-          <div className="grid grid-cols-1 justify-items-center mb-8 gap-6 sm:hidden">
+          {/* <div className="grid grid-cols-1 justify-items-center mb-8 gap-6 sm:hidden">
             {categoryArticles.slice(0, 4).map((article) => {
               const { title, image, body, slug } = article;
               return (
@@ -52,24 +52,24 @@ export default async function BlogSection({ category, articles }) {
                 />
               );
             })}
-          </div>
-          <div className="hidden sm:block">
-            <CardCarousel cardType="article">
-              {categoryArticles.map((article) => {
-                const { title, image, body, slug } = article;
-                return (
-                  <BlogCard
-                    title={title}
-                    body={body}
-                    image={image}
-                    link={slug.current}
-                    key={title}
-                    className="mb-8"
-                  />
-                );
-              })}
-            </CardCarousel>
-          </div>
+          </div> */}
+          {/* <div className="hidden sm:block"> */}
+          <CardCarousel cardType="article">
+            {categoryArticles.map((article) => {
+              const { title, image, body, slug } = article;
+              return (
+                <BlogCard
+                  title={title}
+                  body={body}
+                  image={image}
+                  link={slug.current}
+                  key={title}
+                  className="mb-8"
+                />
+              );
+            })}
+          </CardCarousel>
+          {/* </div> */}
         </div>
       )}
     </section>

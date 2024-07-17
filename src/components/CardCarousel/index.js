@@ -5,8 +5,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
+import "./card-carousel.css";
 
-export default function ProductsCarousel({ children, cardType }) {
+export default function CardCarousel({ children, cardType }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const parseBreakpoint = (breakpoint) => {
     return parseInt(breakpoint.replace("px", ""), 10);
@@ -94,7 +95,7 @@ export default function ProductsCarousel({ children, cardType }) {
       {
         breakpoint: smBreakpoint,
         settings: {
-          slidesToShow: cardType === "article" ? 1 : 1.2,
+          slidesToShow: cardType === "article" ? 1.2 : 1.2,
           slidesToScroll: 1,
         },
       },
