@@ -17,9 +17,7 @@ import StripeProvider from "@/components/StripeProvider";
 const CheckOutPage = () => {
   const { user, accessToken } = useAuthContext();
   const searchParams = useSearchParams();
-  // const productIds = searchParams.get("productIds");
   const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState(null);
   const [products, setProducts] = useState([]);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
@@ -27,7 +25,7 @@ const CheckOutPage = () => {
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
 
-  // console.log("products =>", products);
+  console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -49,6 +47,12 @@ const CheckOutPage = () => {
     handlePaymentResponse(paymentResponse);
   }
 
+  const productsPriceSum = () => {
+    return products.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -64,7 +68,7 @@ const CheckOutPage = () => {
             <div className="g-block flex justify-between">
               <div>
                 <h2 className="font-bold text-lg">
-                  {products.length > 1 ? "Lot d’articles" : product?.title}
+                  {products.length > 1 ? "Lot d’articles" : products[0].title}
                 </h2>
                 <p>{products.length} article</p>
                 {products.map((product) => (
@@ -76,19 +80,19 @@ const CheckOutPage = () => {
                   />
                 ))}
               </div>
-              <p className="font-bold text-lg">{product?.price}€</p>
+              <p className="font-bold text-lg">{productsPriceSum()} €</p>
             </div>
             <UserForm user={user} />
             <AddressForm setActiveAddress={setActiveAddress} />
-            {/* <DeliveryMethods
-            productSize={product.shipping}
-            activeAddress={activeAddress}
-            productIds={productIds}
-            shippingMethods={shippingMethods}
-            setShippingMethods={setShippingMethods}
-            activeServicePoint={activeServicePoint}
-            setActiveServicePoint={setActiveServicePoint}
-          /> */}
+            <DeliveryMethods
+              productSize={products[0].shipping}
+              activeAddress={activeAddress}
+              productIds={productIds}
+              shippingMethods={shippingMethods}
+              setShippingMethods={setShippingMethods}
+              activeServicePoint={activeServicePoint}
+              setActiveServicePoint={setActiveServicePoint}
+            />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
               setActivePaymentMethodId={setActivePaymentMethodId}
@@ -99,14 +103,14 @@ const CheckOutPage = () => {
               <h2 className="font-bold mb-7">Résumé de la commande</h2>
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
-                {/* <p className="justify-self-end">{product?.price} €</p> */}
+                <p className="justify-self-end">{productsPriceSum()} €</p>
                 <p>Frais de port</p>
                 <p className="justify-self-end">
                   {shippingMethods[0]?.price} €
                 </p>
                 <p className="font-extrabold">Total</p>
                 <p className="font-extrabold justify-self-end">
-                  {/* {product?.price + shippingMethods[0]?.price} € */}
+                  {productsPriceSum() + shippingMethods[0]?.price} €
                 </p>
               </div>
               {activePaymentMethodId ? (

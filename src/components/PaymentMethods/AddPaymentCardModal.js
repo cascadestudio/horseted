@@ -19,7 +19,7 @@ const AddPaymentCardModal = ({
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [isDefaultCard, setIsDefaultCard] = useState(false);
 
   const handleSubmit = async (event) => {
