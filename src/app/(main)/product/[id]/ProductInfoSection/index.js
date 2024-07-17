@@ -123,20 +123,22 @@ export default function ProductPageClient({
       >
         Faire une offre
       </Button>
-      <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
-        <div>
-          <h4 className="font-mcqueen font-bold text-lg leading-5">
-            Acheter un lot
-          </h4>
-          <p className="text-sm">Économisez sur les frais de livraison</p>
+      {userProducts.items.lenght > 0 && (
+        <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
+          <div>
+            <h4 className="font-mcqueen font-bold text-lg leading-5">
+              Acheter un lot
+            </h4>
+            <p className="text-sm">Économisez sur les frais de livraison</p>
+          </div>
+          <Button
+            onClick={handleOpenCreateBundleModal}
+            className="text-sm h-8 ml-5"
+          >
+            Créer un lot
+          </Button>
         </div>
-        <Button
-          onClick={handleOpenCreateBundleModal}
-          className="text-sm h-8 ml-5"
-        >
-          Créer un lot
-        </Button>
-      </div>
+      )}
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>
