@@ -11,7 +11,6 @@ export default async function BlogPage() {
       _createdAt
     }`
   );
-  console.log(articles[0]);
   const categories = await client.fetch(`*[_type == "category"]`);
   return (
     <div className="bg-light-grey">
