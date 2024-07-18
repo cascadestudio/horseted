@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
 import ServicePoint from "./ServicePoint";
 
-export default function Delivery({
+export default function DeliveryMethods({
   activeAddress,
   productIds,
   shippingMethods,
@@ -18,7 +18,7 @@ export default function Delivery({
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
 
-  // console.log("servicePoints =>", servicePoints);
+  console.log("activeAddress =>", activeAddress);
 
   useEffect(() => {
     if (activeAddress && productIds) {

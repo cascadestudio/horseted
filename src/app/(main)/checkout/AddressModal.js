@@ -5,10 +5,12 @@ import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function AddressModal({ setIsModal }) {
+export default function AddressModal({ setIsModal, setActiveAddress }) {
   const { user, accessToken } = useAuthContext();
   const [formData, setFormData] = useState({});
   const [isAddressSaved, setIsAddressSaved] = useState(false);
+
+  // console.log("formData =>", formData);
 
   useEffect(() => {
     // TODO: post and patch address when UI is ready
@@ -20,12 +22,29 @@ export default function AddressModal({ setIsModal }) {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "isDefault" ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setActiveAddress(formData);
+    if (isAddressSaved) {
+      // await postAddress();
+    }
+    setIsModal(false);
   };
 
   return (
-    <Modal title="Ajouter une adresse" onClose={() => setIsModal(false)}>
+    <Modal
+      onSubmit={handleSubmit}
+      buttonText="Ajouter"
+      title="Ajouter une adresse"
+      onClose={() => setIsModal(false)}
+    >
       <TextInput
         label="Nom complet"
         name="fullName"
@@ -54,7 +73,6 @@ export default function AddressModal({ setIsModal }) {
         name="additionalInfos"
         value={formData.additionalInfos}
         onChange={handleChange}
-        required
         placeholder="Ex : Bâtiment C"
       />
       <TextInput
@@ -74,6 +92,7 @@ export default function AddressModal({ setIsModal }) {
       />
       <label className="flex items-start mt-3">
         <Checkbox
+          name="isAddressSaved"
           value={isAddressSaved}
           checked={isAddressSaved}
           onChange={handleIsAddressSaved}
@@ -84,16 +103,16 @@ export default function AddressModal({ setIsModal }) {
       </label>
       <label className="flex items-start mt-3">
         <Checkbox
+          name="isDefault"
           value={formData.isDefault}
           checked={formData.isDefault}
           onChange={handleChange}
+          disabled={!isAddressSaved}
         />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           Définir par défaut
         </span>
       </label>
-
-      {/* TODO: isDefault toggle button */}
     </Modal>
   );
 }

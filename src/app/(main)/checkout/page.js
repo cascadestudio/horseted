@@ -83,7 +83,10 @@ const CheckOutPage = () => {
               <p className="font-bold text-lg">{productsPriceSum()} €</p>
             </div>
             <UserForm user={user} />
-            <Address setActiveAddress={setActiveAddress} />
+            <Address
+              activeAddress={activeAddress}
+              setActiveAddress={setActiveAddress}
+            />
             <DeliveryMethods
               productSize={products[0].shipping}
               activeAddress={activeAddress}

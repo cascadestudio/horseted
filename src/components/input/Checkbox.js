@@ -1,15 +1,26 @@
 import TickIcon from "@/assets/icons/TickIcon";
 
-export default function Checkbox({ checked, onChange, className, value }) {
+export default function Checkbox({
+  checked,
+  onChange,
+  className = "",
+  value,
+  disabled,
+  name,
+}) {
   return (
     <div className={`w-4 h-4 lg:w-5 lg:h-5 relative ${className}`}>
       <input
-        value={value}
+        name={name}
+        value={value || false}
         type="checkbox"
         size="10"
-        checked={checked}
+        checked={checked || false}
         onChange={onChange}
-        className="appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
+        disabled={disabled}
+        className={`appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent ${
+          disabled ? "bg-gray-200 cursor-not-allowed" : ""
+        }`}
       />
       {checked && (
         <TickIcon
