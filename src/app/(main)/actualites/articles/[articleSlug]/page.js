@@ -87,11 +87,11 @@ export default async function ArticlePage({ params }) {
         <div className="prose max-w-none mb-10 text-black">
           <PortableText value={body} components={PortableTextComponents} />
         </div>
-
-        <h3 className="font-mcqueen font-semibold text-lg mb-3">
-          Sur le même sujet
-        </h3>
-        <CategoryBlogSection category={category} articles={categoryArticles} />
+        <CategoryBlogSection
+          category={category}
+          articles={categoryArticles}
+          customTitle="Sur le même sujet"
+        />
       </div>
     </div>
   );
