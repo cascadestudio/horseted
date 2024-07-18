@@ -21,13 +21,15 @@ export default function BlogCard({ title, image, body, link, className }) {
           width={350}
         />
       </div>
-      <div className="p-6">
-        <h3 className="font-mcqueen font-semibold text-xl mb-3">{title}</h3>
-        <div className="mb-5 prose line-clamp-3 lg:prose-lg">
+      <div className="p-6 flex flex-col gap-3 justify-between">
+        <h3 className="font-mcqueen font-semibold text-xl line-clamp-2 overflow-hidden text-ellipsis">
+          {title}
+        </h3>
+        <div className="prose line-clamp-3 lg:prose-lg">
           <PortableText value={body} />
         </div>
         <Link
-          className="flex items-center text-light-green"
+          className="flex items-center text-light-green justify-self-end"
           href={`/actualites/articles/${link}`}
         >
           Lire l'article
