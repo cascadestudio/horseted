@@ -59,7 +59,7 @@ export default function DeliveryMethods({
     if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    console.log("shippingMethods =>", shippingMethods);
+    // console.log("shippingMethods =>", shippingMethods);
   }
 
   return (
