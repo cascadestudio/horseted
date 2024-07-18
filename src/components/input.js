@@ -1,7 +1,16 @@
-export const TextInput = ({ label, name, value, onChange, list, required }) => (
+export const TextInput = ({
+  label,
+  name,
+  value,
+  onChange,
+  list,
+  required,
+  placeholder,
+}) => (
   <label htmlFor={name} className="w-full mx-2">
     <p className="label">{label} :</p>
     <input
+      placeholder={placeholder}
       value={value || ""}
       onChange={onChange}
       list={list}

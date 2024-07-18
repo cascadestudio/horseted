@@ -1,9 +1,10 @@
 import TickIcon from "@/assets/icons/TickIcon";
 
-export default function Checkbox({ checked, onChange, className }) {
+export default function Checkbox({ checked, onChange, className, value }) {
   return (
     <div className={`w-4 h-4 lg:w-5 lg:h-5 relative ${className}`}>
       <input
+        value={value}
         type="checkbox"
         size="10"
         checked={checked}
