@@ -18,7 +18,6 @@ import horsetedApp from "@/assets/images/horsetedApp.png";
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
   const featuredArticles = articles.filter((article) => article.isFeatured);
-  console.log(articles);
   return (
     <main>
       <div className="relative">
