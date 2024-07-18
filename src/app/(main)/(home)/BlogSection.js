@@ -13,7 +13,7 @@ export default function BlogSection({ articles }) {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-12">
           {articles?.length > 0 ? (
-            articles.map((article) => {
+            articles.slice(0, 3).map((article) => {
               const { title, image, body, slug } = article;
               return (
                 <BlogCard
@@ -26,7 +26,7 @@ export default function BlogSection({ articles }) {
               );
             })
           ) : (
-            <div className="p-4 text-red-500">No posts found</div>
+            <div className="p-4">Pas d'article trouvé</div>
           )}
         </div>
         <Button className="hidden lg:mt-10" href="#">
