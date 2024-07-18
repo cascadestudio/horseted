@@ -54,6 +54,71 @@ const CheckOutPage = () => {
     }, 0);
   };
 
+  async function getProduct(productId) {
+    const product = await fetchHorseted(`/products/${productId}`);
+    setProducts((prevProducts) => [...prevProducts, product]);
+    setLoading(false);
+  }
+
+  async function postOrders() {
+    const parsedProductIds = parseInt(productIds);
+    const body = {
+      productIds: [parsedProductIds],
+    };
+    console.log(body);
+    const order = await fetchHorseted(
+      `/orders`,
+      accessToken,
+      "POST",
+      body,
+      true
+    );
+    return order.id;
+  }
+
+  async function ordersPayment(orderId) {
+    const body = {
+      // offerId: null, // required if offer exist
+      paymentMethod: activePaymentMethodId,
+      address: {
+        city: activeAddress.city,
+        street: activeAddress.street,
+        postalCode: activeAddress.postalCode,
+      },
+      shippingMethod: shippingMethods[0].id,
+      // servicePoint: activeServicePointId, // not required
+    };
+    const paymentResponse = await fetchHorseted(
+      `/orders/${orderId}/payment`,
+      accessToken,
+      "POST",
+      body,
+      true
+    );
+    return paymentResponse;
+  }
+
+  function handlePaymentResponse(paymentResponse) {
+    // console.log("Payment response:", paymentResponse);
+    if (paymentResponse.status === "succeeded") {
+      console.log("Payment successful");
+      alert("Payment successful");
+    }
+    if (paymentResponse.status === "requires_action") {
+      const paymentIntenturl = paymentResponse.nextAction.url;
+      window.open(paymentIntenturl, "_blank");
+      const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
+      handleSocketPayment(paymentIntentId);
+    }
+  }
+
+  function getPaymentIntentIdFromUrl(url) {
+    const urlObject = new URL(url);
+    const params = new URLSearchParams(urlObject.search);
+    const paymentIntentId = params.get("payment_intent");
+    return paymentIntentId;
+  }
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -139,61 +204,6 @@ const CheckOutPage = () => {
       </div>
     </StripeProvider>
   );
-
-  async function getProduct(productId) {
-    const product = await fetchHorseted(`/products/${productId}`);
-    setProducts((prevProducts) => [...prevProducts, product]);
-    setLoading(false);
-  }
-
-  async function postOrders() {
-    const parsedProductId = parseInt(productId);
-    const body = {
-      productIds: [parsedProductId],
-    };
-    const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
-    return order.id;
-  }
-
-  async function ordersPayment(orderId) {
-    const body = {
-      // offerId: null, // required if offer exist
-      paymentMethod: activePaymentMethodId,
-      address: {
-        city: activeAddress.city,
-        street: activeAddress.street,
-        postalCode: activeAddress.postalCode,
-      },
-      shippingMethod: shippingMethods[0].id,
-      // servicePoint: activeServicePointId, // not required
-    };
-    const paymentResponse = await fetchHorseted(
-      `/orders/${orderId}/payment`,
-      accessToken,
-      "POST",
-      body
-    );
-    return paymentResponse;
-  }
-
-  function handlePaymentResponse(paymentResponse) {
-    if (paymentResponse.status === "success") {
-      console.log("Payment successful");
-    }
-    if (paymentResponse.status === "requires_action") {
-      const paymentIntenturl = paymentResponse.nextAction.url;
-      window.open(paymentIntenturl, "_blank");
-      const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
-      handleSocketPayment(paymentIntentId);
-    }
-  }
-
-  function getPaymentIntentIdFromUrl(url) {
-    const urlObject = new URL(url);
-    const params = new URLSearchParams(urlObject.search);
-    const paymentIntentId = params.get("payment_intent");
-    return paymentIntentId;
-  }
 };
 
 export default withAuth(CheckOutPage);

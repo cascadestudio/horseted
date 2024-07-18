@@ -3,11 +3,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 
-export default function Address({
-  activeAddress,
-  setActiveAddress,
-  notSavedAddress,
-}) {
+export default function Address({ activeAddress, setActiveAddress }) {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
   const [isModal, setIsModal] = useState(false);

@@ -18,7 +18,7 @@ export default function DeliveryMethods({
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
 
-  console.log("activeAddress =>", activeAddress);
+  // console.log("activeAddress =>", activeAddress);
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -47,7 +47,7 @@ export default function DeliveryMethods({
     let query = `/delivery/service_points`;
     query += `?address_id=${activeAddress.id}`;
     query += `&location=${activeAddress.latitude};${activeAddress.longitude}`;
-    query += `&product_ids=${productIds}`;
+    query += `&product_ids=${productIds.join(";")}`;
     const servicePoints = await fetchHorseted(query, accessToken);
     setServicePoints(servicePoints.slice(0, 10));
   }
@@ -55,7 +55,7 @@ export default function DeliveryMethods({
   async function getShippingMethods() {
     let query = `/delivery/shipping_methods`;
     query += `?postal_code=${activeAddress.postalCode}`;
-    query += `&product_ids=${productIds}`;
+    query += `&product_ids=${productIds.join(";")}`;
     if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
