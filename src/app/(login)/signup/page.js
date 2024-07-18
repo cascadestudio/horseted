@@ -12,6 +12,8 @@ import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import TickIcon from "@/assets/icons/TickIcon";
 import heroImage2 from "@/assets/images/heroImage2.jpg";
+import Checkbox from "@/components/input/Checkbox";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -19,21 +21,6 @@ export default function signupPage() {
   const [username, setUsername] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
-
-  async function postUser(firebaseToken) {
-    // TODO: Refactor
-    const response = await fetchHorseted(`http://localhost:3000/api/postUser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        firebaseToken: firebaseToken,
-        username: username,
-        newsLetter: newsletter,
-      }),
-    });
-  }
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -46,6 +33,16 @@ export default function signupPage() {
     }
     return router.push("/");
   };
+
+  async function postUser(firebaseToken) {
+    const query = "/users";
+    const body = {
+      username: username,
+      newsLetter: newsletter,
+    };
+    const response = await fetchHorseted(query, firebaseToken, "POST", body);
+    // console.log("response =>", response);
+  }
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
@@ -111,22 +108,10 @@ export default function signupPage() {
             </label>
             <div className="mt-4">
               <label className="flex items-start mt-3">
-                <div className="w-4 h-4 lg:w-5 lg:h-5 relative">
-                  <input
-                    type="checkbox"
-                    size="10"
-                    checked={newsletter}
-                    onChange={() => setNewsletter(!newsletter)}
-                    className="appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
-                  />
-                  {newsletter && (
-                    <TickIcon
-                      width={10}
-                      height={7}
-                      className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer"
-                    />
-                  )}
-                </div>
+                <Checkbox
+                  checked={newsletter}
+                  onChange={() => setNewsletter(!newsletter)}
+                />
                 <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
                   Je souhaite recevoir par e-mail des offres personnalisées et
                   les dernières mises à jour.

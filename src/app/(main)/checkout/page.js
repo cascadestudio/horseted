@@ -6,27 +6,41 @@ import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
 import DeliveryMethods from "./DeliveryMethods";
-import AddressForm from "./Address";
+import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
 import UserForm from "./User";
 import Button from "@/components/Button";
+import StripeProvider from "@/components/StripeProvider";
 
 const CheckOutPage = () => {
   const { user, accessToken } = useAuthContext();
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
   const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState(null);
+  const [products, setProducts] = useState([]);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
+  const [productIds, setProductIds] = useState([]);
+  const [isAddressSaved, setIsAddressSaved] = useState(false);
+
+  // console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
-    getProduct();
-  }, []);
+    const productIdsParam = searchParams.get("productIds");
+    if (productIdsParam) {
+      const productIdsParamArray = productIdsParam.split(";");
+      setProductIds(productIdsParamArray);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    productIds.map((productId) => {
+      getProduct(productId);
+    });
+  }, [productIds]);
 
   async function handlePayment() {
     const orderId = await postOrders();
@@ -34,87 +48,31 @@ const CheckOutPage = () => {
     handlePaymentResponse(paymentResponse);
   }
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const productsPriceSum = () => {
+    return products.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+  };
 
-  return (
-    <div className="container mx-auto py-10">
-      <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
-        Votre commande
-      </h1>
-      <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
-        <div className="col-span-2">
-          <div className="g-block flex justify-between">
-            <div>
-              <h2 className="font-bold text-lg">{product.title}</h2>
-              <p>1 article</p>
-              <ClientProductImage
-                product={product}
-                size="small"
-                className="w-10 mt-5"
-              />
-            </div>
-            <p className="font-bold text-lg">{product.price}€</p>
-          </div>
-          <UserForm user={user} />
-          <AddressForm setActiveAddress={setActiveAddress} />
-          <DeliveryMethods
-            productSize={product.shipping}
-            activeAddress={activeAddress}
-            productIds={productId}
-            shippingMethods={shippingMethods}
-            setShippingMethods={setShippingMethods}
-            activeServicePoint={activeServicePoint}
-            setActiveServicePoint={setActiveServicePoint}
-          />
-          <PaymentMethods
-            activePaymentMethodId={activePaymentMethodId}
-            setActivePaymentMethodId={setActivePaymentMethodId}
-          />
-        </div>
-        <div className="col-span-1">
-          <div className="g-block">
-            <h2 className="font-bold mb-7">Résumé de la commande</h2>
-            <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
-              <p>Commande</p>
-              <p className="justify-self-end">32,30 €</p>
-              <p>Frais de port</p>
-              <p className="justify-self-end">32,30 €</p>
-              <p className="font-extrabold">Total</p>
-              <p className="font-extrabold justify-self-end">32,30 €</p>
-            </div>
-            {activePaymentMethodId ? (
-              <>
-                <Button
-                  className="mt-12 w-full"
-                  onClick={() => handlePayment()}
-                >
-                  Payer
-                </Button>
-                <p className="mt-3 font-semibold text-center">
-                  Paiement sécurisé
-                </p>
-              </>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  async function getProduct() {
+  async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
-    setProduct(product);
+    setProducts((prevProducts) => [...prevProducts, product]);
     setLoading(false);
   }
 
   async function postOrders() {
-    const parsedProductId = parseInt(productId);
+    const parsedProductIds = parseInt(productIds);
     const body = {
-      productIds: [parsedProductId],
+      productIds: [parsedProductIds],
     };
-    const order = await fetchHorseted(`/orders`, accessToken, "POST", body);
+    console.log(body);
+    const order = await fetchHorseted(
+      `/orders`,
+      accessToken,
+      "POST",
+      body,
+      true
+    );
     return order.id;
   }
 
@@ -134,14 +92,17 @@ const CheckOutPage = () => {
       `/orders/${orderId}/payment`,
       accessToken,
       "POST",
-      body
+      body,
+      true
     );
     return paymentResponse;
   }
 
   function handlePaymentResponse(paymentResponse) {
-    if (paymentResponse.status === "success") {
+    // console.log("Payment response:", paymentResponse);
+    if (paymentResponse.status === "succeeded") {
       console.log("Payment successful");
+      alert("Payment successful");
     }
     if (paymentResponse.status === "requires_action") {
       const paymentIntenturl = paymentResponse.nextAction.url;
@@ -157,6 +118,92 @@ const CheckOutPage = () => {
     const paymentIntentId = params.get("payment_intent");
     return paymentIntentId;
   }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <StripeProvider>
+      <div className="container mx-auto py-10">
+        <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
+          Votre commande
+        </h1>
+        <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
+          <div className="col-span-2">
+            <div className="g-block flex justify-between">
+              <div>
+                <h2 className="font-bold text-lg">
+                  {products.length > 1 ? "Lot d’articles" : products[0].title}
+                </h2>
+                <p>{products.length} article</p>
+                {products.map((product) => (
+                  <ClientProductImage
+                    key={product.id}
+                    product={product}
+                    size="small"
+                    className="w-10 mt-5"
+                  />
+                ))}
+              </div>
+              <p className="font-bold text-lg">{productsPriceSum()} €</p>
+            </div>
+            <UserForm user={user} />
+            <Address
+              activeAddress={activeAddress}
+              setActiveAddress={setActiveAddress}
+              isAddressSaved={isAddressSaved}
+              setIsAddressSaved={setIsAddressSaved}
+            />
+            <DeliveryMethods
+              productSize={products[0].shipping}
+              activeAddress={activeAddress}
+              productIds={productIds}
+              shippingMethods={shippingMethods}
+              setShippingMethods={setShippingMethods}
+              activeServicePoint={activeServicePoint}
+              setActiveServicePoint={setActiveServicePoint}
+              isAddressSaved={isAddressSaved}
+            />
+            <PaymentMethods
+              activePaymentMethodId={activePaymentMethodId}
+              setActivePaymentMethodId={setActivePaymentMethodId}
+            />
+          </div>
+          <div className="col-span-1">
+            <div className="g-block">
+              <h2 className="font-bold mb-7">Résumé de la commande</h2>
+              <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
+                <p>Commande</p>
+                <p className="justify-self-end">{productsPriceSum()} €</p>
+                <p>Frais de port</p>
+                <p className="justify-self-end">
+                  {shippingMethods[0]?.price} €
+                </p>
+                <p className="font-extrabold">Total</p>
+                <p className="font-extrabold justify-self-end">
+                  {productsPriceSum() + shippingMethods[0]?.price} €
+                </p>
+              </div>
+              {activePaymentMethodId ? (
+                <>
+                  <Button
+                    className="mt-12 w-full"
+                    onClick={() => handlePayment()}
+                  >
+                    Payer
+                  </Button>
+                  <p className="mt-3 font-semibold text-center">
+                    Paiement sécurisé
+                  </p>
+                </>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+    </StripeProvider>
+  );
 };
 
 export default withAuth(CheckOutPage);

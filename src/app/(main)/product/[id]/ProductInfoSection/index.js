@@ -110,33 +110,39 @@ export default function ProductPageClient({
         <span className="font-sans">- Livraison à domicile</span>
       </p>
       <Button
-        href={`/checkout?productId=${params.id}`}
         className="w-full mb-3 h-[52px] text-lg"
+        isAuthProtected
+        href={`/checkout?productIds=${params.id}`}
       >
         Acheter
       </Button>
+
       <Button
         onClick={handleOpenOfferModal}
         price={price}
         variant="transparent-green"
         className={`w-full h-[52px] text-xl ${className}`}
+        isAuthProtected
       >
         Faire une offre
       </Button>
-      <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
-        <div>
-          <h4 className="font-mcqueen font-bold text-lg leading-5">
-            Acheter un lot
-          </h4>
-          <p className="text-sm">Économisez sur les frais de livraison</p>
+      {userProducts?.items?.length > 0 && (
+        <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
+          <div>
+            <h4 className="font-mcqueen font-bold text-lg leading-5">
+              Acheter un lot
+            </h4>
+            <p className="text-sm">Économisez sur les frais de livraison</p>
+          </div>
+          <Button
+            onClick={handleOpenCreateBundleModal}
+            className="text-sm h-8 ml-5"
+            isAuthProtected
+          >
+            Créer un lot
+          </Button>
         </div>
-        <Button
-          onClick={handleOpenCreateBundleModal}
-          className="text-sm h-8 ml-5"
-        >
-          Créer un lot
-        </Button>
-      </div>
+      )}
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>

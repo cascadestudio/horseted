@@ -60,11 +60,11 @@ export default async function Home() {
         </div>
         <div className="bg-light-grey pb-12 lg:pb-20"></div>
       </div>
-      <ProductsSection title="Récemment ajouté" />
+      <ProductsSection title="Récemment ajouté" orderBy="new" />
       <CategoriesSection />
-      <ProductsSection title="Pour la cavalière" />
-      <ProductsSection title="Pour le cavalier" />
-      <ProductsSection title="Selles et Accessoires" />
+      <ProductsSection title="Pour la cavalière" categoryId="1109" />
+      <ProductsSection title="Pour le cavalier" categoryId="1121" />
+      <ProductsSection title="Selles et Accessoires" categoryId="1307" />
       <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">
         <div className="lg:pt-20">
           <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">

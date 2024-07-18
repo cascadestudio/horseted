@@ -12,7 +12,7 @@ export default function OfferModal({ price, onClose }) {
     } else {
       setShowAlert(false);
       // TODO: POST /orders?price
-      console.log("Offer: ", number);
+      // console.log("Offer: ", number);
       onClose();
     }
   };

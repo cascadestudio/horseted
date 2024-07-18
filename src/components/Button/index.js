@@ -1,4 +1,9 @@
+"use client";
+
 import Link from "next/link";
+import SignInModal from "../SignInModal";
+import { useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Button({
   children,
@@ -7,6 +12,7 @@ export default function Button({
   type,
   href,
   onClick,
+  isAuthProtected,
 }) {
   const style = `${className} flex justify-center items-center text-center whitespace-nowrap font-mcqueen font-semibold rounded-xl h-11 px-7 ${
     variant === "white"
@@ -21,18 +27,29 @@ export default function Button({
       ? "bg-transparent text-medium-grey border border-medium-grey hover:bg-lighter-green hover:text-light-green hover:border-light-green"
       : "bg-light-green text-white"
   }`;
+  const [isSignInModal, setIsSignInModal] = useState(false);
+  const { user } = useAuthContext();
 
-  if (href) {
-    return (
-      <Link href={href} className={style}>
-        {children}
-      </Link>
-    );
-  } else {
-    return (
-      <button onClick={onClick} type={type} className={style}>
-        {children}
-      </button>
-    );
-  }
+  const handleClick = () => {
+    if (isAuthProtected && !user) {
+      setIsSignInModal(true);
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
+  return (
+    <>
+      {href && user ? (
+        <Link href={href} className={style}>
+          {children}
+        </Link>
+      ) : (
+        <button onClick={handleClick} type={type} className={style}>
+          {children}
+        </button>
+      )}
+      {isSignInModal && <SignInModal setIsSignInModal={setIsSignInModal} />}
+    </>
+  );
 }

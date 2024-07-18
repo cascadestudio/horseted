@@ -10,6 +10,8 @@ export default function BundleSummaryModal({
   shippingPrice,
   onOpenOfferModal,
 }) {
+  const bundleIdsQuery = bundle.map((product) => product.id).join(";");
+
   return (
     <Modal title="Votre lot" onClose={onCloseBundleSummaryModal}>
       <div className="flex justify-between items-center mb-6">
@@ -37,7 +39,10 @@ export default function BundleSummaryModal({
         <span>Total</span>
         <span>{formatNumber(bundlePrice + shippingPrice)} €</span>
       </div>
-      <Button href="/checkout" className="w-full h-[52px] mb-2 text-xl">
+      <Button
+        href={`/checkout?productIds=${bundleIdsQuery}`}
+        className="w-full h-[52px] mb-2 text-xl"
+      >
         Acheter
       </Button>
       <Button
