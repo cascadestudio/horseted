@@ -23,7 +23,11 @@ export default async function FavoritesPage() {
             <p className="text-[14px]">
               Sauvegardez vos articles préférez dans vos favoris.
             </p>
-            <Button variant="transparent-black" className="mt-10">
+            <Button
+              href="/articles"
+              variant="transparent-black"
+              className="mt-10"
+            >
               Parcourir les articles
             </Button>
           </div>
