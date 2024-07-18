@@ -17,6 +17,8 @@ import horsetedApp from "@/assets/images/horsetedApp.png";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
+  const featuredArticles = articles.filter((article) => article.isFeatured);
+  console.log(articles);
   return (
     <main>
       <div className="relative">
@@ -81,7 +83,10 @@ export default async function Home() {
             Duis aute irure dolor in reprehenderit in voluptate velit esse
             cillum dolore eu fugiat nulla pariatur
           </p>
-          <Button variant={"black"} className="w-full mb-7 lg:w-auto lg:mb-24">
+          <Button
+            variant="transparent-black"
+            className="w-full mb-7 lg:w-auto lg:mb-24"
+          >
             En savoir plus
           </Button>
           <Image
@@ -183,7 +188,7 @@ export default async function Home() {
           </p>
         </div>
       </div>
-      <BlogSection articles={articles} />
+      <BlogSection articles={featuredArticles} />
       <div className="bg-dark-green">
         <div className="container mx-auto px-5 py-14 flex flex-col gap-14 lg:flex-row lg:gap-44 lg:py-36">
           <div>

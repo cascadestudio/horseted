@@ -5,25 +5,29 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
+import "./card-carousel.css";
 
-export default function ProductsCarousel({ children }) {
+export default function CardCarousel({ children, cardType }) {
   const fullConfig = resolveConfig(tailwindConfig);
   const parseBreakpoint = (breakpoint) => {
     return parseInt(breakpoint.replace("px", ""), 10);
   };
+  const xxlBreakpoint = parseBreakpoint(fullConfig.theme.screens["2xl"]);
+  const xlBreakpoint = parseBreakpoint(fullConfig.theme.screens.xl);
   const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
-  const [isSmScreen, setIsSmScreen] = useState(false);
+  const smBreakpoint = parseBreakpoint(fullConfig.theme.screens.sm);
+  const [isMdScreen, setIsMdScreen] = useState(false);
   useEffect(() => {
     const handleResize = () => {
-      setIsSmScreen(window.innerWidth < lgBreakpoint);
+      setIsMdScreen(window.innerWidth < lgBreakpoint);
     };
-
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const [slideIndex, setSlideIndex] = useState(0);
   let sliderRef = useRef(null);
+
   var settings = {
     arrows: false,
     dots: true,
@@ -31,15 +35,15 @@ export default function ProductsCarousel({ children }) {
     speed: 500,
     beforeChange: (current, next) => setSlideIndex(next),
     initialSlide: 0,
-    slidesToShow: 4.2,
-    slidesToScroll: 4,
+    slidesToShow: cardType === "article" ? 3.6 : 4.2,
+    slidesToScroll: cardType === "article" ? 1 : 4,
     appendDots: (dots) => (
       <ul>
         {dots.map((dot, index) => (
           <li
             key={index}
             style={{
-              width: isSmScreen ? "33px" : "118px",
+              width: isMdScreen ? "33px" : "118px",
               margin: 0,
               padding: 0,
             }}
@@ -55,21 +59,43 @@ export default function ProductsCarousel({ children }) {
           width: "100%",
           height: "7px",
           cursor: "pointer",
-          background: isSmScreen
-            ? i === Math.ceil(slideIndex)
+          background:
+            isMdScreen || cardType === "article"
+              ? i === Math.ceil(slideIndex)
+                ? fullConfig.theme.colors["light-green"]
+                : "white"
+              : i === Math.ceil(slideIndex / 4)
               ? fullConfig.theme.colors["light-green"]
-              : "white"
-            : i === Math.ceil(slideIndex / 4)
-            ? fullConfig.theme.colors["light-green"]
-            : "white",
+              : "white",
         }}
       />
     ),
     responsive: [
       {
+        breakpoint: xxlBreakpoint,
+        settings: {
+          slidesToShow: cardType === "article" ? 3.2 : 4.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
+        },
+      },
+      {
+        breakpoint: xlBreakpoint,
+        settings: {
+          slidesToShow: cardType === "article" ? 2.6 : 4.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
+        },
+      },
+      {
         breakpoint: lgBreakpoint,
         settings: {
-          slidesToShow: 1.1,
+          slidesToShow: cardType === "article" ? 1.6 : 3.2,
+          slidesToScroll: cardType === "article" ? 1 : 4,
+        },
+      },
+      {
+        breakpoint: smBreakpoint,
+        settings: {
+          slidesToShow: cardType === "article" ? 1.2 : 1.2,
           slidesToScroll: 1,
         },
       },
@@ -84,7 +110,9 @@ export default function ProductsCarousel({ children }) {
         }}
         {...settings}
       >
-        {children.slice(0, isSmScreen ? 4 : 16)}
+        {children.length > 1
+          ? children.slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)
+          : children}
       </Slider>
     </div>
   );
