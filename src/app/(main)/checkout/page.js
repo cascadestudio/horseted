@@ -24,6 +24,7 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
+  const [isAddressSaved, setIsAddressSaved] = useState(false);
 
   // console.log("shippingMethods =>", shippingMethods);
 
@@ -86,6 +87,8 @@ const CheckOutPage = () => {
             <Address
               activeAddress={activeAddress}
               setActiveAddress={setActiveAddress}
+              isAddressSaved={isAddressSaved}
+              setIsAddressSaved={setIsAddressSaved}
             />
             <DeliveryMethods
               productSize={products[0].shipping}
@@ -95,6 +98,7 @@ const CheckOutPage = () => {
               setShippingMethods={setShippingMethods}
               activeServicePoint={activeServicePoint}
               setActiveServicePoint={setActiveServicePoint}
+              isAddressSaved={isAddressSaved}
             />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}

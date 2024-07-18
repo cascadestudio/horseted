@@ -5,9 +5,13 @@ import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function AddressModal({ setIsModal, setActiveAddress }) {
+export default function AddressModal({
+  setIsModal,
+  setActiveAddress,
+  isAddressSaved,
+  setIsAddressSaved,
+}) {
   const { accessToken } = useAuthContext();
-  const [isAddressSaved, setIsAddressSaved] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     street: "",
@@ -32,6 +36,12 @@ export default function AddressModal({ setIsModal, setActiveAddress }) {
       [name]: name === "isDefault" ? checked : value,
     }));
   };
+
+  useEffect(() => {
+    if (formData.isDefault) {
+      setIsAddressSaved(true);
+    }
+  }, [formData]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,7 +131,6 @@ export default function AddressModal({ setIsModal, setActiveAddress }) {
           value={formData.isDefault}
           checked={formData.isDefault}
           onChange={handleChange}
-          disabled={!isAddressSaved}
         />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           Définir par défaut
