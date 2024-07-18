@@ -43,6 +43,25 @@ export default function DeliveryMethods({
     setActiveDeliveryMethod(e.target.value);
   }
 
+  async function getServicePoints() {
+    let query = `/delivery/service_points`;
+    query += `?address_id=${activeAddress.id}`;
+    query += `&location=${activeAddress.latitude};${activeAddress.longitude}`;
+    query += `&product_ids=${productIds}`;
+    const servicePoints = await fetchHorseted(query, accessToken);
+    setServicePoints(servicePoints.slice(0, 10));
+  }
+
+  async function getShippingMethods() {
+    let query = `/delivery/shipping_methods`;
+    query += `?postal_code=${activeAddress.postalCode}`;
+    query += `&product_ids=${productIds}`;
+    if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
+    const shippingMethods = await fetchHorseted(query, accessToken);
+    setShippingMethods(shippingMethods);
+    console.log("shippingMethods =>", shippingMethods);
+  }
+
   return (
     <>
       <div className="g-block">
@@ -76,23 +95,4 @@ export default function DeliveryMethods({
       </div>
     </>
   );
-
-  async function getServicePoints() {
-    let query = `/delivery/service_points`;
-    query += `?address_id=${activeAddress.id}`;
-    query += `&location=${activeAddress.latitude};${activeAddress.longitude}`;
-    query += `&product_ids=${productIds}`;
-    const servicePoints = await fetchHorseted(query, accessToken);
-    setServicePoints(servicePoints.slice(0, 10));
-  }
-
-  async function getShippingMethods() {
-    let query = `/delivery/shipping_methods`;
-    query += `?postal_code=${activeAddress.postalCode}`;
-    query += `&product_ids=${productIds}`;
-    if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
-    const shippingMethods = await fetchHorseted(query, accessToken);
-    setShippingMethods(shippingMethods);
-    console.log("shippingMethods =>", shippingMethods);
-  }
 }

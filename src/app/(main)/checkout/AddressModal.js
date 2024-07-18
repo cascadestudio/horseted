@@ -6,16 +6,20 @@ import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 
 export default function AddressModal({ setIsModal, setActiveAddress }) {
-  const { user, accessToken } = useAuthContext();
-  const [formData, setFormData] = useState({});
+  const { accessToken } = useAuthContext();
   const [isAddressSaved, setIsAddressSaved] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    street: "",
+    postalCode: "",
+    city: "",
+    country: "FR",
+    additionalInfos: "1er étage",
+    type: "delivery",
+    isDefault: false,
+  });
 
   // console.log("formData =>", formData);
-
-  useEffect(() => {
-    // TODO: post and patch address when UI is ready
-    // console.log("formData", formData);
-  }, [formData]);
 
   const handleIsAddressSaved = (event) => {
     setIsAddressSaved(event.target.checked);
@@ -31,12 +35,21 @@ export default function AddressModal({ setIsModal, setActiveAddress }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setActiveAddress(formData);
-    if (isAddressSaved) {
-      // await postAddress();
-    }
+    await postAddress();
     setIsModal(false);
   };
+
+  async function postAddress() {
+    const query = `/users/me/addresses`;
+    const address = await fetchHorseted(
+      query,
+      accessToken,
+      "POST",
+      formData,
+      true
+    );
+    setActiveAddress(address);
+  }
 
   return (
     <Modal
@@ -59,6 +72,7 @@ export default function AddressModal({ setIsModal, setActiveAddress }) {
         value={formData.country}
         onChange={handleChange}
         required
+        disabled
       />
       <TextInput
         label="N° et nom de rue"
