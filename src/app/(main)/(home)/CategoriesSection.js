@@ -6,7 +6,7 @@ import Link from "next/link";
 import RightArrow from "@/assets/icons/RightArrow";
 export default async function CategoriesSection() {
   const categories = await fetchHorseted("/categories");
-  console.log("categories =>", categories);
+  // console.log("categories =>", categories);
   return (
     <section className=" bg-light-grey">
       <div className="container mx-auto px-5 pb-8 lg:pb-24">
