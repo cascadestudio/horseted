@@ -15,7 +15,9 @@ export default function AccountHandler() {
       ) : (
         <>
           <MyAccountDropDown />
-          <HeartIcon className="hidden lg:block" />
+          <Link href="/favoris">
+            <HeartIcon className="hidden lg:block" />
+          </Link>
           <span className="bg-black h-5 w-px hidden lg:block"></span>
           <Link href="/messagerie">
             <MessageIcon />
