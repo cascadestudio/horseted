@@ -82,18 +82,17 @@ export default function ProductImagesCarousel({ medias }) {
   return (
     <>
       <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
-        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-4 pb-0">
+        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-3 pb-0">
           <Slider
-            // centerMode={true}
             asNavFor={nav1}
             arrows={false}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
-            slidesToShow={3}
+            slidesToShow={4}
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}
-            verticalSwiping={true}
+            // verticalSwiping={true}
             infinite={true}
             className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >

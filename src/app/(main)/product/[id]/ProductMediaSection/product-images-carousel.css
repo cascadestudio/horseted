@@ -1,5 +1,6 @@
-.nav-slider .slick-list {
-  /* transform: translateY(20px); */
+.nav-slider .slick-track {
+  position: relative;
+  top: 8px;
 }
 
 .slick-track {
