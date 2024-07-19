@@ -5,9 +5,12 @@ import Link from "next/link";
 import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 import ClientProductImage from "../ClientProductImage";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function ProductCard({ product, className }) {
+  const { accessToken } = useAuthContext();
   const { title, price, favoritCount, shipping, id } = product;
+  // productId if from favoriteProducts
   const shippingSizeTranslations = {
     small: "Petit",
     medium: "Moyen",
