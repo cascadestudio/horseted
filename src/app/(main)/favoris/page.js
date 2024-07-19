@@ -1,10 +1,28 @@
+"use client";
+
 import ProductsSection from "@/components/ProductsSection";
 import HeartFilledIcon from "@/assets/icons/HeartFilledIcon";
 import Button from "@/components/Button";
+import { useAuthContext } from "@/context/AuthContext";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useEffect, useState } from "react";
 
-export default async function FavoritesPage() {
-  // Add favorite products from user
-  const favoriteProducts = [];
+export default function FavoritesPage() {
+  const { accessToken } = useAuthContext();
+  const [favoriteProducts, setFavoriteProducts] = useState([]);
+
+  console.log("favoriteProducts =>", favoriteProducts);
+
+  useEffect(() => {
+    if (accessToken) {
+      getUserFavorites();
+    }
+  }, [accessToken]);
+
+  async function getUserFavorites() {
+    const data = await fetchHorseted("/users/me/favorits", accessToken);
+    setFavoriteProducts(data);
+  }
 
   return (
     <div className="bg-light-grey min-h-screen">

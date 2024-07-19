@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 import ClientProductImage from "../ClientProductImage";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function ProductCard({ product, className }) {
-  const { title, price, favoritCount, shipping } = product;
+  const { title, price, favoritCount, shipping, id } = product;
   const shippingSizeTranslations = {
     small: "Petit",
     medium: "Moyen",
@@ -14,6 +15,14 @@ export default function ProductCard({ product, className }) {
     very_large: "Très grand",
   };
   const shippingSizeFrench = shippingSizeTranslations[shipping];
+
+  async function handleFavoriteClick() {
+    const body = { productId: id };
+    const query = "/users/me/favorits";
+    const data = await fetchHorseted(query, accessToken, "POST", body, true);
+    console.log("data =>", data);
+  }
+
   return (
     <Link
       href={`/product/${product.id}`}
@@ -32,11 +41,17 @@ export default function ProductCard({ product, className }) {
           <p className="text-grey">{shippingSizeFrench}</p>
         </div>
         <div className="flex items-start">
-          <Image
-            src={favoriteCountIcon}
-            alt="favoriteCountIcon"
-            className="w-5 mr-1"
-          />
+          <button
+            onClick={() => {
+              handleFavoriteClick();
+            }}
+          >
+            <Image
+              src={favoriteCountIcon}
+              alt="favoriteCountIcon"
+              className="w-5 mr-1"
+            />
+          </button>
           <p className="leading-none">{favoritCount}</p>
         </div>
       </div>
