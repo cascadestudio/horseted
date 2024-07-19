@@ -29,8 +29,8 @@ function SettingsLayout({ children }) {
   }, [pathname]);
 
   return (
-    <div className="grid grid-cols-2">
-      <div>
+    <div className="container mx-auto px-5 grid grid-cols-3 pt-11 pb-16">
+      <div className="col-span-3 lg:col-span-1">
         <h1 className="font-mcqueen font-bold text-2xl mb-5">
           {pages.find((page) => page.path === activePath)?.title}
         </h1>
@@ -42,7 +42,7 @@ function SettingsLayout({ children }) {
           ))}
         </aside>
       </div>
-      <div>{children}</div>
+      <div className="col-span-3 lg:col-span-2">{children}</div>
     </div>
   );
 }
