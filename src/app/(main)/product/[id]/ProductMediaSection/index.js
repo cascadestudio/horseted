@@ -8,7 +8,7 @@ export default async function ProductMediaSection({ medias }) {
     if (!medias) return;
     return await Promise.all(
       medias.map(async (media) => {
-        const base64 = await getImage(media.files.default, "server");
+        const base64 = await getImage(media.files.thumbnail1000, "server");
         return {
           ...media,
           base64,

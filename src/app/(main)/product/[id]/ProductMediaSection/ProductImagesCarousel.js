@@ -66,6 +66,11 @@ export default function ProductImagesCarousel({ medias }) {
   useEffect(() => {
     setNav1(sliderRef1);
     setNav2(sliderRef2);
+
+    // if (sliderRef2.current) {
+    //   const sliderElement = sliderRef2.current;
+    //   sliderElement.querySelector('.slick-track').style.transform = 'translateX(-100px)';
+    // }
   }, []);
 
   const settings = {
@@ -77,13 +82,14 @@ export default function ProductImagesCarousel({ medias }) {
   return (
     <>
       <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
-        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
+        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-4 pb-0">
           <Slider
+            // centerMode={true}
             asNavFor={nav1}
             arrows={false}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
-            slidesToShow={4}
+            slidesToShow={3}
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}

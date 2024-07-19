@@ -1,3 +1,7 @@
+.nav-slider .slick-list {
+  /* transform: translateY(20px); */
+}
+
 .slick-track {
   height: 100%;
 }
