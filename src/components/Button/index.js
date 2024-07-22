@@ -40,7 +40,7 @@ export default function Button({
 
   return (
     <>
-      {href && user ? (
+      {href && (user || !isAuthProtected) ? (
         <Link href={href} className={style}>
           {children}
         </Link>
