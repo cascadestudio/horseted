@@ -2,10 +2,11 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 
-export default function FavoriteButton({ favoritCount, productId }) {
+export default function FavoriteButton({ favoriteCount, productId }) {
   const { accessToken } = useAuthContext();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [favoriteCount, setFavoriteCount] = useState(favoritCount);
+  const [userFavorites, setUserFavorites] = useState([]);
+  const [favoriteId, setfavoriteId] = useState(null);
 
   useEffect(() => {
     if (accessToken) {
@@ -14,26 +15,44 @@ export default function FavoriteButton({ favoritCount, productId }) {
   }, [accessToken]);
 
   useEffect(() => {
-    setFavoriteCount(isFavorite ? favoriteCount - 1 : favoriteCount + 1);
-  }, [isFavorite]);
+    checkIsFavorite();
+  }, [userFavorites, isFavorite]);
+
+  function checkIsFavorite() {
+    const favorite = userFavorites.find(
+      (favorite) => favorite.productId === productId
+    );
+    if (favorite) {
+      setIsFavorite(true);
+      setfavoriteId(favorite.id);
+    } else {
+      setIsFavorite(false);
+    }
+  }
+
+  function handleFavoriteClick() {
+    if (isFavorite) {
+      deleteFavorite();
+    } else {
+      postFavorite();
+    }
+    setIsFavorite(!isFavorite);
+  }
 
   async function getUserFavorites() {
     const favorites = await fetchHorseted("/users/me/favorits", accessToken);
-    // console.log("getUserFavorites =>", favorites);
-
-    favorites.forEach((favorite) => {
-      if (favorite.id === productId) {
-        setIsFavorite(true);
-      }
-    });
+    setUserFavorites(favorites);
   }
 
-  async function handleFavoriteClick() {
+  async function postFavorite() {
     const body = { productId: productId };
     const query = "/users/me/favorits";
     const data = await fetchHorseted(query, accessToken, "POST", body, true);
-    // console.log("handleFavoriteClick =>", data);
-    setIsFavorite(!isFavorite);
+  }
+
+  async function deleteFavorite() {
+    const query = `/users/me/favorits/${favoriteId}`;
+    const data = await fetchHorseted(query, accessToken, "DELETE");
   }
 
   return (
@@ -54,7 +73,7 @@ export default function FavoriteButton({ favoritCount, productId }) {
           stroke="black"
         />
       </svg>
-      <p className="leading-none ml-1">{favoritCount}</p>
+      <p className="leading-none ml-1">{favoriteCount}</p>
     </button>
   );
 }

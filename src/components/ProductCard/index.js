@@ -59,7 +59,7 @@ export default function ProductCard({
           <p className="text-grey">{shippingSizeFrench}</p>
         </Link>
         <div className="flex items-start">
-          <FavoriteButton favoritCount={favoritCount} productId={id} />
+          <FavoriteButton favoriteCount={favoritCount} productId={id} />
         </div>
       </div>
     </div>
