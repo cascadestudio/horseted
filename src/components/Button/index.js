@@ -12,7 +12,8 @@ export default function Button({
   type,
   href,
   onClick,
-  isAuthProtected,
+  withAuth,
+  noStyle,
 }) {
   const style = `${className} flex justify-center items-center text-center whitespace-nowrap font-mcqueen font-semibold rounded-xl h-11 px-7 ${
     variant === "white"
@@ -31,7 +32,7 @@ export default function Button({
   const { user } = useAuthContext();
 
   const handleClick = () => {
-    if (isAuthProtected && !user) {
+    if (withAuth && !user) {
       setIsSignInModal(true);
     } else if (onClick) {
       onClick();
@@ -40,12 +41,12 @@ export default function Button({
 
   return (
     <>
-      {href && (user || !isAuthProtected) ? (
-        <Link href={href} className={style}>
+      {href && (user || !withAuth) ? (
+        <Link href={href} className={!noStyle && style}>
           {children}
         </Link>
       ) : (
-        <button onClick={handleClick} type={type} className={style}>
+        <button onClick={handleClick} type={type} className={!noStyle && style}>
           {children}
         </button>
       )}

@@ -6,8 +6,9 @@ import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
+import withAuth from "@/hoc/withAuth";
 
-export default function FavoritesPage() {
+function FavoritesPage() {
   const { accessToken } = useAuthContext();
   const [favoriteProducts, setFavoriteProducts] = useState([]);
 
@@ -55,3 +56,5 @@ export default function FavoritesPage() {
     </div>
   );
 }
+
+export default withAuth(FavoritesPage);

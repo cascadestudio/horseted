@@ -4,6 +4,7 @@ import MyAccountDropDown from "./MyAccountDropDown";
 import Link from "next/link";
 import HeartIcon from "@/assets/icons/HeartIcon";
 import MessageIcon from "@/assets/icons/MessageIcon";
+import Button from "@/components/Button";
 
 export default function AccountHandler() {
   const { user } = useAuthContext();
@@ -15,9 +16,9 @@ export default function AccountHandler() {
       ) : (
         <>
           <MyAccountDropDown />
-          <Link href="/favoris">
+          <Button noStyle withAuth href="/favoris">
             <HeartIcon className="hidden lg:block" />
-          </Link>
+          </Button>
           <span className="bg-black h-5 w-px hidden lg:block"></span>
           <Link href="/messagerie">
             <MessageIcon />
