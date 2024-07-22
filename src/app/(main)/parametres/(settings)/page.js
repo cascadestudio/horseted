@@ -10,6 +10,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import { TextInput } from "@/components/input";
+import ModifyIcon from "@/assets/icons/ModifyIcon";
 
 export default function Settings() {
   const { user } = useAuthContext();
@@ -58,9 +59,11 @@ export default function Settings() {
   return (
     <section>
       {user?.username}
-      <AvatarDisplay avatarSrc={avatarSrc} />
-      <form className="form-container">
+      <div className="relative w-fit">
+        <AvatarDisplay avatarSrc={avatarSrc} />
         <AvatarInput onChange={handleAvatarChange} />
+      </div>
+      <form className="form-container">
         <TextInput
           label="Ville"
           name="city"
@@ -164,32 +167,35 @@ const AvatarDisplay = ({ avatarSrc }) =>
   avatarSrc ? (
     <Image
       src={avatarSrc}
-      className="w-auto h-40 rounded-full"
-      width={200}
-      height={200}
+      className="h-21 w-21 object-cover rounded-full"
+      width={84}
+      height={84}
       alt="Avatar"
     />
   ) : (
     <Image
       src={placeholderImage}
-      className="rounded-full"
-      width={200}
-      height={200}
+      className="h-21 w-21 object-cover rounded-full"
+      width={84}
+      height={84}
       alt="Avatar"
       priority
     />
   );
 
 const AvatarInput = ({ onChange }) => (
-  <label htmlFor="avatar">
-    <p className="label">Avatar :</p>
+  <label
+    htmlFor="avatar"
+    className="absolute top-0 right-0 flex items-center cursor-pointer"
+  >
+    <ModifyIcon className="w-9 h-9" />
     <input
       onChange={onChange}
       type="file"
       name="avatar"
       id="avatar"
       accept="image/*"
-      className="input"
+      className="hidden"
     />
   </label>
 );
