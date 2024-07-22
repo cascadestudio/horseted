@@ -56,12 +56,20 @@ export default function Settings() {
     await deleteUserAccount(user.auth.accessToken, router);
   };
 
+  console.log(user?.username);
+
   return (
     <section>
-      {user?.username}
-      <div className="relative w-fit">
-        <AvatarDisplay avatarSrc={avatarSrc} />
-        <AvatarInput onChange={handleAvatarChange} />
+      {/* {user?.username} */}
+      <div className="flex items-center mb-10">
+        <div className="relative w-fit mr-8">
+          <AvatarDisplay avatarSrc={avatarSrc} />
+          <AvatarInput onChange={handleAvatarChange} />
+        </div>
+        <div className="self-end mb-3">
+          <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
+          <span className="text-lg text-grey">username</span>
+        </div>
       </div>
       <form className="form-container">
         <TextInput
