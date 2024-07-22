@@ -19,7 +19,7 @@ export default async function getImage(requestedImage, rendering, accessToken) {
   const response = await fetch(url, options);
 
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${query}`);
+    throw new Error(`Failed to fetch ${requestedImage}`);
   }
 
   const blob = await response.blob();
