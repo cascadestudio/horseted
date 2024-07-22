@@ -6,7 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import NextArrow from "@/assets/icons/NextArrow";
 import "./product-images-carousel.css";
-import ClientProductImage from "@/components/ClientProductImage";
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -56,25 +55,34 @@ function SamplePrevArrow(props) {
   );
 }
 
-export default function ProductImagesCarousel({ product, medias }) {
+export default function ProductImagesCarousel({ medias }) {
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
   const [activeSlide, setActiveSlide] = useState(0);
+
   let sliderRef1 = useRef(null);
   let sliderRef2 = useRef(null);
+
   useEffect(() => {
     setNav1(sliderRef1);
     setNav2(sliderRef2);
+
+    // if (sliderRef2.current) {
+    //   const sliderElement = sliderRef2.current;
+    //   sliderElement.querySelector('.slick-track').style.transform = 'translateX(-100px)';
+    // }
   }, []);
+
   const settings = {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     beforeChange: (current, next) => setActiveSlide(next),
   };
+
   return (
     <>
       <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
-        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden p-4 pb-0">
+        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-3 pb-0">
           <Slider
             asNavFor={nav1}
             arrows={false}
@@ -84,7 +92,7 @@ export default function ProductImagesCarousel({ product, medias }) {
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}
-            verticalSwiping={true}
+            // verticalSwiping={true}
             infinite={true}
             className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >
@@ -97,7 +105,11 @@ export default function ProductImagesCarousel({ product, medias }) {
                     : ""
                 }`}
               >
-                <ClientProductImage product={product} media={media} />
+                <img
+                  className="aspect-[280/340] object-cover h-full w-full"
+                  src={`data:image/png;base64, ${media.base64}`}
+                  alt="Image du produit"
+                />
               </div>
             ))}
           </Slider>
@@ -115,7 +127,10 @@ export default function ProductImagesCarousel({ product, medias }) {
                 className="h-full w-full [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
-                <ClientProductImage product={product} media={media} />
+                <img
+                  src={`data:image/png;base64, ${media.base64}`}
+                  alt="Image du produit"
+                />
               </div>
             ))}
           </Slider>

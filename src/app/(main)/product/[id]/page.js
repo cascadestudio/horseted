@@ -14,7 +14,7 @@ export default async function ProductPage({ params }) {
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 ">
         <div className="border-b border-grey py-10 flex flex-col items-center mb-10 lg:flex-row lg:items-start lg:justify-center lg:mb-11 lg:py-12">
-          <ProductMediaSection product={product} medias={product.medias} />
+          <ProductMediaSection medias={product.medias} />
           <ProductInfoSection
             product={product}
             userData={userData}
