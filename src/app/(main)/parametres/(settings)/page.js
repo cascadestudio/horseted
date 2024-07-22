@@ -11,12 +11,15 @@ import getImage from "@/utils/getImage";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
+import CityIcon from "@/assets/icons/CityIcon";
 
 export default function Settings() {
   const { user } = useAuthContext();
   const router = useRouter();
   const [formData, setFormData] = useState(initializeFormData(user));
   const [avatarSrc, setAvatarSrc] = useState(null);
+  const [isCityPublic, setIsCityPublic] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     if (formData.avatar) {
@@ -42,6 +45,10 @@ export default function Settings() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleCityChange = (event) => {
+    setSelectedCity(event.target.value);
+  };
+
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -60,26 +67,56 @@ export default function Settings() {
 
   return (
     <section>
-      {/* {user?.username} */}
-      <div className="flex items-center mb-10">
-        <div className="relative w-fit mr-8">
-          <AvatarDisplay avatarSrc={avatarSrc} />
-          <AvatarInput onChange={handleAvatarChange} />
+      <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* {user?.username} */}
+        <div className="flex items-center mb-10">
+          <div className="relative w-fit mr-8">
+            <AvatarDisplay avatarSrc={avatarSrc} />
+            <AvatarInput onChange={handleAvatarChange} />
+          </div>
+          <div className="self-end mb-3">
+            <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
+            <span className="text-lg text-grey">username*</span>
+          </div>
         </div>
-        <div className="self-end mb-3">
-          <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
-          <span className="text-lg text-grey">username</span>
-        </div>
-      </div>
-      <form className="form-container">
-        <TextInput
+        {/* <TextInput
           label="Ville"
           name="city"
           value={formData.city}
           onChange={handleChange}
           list="cities"
-        />
-        <CityDataList />
+        /> */}
+        <div className="flex flex-col">
+          <div className="relative flex items-center border rounded-md p-3">
+            <CityIcon className="w-5 h-5 text-gray-500 mr-3" />
+            <span className="flex-grow">
+              {formData.city || "Sélectionnez une ville"}
+            </span>
+            <label htmlFor="city" className="flex items-center cursor-pointer">
+              <ModifyIcon className="w-9 h-9" />
+            </label>
+            {/* <input
+              onChange={handleChange}
+              type="file"
+              name="city"
+              id="city"
+              className="hidden"
+            /> */}
+            <CityDataList />
+          </div>
+          <div className="flex items-center mt-2">
+            <input
+              type="checkbox"
+              id="publicCity"
+              checked={isCityPublic}
+              onChange={() => setIsCityPublic(!isCityPublic)}
+              className="mr-2"
+            />
+            <label htmlFor="publicCity" className="text-gray-700">
+              Afficher publiquement la ville
+            </label>
+          </div>
+        </div>
         <TextInput
           label="Email"
           name="email"

@@ -9,7 +9,7 @@ export const TextInput = ({
   disabled,
 }) => (
   <label htmlFor={name} className="w-full mx-2">
-    <p className="label">{label} :</p>
+    <p className="label font-mcqueen font-semibold">{label} :</p>
     <input
       placeholder={placeholder}
       value={value || ""}
