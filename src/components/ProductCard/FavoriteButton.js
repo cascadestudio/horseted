@@ -7,6 +7,9 @@ export default function FavoriteButton({ favoriteCount, productId }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [userFavorites, setUserFavorites] = useState([]);
   const [favoriteId, setfavoriteId] = useState(null);
+  const [favoriteCountState, setFavoriteCountState] = useState(favoriteCount);
+
+  //   console.log("isFavorite =>", isFavorite);
 
   useEffect(() => {
     if (accessToken) {
@@ -16,7 +19,7 @@ export default function FavoriteButton({ favoriteCount, productId }) {
 
   useEffect(() => {
     checkIsFavorite();
-  }, [userFavorites, isFavorite]);
+  }, [userFavorites]);
 
   function checkIsFavorite() {
     const favorite = userFavorites.find(
@@ -30,17 +33,20 @@ export default function FavoriteButton({ favoriteCount, productId }) {
     }
   }
 
-  function handleFavoriteClick() {
+  async function handleFavoriteClick() {
     if (isFavorite) {
       deleteFavorite();
+      setFavoriteCountState(favoriteCountState - 1);
     } else {
       postFavorite();
+      setFavoriteCountState(favoriteCountState + 1);
     }
     setIsFavorite(!isFavorite);
   }
 
   async function getUserFavorites() {
     const favorites = await fetchHorseted("/users/me/favorits", accessToken);
+    // console.log("getUserFavorites =>", favorites);
     setUserFavorites(favorites);
   }
 
@@ -48,6 +54,7 @@ export default function FavoriteButton({ favoriteCount, productId }) {
     const body = { productId: productId };
     const query = "/users/me/favorits";
     const data = await fetchHorseted(query, accessToken, "POST", body, true);
+    // console.log("postFavorite =>", data);
   }
 
   async function deleteFavorite() {
@@ -73,7 +80,7 @@ export default function FavoriteButton({ favoriteCount, productId }) {
           stroke="black"
         />
       </svg>
-      <p className="leading-none ml-1">{favoriteCount}</p>
+      <p className="leading-none ml-1">{favoriteCountState}</p>
     </button>
   );
 }
