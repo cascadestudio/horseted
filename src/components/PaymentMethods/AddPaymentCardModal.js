@@ -103,7 +103,8 @@ const AddPaymentCardModal = ({
       query,
       user.auth.accessToken,
       "POST",
-      body
+      body,
+      true
     );
     // console.log(response);
   }
