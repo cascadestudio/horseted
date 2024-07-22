@@ -6,18 +6,35 @@ import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 import ClientProductImage from "../ClientProductImage";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import Spinner from "../Spinner";
 
-export default function ProductCard({ product, className }) {
+export default function ProductCard({
+  productId,
+  product: initialProduct,
+  className,
+}) {
   const { accessToken } = useAuthContext();
-  const { title, price, favoritCount, shipping, id } = product;
-  // productId if from favoriteProducts
+  const [product, setProduct] = useState(initialProduct);
   const shippingSizeTranslations = {
     small: "Petit",
     medium: "Moyen",
     large: "Grand",
     very_large: "Très grand",
   };
-  const shippingSizeFrench = shippingSizeTranslations[shipping];
+
+  useEffect(() => {
+    if (productId && !initialProduct) {
+      getProduct(productId);
+    }
+  }, [productId, initialProduct]);
+
+  async function getProduct(productId) {
+    const query = `/products/${productId}`;
+    const data = await fetchHorseted(query);
+    setProduct(data);
+    console.log("data =>", data);
+  }
 
   async function handleFavoriteClick() {
     const body = { productId: id };
@@ -25,6 +42,13 @@ export default function ProductCard({ product, className }) {
     const data = await fetchHorseted(query, accessToken, "POST", body, true);
     console.log("data =>", data);
   }
+
+  if (!product) {
+    return <Spinner />;
+  }
+
+  const { title, price, favoritCount, shipping, id } = product;
+  const shippingSizeFrench = shippingSizeTranslations[shipping];
 
   return (
     <Link

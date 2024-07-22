@@ -42,11 +42,15 @@ export default function Button({
   return (
     <>
       {href && (user || !withAuth) ? (
-        <Link href={href} className={!noStyle && style}>
+        <Link href={href} className={!noStyle ? style : ""}>
           {children}
         </Link>
       ) : (
-        <button onClick={handleClick} type={type} className={!noStyle && style}>
+        <button
+          onClick={handleClick}
+          type={type}
+          className={!noStyle ? style : ""}
+        >
           {children}
         </button>
       )}
