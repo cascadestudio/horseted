@@ -41,26 +41,27 @@ export default function ProductCard({
   const shippingSizeFrench = shippingSizeTranslations[shipping];
 
   return (
-    <Link
-      href={`/product/${id}`}
-      className={
-        className +
-        " flex flex-col items-center border-b border-grey focus:outline-none"
-      }
+    <div
+      className={`
+      ${className} flex flex-col items-center border-b border-grey focus:outline-none"
+    `}
     >
-      <ClientProductImage product={product} className="w-[280px] h-[340px]" />
-      <div className="flex  w-full p-5 justify-between self-start">
-        <div className="max-w-[82%]">
+      <Link href={`/product/${id}`}>
+        <ClientProductImage product={product} className="w-[280px] h-[340px]" />
+      </Link>
+
+      <div className="flex w-full p-5 justify-between self-start">
+        <Link href={`/product/${id}`} className="max-w-[82%]">
           <p className="font-poppins font-bold">{price} €</p>
           <h4 className="text-lg font-extrabold text-light-green truncate">
             {title}
           </h4>
           <p className="text-grey">{shippingSizeFrench}</p>
-        </div>
+        </Link>
         <div className="flex items-start">
           <FavoriteButton favoritCount={favoritCount} productId={id} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

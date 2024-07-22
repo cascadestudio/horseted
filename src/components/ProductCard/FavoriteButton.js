@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function FavoriteButton({ favoritCount, productId }) {
   const { accessToken } = useAuthContext();
   const [isFavorite, setIsFavorite] = useState(false);
+  const [favoriteCount, setFavoriteCount] = useState(favoritCount);
 
   useEffect(() => {
     if (accessToken) {
@@ -12,9 +13,14 @@ export default function FavoriteButton({ favoritCount, productId }) {
     }
   }, [accessToken]);
 
+  useEffect(() => {
+    setFavoriteCount(isFavorite ? favoriteCount - 1 : favoriteCount + 1);
+  }, [isFavorite]);
+
   async function getUserFavorites() {
     const favorites = await fetchHorseted("/users/me/favorits", accessToken);
-    // console.log("handleFavoriteClick =>", favorites);
+    // console.log("getUserFavorites =>", favorites);
+
     favorites.forEach((favorite) => {
       if (favorite.id === productId) {
         setIsFavorite(true);
@@ -26,13 +32,13 @@ export default function FavoriteButton({ favoritCount, productId }) {
     const body = { productId: productId };
     const query = "/users/me/favorits";
     const data = await fetchHorseted(query, accessToken, "POST", body, true);
+    // console.log("handleFavoriteClick =>", data);
+    setIsFavorite(!isFavorite);
   }
 
   return (
     <button
-      onClick={() => {
-        handleFavoriteClick();
-      }}
+      onClick={handleFavoriteClick}
       className="flex items-center flex-grow"
     >
       <svg

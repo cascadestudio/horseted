@@ -1,6 +1,5 @@
 "use client";
 
-import ProductsSection from "@/components/ProductsSection";
 import HeartFilledIcon from "@/assets/icons/HeartFilledIcon";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
@@ -8,10 +7,11 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import ProductCard from "@/components/ProductCard";
+import Spinner from "@/components/Spinner";
 
 function FavoritesPage() {
   const { accessToken } = useAuthContext();
-  const [favoriteProducts, setFavoriteProducts] = useState([]);
+  const [favoriteProducts, setFavoriteProducts] = useState(null);
 
   console.log("favoriteProducts =>", favoriteProducts);
 
@@ -24,6 +24,10 @@ function FavoritesPage() {
   async function getUserFavorites() {
     const data = await fetchHorseted("/users/me/favorits", accessToken);
     setFavoriteProducts(data);
+  }
+
+  if (favoriteProducts === null) {
+    return <Spinner />;
   }
 
   return (
