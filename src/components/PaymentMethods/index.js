@@ -52,7 +52,7 @@ export default function PaymentMethods({
   };
 
   return (
-    <div className="pt-14">
+    <div className="pt-4 lg:pt-14">
       <h2 className="font-mcqueen font-bold text-[24px] mb-4">
         Mode de paiement
       </h2>
