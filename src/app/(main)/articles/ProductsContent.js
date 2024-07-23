@@ -98,8 +98,8 @@ export default function ProductsPage() {
     searchQuery,
   ]);
 
-  function handleOrderChange(value) {
-    setActiveOrder(value);
+  function handleOrderChange(e) {
+    setActiveOrder(e.target.value);
   }
   function handleCategoryChange(id, name) {
     setActiveCategory({ id: id, name: name });

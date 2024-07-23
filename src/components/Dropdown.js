@@ -27,7 +27,11 @@ export default function Dropdown({ title, children }) {
           />
         </svg>
       </button>
-      {isActive && <div>{children}</div>}
+      {isActive && (
+        <div className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2">
+          {children}
+        </div>
+      )}
     </div>
   );
 }
