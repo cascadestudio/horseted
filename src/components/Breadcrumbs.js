@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Breadcrumbs = ({ breadcrumbs }) => {
   return (
-    <nav className="flex pt-10 pb-5" aria-label="Breadcrumb">
+    <nav className="flex pt-10 pb-2" aria-label="Breadcrumb">
       <ol className="inline-flex items-center">
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={index} className="font-medium">

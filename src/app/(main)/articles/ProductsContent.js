@@ -143,6 +143,12 @@ export default function ProductsPage() {
   return (
     <div className="container mx-auto">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <h1 className="text-4xl font-bold font-mcqueen mb-7">
+        Tous les articles
+      </h1>
+      <legend className="font-semibold text-ms uppercase tracking-widest">
+        Filtres :
+      </legend>
       <div className="flex">
         <SortSelect
           onOrderChange={handleOrderChange}
