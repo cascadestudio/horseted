@@ -12,6 +12,7 @@ import PricesSelect from "./ProductFilters/PricesSelect";
 import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -137,8 +138,11 @@ export default function ProductsPage() {
     setActiveSizes(activeSizes.filter((s) => s.name !== size));
   }
 
+  const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Catalogue" }];
+
   return (
     <div className="container mx-auto">
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="flex">
         <SortSelect
           onOrderChange={handleOrderChange}
