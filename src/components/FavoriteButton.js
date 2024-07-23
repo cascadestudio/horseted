@@ -9,8 +9,6 @@ export default function FavoriteButton({ favoriteCount, productId }) {
   const [favoriteId, setfavoriteId] = useState(null);
   const [favoriteCountState, setFavoriteCountState] = useState(favoriteCount);
 
-  //   console.log("isFavorite =>", isFavorite);
-
   useEffect(() => {
     if (accessToken) {
       getUserFavorites();
@@ -46,7 +44,6 @@ export default function FavoriteButton({ favoriteCount, productId }) {
 
   async function getUserFavorites() {
     const favorites = await fetchHorseted("/users/me/favorits", accessToken);
-    // console.log("getUserFavorites =>", favorites);
     setUserFavorites(favorites);
   }
 
@@ -54,7 +51,6 @@ export default function FavoriteButton({ favoriteCount, productId }) {
     const body = { productId: productId };
     const query = "/users/me/favorits";
     const data = await fetchHorseted(query, accessToken, "POST", body, true);
-    // console.log("postFavorite =>", data);
   }
 
   async function deleteFavorite() {
@@ -68,16 +64,19 @@ export default function FavoriteButton({ favoriteCount, productId }) {
       className="flex items-center flex-grow"
     >
       <svg
-        width="22"
-        height="22"
-        viewBox="0 0 22 22"
+        className={isFavorite ? "fill-red" : ""}
+        width="23"
+        height="20"
+        viewBox="0 0 23 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={isFavorite ? "fill-red" : ""}
       >
         <path
-          d="M12.2133 3.27067L12.2131 3.27091L11.3666 4.18202L11.0003 4.5763L10.634 4.18202L9.78754 3.27091L9.78698 3.27031C7.79099 1.1148 4.59442 0.801426 2.46866 2.6935C-0.0162046 4.90893 -0.151196 8.9045 2.0773 11.3112L12.2133 3.27067ZM12.2133 3.27067C14.2139 1.11454 17.4063 0.801612 19.5319 2.69341C22.0169 4.90885 22.1518 8.90443 19.9191 11.3111L19.919 11.3112L11.6048 20.2786C11.2656 20.6443 10.7308 20.6443 10.3915 20.2786L2.07751 11.3114L12.2133 3.27067Z"
+          d="M19.7322 12.3442C16.3639 16.7068 13.6925 18.2729 12.4148 18.8322C11.8341 19.0559 11.1372 19.0559 10.5564 18.8322C9.2788 18.2729 6.60737 16.7068 3.23905 12.3442C1.84526 10.2189 -0.82617 5.29698 2.8906 2.053C6.37507 -0.184225 9.2788 1.82928 10.6726 3.17162C11.1372 3.61906 11.9502 3.61906 12.4148 3.17162C13.8086 1.82928 16.7123 -0.296086 20.1968 2.053C23.7974 5.29698 21.126 10.2189 19.7322 12.3442Z"
           stroke="black"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
       <p className="leading-none ml-1">{favoriteCountState}</p>
