@@ -12,6 +12,7 @@ import PricesSelect from "./ProductFilters/PricesSelect";
 import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 import { useRouter } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -97,8 +98,8 @@ export default function ProductsPage() {
     searchQuery,
   ]);
 
-  function handleOrderChange(value) {
-    setActiveOrder(value);
+  function handleOrderChange(e) {
+    setActiveOrder(e.target.value);
   }
   function handleCategoryChange(id, name) {
     setActiveCategory({ id: id, name: name });
@@ -137,8 +138,17 @@ export default function ProductsPage() {
     setActiveSizes(activeSizes.filter((s) => s.name !== size));
   }
 
+  const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Catalogue" }];
+
   return (
     <div className="container mx-auto">
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <h1 className="text-4xl font-bold font-mcqueen mb-7">
+        Tous les articles
+      </h1>
+      <legend className="font-semibold text-ms uppercase tracking-widest mb-4">
+        Filtres :
+      </legend>
       <div className="flex">
         <SortSelect
           onOrderChange={handleOrderChange}
