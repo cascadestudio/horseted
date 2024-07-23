@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import ClientProductImage from "../ClientProductImage";
+import ClientProductImage from "@/components/ClientProductImage";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
-import Spinner from "../Spinner";
-import FavoriteButton from "./FavoriteButton";
+import Spinner from "@/components/Spinner";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default function ProductCard({
   productId,
@@ -30,7 +30,6 @@ export default function ProductCard({
     const query = `/products/${productId}`;
     const data = await fetchHorseted(query);
     setProduct(data);
-    // console.log("getProduct =>", data);
   }
 
   if (!product) {

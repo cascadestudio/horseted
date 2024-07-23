@@ -14,6 +14,7 @@ import { formatDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
 import { formatNumber } from "@/utils/formatNumber";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default function ProductPageClient({
   product,
@@ -58,6 +59,7 @@ export default function ProductPageClient({
   };
 
   const {
+    id,
     title,
     price,
     description,
@@ -87,8 +89,7 @@ export default function ProductPageClient({
         </Link>
         <div className="flex items-center gap-5">
           <div className="flex items-center gap-1">
-            <HeartIcon />
-            <span className="text-sm font-poppins">{favoritCount}</span>
+            <FavoriteButton favoriteCount={favoritCount} productId={id} />
           </div>
           <Link href="#">
             <ShareIcon />
