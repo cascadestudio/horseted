@@ -62,8 +62,6 @@ export default function Settings() {
     await deleteUserAccount(user.auth.accessToken, router);
   };
 
-  console.log(user);
-
   return (
     <section>
       <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
@@ -157,7 +155,7 @@ export default function Settings() {
           label="Date de naissance"
           name="birthday"
           value={formData.birthday ? formatDate(formData.birthday) : ""}
-          // onChange={handleChange}
+          onChange={handleChange}
           type="date"
           required
           className="col-span-2 lg:col-span-1"
