@@ -40,7 +40,13 @@ export default function signupPage() {
       username: username,
       newsLetter: newsletter,
     };
-    const response = await fetchHorseted(query, firebaseToken, "POST", body);
+    const response = await fetchHorseted(
+      query,
+      firebaseToken,
+      "POST",
+      body,
+      true
+    );
     // console.log("response =>", response);
   }
 

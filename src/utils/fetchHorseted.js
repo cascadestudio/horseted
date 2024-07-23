@@ -1,6 +1,6 @@
 export default async function fetchHorseted(
   query,
-  accessToken = null,
+  accessToken,
   method = "GET",
   body = null,
   isJsonBody
@@ -15,10 +15,6 @@ export default async function fetchHorseted(
   const headers = {
     "API-Key": apiKey,
     ...(isJsonBody && { "Content-Type": "application/json" }),
-    // ...(method === "POST" &&
-    //   (query === "/users/me/payment_methods" || query === "/users") && {
-    //     "Content-Type": "application/json",
-    //   }),
     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
   };
 
@@ -30,13 +26,6 @@ export default async function fetchHorseted(
     ...(body && isJsonBody
       ? { body: JSON.stringify(body) }
       : body && { body: body }),
-    // ...((body && method === "PATCH") ||
-    // (method === "POST" && body && query.startsWith("/threads")) ||
-    // (method === "POST" && body && query.startsWith("/users"))
-    //   ? { body: body }
-    //   : body && {
-    //       body: JSON.stringify(body),
-    //     }),
   };
 
   // console.log("Fetching Horseted API with", "URL:", url, "Options:", options);

@@ -1,45 +1,67 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import favoriteCountIcon from "@/assets/icons/favoriteCountIcon.png";
 import ClientProductImage from "../ClientProductImage";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useEffect, useState } from "react";
+import Spinner from "../Spinner";
+import FavoriteButton from "./FavoriteButton";
 
-export default function ProductCard({ product, className }) {
-  const { title, price, favoritCount, shipping } = product;
+export default function ProductCard({
+  productId,
+  product: initialProduct,
+  className,
+}) {
+  const [product, setProduct] = useState(initialProduct);
   const shippingSizeTranslations = {
     small: "Petit",
     medium: "Moyen",
     large: "Grand",
     very_large: "Très grand",
   };
+
+  useEffect(() => {
+    if (productId && !initialProduct) {
+      getProduct(productId);
+    }
+  }, [productId, initialProduct]);
+
+  async function getProduct(productId) {
+    const query = `/products/${productId}`;
+    const data = await fetchHorseted(query);
+    setProduct(data);
+    // console.log("getProduct =>", data);
+  }
+
+  if (!product) {
+    return <Spinner />;
+  }
+
+  const { title, price, favoritCount, shipping, id } = product;
   const shippingSizeFrench = shippingSizeTranslations[shipping];
+
   return (
-    <Link
-      href={`/product/${product.id}`}
-      className={
-        className +
-        " flex flex-col items-center border-b border-grey focus:outline-none"
-      }
+    <div
+      className={`
+      ${className} flex flex-col items-center border-b border-grey focus:outline-none"
+    `}
     >
-      <ClientProductImage product={product} className="w-[280px] h-[340px]" />
-      <div className="flex  w-full p-5 justify-between self-start">
-        <div className="max-w-[82%]">
+      <Link href={`/product/${id}`}>
+        <ClientProductImage product={product} className="w-[280px] h-[340px]" />
+      </Link>
+
+      <div className="flex w-full p-5 justify-between self-start">
+        <Link href={`/product/${id}`} className="max-w-[82%]">
           <p className="font-poppins font-bold">{price} €</p>
           <h4 className="text-lg font-extrabold text-light-green truncate">
             {title}
           </h4>
           <p className="text-grey">{shippingSizeFrench}</p>
-        </div>
+        </Link>
         <div className="flex items-start">
-          <Image
-            src={favoriteCountIcon}
-            alt="favoriteCountIcon"
-            className="w-5 mr-1"
-          />
-          <p className="leading-none">{favoritCount}</p>
+          <FavoriteButton favoriteCount={favoritCount} productId={id} />
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

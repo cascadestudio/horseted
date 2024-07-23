@@ -111,7 +111,7 @@ export default function ProductPageClient({
       </p>
       <Button
         className="w-full mb-3 h-[52px] text-lg"
-        isAuthProtected
+        withAuth
         href={`/checkout?productIds=${params.id}`}
       >
         Acheter
@@ -122,7 +122,7 @@ export default function ProductPageClient({
         price={price}
         variant="transparent-green"
         className={`w-full h-[52px] text-xl ${className}`}
-        isAuthProtected
+        withAuth
       >
         Faire une offre
       </Button>
@@ -137,7 +137,7 @@ export default function ProductPageClient({
           <Button
             onClick={handleOpenCreateBundleModal}
             className="text-sm h-8 ml-5"
-            isAuthProtected
+            withAuth
           >
             Créer un lot
           </Button>
