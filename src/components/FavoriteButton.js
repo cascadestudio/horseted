@@ -1,22 +1,26 @@
+"use client";
+
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 
 export default function FavoriteButton({ favoriteCount, productId }) {
-  const { accessToken } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [isFavorite, setIsFavorite] = useState(false);
   const [userFavorites, setUserFavorites] = useState([]);
   const [favoriteId, setfavoriteId] = useState(null);
   const [favoriteCountState, setFavoriteCountState] = useState(favoriteCount);
 
   useEffect(() => {
-    if (accessToken) {
+    if (user) {
       getUserFavorites();
     }
-  }, [accessToken]);
+  }, [user]);
 
   useEffect(() => {
-    checkIsFavorite();
+    if (userFavorites.length > 0) {
+      checkIsFavorite();
+    }
   }, [userFavorites]);
 
   function checkIsFavorite() {
@@ -50,12 +54,12 @@ export default function FavoriteButton({ favoriteCount, productId }) {
   async function postFavorite() {
     const body = { productId: productId };
     const query = "/users/me/favorits";
-    const data = await fetchHorseted(query, accessToken, "POST", body, true);
+    await fetchHorseted(query, accessToken, "POST", body, true);
   }
 
   async function deleteFavorite() {
     const query = `/users/me/favorits/${favoriteId}`;
-    const data = await fetchHorseted(query, accessToken, "DELETE");
+    await fetchHorseted(query, accessToken, "DELETE");
   }
 
   return (
