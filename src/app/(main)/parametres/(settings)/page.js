@@ -75,24 +75,17 @@ export default function Settings() {
           <LogOutIcon className="mr-3" />
           Se déconnecter
         </Button>
-        {/* {user?.username} */}
         <div className="flex items-center mb-10 col-span-2 lg:col-span-1 ">
           <div className="relative w-fit mr-8">
             <AvatarDisplay avatarSrc={avatarSrc} />
             <AvatarInput onChange={handleAvatarChange} />
           </div>
           <div className="self-end mb-3">
+            {/* {user?.username} */}
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
             <span className="text-lg text-grey">username*</span>
           </div>
         </div>
-        {/* <TextInput
-          label="Ville"
-          name="city"
-          value={formData.city}
-          onChange={handleChange}
-          list="cities"
-        /> */}
         <div className="flex flex-col col-span-2 lg:col-span-1">
           <div className="relative flex items-center border border-black rounded-md p-3">
             <CityIcon className="w-5 h-5 text-gray-500 mr-3" />
@@ -156,9 +149,12 @@ export default function Settings() {
           name="birthday"
           value={formData.birthday ? formatDate(formData.birthday) : ""}
           onChange={handleChange}
-          type="date"
+          type="text"
+          onFocus={(e) => (e.target.type = "date")}
+          onBlur={(e) => (e.target.type = "text")}
           required
           className="col-span-2 lg:col-span-1"
+          placeholder="jj/mm/aaaa"
         />
         <TextInput
           label="Présentation"
