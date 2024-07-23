@@ -70,7 +70,7 @@ export default function Settings() {
           onClick={() => {
             signOut(getAuth()).then(() => router.push("/"));
           }}
-          className="col-span-2 lg:col-start-2 lg:col-span-1 w-full lg:w-fit place-self-start lg:place-self-end"
+          className="mt-5 lg:mt-0 col-span-2 lg:col-start-2 lg:col-span-1 w-full lg:w-fit place-self-start lg:place-self-end"
         >
           <LogOutIcon className="mr-3" />
           Se déconnecter
