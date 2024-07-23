@@ -11,31 +11,31 @@ import Spinner from "@/components/Spinner";
 
 function FavoritesPage() {
   const { accessToken } = useAuthContext();
-  const [favoriteProducts, setFavoriteProducts] = useState(null);
+  const [favorites, setfavorites] = useState(null);
 
-  console.log("favoriteProducts =>", favoriteProducts);
+  // console.log("favorites =>", favorites);
 
   useEffect(() => {
     if (accessToken) {
-      getUserFavorites();
+      getUserfavoritess();
     }
   }, [accessToken]);
 
-  async function getUserFavorites() {
+  async function getUserfavoritess() {
     const data = await fetchHorseted("/users/me/favorits", accessToken);
-    setFavoriteProducts(data);
+    setfavorites(data);
   }
 
-  if (favoriteProducts === null) {
+  if (favorites === null) {
     return <Spinner />;
   }
 
   return (
     <div className="bg-light-grey min-h-screen">
       <div className="container mx-auto px-5 pt-12">
-        {favoriteProducts.length > 0 ? (
-          favoriteProducts.map((product, index) => {
-            return <ProductCard key={index} productId={product.id} />;
+        {favorites.length > 0 ? (
+          favorites.map((favorites, index) => {
+            return <ProductCard key={index} productId={favorites.productId} />;
           })
         ) : (
           <div className="flex flex-col items-center py-20">
