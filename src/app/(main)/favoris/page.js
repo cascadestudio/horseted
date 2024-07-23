@@ -13,8 +13,6 @@ function FavoritesPage() {
   const { accessToken } = useAuthContext();
   const [favorites, setfavorites] = useState(null);
 
-  // console.log("favorites =>", favorites);
-
   useEffect(() => {
     if (accessToken) {
       getUserfavoritess();
