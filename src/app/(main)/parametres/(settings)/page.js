@@ -19,7 +19,6 @@ export default function Settings() {
   const [formData, setFormData] = useState(initializeFormData(user));
   const [avatarSrc, setAvatarSrc] = useState(null);
   const [isCityPublic, setIsCityPublic] = useState(false);
-  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     if (formData.avatar) {
@@ -43,10 +42,6 @@ export default function Settings() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleCityChange = (event) => {
-    setSelectedCity(event.target.value);
   };
 
   const handleAvatarChange = async (e) => {
@@ -87,9 +82,9 @@ export default function Settings() {
           list="cities"
         /> */}
         <div className="flex flex-col">
-          <div className="relative flex items-center border rounded-md p-3">
+          <div className="relative flex items-center border border-black rounded-md p-3">
             <CityIcon className="w-5 h-5 text-gray-500 mr-3" />
-            <span className="flex-grow">
+            <span className="flex-grow font-poppins font-medium">
               {formData.city || "Sélectionnez une ville"}
             </span>
             <label htmlFor="city" className="flex items-center cursor-pointer">
@@ -104,17 +99,20 @@ export default function Settings() {
             /> */}
             <CityDataList />
           </div>
-          <div className="flex items-center mt-2">
-            <input
-              type="checkbox"
-              id="publicCity"
-              checked={isCityPublic}
-              onChange={() => setIsCityPublic(!isCityPublic)}
-              className="mr-2"
-            />
-            <label htmlFor="publicCity" className="text-gray-700">
+          <div className="flex items-center justify-end mt-3">
+            <label htmlFor="publicCity" className="text-sm mr-2">
               Afficher publiquement la ville
             </label>
+            <div className="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+              <input
+                type="checkbox"
+                id="publicCity"
+                checked={isCityPublic}
+                onChange={() => setIsCityPublic(!isCityPublic)}
+                className="absolute block w-4 h-4 rounded-full bg-grey border-none appearance-none cursor-pointer top-1 checked:right-1 right-5 checked:bg-light-green"
+              />
+              <div className="block overflow-hidden h-6 rounded-full bg-white cursor-pointer border border-grey"></div>
+            </div>
           </div>
         </div>
         <TextInput
