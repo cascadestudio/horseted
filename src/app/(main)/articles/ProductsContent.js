@@ -146,7 +146,7 @@ export default function ProductsPage() {
       <h1 className="text-4xl font-bold font-mcqueen mb-7">
         Tous les articles
       </h1>
-      <legend className="font-semibold text-ms uppercase tracking-widest">
+      <legend className="font-semibold text-ms uppercase tracking-widest mb-4">
         Filtres :
       </legend>
       <div className="flex">

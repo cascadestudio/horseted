@@ -1,7 +1,8 @@
+import Dropdown from "@/components/Dropdown";
+
 export default function SortSelect({ onOrderChange, activeOrder }) {
   return (
-    <div className="p-5">
-      <label htmlFor="sort">Trier par</label>
+    <Dropdown title="Trier par">
       <select
         id="sort"
         onChange={(e) => onOrderChange(e.target.value)}
@@ -12,6 +13,6 @@ export default function SortSelect({ onOrderChange, activeOrder }) {
         <option value="price;asc">Prix croissant</option>
         <option value="price;desc">Prix décroissant</option>
       </select>
-    </div>
+    </Dropdown>
   );
 }
