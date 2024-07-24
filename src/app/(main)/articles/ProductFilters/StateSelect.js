@@ -1,6 +1,5 @@
 import Dropdown from "@/components/Dropdown";
 import Radio from "@/components/input/Radio";
-import { useState } from "react";
 
 export default function StateSelect({ onStateChange, activeState }) {
   const states = [

@@ -5,7 +5,6 @@ import Checkbox from "@/components/input/Checkbox";
 
 export default function BrandSelect({ activeBrands, onBrandsChange }) {
   const [brands, setBrands] = useState([]);
-  const [isDropdown, setIsDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
