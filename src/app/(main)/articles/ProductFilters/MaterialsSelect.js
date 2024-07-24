@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import Dropdown from "@/components/Dropdown";
+import Checkbox from "@/components/input/Checkbox";
 
 export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   const [materials, setMaterials] = useState([]);
-  const [isDropdown, setIsDropdown] = useState(false);
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -33,23 +34,23 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   };
 
   return (
-    <div className="p-5">
-      <button onClick={() => setIsDropdown(!isDropdown)}>Matières</button>
-      {isDropdown && (
-        <div className="flex flex-col">
-          {materials.map(({ name }) => (
-            <label key={name}>
-              {name}
-              <input
-                type="checkbox"
-                value={name}
-                onChange={(e) => handleCheckboxChange(e)}
-                checked={activeMaterials.includes(name)}
-              />
-            </label>
-          ))}
-        </div>
-      )}
-    </div>
+    <Dropdown className="mr-5" title="Matières">
+      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
+        {materials.map(({ name }) => (
+          <label
+            key={name}
+            className="flex justify-between items-center cursor-pointer font-semibold"
+          >
+            {name}
+            <Checkbox
+              className="ml-20"
+              value={name}
+              onChange={(e) => handleCheckboxChange(e)}
+              checked={activeMaterials.includes(name)}
+            />
+          </label>
+        ))}
+      </div>
+    </Dropdown>
   );
 }

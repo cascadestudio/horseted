@@ -57,7 +57,7 @@ export default function BrandSelect({ activeBrands, onBrandsChange }) {
             onChange={handleFilterChange}
           />
         </div>
-        <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll">
+        <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
           {filteredBrands.map(({ name }) => (
             <label
               key={name}
