@@ -21,9 +21,9 @@ export default function Dropdown({ title, children }) {
           <path
             d="M1.00003 1.5L5.00002 5.49998L9 1.5"
             stroke="#4D7A4C"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </button>
