@@ -7,7 +7,10 @@ import capitalizeText from "@/utils/capitalizeText";
 import slugify from "@/utils/slugify";
 import NextArrow from "@/assets/icons/NextArrow";
 
-export default function CategorySelect({ onClickProductCategory }) {
+export default function CategorySelect({
+  onClickProductCategory,
+  activeCategory,
+}) {
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
@@ -78,6 +81,7 @@ export default function CategorySelect({ onClickProductCategory }) {
           activeSubCategory={activeSubCategory}
           onClickProductCategory={onClickProductCategory}
           onClickPrev={showSubCategories}
+          activeCategory={activeCategory}
         />
       )}
     </Dropdown>

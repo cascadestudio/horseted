@@ -158,7 +158,10 @@ export default function ProductsPage() {
           activeState={activeState}
           onStateChange={handleStateChange}
         />
-        <CategorySelect onClickProductCategory={handleCategoryChange} />
+        <CategorySelect
+          onClickProductCategory={handleCategoryChange}
+          activeCategory={activeCategory}
+        />
         <BrandsSelect
           activeBrands={activeBrands}
           onBrandsChange={handleBrandsChange}
