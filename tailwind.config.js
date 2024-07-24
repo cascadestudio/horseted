@@ -20,6 +20,8 @@ module.exports = {
         grey: "#ADA89F",
         "medium-grey": "#5C5955",
         "light-grey": "#F5F3EB",
+        "lighter-grey": "#CCC9C0",
+        "pale-grey": "#E7E5DC",
       },
       fontFamily: {
         sans: ["var(--font-raleway)"],

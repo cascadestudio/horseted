@@ -55,8 +55,13 @@ export default function PaymentMethods({
   };
 
   return (
-    <div className="g-block">
-      <h2 className="font-mcqueen font-bold text-xl mb-5">Mode de paiement</h2>
+    <div className="pt-4 lg:pt-14">
+      <h2 className="font-mcqueen font-bold text-[24px] mb-4">
+        Mode de paiement
+      </h2>
+      <h3 className="font-mcqueen font-semibold text-lg mb-4">
+        Carte bancaire
+      </h3>
       {paymentMethods.map((paymentMethod) => {
         const { id, brand, last4 } = paymentMethod;
         return (
@@ -80,8 +85,12 @@ export default function PaymentMethods({
         <span className="mr-5 w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
           +
         </span>
-        Ajouter un moyen de paiement
+        Ajouter une carte bancaire
       </button>
+      <p className="font-semibold text-xs text-grey">
+        Les informations de paiements sont confidentielles et ne seront jamais
+        transmises au cavalier.
+      </p>
       {isAddPaymentCardModal && (
         <AddPaymentCardModal
           setIsAddPaymentCardModal={setIsAddPaymentCardModal}
