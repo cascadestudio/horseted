@@ -40,7 +40,9 @@ function SettingsLayout({ children }) {
   return (
     <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pt-11 pb-16">
       <div className="col-span-3 lg:col-span-1">
-        <h1 className="font-mcqueen font-bold text-4xl mb-5">Paramètres</h1>
+        <h1 className="font-mcqueen font-bold text-4xl mb-5">
+          {pages.find((page) => page.path === activePath)?.title}
+        </h1>
         <aside className="bg-light-grey flex flex-col border border-lighter-grey">
           {pages.map((page, index) => {
             const Icon = page.icon;
