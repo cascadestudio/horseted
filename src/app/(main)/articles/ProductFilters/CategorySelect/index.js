@@ -2,9 +2,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import SubCategorySelect from "./SubCategorySelect";
 import ProductCategorySelect from "./ProductCategorySelect";
+import Dropdown from "@/components/Dropdown";
+import capitalizeText from "@/utils/capitalizeText";
+import slugify from "@/utils/slugify";
+import NextArrow from "@/assets/icons/NextArrow";
 
 export default function CategorySelect({ onClickProductCategory }) {
-  const [isCategoryDropdown, setIsCategoryDropdown] = useState(false);
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
@@ -36,48 +39,47 @@ export default function CategorySelect({ onClickProductCategory }) {
   }
 
   return (
-    <div className="p-5">
-      <button onClick={() => setIsCategoryDropdown(!isCategoryDropdown)}>
-        Catégorie
-      </button>
-
-      {isCategoryDropdown &&
-        activeParentCategory === null &&
+    <Dropdown className="mr-5" title="Catégorie">
+      {activeParentCategory === null &&
         (activeParentCategory === null || activeSubCategory === null) && (
-          <div className="flex flex-col">
-            {parentCategories.map(({ id, name }) => {
+          <div className="flex flex-col gap-y-4">
+            {parentCategories.map((parentCategorie) => {
+              const { id, name } = parentCategorie;
               return (
                 <button
+                  className="flex items-center justify-between"
                   onClick={() =>
                     setActiveParentCategory({ id: id, name: name })
                   }
                   key={id}
                 >
-                  {name}
+                  <div className="flex mr-14">
+                    <img src={`/icons/${slugify(name)}.svg`} alt={name} />
+                    <p className="ml-3 font-semibold">{capitalizeText(name)}</p>
+                  </div>
+                  <NextArrow className="" />
                 </button>
               );
             })}
           </div>
         )}
 
-      {isCategoryDropdown &&
-        activeParentCategory !== null &&
-        activeSubCategory === null && (
-          <SubCategorySelect
-            activeParentCategory={activeParentCategory}
-            onClickSubCategory={onClickSubCategory}
-            activeSubCategory={activeSubCategory}
-            onClickPrev={showParentCategories}
-          />
-        )}
+      {activeParentCategory !== null && activeSubCategory === null && (
+        <SubCategorySelect
+          activeParentCategory={activeParentCategory}
+          onClickSubCategory={onClickSubCategory}
+          activeSubCategory={activeSubCategory}
+          onClickPrev={showParentCategories}
+        />
+      )}
 
-      {isCategoryDropdown && activeSubCategory !== null && (
+      {activeSubCategory !== null && (
         <ProductCategorySelect
           activeSubCategory={activeSubCategory}
           onClickProductCategory={onClickProductCategory}
           onClickPrev={showSubCategories}
         />
       )}
-    </div>
+    </Dropdown>
   );
 }

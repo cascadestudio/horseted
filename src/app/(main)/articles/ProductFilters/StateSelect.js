@@ -37,7 +37,7 @@ export default function StateSelect({ onStateChange, activeState }) {
   ];
 
   return (
-    <Dropdown title="État">
+    <Dropdown className="mr-5" title="État">
       <div className="flex flex-col gap-y-4">
         {states.map((state, index) => {
           const { label, param, description } = state;
