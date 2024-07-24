@@ -113,9 +113,6 @@ export default function ProductsPage() {
   function handleMaterialsChange(value) {
     setActiveMaterials(value);
   }
-  function handleSizesChange(value) {
-    setActiveSizes(value);
-  }
   function handlePricesChange(minPrice, maxPrice) {
     setActivePrices(`${minPrice}-${maxPrice}`);
   }
@@ -177,7 +174,7 @@ export default function ProductsPage() {
         {activeCategory !== null && (
           <SizesSelect
             activeSizes={activeSizes}
-            onSizesChange={handleSizesChange}
+            setActiveSizes={setActiveSizes}
             categoryId={activeCategory.id}
           />
         )}
@@ -226,7 +223,7 @@ export default function ProductsPage() {
             return (
               <ActiveFilterBtn
                 key={size.id}
-                filterName={size.name}
+                filterName={size.value}
                 onRemoveFilter={removeSizeFilter}
               />
             );

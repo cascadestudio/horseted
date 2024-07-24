@@ -48,7 +48,7 @@ export default function ProductCategorySelect({
                 <Radio
                   className="ml-10"
                   value={name}
-                  checked={activeCategory.name === name}
+                  checked={activeCategory?.name === name || false}
                   onChange={() => onClickProductCategory(id, name)}
                 />
               </label>
