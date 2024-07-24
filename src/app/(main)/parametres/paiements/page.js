@@ -1,8 +1,18 @@
-import React from 'react'
-import PaymentMethods from '@/components/PaymentMethods'
+"use client";
+
+import PaymentMethods from "@/components/PaymentMethods";
+import StripeProvider from "@/components/StripeProvider";
+import { useState } from "react";
 
 export default function page() {
+  const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
+
   return (
-    <PaymentMethods/>
-  )
+    <StripeProvider>
+      <PaymentMethods
+        activePaymentMethodId={activePaymentMethodId}
+        setActivePaymentMethodId={setActivePaymentMethodId}
+      />
+    </StripeProvider>
+  );
 }

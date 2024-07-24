@@ -1,3 +1,6 @@
+// Stripe test cards
+// 4242 4242 4242 4242
+
 "use client";
 
 import { useEffect, useState } from "react";
