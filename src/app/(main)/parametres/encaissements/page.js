@@ -5,12 +5,12 @@ import Checkbox from "@/components/input/Checkbox";
 
 export default function page() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-14">
+    <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
       <p className="text-xs font-semibold col-span-2">
         Pour vendre des produits sur Horseted, vous devez valider votre identité
         avec le formulaire ci-dessous
       </p>
-      <div>
+      <div className="col-span-2 lg:col-span-1">
         <h2 className="font-mcqueen text-[24px] font-bold">
           Informations vendeur
         </h2>
@@ -28,7 +28,7 @@ export default function page() {
           Ajouter une adresse
         </button>
       </div>
-      <div>
+      <div className="col-span-2 lg:col-span-1">
         <h2 className="font-mcqueen text-[24px] font-bold">
           Vérification de l’identité
         </h2>
