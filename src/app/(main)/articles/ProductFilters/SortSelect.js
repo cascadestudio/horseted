@@ -10,7 +10,7 @@ export default function SortSelect({ onOrderChange, activeOrder }) {
   ];
 
   return (
-    <Dropdown title="Trier par">
+    <Dropdown className="mr-5" title="Trier par">
       <div className="flex flex-col gap-y-4">
         {orders.map((order, index) => {
           const { label, param } = order;

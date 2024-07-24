@@ -25,7 +25,7 @@ export default function ProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters states
-  const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeOrder, setActiveOrder] = useState("createdAt;desc"); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
@@ -104,8 +104,8 @@ export default function ProductsPage() {
   function handleCategoryChange(id, name) {
     setActiveCategory({ id: id, name: name });
   }
-  function handleStateChange(value) {
-    setActiveState(value);
+  function handleStateChange(e) {
+    setActiveState(e.target.value);
   }
   function handleBrandsChange(value) {
     setActiveBrands(value);

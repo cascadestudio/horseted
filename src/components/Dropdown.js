@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-export default function Dropdown({ title, children }) {
+export default function Dropdown({ title, children, className }) {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div>
+    <div className={className}>
       <button
         onClick={() => setIsActive(!isActive)}
         className="flex items-center border border-light-green px-5 py-2 rounded-xl bg-lighter-green text-light-green font-mcqueen font-semibold"
@@ -28,7 +28,7 @@ export default function Dropdown({ title, children }) {
         </svg>
       </button>
       {isActive && (
-        <div className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2">
+        <div className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2 max-w-96 ">
           {children}
         </div>
       )}
