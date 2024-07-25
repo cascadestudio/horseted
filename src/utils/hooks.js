@@ -13,9 +13,9 @@ export function useIsClickOutsideElement(elementRef, buttonRef) {
         setIsClickOutside(true);
       }
     };
-    document.addEventListener("click", checkIfClickedOutside);
+    document.addEventListener("mousedown", checkIfClickedOutside);
     return () => {
-      document.removeEventListener("click", checkIfClickedOutside);
+      document.removeEventListener("mousedown", checkIfClickedOutside);
       setIsClickOutside(false);
     };
   }, [elementRef, buttonRef]);

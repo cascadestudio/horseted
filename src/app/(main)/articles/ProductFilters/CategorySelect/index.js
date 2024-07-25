@@ -47,44 +47,46 @@ export default function CategorySelect({
       title="Catégorie"
       isActive={activeCategory !== null}
     >
-      {activeParentCategory === null && activeSubCategory === null && (
-        <div className="flex flex-col gap-y-4">
-          {parentCategories.map((parentCategorie) => {
-            const { id, name } = parentCategorie;
-            return (
-              <button
-                className="flex items-center justify-between"
-                onClick={(e) => {
-                  setActiveParentCategory({ id: id, name: name });
-                }}
-                key={id}
-              >
-                <div className="flex mr-14">
-                  <img src={`/icons/${slugify(name)}.svg`} alt={name} />
-                  <p className="ml-3 font-semibold">{capitalizeText(name)}</p>
-                </div>
-                <NextArrow />
-              </button>
-            );
-          })}
-        </div>
-      )}
-      {activeParentCategory !== null && activeSubCategory === null && (
-        <SubCategorySelect
-          activeParentCategory={activeParentCategory}
-          onClickSubCategory={onClickSubCategory}
-          activeSubCategory={activeSubCategory}
-          onClickPrev={showParentCategories}
-        />
-      )}
-      {activeSubCategory !== null && (
-        <ProductCategorySelect
-          activeSubCategory={activeSubCategory}
-          onClickProductCategory={onClickProductCategory}
-          onClickPrev={showSubCategories}
-          activeCategory={activeCategory}
-        />
-      )}
+      <div className="min-w-64 min-h-64">
+        {activeParentCategory === null && activeSubCategory === null && (
+          <div className="flex flex-col gap-y-4">
+            {parentCategories.map((parentCategorie) => {
+              const { id, name } = parentCategorie;
+              return (
+                <button
+                  className="flex items-center justify-between"
+                  onClick={(e) => {
+                    setActiveParentCategory({ id: id, name: name });
+                  }}
+                  key={id}
+                >
+                  <div className="flex mr-14">
+                    <img src={`/icons/${slugify(name)}.svg`} alt={name} />
+                    <p className="ml-3 font-semibold">{capitalizeText(name)}</p>
+                  </div>
+                  <NextArrow />
+                </button>
+              );
+            })}
+          </div>
+        )}
+        {activeParentCategory !== null && activeSubCategory === null && (
+          <SubCategorySelect
+            activeParentCategory={activeParentCategory}
+            onClickSubCategory={onClickSubCategory}
+            activeSubCategory={activeSubCategory}
+            onClickPrev={showParentCategories}
+          />
+        )}
+        {activeSubCategory !== null && (
+          <ProductCategorySelect
+            activeSubCategory={activeSubCategory}
+            onClickProductCategory={onClickProductCategory}
+            onClickPrev={showSubCategories}
+            activeCategory={activeCategory}
+          />
+        )}
+      </div>
     </Dropdown>
   );
 }
