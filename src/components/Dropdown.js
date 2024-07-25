@@ -1,12 +1,32 @@
-import { useState } from "react";
+import { useIsClickOutsideElement } from "@/utils/hooks";
+import { useEffect, useRef, useState } from "react";
 
 export default function Dropdown({ title, children, className, isActive }) {
+  const panelRef = useRef();
+  const buttonRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const [isClickOutside, setIsClickOutside] = useIsClickOutsideElement(
+    panelRef,
+    buttonRef
+  );
+
+  useEffect(() => {
+    if (isClickOutside) {
+      setIsOpen(false);
+      setIsClickOutside(false);
+    }
+  }, [isClickOutside, setIsClickOutside]);
+
+  function handleClick() {
+    setIsOpen(!isOpen);
+    setIsClickOutside(false);
+  }
 
   return (
     <div className={className}>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        ref={buttonRef}
+        onClick={handleClick}
         className={`flex items-center border px-5 py-2 rounded-xl font-mcqueen font-semibold ${
           isActive
             ? "border-light-green text-light-green bg-lighter-green"
@@ -33,7 +53,10 @@ export default function Dropdown({ title, children, className, isActive }) {
         </svg>
       </button>
       {isOpen && (
-        <div className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2 z-10">
+        <div
+          ref={panelRef}
+          className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2 z-10"
+        >
           {children}
         </div>
       )}
