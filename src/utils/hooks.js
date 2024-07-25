@@ -5,19 +5,14 @@ export function useIsClickOutsideElement(elementRef, buttonRef) {
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      const button = buttonRef.current;
-      const element = elementRef.current;
-
-      if (button && button.contains(e.target)) {
+      if (buttonRef?.current && buttonRef?.current.contains(e.target)) {
         setIsClickOutside(false);
         return;
       }
-
-      if (element && !element.contains(e.target)) {
+      if (elementRef.current && !elementRef.current.contains(e.target)) {
         setIsClickOutside(true);
       }
     };
-
     document.addEventListener("click", checkIfClickedOutside);
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
