@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import Dropdown from "@/components/Dropdown";
+import Checkbox from "@/components/input/Checkbox";
 
 export default function SizesSelect({
   activeSizes,
-  onSizesChange,
   categoryId,
+  setActiveSizes,
 }) {
   const [sizes, setSizes] = useState([]);
-  const [isDropdown, setIsDropdown] = useState(false);
 
   useEffect(() => {
     const fetchSizes = async () => {
@@ -23,35 +24,42 @@ export default function SizesSelect({
     fetchSizes();
   }, []);
 
-  const handleCheckboxChange = (e, value) => {
-    const id = Number(e.target.value);
-    if (e.target.checked) {
-      onSizesChange([...activeSizes, { id: id, name: value }]);
-    } else {
-      onSizesChange(activeSizes.filter((activeSize) => activeSize !== size));
-    }
+  const handleCheckboxChange = (item) => {
+    setActiveSizes((prevSelectedItems) => {
+      if (prevSelectedItems.includes(item)) {
+        return prevSelectedItems.filter((i) => i !== item);
+      } else {
+        return [...prevSelectedItems, item];
+      }
+    });
   };
 
   return (
-    <div className="p-5">
-      <button onClick={() => setIsDropdown(!isDropdown)}>Tailles</button>
-      {isDropdown && (
-        <div className="flex flex-col">
-          {sizes.map(({ id, value }) => {
-            return (
-              <label key={id}>
-                {value}
-                <input
-                  type="checkbox"
-                  value={id}
-                  onChange={(e) => handleCheckboxChange(e, value)}
-                  checked={activeSizes.map((size) => size.id).includes(id)}
-                />
-              </label>
-            );
-          })}
-        </div>
-      )}
-    </div>
+    <Dropdown
+      className="mr-5"
+      title="Tailles"
+      isActive={activeSizes.length > 0}
+    >
+      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
+        {sizes.map((size) => {
+          const { id, value } = size;
+
+          return (
+            <label
+              key={id}
+              className="flex justify-between items-center cursor-pointer font-semibold"
+            >
+              {value}
+              <Checkbox
+                className="ml-20"
+                value={size.value}
+                onChange={() => handleCheckboxChange(size)}
+                checked={activeSizes?.includes(size)}
+              />
+            </label>
+          );
+        })}
+      </div>
+    </Dropdown>
   );
 }

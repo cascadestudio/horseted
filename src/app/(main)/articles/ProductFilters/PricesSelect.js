@@ -1,9 +1,9 @@
+import Dropdown from "@/components/Dropdown";
 import { useState } from "react";
 
-export default function PricesSelect({ onPricesChange }) {
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
-  const [isDropdown, setIsDropdown] = useState(false);
+export default function PricesSelect({ onPricesChange, activePrices }) {
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const handleMinPriceChange = (event) => {
     const value = event.target.value;
@@ -18,26 +18,33 @@ export default function PricesSelect({ onPricesChange }) {
   };
 
   return (
-    <div className="p-5">
-      <button onClick={() => setIsDropdown(!isDropdown)}>Prix</button>
-      {isDropdown && (
-        <div className="flex flex-col">
-          <label>De</label>
-          <input
-            type="text"
-            placeholder="0"
-            value={minPrice}
-            onChange={handleMinPriceChange}
-          />
-          <label>À</label>
-          <input
-            type="text"
-            placeholder="250"
-            value={maxPrice}
-            onChange={handleMaxPriceChange}
-          />
+    <Dropdown
+      className="mr-5"
+      title="Prix"
+      isActive={(minPrice || maxPrice) !== ""}
+    >
+      <div className="flex flex-col">
+        <div className="flex gap-x-4">
+          <label className="flex flex-col">
+            De
+            <input
+              type="text"
+              value={minPrice}
+              onChange={handleMinPriceChange}
+              placeholder="€"
+            />
+          </label>
+          <label className="flex flex-col">
+            À
+            <input
+              placeholder="€"
+              type="text"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
+            />
+          </label>
         </div>
-      )}
-    </div>
+      </div>
+    </Dropdown>
   );
 }

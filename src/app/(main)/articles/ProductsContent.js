@@ -25,7 +25,7 @@ export default function ProductsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   // Filters states
-  const [activeOrder, setActiveOrder] = useState(""); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeOrder, setActiveOrder] = useState("createdAt;desc"); //TODO quand Jojo l'a fait useState("visitCount;desc")
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
@@ -104,17 +104,14 @@ export default function ProductsPage() {
   function handleCategoryChange(id, name) {
     setActiveCategory({ id: id, name: name });
   }
-  function handleStateChange(value) {
-    setActiveState(value);
+  function handleStateChange(e) {
+    setActiveState(e.target.value);
   }
   function handleBrandsChange(value) {
     setActiveBrands(value);
   }
   function handleMaterialsChange(value) {
     setActiveMaterials(value);
-  }
-  function handleSizesChange(value) {
-    setActiveSizes(value);
   }
   function handlePricesChange(minPrice, maxPrice) {
     setActivePrices(`${minPrice}-${maxPrice}`);
@@ -158,7 +155,10 @@ export default function ProductsPage() {
           activeState={activeState}
           onStateChange={handleStateChange}
         />
-        <CategorySelect onClickProductCategory={handleCategoryChange} />
+        <CategorySelect
+          onClickProductCategory={handleCategoryChange}
+          activeCategory={activeCategory}
+        />
         <BrandsSelect
           activeBrands={activeBrands}
           onBrandsChange={handleBrandsChange}
@@ -174,7 +174,7 @@ export default function ProductsPage() {
         {activeCategory !== null && (
           <SizesSelect
             activeSizes={activeSizes}
-            onSizesChange={handleSizesChange}
+            setActiveSizes={setActiveSizes}
             categoryId={activeCategory.id}
           />
         )}
@@ -223,7 +223,7 @@ export default function ProductsPage() {
             return (
               <ActiveFilterBtn
                 key={size.id}
-                filterName={size.name}
+                filterName={size.value}
                 onRemoveFilter={removeSizeFilter}
               />
             );

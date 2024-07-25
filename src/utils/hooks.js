@@ -1,22 +1,24 @@
 import { useEffect, useState } from "react";
 
-// Click Outside Element
-export function useIsClickOutsideElement(elementRef) {
+export function useIsClickOutsideElement(elementRef, buttonRef) {
   const [isClickOutside, setIsClickOutside] = useState(false);
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
+      if (buttonRef?.current && buttonRef?.current.contains(e.target)) {
+        setIsClickOutside(false);
+        return;
+      }
       if (elementRef.current && !elementRef.current.contains(e.target)) {
         setIsClickOutside(true);
       }
     };
-    document.addEventListener("click", checkIfClickedOutside);
+    document.addEventListener("mousedown", checkIfClickedOutside);
     return () => {
-      document.removeEventListener("click", checkIfClickedOutside);
+      document.removeEventListener("mousedown", checkIfClickedOutside);
       setIsClickOutside(false);
-      // document.body.style.overflow = "scroll";
     };
-  }, []);
+  }, [elementRef, buttonRef]);
 
   return [isClickOutside, setIsClickOutside];
 }

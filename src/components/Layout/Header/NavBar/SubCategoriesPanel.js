@@ -3,24 +3,13 @@ import { useEffect, useState, useRef } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 
-export default function SubCategoriesPanel({ parentId }) {
-  const panelRef = useRef();
+export default function SubCategoriesPanel({ parentId, panelRef }) {
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const isSubCategories = subCategories.length > 0;
-  const [isClickOutside, setIsClickOutside] =
-    useIsClickOutsideElement(panelRef);
-  const [isClickDropdown, setIsClickDropdown] = useState(false);
 
-  // console.log(selectedSubCategoriesId);
   function handleClick(id) {
     setSelectedSubCategoriesId(id);
-    if (isClickOutside) {
-      setIsClickDropdown(true);
-    } else {
-      setIsClickDropdown(!isClickDropdown);
-    }
-    setIsClickOutside(false);
   }
 
   useEffect(() => {
@@ -43,7 +32,7 @@ export default function SubCategoriesPanel({ parentId }) {
     }
   }, [subCategories]);
 
-  if (isSubCategories && !isClickOutside) {
+  if (isSubCategories) {
     return (
       <div
         ref={panelRef}
