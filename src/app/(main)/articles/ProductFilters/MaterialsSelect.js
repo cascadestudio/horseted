@@ -34,7 +34,11 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   };
 
   return (
-    <Dropdown className="mr-5" title="Matières">
+    <Dropdown
+      className="mr-5"
+      title="Matières"
+      isActive={activeMaterials.length > 0}
+    >
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
         {materials.map(({ name }) => (
           <label
@@ -46,7 +50,7 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
               className="ml-20"
               value={name}
               onChange={(e) => handleCheckboxChange(e)}
-              checked={activeMaterials.includes(name)}
+              checked={activeMaterials?.includes(name)}
             />
           </label>
         ))}

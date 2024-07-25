@@ -41,7 +41,11 @@ export default function BrandSelect({ activeBrands, onBrandsChange }) {
   };
 
   return (
-    <Dropdown className="mr-5" title="Marques">
+    <Dropdown
+      className="mr-5"
+      title="Marques"
+      isActive={activeBrands.length > 0}
+    >
       <div className="flex flex-col">
         <div className="flex items-center mb-4 border-black border-b">
           <img
@@ -68,7 +72,7 @@ export default function BrandSelect({ activeBrands, onBrandsChange }) {
                 className="ml-20"
                 value={name}
                 onChange={handleCheckboxChange}
-                checked={activeBrands.includes(name)}
+                checked={activeBrands?.includes(name)}
               />
             </label>
           ))}

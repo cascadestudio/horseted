@@ -1,9 +1,9 @@
 import Dropdown from "@/components/Dropdown";
 import { useState } from "react";
 
-export default function PricesSelect({ onPricesChange }) {
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null);
+export default function PricesSelect({ onPricesChange, activePrices }) {
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const handleMinPriceChange = (event) => {
     const value = event.target.value;
@@ -18,7 +18,11 @@ export default function PricesSelect({ onPricesChange }) {
   };
 
   return (
-    <Dropdown className="mr-5" title="Prix">
+    <Dropdown
+      className="mr-5"
+      title="Prix"
+      isActive={(minPrice || maxPrice) !== ""}
+    >
       <div className="flex flex-col">
         <div className="flex gap-x-4">
           <label className="flex flex-col">
