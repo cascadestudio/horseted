@@ -14,6 +14,8 @@ import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import TotalProduct from "./TotalProduct";
+import Spinner from "@/components/Spinner";
+import Pagination from "./Pagination";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -33,6 +35,7 @@ export default function ProductsPage() {
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
+  const [fromId, setFromId] = useState(null);
 
   function resetFilters() {
     setActiveOrder("");
@@ -79,6 +82,10 @@ export default function ProductsPage() {
         if (searchQuery !== null) {
           query += `&terms=${searchQuery}`;
         }
+        if (fromId !== null) {
+          query += `&fromId=${fromId}`;
+        }
+        console.log("query", query);
         const data = await fetchHorseted(query);
         setProducts(data);
         setIsLoading(false);
@@ -97,6 +104,7 @@ export default function ProductsPage() {
     activePrices,
     activeSizes,
     searchQuery,
+    fromId,
   ]);
 
   function handleOrderChange(e) {
@@ -240,7 +248,14 @@ export default function ProductsPage() {
             );
           })}
       </div>
-      {!isLoading && <ProductsList products={products} />}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <ProductsList products={products} />
+          <Pagination products={products} setFromId={setFromId} />
+        </>
+      )}
     </div>
   );
 }
