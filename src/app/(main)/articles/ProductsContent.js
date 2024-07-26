@@ -147,7 +147,7 @@ export default function ProductsPage() {
       <legend className="font-semibold text-ms uppercase tracking-widest mb-4">
         Filtres :
       </legend>
-      <div className="flex">
+      <div className="flex gap-x-2">
         <SortSelect
           onOrderChange={handleOrderChange}
           activeOrder={activeOrder}
@@ -182,10 +182,15 @@ export default function ProductsPage() {
       </div>
       <div className="flex flex-col items-end">
         <TotalProduct products={products} />
-        <div className="h-[1px] bg-grey w-full my-4"></div>
-        <button>Effacer les filtres</button>
+        <div className="h-[1px] bg-grey w-full my-2"></div>
+        <button
+          onClick={resetFilters}
+          className="font-semibold font-mcqueen text-light-green"
+        >
+          Effacer les filtres
+        </button>
       </div>
-      <div className="p-5">
+      <div className="flex gap-2 flex-wrap mb-10 lg:pe-40">
         {activeCategory !== null && (
           <ActiveFilterBtn
             filterName={activeCategory.name}
@@ -234,12 +239,6 @@ export default function ProductsPage() {
               />
             );
           })}
-        <button
-          className="bg-white text-gray-700 rounded-lg px-4 py-2 mt-4 hover:bg-gray-100"
-          onClick={() => resetFilters()}
-        >
-          Effacer les filtres
-        </button>
       </div>
       {!isLoading && <ProductsList products={products} />}
     </div>
