@@ -181,7 +181,7 @@ export default function ProductsPage() {
         )}
       </div>
       <div className="flex flex-col items-end">
-        {products.total && <TotalProduct totalProduct={products.total} />}
+        <TotalProduct products={products} />
         <div className="h-[1px] bg-grey w-full my-4"></div>
         <button>Effacer les filtres</button>
       </div>
