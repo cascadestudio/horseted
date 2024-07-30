@@ -253,7 +253,11 @@ export default function ProductsPage() {
       ) : (
         <>
           <ProductsList products={products} />
-          <Pagination products={products} setFromId={setFromId} />
+          <Pagination
+            activeBrands={activeBrands}
+            products={products}
+            setFromId={setFromId}
+          />
         </>
       )}
     </div>
