@@ -1,4 +1,8 @@
-export default function UserAddresses() {
+import DeleteIcon from "@/assets/icons/DeleteIcon";
+import ModifyIcon from "@/assets/icons/ModifyIcon";
+import Radio from "@/components/input/Radio";
+
+export default function page() {
   // Add dynamic addresses
   const addresses = [
     {
@@ -9,7 +13,7 @@ export default function UserAddresses() {
       postalCode: "12345",
       city: "Anytown",
       country: "US",
-      additionalInfos: "Apartment 4A",
+      additionalInfos: "",
       type: "delivery",
       latitude: 37.7749,
       longitude: -122.4194,
@@ -17,18 +21,43 @@ export default function UserAddresses() {
     },
   ];
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4 lg:gap-y-2">
+      <h3 className="text-[24px] font-mcqueen font-bold mb-2 lg:col-start-1">
+        Adresse de livraison
+      </h3>
       {addresses.map((address) => (
-        <div className="bg-white rounded-lg shadow p-4" key={address.id}>
-          <h3 className="text-xl font-bold mb-2">{address.fullName}</h3>
-          <p>{address.street}</p>
-          <p>
-            {address.postalCode} {address.city}
-          </p>
-          <p>{address.country}</p>
-          <p>{address.additionalInfos}</p>
+        <div
+          className="bg-white rounded-xl p-5 border border-lighter-grey lg:col-start-1 flex justify-between items-center"
+          key={address.id}
+        >
+          <div>
+            <p>{address.street}</p>
+            <p>
+              {address.postalCode} {address.city}
+            </p>
+            <p>{address.additionalInfos}</p>
+          </div>
+          <div className="flex gap-2">
+            <ModifyIcon className="w-9 h-9" />
+            <DeleteIcon className="w-9 h-9 text-red" />
+          </div>
         </div>
       ))}
+      <button className="flex items-center px-5 mt-4 bg-light-grey w-full col-start-1">
+        <span className="mr-5 w-10 h-10 flex items-center justify-center bg-white border border-light-green rounded-full text-4xl text-light-green">
+          +
+        </span>
+        Ajouter une adresse
+      </button>
+      <h3 className="text-[24px] font-mcqueen font-bold lg:col-start-2 lg:row-start-1">
+        Adresse de facturation
+      </h3>
+      <div className="flex gap-2 items-start lg:col-start-2 lg:row-start-2">
+        <Radio />
+        <p className="font-semibold leading-5">
+          Identique à l’adresse de livraison
+        </p>
+      </div>
     </div>
   );
 }
