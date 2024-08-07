@@ -4,7 +4,7 @@ import signIn from "@/libs/firebase/auth/signin";
 import Button from "@/components/Button";
 import Link from "next/link";
 
-export default function SigninForm() {
+export default function SigninForm({ className }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -34,7 +34,7 @@ export default function SigninForm() {
   return (
     <form
       onSubmit={handleForm}
-      className="mt-3 border-b border-black mb-11 lg:border-t lg:pt-8 lg:border-b-0 lg:mb-[82px]"
+      className={`mt-3 border-b border-black mb-11 lg:pt-8 lg:border-b-0 lg:mb-[82px] ${className}`}
     >
       <label htmlFor="email">
         <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
