@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 import { TextInput } from "@/components/input";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function page() {
+export default function Transactions() {
   return (
     <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
       <p className="text-xs font-semibold col-span-2">

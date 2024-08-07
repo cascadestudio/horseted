@@ -2,7 +2,7 @@ import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 import Radio from "@/components/input/Radio";
 
-export default function page() {
+export default function Addresses() {
   // Add dynamic addresses
   const addresses = [
     {

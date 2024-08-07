@@ -1,4 +1,4 @@
-export default function Page() {
+export default function Notifications() {
   return (
     <div className="flex flex-col justify-center w-full lg:pt-14">
       <h1 className="text-[24px] font-mcqueen font-bold mt-4 lg:mt-0">
