@@ -105,19 +105,21 @@ export default function Settings() {
             <CityDataList />
           </div>
           <div className="flex items-center justify-end mt-3">
-            <label htmlFor="publicCity" className="text-sm mr-2">
-              Afficher publiquement la ville
+            <label htmlFor="publicCity">
+              <span className="text-sm mr-2">
+                Afficher publiquement la ville
+              </span>
+              <div className="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                <input
+                  type="checkbox"
+                  id="publicCity"
+                  checked={showCity}
+                  onChange={() => setShowCity(!showCity)}
+                  className="absolute block w-4 h-4 rounded-full bg-grey border-none appearance-none cursor-pointer top-1 checked:right-1 right-5 checked:bg-light-green"
+                />
+                <div className="block overflow-hidden h-6 rounded-full bg-white cursor-pointer border border-grey"></div>
+              </div>
             </label>
-            <div className="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-              <input
-                type="checkbox"
-                id="publicCity"
-                checked={showCity}
-                onChange={() => setShowCity(!showCity)}
-                className="absolute block w-4 h-4 rounded-full bg-grey border-none appearance-none cursor-pointer top-1 checked:right-1 right-5 checked:bg-light-green"
-              />
-              <div className="block overflow-hidden h-6 rounded-full bg-white cursor-pointer border border-grey"></div>
-            </div>
           </div>
         </div>
         <TextInput
