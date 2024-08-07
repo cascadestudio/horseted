@@ -3,12 +3,12 @@ import Button from "@/components/Button";
 import { TextInput } from "@/components/input";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function page() {
+export default function Transactions() {
   return (
     <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
       <p className="text-xs font-semibold col-span-2">
         Pour vendre des produits sur Horseted, vous devez valider votre identité
-        avec le formulaire ci-dessous
+        avec le formulaire ci-dessous.
       </p>
       <div className="col-span-2 lg:col-span-1">
         <h2 className="font-mcqueen text-[24px] font-bold">
@@ -35,25 +35,28 @@ export default function page() {
         <h3 className="font-mcqueen font-semibold mb-2">
           Document d’identité :
         </h3>
-        <button className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4">
+        <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
           <UploadIcon />
           <p className="text-sm font-semibold uppercase text-center">
             Passeport
           </p>
-        </button>
+          <input type="file" name="passport" className="hidden" />
+        </label>
         <p className="text-center uppercase text-xl">ou</p>
         <p className="text-center uppercase text-light-green mb-2">
           Carte d'identité
         </p>
         <div className="flex gap-8">
-          <button className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4">
+          <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
             <UploadIcon />
             <p className="text-sm font-semibold uppercase text-center">Recto</p>
-          </button>
-          <button className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4">
+            <input type="file" name="idRecto" className="hidden" />
+          </label>
+          <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
             <UploadIcon />
             <p className="text-sm font-semibold uppercase text-center">Verso</p>
-          </button>
+            <input type="file" name="idVerso" className="hidden" />
+          </label>
         </div>
         <label className="flex items-start mt-12 mb-7">
           <Checkbox />

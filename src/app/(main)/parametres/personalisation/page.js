@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import DropdownArrow from "@/assets/icons/DropdownArrow.svg";
 
-export default function PersonalizationSettings() {
+export default function Customization() {
   // TODO: quand Jojo aura fait le back
   return (
     <div className="lg:pt-10">
