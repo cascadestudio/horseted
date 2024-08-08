@@ -1,11 +1,11 @@
 import Image from "next/image";
 import placeholderImage from "@/assets/images/placeholder.svg";
 
-export default function AvatarDisplay({ avatarSrc }) {
+export default function AvatarDisplay({ avatarSrc, className }) {
   return avatarSrc ? (
     <Image
       src={avatarSrc}
-      className="h-21 w-21 object-cover rounded-full"
+      className={`${className} h-21 w-21 object-cover rounded-full`}
       width={84}
       height={84}
       alt="Avatar"
@@ -13,7 +13,7 @@ export default function AvatarDisplay({ avatarSrc }) {
   ) : (
     <Image
       src={placeholderImage}
-      className="h-21 w-21 object-cover rounded-full"
+      className={`${className} h-21 w-21 object-cover rounded-full`}
       width={84}
       height={84}
       alt="Avatar"

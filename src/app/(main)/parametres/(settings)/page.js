@@ -81,9 +81,8 @@ export default function Settings() {
             <AvatarInput onChange={handleAvatarChange} />
           </div>
           <div className="self-end mb-3">
-            {/* {user?.username} */}
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
-            <span className="text-lg text-grey">username*</span>
+            <span className="text-lg text-grey">{user?.username}*</span>
           </div>
         </div>
         <div className="flex flex-col col-span-2 lg:col-span-1">
