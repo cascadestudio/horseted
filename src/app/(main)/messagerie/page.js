@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
@@ -7,15 +8,27 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 function ThreadsPage() {
+  const searchParams = useSearchParams();
   const { accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
+  const [recipientId, setRecipientId] = useState(null);
+  console.log("recipientId =>", recipientId);
+
+  // TODO start new threads from recipientId and product Id
 
   useEffect(() => {
     getThreads();
   }, []);
+
+  useEffect(() => {
+    const recipientIdParam = searchParams.get("recipientId");
+    if (recipientIdParam) {
+      setRecipientId(recipientIdParam);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (threads.length !== 0) {
