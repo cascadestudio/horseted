@@ -6,6 +6,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import FavoriteButton from "@/components/FavoriteButton";
+import { shippingSizeTranslations } from "@/utils/translations";
 
 export default function ProductCard({
   productId,
@@ -13,12 +14,6 @@ export default function ProductCard({
   className,
 }) {
   const [product, setProduct] = useState(initialProduct);
-  const shippingSizeTranslations = {
-    small: "Petit",
-    medium: "Moyen",
-    large: "Grand",
-    very_large: "Très grand",
-  };
 
   useEffect(() => {
     if (productId && !initialProduct) {
