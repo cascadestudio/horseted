@@ -9,6 +9,7 @@ import withAuth from "@/hoc/withAuth";
 import ProductCard from "@/components/ProductCard";
 import Spinner from "@/components/Spinner";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import RightArrow from "@/assets/icons/RightArrow";
 
 function FavoritesPage() {
   const { accessToken } = useAuthContext();
@@ -34,7 +35,15 @@ function FavoritesPage() {
   return (
     <div className="container mx-auto">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <h1 className="text-4xl font-mcqueen font-bold">Articles favoris</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-mcqueen font-bold">Articles favoris</h1>
+        {favorites.length > 0 && (
+          <Button href="/articles" variant="transparent-green">
+            Parcourir les articles
+            <RightArrow className={"ml-2"} />
+          </Button>
+        )}
+      </div>
       {favorites.length > 0 ? (
         <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
           {favorites.map((favorite, index) => (
