@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import getImage from "@/utils/getImage";
-import placeholderImage from "@/assets/images/placeholder.svg";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 import CityIcon from "@/assets/icons/CityIcon";
@@ -81,9 +81,8 @@ export default function Settings() {
             <AvatarInput onChange={handleAvatarChange} />
           </div>
           <div className="self-end mb-3">
-            {/* {user?.username} */}
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
-            <span className="text-lg text-grey">username*</span>
+            <span className="text-lg text-grey">{user?.username}*</span>
           </div>
         </div>
         <div className="flex flex-col col-span-2 lg:col-span-1">
@@ -266,26 +265,6 @@ async function deleteUserAccount(token, router) {
   await fetchHorseted(`/users/me`, token, "DELETE");
   router.push("/");
 }
-
-const AvatarDisplay = ({ avatarSrc }) =>
-  avatarSrc ? (
-    <Image
-      src={avatarSrc}
-      className="h-21 w-21 object-cover rounded-full"
-      width={84}
-      height={84}
-      alt="Avatar"
-    />
-  ) : (
-    <Image
-      src={placeholderImage}
-      className="h-21 w-21 object-cover rounded-full"
-      width={84}
-      height={84}
-      alt="Avatar"
-      priority
-    />
-  );
 
 const AvatarInput = ({ onChange }) => (
   <label
