@@ -34,11 +34,7 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   };
 
   return (
-    <Dropdown
-      className="mr-5"
-      title="Matières"
-      isActive={activeMaterials.length > 0}
-    >
+    <Dropdown title="Matières" isActive={activeMaterials.length > 0}>
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
         {materials.map(({ name }) => (
           <label
