@@ -85,7 +85,6 @@ export default function ProductsPage() {
         if (fromId !== null) {
           query += `&fromId=${fromId}`;
         }
-        console.log("query", query);
         const data = await fetchHorseted(query);
         setProducts(data);
         setIsLoading(false);

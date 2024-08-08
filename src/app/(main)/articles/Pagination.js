@@ -1,10 +1,8 @@
+import NextArrow from "@/assets/icons/NextArrow";
 import { useEffect, useState } from "react";
 
 export default function Pagination({ products, setFromId, activeBrands }) {
-  console.log("products total", products.total);
-
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  console.log("currentPageIndex", currentPageIndex);
   const [pages, setPages] = useState(() => {
     if (products.items && products.items.length > 0) {
       return [
@@ -16,7 +14,6 @@ export default function Pagination({ products, setFromId, activeBrands }) {
     }
     return [];
   });
-  console.log("pages", pages);
 
   // Test reset on activebrands
   useEffect(() => {
@@ -59,30 +56,33 @@ export default function Pagination({ products, setFromId, activeBrands }) {
 
   if (products.total > 50)
     return (
-      <nav className="py-10">
-        <ul className=" flex gap-x-4  justify-center ">
+      <nav className="py-12">
+        <ul className="flex gap-x-7 justify-center items-center text-xl text-medium-grey font-poppins">
           {pages.map((_, index) => {
             return (
-              <>
-                <button
-                  key={index}
-                  onClick={() => handleClick(index)}
-                  className={`px-4 py-2 border rounded ${
-                    index === currentPageIndex ? "bg-gray-200" : ""
-                  }`}
-                >
-                  {index + 1}
-                </button>
-              </>
+              <button
+                key={index}
+                onClick={() => handleClick(index)}
+                className={` ${
+                  index === currentPageIndex
+                    ? "bg-pale-grey border border-grey rounded-full w-14 h-14 "
+                    : ""
+                }`}
+              >
+                {index + 1}
+              </button>
             );
           })}
           {isNextButton && (
-            <button
-              onClick={() => handleClick(pages.length)}
-              className={`px-4 py-2 border rounded`}
-            >
-              {pages.length + 1}
-            </button>
+            <>
+              <button onClick={() => handleClick(pages.length)}>
+                {pages.length + 1}
+              </button>
+              <span>...</span>
+              <button onClick={() => handleClick(pages.length)}>
+                <NextArrow className={"stroke-medium-grey"} />
+              </button>
+            </>
           )}
         </ul>
       </nav>
