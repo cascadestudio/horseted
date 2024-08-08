@@ -7,12 +7,70 @@ import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
+import ReviewCard from "@/components/ReviewCard";
 
 function AccountPage() {
   const { user } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
 
-  // Add fetchAvatar()
+  // TODO: Fetch reviews
+  const reviews = [
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "John Doe",
+      date: "Il y a 3 jours",
+      rating: 4.5,
+      comment:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "John Doe",
+      date: "Il y a 3 jours",
+      rating: 4.5,
+      comment: "",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "Jane Doe",
+      date: "Il y a 2 jours",
+      rating: 5,
+      comment:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "Alice Smith",
+      date: "Il y a 5 jours",
+      rating: 4,
+      comment:
+        "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur.",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "Alice Smith",
+      date: "Il y a 5 jours",
+      rating: 4,
+      comment: "",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "Alice Smith",
+      date: "Il y a 5 jours",
+      rating: 4,
+      comment: "",
+    },
+    {
+      avatarSrc: "https://i.pravatar.cc/300",
+      author: "Bob Johnson",
+      date: "Il y a 1 semaine",
+      rating: 3.5,
+      comment:
+        "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
+    },
+    // Add more reviews as needed
+  ];
+
   if (user)
     return (
       <div className="container mx-auto pt-7 pb-12 px-5 lg:px-0">
@@ -27,7 +85,6 @@ function AccountPage() {
               <CityIcon className="w-3" />
               <p>Montpellier (34)</p>
             </div>
-            {/* {user?.description} */}
             <p className="text-sm leading-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
@@ -49,7 +106,7 @@ function AccountPage() {
               }`}
               onClick={() => setActiveTab("products")}
             >
-              Products
+              Sellerie
             </button>
             <button
               className={`px-4 py-2 text-lg font-medium font-mcqueen ${
@@ -59,24 +116,43 @@ function AccountPage() {
               }`}
               onClick={() => setActiveTab("reviews")}
             >
-              Reviews
+              Évaluations
             </button>
           </div>
           <div className="mt-4">
             {activeTab === "products" && (
               <div>
-                {/* Render product cards here */}
-                {/* <ProductCard title="Product 1" description="Description of product 1" />
-                <ProductCard title="Product 2" description="Description of product 2" /> */}
-                Products
+                <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
+                  <ProductCard productId="1" />
+                  <ProductCard productId="1" />
+                  <ProductCard productId="1" />
+                  <ProductCard productId="1" />
+                  <ProductCard productId="1" />
+                </section>
               </div>
             )}
             {activeTab === "reviews" && (
               <div>
-                {/* Render reviews here */}
-                {/* <ReviewCard reviewer="Reviewer 1" review="This is a review." />
-                <ReviewCard reviewer="Reviewer 2" review="This is another review." /> */}
-                Reviews
+                <div className="flex flex-col items-center justify-center border-b border-lighter-grey mb-8 pb-5">
+                  <p className="font-mcqueen font-semibold text-[40px] leading-[48px]">
+                    4.5
+                  </p>
+                  <p className="font-mcqueen">{reviews.length} évaluations</p>
+                  <StarRating rating="4.5" count="6" />
+                </div>
+                <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
+                  {reviews.map((review, index) => (
+                    <div key={index} className="break-inside-avoid mb-3">
+                      <ReviewCard
+                        avatarSrc={review.avatarSrc}
+                        author={review.author}
+                        date={review.date}
+                        rating={review.rating}
+                        comment={review.comment}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>
