@@ -4,6 +4,7 @@ import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 function ThreadsPage() {
   const { accessToken } = useAuthContext();
@@ -40,67 +41,88 @@ function ThreadsPage() {
     getMessages(threadId);
   }
 
+  const breadcrumbs = [
+    { label: "Accueil", href: "/" },
+    { label: "Mon compte", href: "/account" },
+    { label: "Messagerie" },
+  ];
+
   return (
     <div className="container mx-auto">
-      <div className="flex">
-        <h1>messages</h1>
-        {threads.length !== 0 ? (
-          <ul>
-            {threads.map((thread) => {
-              const { id, productId, authors } = thread;
-              return (
-                <li key={id}>
-                  <button onClick={() => handleThreadClick(id, productId)}>
-                    {authors[0].username}
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p>No threads found</p>
-        )}
-        {product && messages.length !== 0 ? (
-          <div>
-            <h2>{product.title}</h2>
-            {messages.map((message) => {
-              const { id, content, createdAt } = message;
-              return (
-                <p key={id}>
-                  {content} {createdAt}
-                </p>
-              );
-            })}
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
+      <div className="border border-darker-grey rounded-3xl my-10">
+        <div className="flex">
+          <div className="w-1/3">
+            <div className="flex justify-between items-center p-6">
+              <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
+                Messages
+              </h1>
+              <button>
+                <img src="/icons/new-message.svg" alt="Nouveau message" />
+              </button>
+            </div>
+            {threads.length !== 0 ? (
+              <ul>
+                {threads.map((thread) => {
+                  const { id, productId, authors } = thread;
+                  return (
+                    <li key={id}>
+                      <button onClick={() => handleThreadClick(id, productId)}>
+                        {authors[0].username}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p>Pas de messages</p>
+            )}
           </div>
-        ) : (
-          <p>Pas de messages</p>
-        )}
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col space-y-4 p-4 border border-gray-300 rounded-md"
-        >
-          <label htmlFor="message" className="text-lg font-semibold">
-            Message:
-          </label>
-          <textarea
-            id="content"
-            name="content"
-            className="p-2 border border-gray-300 rounded-md"
-            rows="4"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-          >
-            Submit
-          </button>
-        </form>
+          <div>
+            {product && messages.length !== 0 ? (
+              <div>
+                <h2>{product.title}</h2>
+                {messages.map((message) => {
+                  const { id, content, createdAt } = message;
+                  return (
+                    <p key={id}>
+                      {content} {createdAt}
+                    </p>
+                  );
+                })}
+              </div>
+            ) : (
+              <p>Pas de messages</p>
+            )}
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-4 p-4 border border-gray-300 rounded-md"
+            >
+              <label htmlFor="message" className="text-lg font-semibold">
+                Message:
+              </label>
+              <textarea
+                id="content"
+                name="content"
+                className="p-2 border border-gray-300 rounded-md"
+                rows="4"
+              />
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   );
 
   async function getThreads() {
     const threads = await fetchHorseted("/threads", accessToken);
+    console.log("threads =>", threads);
     setThreads(threads);
   }
 
