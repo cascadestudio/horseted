@@ -8,7 +8,7 @@ import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import getImage from "@/utils/getImage";
-import placeholderImage from "@/assets/images/placeholder.svg";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 import CityIcon from "@/assets/icons/CityIcon";
@@ -266,26 +266,6 @@ async function deleteUserAccount(token, router) {
   await fetchHorseted(`/users/me`, token, "DELETE");
   router.push("/");
 }
-
-const AvatarDisplay = ({ avatarSrc }) =>
-  avatarSrc ? (
-    <Image
-      src={avatarSrc}
-      className="h-21 w-21 object-cover rounded-full"
-      width={84}
-      height={84}
-      alt="Avatar"
-    />
-  ) : (
-    <Image
-      src={placeholderImage}
-      className="h-21 w-21 object-cover rounded-full"
-      width={84}
-      height={84}
-      alt="Avatar"
-      priority
-    />
-  );
 
 const AvatarInput = ({ onChange }) => (
   <label
