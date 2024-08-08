@@ -18,11 +18,7 @@ export default function PricesSelect({ onPricesChange, activePrices }) {
   };
 
   return (
-    <Dropdown
-      className="mr-5"
-      title="Prix"
-      isActive={(minPrice || maxPrice) !== ""}
-    >
+    <Dropdown title="Prix" isActive={(minPrice || maxPrice) !== ""}>
       <div className="flex flex-col">
         <div className="flex gap-x-4">
           <label className="flex flex-col">

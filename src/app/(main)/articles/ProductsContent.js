@@ -13,6 +13,9 @@ import SizesSelect from "./ProductFilters/SizesSelect";
 import MaterialsSelect from "./ProductFilters/MaterialsSelect";
 import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import TotalProduct from "./TotalProduct";
+import Spinner from "@/components/Spinner";
+import Pagination from "./Pagination";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -32,6 +35,7 @@ export default function ProductsPage() {
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
+  const [fromId, setFromId] = useState(null);
 
   function resetFilters() {
     setActiveOrder("");
@@ -78,6 +82,9 @@ export default function ProductsPage() {
         if (searchQuery !== null) {
           query += `&terms=${searchQuery}`;
         }
+        if (fromId !== null) {
+          query += `&fromId=${fromId}`;
+        }
         const data = await fetchHorseted(query);
         setProducts(data);
         setIsLoading(false);
@@ -96,6 +103,7 @@ export default function ProductsPage() {
     activePrices,
     activeSizes,
     searchQuery,
+    fromId,
   ]);
 
   function handleOrderChange(e) {
@@ -146,7 +154,7 @@ export default function ProductsPage() {
       <legend className="font-semibold text-ms uppercase tracking-widest mb-4">
         Filtres :
       </legend>
-      <div className="flex">
+      <div className="flex gap-x-2">
         <SortSelect
           onOrderChange={handleOrderChange}
           activeOrder={activeOrder}
@@ -179,7 +187,17 @@ export default function ProductsPage() {
           />
         )}
       </div>
-      <div className="p-5">
+      <div className="flex flex-col items-end">
+        <TotalProduct products={products} />
+        <div className="h-[1px] bg-grey w-full my-2"></div>
+        <button
+          onClick={resetFilters}
+          className="font-semibold font-mcqueen text-light-green"
+        >
+          Effacer les filtres
+        </button>
+      </div>
+      <div className="flex gap-2 flex-wrap mb-10 lg:pe-40">
         {activeCategory !== null && (
           <ActiveFilterBtn
             filterName={activeCategory.name}
@@ -228,14 +246,19 @@ export default function ProductsPage() {
               />
             );
           })}
-        <button
-          className="bg-white text-gray-700 rounded-lg px-4 py-2 mt-4 hover:bg-gray-100"
-          onClick={() => resetFilters()}
-        >
-          Effacer les filtres
-        </button>
       </div>
-      {!isLoading && <ProductsList products={products} />}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <ProductsList products={products} />
+          <Pagination
+            activeBrands={activeBrands}
+            products={products}
+            setFromId={setFromId}
+          />
+        </>
+      )}
     </div>
   );
 }

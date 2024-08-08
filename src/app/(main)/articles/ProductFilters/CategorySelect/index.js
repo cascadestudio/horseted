@@ -42,11 +42,7 @@ export default function CategorySelect({
   }
 
   return (
-    <Dropdown
-      className="mr-5"
-      title="Catégorie"
-      isActive={activeCategory !== null}
-    >
+    <Dropdown title="Catégorie" isActive={activeCategory !== null}>
       <div className="min-w-64 min-h-64">
         {activeParentCategory === null && activeSubCategory === null && (
           <div className="flex flex-col gap-y-4">

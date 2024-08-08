@@ -35,11 +35,7 @@ export default function SizesSelect({
   };
 
   return (
-    <Dropdown
-      className="mr-5"
-      title="Tailles"
-      isActive={activeSizes.length > 0}
-    >
+    <Dropdown title="Tailles" isActive={activeSizes.length > 0}>
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
         {sizes.map((size) => {
           const { id, value } = size;
