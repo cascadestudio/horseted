@@ -3,7 +3,8 @@ export default async function fetchHorseted(
   accessToken,
   method = "GET",
   body = null,
-  isJsonBody
+  isJsonBody,
+  isDebug
 ) {
   const apiKey = process.env.NEXT_PUBLIC_HORSETED_API_KEY;
   const baseUrl = process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL;
@@ -28,7 +29,8 @@ export default async function fetchHorseted(
       : body && { body: body }),
   };
 
-  // console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
+  isDebug &&
+    console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
 
   try {
     const response = await fetch(url, options);

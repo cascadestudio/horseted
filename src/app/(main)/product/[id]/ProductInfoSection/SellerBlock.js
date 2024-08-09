@@ -5,9 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/Button";
 
-export default function UserBlock({ user }) {
-  console.log("user =>", user);
-  const { username, review, id } = user;
+export default function SellerBlock({ sellerData, productId }) {
+  const { username, review } = sellerData;
 
   return (
     <div className="flex justify-between w-full mt-3 mb-5">
@@ -30,7 +29,7 @@ export default function UserBlock({ user }) {
       </div>
       <div className="flex items-center">
         <Link
-          href={`/messagerie?recipientId=${id}`}
+          href={`/messagerie?productId=${productId}`}
           className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
         >
           <MessageGreenIcon />

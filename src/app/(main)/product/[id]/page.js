@@ -5,7 +5,7 @@ import ProductMediaSection from "./ProductMediaSection";
 
 export default async function ProductPage({ params }) {
   const product = await fetchHorseted(`/products/${params.id}`);
-  const userData = await fetchHorseted(`/users/${product.userId}`);
+  const sellerData = await fetchHorseted(`/users/${product.userId}`);
   const userProducts = await fetchHorseted(
     `/products?orderBy=createdAt;desc&userId=${product.userId}`
   );
@@ -17,7 +17,7 @@ export default async function ProductPage({ params }) {
           <ProductMediaSection medias={product.medias} />
           <ProductInfoSection
             product={product}
-            userData={userData}
+            sellerData={sellerData}
             userProducts={userProducts}
             params={params}
           />

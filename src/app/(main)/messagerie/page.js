@@ -9,13 +9,14 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
-  const { accessToken } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
-  const [recipientId, setRecipientId] = useState(null);
-  console.log("recipientId =>", recipientId);
+  const [productId, setProductId] = useState(null);
+  console.log("user id =>", user.id);
+  console.log("productId =>", productId);
 
   // TODO start new threads from recipientId and product Id
 
@@ -24,9 +25,9 @@ function ThreadsPage() {
   }, []);
 
   useEffect(() => {
-    const recipientIdParam = searchParams.get("recipientId");
+    const recipientIdParam = searchParams.get("productId");
     if (recipientIdParam) {
-      setRecipientId(recipientIdParam);
+      setProductId(recipientIdParam);
     }
   }, [searchParams]);
 

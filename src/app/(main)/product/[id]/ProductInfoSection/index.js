@@ -10,11 +10,11 @@ import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
 import { formatNumber } from "@/utils/formatNumber";
 import FavoriteButton from "@/components/FavoriteButton";
-import UserBlock from "./UserBlock";
+import SellerBlock from "./SellerBlock";
 
 export default function ProductPageClient({
   product,
-  userData,
+  sellerData,
   userProducts,
   params,
   className,
@@ -70,9 +70,11 @@ export default function ProductPageClient({
     size,
   } = product;
 
+  console.log("productId =>", id);
+
   const formattedDate = formatDate(createdAt);
 
-  const { username, review } = userData;
+  const { username, review } = sellerData;
 
   return (
     <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
@@ -173,7 +175,7 @@ export default function ProductPageClient({
           </tr>
         </tbody>
       </table>
-      <UserBlock user={userData} />
+      <SellerBlock sellerData={sellerData} productId={id} />
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal
