@@ -97,8 +97,8 @@ function ThreadsPage() {
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="border border-darker-grey rounded-3xl my-10 overflow-hidden">
         <div className="flex">
-          <div className="w-1/3">
-            <div className="flex justify-between items-center p-6">
+          <div className="w-1/3 border-e border-darker-grey">
+            <div className="flex justify-between items-center p-6 border-b border-pale-grey">
               <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
                 Messages
               </h1>
