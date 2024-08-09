@@ -62,7 +62,6 @@ function ThreadsPage() {
 
   async function getThreads() {
     const threads = await fetchHorseted("/threads", accessToken);
-    console.log("threads =>", threads);
     setThreads(threads);
   }
 

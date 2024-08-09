@@ -14,6 +14,7 @@ export default function MessageThread({ product, messages, userId }) {
           const isFromUser = userId === senderId;
           return (
             <div
+              key={id}
               className={`border border-pale-grey rounded-md p-6 max-w-[500px] flex flex-1 ${
                 isFromUser ? "self-end" : "align-self-start"
               }`}
