@@ -6,7 +6,6 @@ import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
-import HeartIcon from "@/assets/icons/HeartIcon";
 import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarRating from "@/components/StarRating";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";

@@ -8,10 +8,18 @@ import CityIcon from "@/assets/icons/CityIcon";
 import { useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ReviewCard from "@/components/ReviewCard";
+import CreateBundleModal from "../product/[id]/CreateBundleModal";
 
 function SellerPage() {
   const { user } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
+  const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
+  const [bundle, setBundle] = useState([]);
+  const [bundlePrice, setBundlePrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(5.9);
+
+  const handleOpenCreateBundleModal = () => setIsCreateBundleModalOpen(true);
+  const handleCloseCreateBundleModal = () => setIsCreateBundleModalOpen(false);
 
   // TODO: Fetch products
   // TODO: Fetch reviews
@@ -92,9 +100,14 @@ function SellerPage() {
               nisi ut aliquip
             </p>
           </div>
-          <Button href="/parametres" className="lg:ml-36">
-            Modifier mon profil
-          </Button>
+          <div className="flex gap-3 lg:ml-8">
+            <Button variant="transparent-green" href="/messagerie">
+              Contacter
+            </Button>
+            <Button onClick={handleOpenCreateBundleModal}>
+              Acheter un lot
+            </Button>
+          </div>
         </div>
         <div className="mt-8">
           <div className="flex border-b border-lighter-grey">
@@ -160,6 +173,21 @@ function SellerPage() {
             )}
           </div>
         </div>
+        {isCreateBundleModalOpen && (
+          <CreateBundleModal
+            username={user?.username}
+            review={{ rating: 4.5, count: 6 }}
+            userProducts={{ items: [] }}
+            bundle={bundle}
+            setBundle={setBundle}
+            bundlePrice={bundlePrice}
+            setBundlePrice={setBundlePrice}
+            shippingPrice={shippingPrice}
+            setShippingPrice={setShippingPrice}
+            isCreateBundleModalOpen={isCreateBundleModalOpen}
+            onCloseCreateBundleModal={handleCloseCreateBundleModal}
+          />
+        )}
       </div>
     );
 }
