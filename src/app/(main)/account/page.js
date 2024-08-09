@@ -13,6 +13,7 @@ function AccountPage() {
   const { user } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
 
+  // TODO: Fetch products
   // TODO: Fetch reviews
   const reviews = [
     {
@@ -68,7 +69,6 @@ function AccountPage() {
       comment:
         "Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?",
     },
-    // Add more reviews as needed
   ];
 
   if (user)
@@ -142,7 +142,10 @@ function AccountPage() {
                 </div>
                 <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
                   {reviews.map((review, index) => (
-                    <div key={index} className="break-inside-avoid mb-3">
+                    <div
+                      key={index}
+                      className="flex flex-col items-center break-inside-avoid mb-3"
+                    >
                       <ReviewCard
                         avatarSrc={review.avatarSrc}
                         author={review.author}
