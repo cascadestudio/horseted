@@ -1,4 +1,5 @@
 export default function MessageThread({ product, messages, userId }) {
+  const reversedMessages = [...messages].reverse();
   return (
     <>
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
@@ -7,14 +8,13 @@ export default function MessageThread({ product, messages, userId }) {
           <img src="/icons/thread-info.svg" alt="" />
         </button>
       </div>
-      <div className="p-10 flex flex-col">
-        {messages.map((message) => {
-          console.log("message =>", message);
+      <div className="p-10 flex flex-col gap-y-4">
+        {reversedMessages.map((message) => {
           const { id, content, senderId } = message;
           const isFromUser = userId === senderId;
           return (
             <div
-              className={`border border-pale-grey rounded-md p-6 max-w-[500px] flex flex-1  ${
+              className={`border border-pale-grey rounded-md p-6 max-w-[500px] flex flex-1 ${
                 isFromUser ? "self-end" : "align-self-start"
               }`}
             >

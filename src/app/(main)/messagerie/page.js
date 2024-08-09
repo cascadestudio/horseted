@@ -29,7 +29,6 @@ function ThreadsPage() {
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
     if (productIdParam) {
-      // getProduct(productIdParam)
       setProductId(productIdParam);
     }
   }, [searchParams]);
@@ -50,11 +49,8 @@ function ThreadsPage() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    // for (let [key, value] of formData.entries()) {
-    //   console.log(`formData => ${key}: ${value}`);
-    // }
-    await postMessage(formData);
+    const message = e.target.content.value;
+    await postMessage(message);
     getMessages(threadId);
   }
 
@@ -63,6 +59,39 @@ function ThreadsPage() {
     { label: "Mon compte", href: "/account" },
     { label: "Messagerie" },
   ];
+
+  async function getThreads() {
+    const threads = await fetchHorseted("/threads", accessToken);
+    console.log("threads =>", threads);
+    setThreads(threads);
+  }
+
+  async function getMessages(id) {
+    const messages = await fetchHorseted(
+      `/threads/${id}/messages`,
+      accessToken
+    );
+    setMessages(messages);
+  }
+
+  async function getProduct(productId) {
+    const product = await fetchHorseted(`/products/${productId}`);
+    setProduct(product);
+  }
+
+  async function postMessage(message) {
+    const body = {
+      content: message,
+    };
+    const response = await fetchHorseted(
+      `/threads/${threadId}/messages`,
+      accessToken,
+      "POST",
+      body,
+      true
+    );
+    console.log("postMessageresponse =>", response);
+  }
 
   return (
     <div className="container mx-auto">
@@ -119,35 +148,6 @@ function ThreadsPage() {
       </div>
     </div>
   );
-
-  async function getThreads() {
-    const threads = await fetchHorseted("/threads", accessToken);
-    console.log("threads =>", threads);
-    setThreads(threads);
-  }
-
-  async function getMessages(id) {
-    const messages = await fetchHorseted(
-      `/threads/${id}/messages`,
-      accessToken
-    );
-    setMessages(messages);
-  }
-
-  async function getProduct(productId) {
-    const product = await fetchHorseted(`/products/${productId}`);
-    setProduct(product);
-  }
-
-  async function postMessage(formData) {
-    const response = await fetchHorseted(
-      `/threads/${threadId}/messages`,
-      accessToken,
-      "POST",
-      formData
-    );
-    console.log("postMessageresponse =>", response);
-  }
 }
 
 export default withAuth(ThreadsPage);
