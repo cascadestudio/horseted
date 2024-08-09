@@ -32,13 +32,19 @@ export default function ThreadList({ threads, handleThreadClick }) {
                 className="flex-none"
               />
               <div className="flex-1 min-w-0">
-                <h2 className="font-bold">{authors[0].username}</h2>
+                <div className="flex items-center">
+                  <h2 className="font-bold mr-2">{authors[0].username}</h2>
+                  {!lastMessage.seen && (
+                    <div className="w-[10px] h-[10px] bg-red rounded-full"></div>
+                  )}
+                </div>
                 <p className="text-darker-grey truncate">
                   {lastMessage.content}
                 </p>
               </div>
               <p className="font-poppins font-medium self-start flex text-sm">
                 {formatDate(lastMessage.createdAt)}
+                {/* TODO date in hours if less than one day ago and in nb of days if less than one week */}
               </p>
             </button>
           </li>

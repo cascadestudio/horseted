@@ -127,19 +127,26 @@ function ThreadsPage() {
             )}
             <form
               onSubmit={handleSubmit}
-              className="flex flex-col space-y-4 p-4 border border-gray-300 rounded-md"
+              className="flex gap-4 p-4 border-t border-darker-grey"
             >
+              <button>
+                <img src="/icons/media-message.svg" alt="" />
+              </button>
               <textarea
+                placeholder="Aa"
                 id="content"
                 name="content"
-                className="p-2 border border-gray-300 rounded-md"
-                rows="4"
+                className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
+                rows="1"
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
               >
-                Submit
+                Envoyer
+                <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
+                  <img src="/icons/send-message.svg" alt="" />
+                </span>
               </button>
             </form>
           </div>
