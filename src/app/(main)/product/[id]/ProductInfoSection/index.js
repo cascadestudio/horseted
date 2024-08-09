@@ -11,6 +11,10 @@ import OfferModal from "./OfferModal";
 import { formatNumber } from "@/utils/formatNumber";
 import FavoriteButton from "@/components/FavoriteButton";
 import SellerBlock from "./SellerBlock";
+import {
+  stateTranslations,
+  shippingSizeTranslations,
+} from "@/utils/translations";
 
 export default function ProductPageClient({
   product,
@@ -151,7 +155,11 @@ export default function ProductPageClient({
           </tr>
           <tr>
             <td>État</td>
-            <td>{state && <Link href="#">{state}</Link>}</td>
+            <td>
+              {state && (
+                <Link href="#">{stateTranslations[state] || state}</Link>
+              )}
+            </td>
           </tr>
           <tr>
             <td>Couleurs</td>
@@ -171,7 +179,13 @@ export default function ProductPageClient({
           </tr>
           <tr>
             <td>Taille du colis</td>
-            <td>{shipping && <Link href="#">{shipping}</Link>}</td>
+            <td>
+              {shipping && (
+                <Link href="#">
+                  {shippingSizeTranslations[shipping] || shipping}
+                </Link>
+              )}
+            </td>
           </tr>
         </tbody>
       </table>
