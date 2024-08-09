@@ -8,7 +8,7 @@ export default function MessageThread({ product, messages, userId }) {
           <img src="/icons/thread-info.svg" alt="" />
         </button>
       </div>
-      <div className="p-10 flex flex-col gap-y-4">
+      <div className="p-10 flex flex-col gap-y-4 max-h-[500px] overflow-y-scroll">
         {reversedMessages.map((message) => {
           const { id, content, senderId } = message;
           const isFromUser = userId === senderId;

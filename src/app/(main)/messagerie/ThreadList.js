@@ -2,6 +2,7 @@ export default function ThreadList({ threads, handleThreadClick }) {
   return (
     <ul>
       {threads.map((thread) => {
+        console.log("thread =>", thread);
         const { id, productId, authors } = thread;
         return (
           <li key={id}>

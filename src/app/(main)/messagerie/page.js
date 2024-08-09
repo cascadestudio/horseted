@@ -17,10 +17,10 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [productId, setProductId] = useState(null);
-  console.log("user id =>", user.id);
-  console.log("productId =>", productId);
+  // console.log("user id =>", user.id);
+  // console.log("productId =>", productId);
 
-  // TODO start new threads from recipientId and product Id
+  // TODO start new threads from product Id
 
   useEffect(() => {
     getThreads();
