@@ -6,6 +6,8 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import MessageThread from "./MessageThread";
+import ThreadList from "./ThreadList";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
@@ -25,9 +27,10 @@ function ThreadsPage() {
   }, []);
 
   useEffect(() => {
-    const recipientIdParam = searchParams.get("productId");
-    if (recipientIdParam) {
-      setProductId(recipientIdParam);
+    const productIdParam = searchParams.get("productId");
+    if (productIdParam) {
+      // getProduct(productIdParam)
+      setProductId(productIdParam);
     }
   }, [searchParams]);
 
@@ -64,7 +67,7 @@ function ThreadsPage() {
   return (
     <div className="container mx-auto">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="border border-darker-grey rounded-3xl my-10">
+      <div className="border border-darker-grey rounded-3xl my-10 overflow-hidden">
         <div className="flex">
           <div className="w-1/3">
             <div className="flex justify-between items-center p-6">
@@ -76,35 +79,17 @@ function ThreadsPage() {
               </button>
             </div>
             {threads.length !== 0 ? (
-              <ul>
-                {threads.map((thread) => {
-                  const { id, productId, authors } = thread;
-                  return (
-                    <li key={id}>
-                      <button onClick={() => handleThreadClick(id, productId)}>
-                        {authors[0].username}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
+              <ThreadList
+                threads={threads}
+                handleThreadClick={handleThreadClick}
+              />
             ) : (
               <p>Pas de messages</p>
             )}
           </div>
-          <div>
+          <div className="w-2/3 bg-white">
             {product && messages.length !== 0 ? (
-              <div>
-                <h2>{product.title}</h2>
-                {messages.map((message) => {
-                  const { id, content, createdAt } = message;
-                  return (
-                    <p key={id}>
-                      {content} {createdAt}
-                    </p>
-                  );
-                })}
-              </div>
+              <MessageThread product={product} messages={messages} />
             ) : (
               <p>Pas de messages</p>
             )}
@@ -112,9 +97,6 @@ function ThreadsPage() {
               onSubmit={handleSubmit}
               className="flex flex-col space-y-4 p-4 border border-gray-300 rounded-md"
             >
-              <label htmlFor="message" className="text-lg font-semibold">
-                Message:
-              </label>
               <textarea
                 id="content"
                 name="content"
