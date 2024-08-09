@@ -84,12 +84,16 @@ function ThreadsPage() {
                 handleThreadClick={handleThreadClick}
               />
             ) : (
-              <p>Pas de messages</p>
+              <p>Pas de convesations</p>
             )}
           </div>
           <div className="w-2/3 bg-white">
             {product && messages.length !== 0 ? (
-              <MessageThread product={product} messages={messages} />
+              <MessageThread
+                product={product}
+                messages={messages}
+                userId={user.id}
+              />
             ) : (
               <p>Pas de messages</p>
             )}
