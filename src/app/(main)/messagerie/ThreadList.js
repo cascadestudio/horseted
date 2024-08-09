@@ -21,9 +21,12 @@ export default function ThreadList({ threads, handleThreadClick }) {
         const { id, productId, authors } = thread;
         return (
           <li key={id}>
-            <button onClick={() => handleThreadClick(id, productId)}>
-              <AvatarDisplay avatarSrc={avatarSrc} />
-              {authors[0].username}
+            <button
+              onClick={() => handleThreadClick(id, productId)}
+              className="flex p-4 items-center gap-4 border-b border-pale-grey w-full"
+            >
+              <AvatarDisplay avatarSrc={avatarSrc} size="sm" />
+              <h2 className="font-bold">{authors[0].username}</h2>
             </button>
           </li>
         );
