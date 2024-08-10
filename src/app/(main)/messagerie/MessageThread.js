@@ -5,6 +5,8 @@ import "@/app/styles/globals.css";
 export default function MessageThread({ product, messages, userId }) {
   const [seller, setSeller] = useState({});
 
+  // console.log("seller =>", seller);
+
   useEffect(() => {
     if (!product) return;
 
@@ -46,7 +48,8 @@ export default function MessageThread({ product, messages, userId }) {
           })
         ) : (
           <div className="message-container self-start">
-            <p>Bonjour, moi c’est Alexandra</p>
+            <p>Bonjour, moi c’est {seller.username}</p>
+            {/* TODO Clem : intégration premier message vendeur */}
           </div>
         )}
       </div>

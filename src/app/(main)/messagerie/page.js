@@ -17,7 +17,7 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
 
-  console.log("product =>", product);
+  // console.log("product =>", product);
 
   useEffect(() => {
     getThreads();
