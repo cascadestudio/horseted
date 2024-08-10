@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function ThreadList({ threads, handleThreadClick }) {
   const [avatarSrc, setAvatarSrc] = useState(null);
-  console.log("threads =>", threads);
+  // console.log("threads =>", threads);
   useEffect(() => {
     const avatarFile = threads[0].authors[0].avatar.files.thumbnail200;
     fetchAvatar(avatarFile);

@@ -16,11 +16,8 @@ function ThreadsPage() {
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
-  const [productId, setProductId] = useState(null);
-  // console.log("user id =>", user.id);
-  // console.log("productId =>", productId);
 
-  // TODO start new threads from product Id
+  console.log("product =>", product);
 
   useEffect(() => {
     getThreads();
@@ -28,18 +25,20 @@ function ThreadsPage() {
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
-    if (productIdParam) {
-      setProductId(productIdParam);
+    if (productIdParam !== null) {
+      getProduct(productIdParam);
+    } else {
+      initWithLastThread();
     }
-  }, [searchParams]);
+  }, [searchParams, threads]);
 
-  useEffect(() => {
+  const initWithLastThread = () => {
     if (threads.length !== 0) {
       setThreadId(threads[0].id);
       getMessages(threads[0].id);
       getProduct(threads[0].productId);
     }
-  }, [threads]);
+  };
 
   function handleThreadClick(id, productId) {
     setThreadId(id);
@@ -89,13 +88,12 @@ function ThreadsPage() {
       body,
       true
     );
-    console.log("postMessageresponse =>", response);
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto pb-10">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="border border-darker-grey rounded-3xl my-10 overflow-hidden">
+      <div className="border border-darker-grey rounded-3xl overflow-hidden mt-10">
         <div className="flex">
           <div className="w-1/3 border-e border-darker-grey">
             <div className="flex justify-between items-center p-6 border-b border-pale-grey">
@@ -116,15 +114,11 @@ function ThreadsPage() {
             )}
           </div>
           <div className="w-2/3 bg-white">
-            {product && messages.length !== 0 ? (
-              <MessageThread
-                product={product}
-                messages={messages}
-                userId={user.id}
-              />
-            ) : (
-              <p>Pas de messages</p>
-            )}
+            <MessageThread
+              product={product}
+              messages={messages}
+              userId={user.id}
+            />
             <form
               onSubmit={handleSubmit}
               className="flex gap-4 p-4 border-t border-darker-grey"
