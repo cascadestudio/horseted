@@ -13,15 +13,19 @@ function ThreadsPage() {
   const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
-  const [threadId, setThreadId] = useState(null);
+  const [activeThreadId, setActiveThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
 
-  // console.log("product =>", product);
+  console.log("activeThreadId =>", activeThreadId);
 
   useEffect(() => {
     getThreads();
   }, []);
+
+  useEffect(() => {
+    getMessages(activeThreadId);
+  }, [activeThreadId]);
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
@@ -34,14 +38,14 @@ function ThreadsPage() {
 
   const initWithLastThread = () => {
     if (threads.length !== 0) {
-      setThreadId(threads[0].id);
+      setActiveThreadId(threads[0].id);
       getMessages(threads[0].id);
       getProduct(threads[0].productId);
     }
   };
 
   function handleThreadClick(id, productId) {
-    setThreadId(id);
+    setActiveThreadId(id);
     getMessages(id);
     getProduct(productId);
   }
@@ -49,15 +53,14 @@ function ThreadsPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     const message = e.target.content.value;
-    await postMessage(message);
-    getMessages(threadId);
+    if (activeThreadId === null) {
+      console.log("creating new thread");
+      await postThread(message);
+      await getThreads();
+    } else {
+      await postMessage(message);
+    }
   }
-
-  const breadcrumbs = [
-    { label: "Accueil", href: "/" },
-    { label: "Mon compte", href: "/account" },
-    { label: "Messagerie" },
-  ];
 
   async function getThreads() {
     const threads = await fetchHorseted("/threads", accessToken);
@@ -81,14 +84,37 @@ function ThreadsPage() {
     const body = {
       content: message,
     };
-    const response = await fetchHorseted(
-      `/threads/${threadId}/messages`,
+    await fetchHorseted(
+      `/threads/${activeThreadId}/messages`,
       accessToken,
       "POST",
       body,
       true
     );
   }
+
+  async function postThread(message) {
+    const body = {
+      userId: user.id,
+      productId: product.id,
+      content: message,
+      // medias: [0],
+    };
+    const newThread = await fetchHorseted(
+      `/threads`,
+      accessToken,
+      "POST",
+      body,
+      true
+    );
+    setActiveThreadId(newThread.id);
+  }
+
+  const breadcrumbs = [
+    { label: "Accueil", href: "/" },
+    { label: "Mon compte", href: "/account" },
+    { label: "Messagerie" },
+  ];
 
   return (
     <div className="container mx-auto pb-10">
