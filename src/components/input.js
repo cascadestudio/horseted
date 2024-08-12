@@ -9,9 +9,12 @@ export const TextInput = ({
   disabled,
   className,
   type = "text",
+  hideLabel = false,
 }) => (
   <label htmlFor={name} className={`w-full mx-2 ${className}`}>
-    <p className="label font-mcqueen font-semibold">{label} :</p>
+    {!hideLabel && (
+      <p className="label font-mcqueen font-semibold">{label} :</p>
+    )}
     {type === "textarea" ? (
       <textarea
         placeholder={placeholder}

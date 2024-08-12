@@ -3,7 +3,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
+export default function MaterialSelect({
+  activeMaterials = [],
+  onMaterialsChange,
+  className,
+  isBlack,
+}) {
   const [materials, setMaterials] = useState([]);
 
   useEffect(() => {
@@ -34,7 +39,12 @@ export default function MaterialSelect({ activeMaterials, onMaterialsChange }) {
   };
 
   return (
-    <Dropdown title="Matières" isActive={activeMaterials.length > 0}>
+    <Dropdown
+      className={className}
+      isBlack={isBlack}
+      title="Matières"
+      isActive={activeMaterials.length > 0}
+    >
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
         {materials.map(({ name }) => (
           <label

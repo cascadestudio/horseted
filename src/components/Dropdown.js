@@ -1,7 +1,13 @@
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import { useEffect, useRef, useState } from "react";
 
-export default function Dropdown({ title, children, className, isActive }) {
+export default function Dropdown({
+  title,
+  children,
+  className,
+  isActive,
+  isBlack,
+}) {
   const panelRef = useRef();
   const buttonRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,16 +32,23 @@ export default function Dropdown({ title, children, className, isActive }) {
     <div className={className} ref={panelRef}>
       <button
         onClick={handleClick}
-        className={`flex items-center border px-5 py-2 rounded-xl font-mcqueen font-semibold ${
-          isActive
+        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${
+          isBlack
+            ? "text-black border-black"
+            : isActive
             ? "border-light-green text-light-green bg-lighter-green"
-            : "text-medium-grey border-medium-grey"
-        }`}
+            : "text-medium-grey border-medium-grey "
+        }
+        ${className}`}
       >
         {title}
         <svg
           className={`ml-2 ${
-            isActive ? " stroke-light-green" : "stroke-medium-grey"
+            isBlack
+              ? "stroke-black"
+              : isActive
+              ? " stroke-light-green"
+              : "stroke-medium-grey"
           }`}
           width="10"
           height="7"
@@ -52,7 +65,11 @@ export default function Dropdown({ title, children, className, isActive }) {
         </svg>
       </button>
       {isOpen && (
-        <div className="absolute bg-light-grey border border-light-green rounded-xl p-5 mt-2 z-10">
+        <div
+          className={`absolute bg-light-grey border ${
+            isBlack ? "border-black" : "border-light-green"
+          } rounded-xl p-5 mt-2 z-10 ${className}`}
+        >
           {children}
         </div>
       )}

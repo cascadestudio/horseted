@@ -1,7 +1,12 @@
 import Dropdown from "@/components/Dropdown";
 import Radio from "@/components/input/Radio";
 
-export default function StateSelect({ onStateChange, activeState }) {
+export default function StateSelect({
+  onStateChange,
+  activeState,
+  className,
+  isBlack,
+}) {
   const states = [
     {
       label: "Neuf avec emballage",
@@ -36,8 +41,13 @@ export default function StateSelect({ onStateChange, activeState }) {
   ];
 
   return (
-    <Dropdown title="État" isActive={activeState !== ""}>
-      <div className="flex flex-col gap-y-4 max-w-96">
+    <Dropdown
+      title="État"
+      className={className}
+      isBlack={isBlack}
+      isActive={activeState !== ""}
+    >
+      <div className={`flex flex-col gap-y-4 max-w-96 ${className}`}>
         {states.map((state, index) => {
           const { label, param, description } = state;
           return (
