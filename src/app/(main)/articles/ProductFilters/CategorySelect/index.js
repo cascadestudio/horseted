@@ -10,6 +10,9 @@ import NextArrow from "@/assets/icons/NextArrow";
 export default function CategorySelect({
   onClickProductCategory,
   activeCategory,
+  className,
+  isBlack,
+  title = "Catégorie",
 }) {
   const [parentCategories, setParentCategories] = useState([]);
   const [activeParentCategory, setActiveParentCategory] = useState(null);
@@ -42,7 +45,12 @@ export default function CategorySelect({
   }
 
   return (
-    <Dropdown title="Catégorie" isActive={activeCategory !== null}>
+    <Dropdown
+      className={className}
+      title={title}
+      isActive={activeCategory !== null}
+      isBlack={isBlack}
+    >
       <div className="min-w-64 min-h-64">
         {activeParentCategory === null && activeSubCategory === null && (
           <div className="flex flex-col gap-y-4">

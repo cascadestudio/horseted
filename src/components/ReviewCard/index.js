@@ -9,7 +9,7 @@ export default function ReviewCard({
   comment,
 }) {
   return (
-    <div className="flex border border-lighter-grey rounded-lg p-5 gap-2 max-w-[420px]">
+    <div className="flex border border-lighter-grey rounded-lg p-5 gap-2 w-full max-w-[420px]">
       <AvatarDisplay src={avatarSrc} className="h-10 w-10" />
       <div>
         <div className="flex items-center justify-between">

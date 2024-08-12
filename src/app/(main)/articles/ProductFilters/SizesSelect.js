@@ -4,9 +4,11 @@ import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
 
 export default function SizesSelect({
-  activeSizes,
+  activeSizes = [],
   categoryId,
   setActiveSizes,
+  className,
+  isBlack,
 }) {
   const [sizes, setSizes] = useState([]);
 
@@ -35,7 +37,12 @@ export default function SizesSelect({
   };
 
   return (
-    <Dropdown title="Tailles" isActive={activeSizes.length > 0}>
+    <Dropdown
+      className={className}
+      title="Tailles"
+      isActive={activeSizes.length > 0}
+      isBlack={isBlack}
+    >
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
         {sizes.map((size) => {
           const { id, value } = size;
