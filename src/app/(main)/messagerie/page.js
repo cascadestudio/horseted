@@ -17,7 +17,8 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
 
-  console.log("activeThreadId =>", activeThreadId);
+  // console.log("threads =>", threads);
+  // console.log("activeThreadId =>", activeThreadId);
 
   useEffect(() => {
     getThreads();
@@ -31,7 +32,15 @@ function ThreadsPage() {
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
-    if (productIdParam !== null) {
+
+    if (productIdParam && threads.length > 0) {
+      const thread = threads.find((thread) =>
+        String(thread.productId).includes(productIdParam)
+      );
+
+      if (thread) {
+        setActiveThreadId(thread.id);
+      }
       getProduct(productIdParam);
     } else {
       initWithLastThread();
