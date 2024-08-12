@@ -23,11 +23,11 @@ function ThreadsPage() {
     getThreads();
   }, []);
 
-  // useEffect(() => {
-  //   if (activeThreadId !== null) {
-  //     getMessages(activeThreadId);
-  //   }
-  // }, [activeThreadId]);
+  useEffect(() => {
+    if (activeThreadId !== null) {
+      getMessages(activeThreadId);
+    }
+  }, [activeThreadId]);
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
@@ -61,6 +61,7 @@ function ThreadsPage() {
       await getThreads();
     } else {
       await postMessage(message);
+      getMessages(activeThreadId);
     }
   }
 
