@@ -2,7 +2,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import "@/app/styles/globals.css";
 
-export default function MessageThread({ product, messages, userId }) {
+export default function MessageThread({
+  product,
+  messages,
+  userId,
+  handleSubmit,
+}) {
   const [seller, setSeller] = useState({});
 
   // console.log("seller =>", seller);
@@ -51,6 +56,30 @@ export default function MessageThread({ product, messages, userId }) {
             );
           })}
       </ul>
+      <form
+        onSubmit={handleSubmit}
+        className="flex gap-4 p-4 border-t border-darker-grey"
+      >
+        <button>
+          <img src="/icons/media-message.svg" alt="" />
+        </button>
+        <textarea
+          placeholder="Aa"
+          id="content"
+          name="content"
+          className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
+          rows="1"
+        />
+        <button
+          type="submit"
+          className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
+        >
+          Envoyer
+          <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
+            <img src="/icons/send-message.svg" alt="" />
+          </span>
+        </button>
+      </form>
     </>
   );
 }

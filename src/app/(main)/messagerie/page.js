@@ -8,6 +8,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
+import NewMessageSearch from "./NewMessageSearch";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
@@ -16,6 +17,7 @@ function ThreadsPage() {
   const [activeThreadId, setActiveThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
+  const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
 
   // console.log("threads =>", threads);
   // console.log("activeThreadId =>", activeThreadId);
@@ -137,7 +139,7 @@ function ThreadsPage() {
             <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
               Messages
             </h1>
-            <button>
+            <button onClick={() => setIsNewMessageSearch(!isNewMessageSearch)}>
               <img src="/icons/new-message.svg" alt="Nouveau message" />
             </button>
           </div>
@@ -152,35 +154,16 @@ function ThreadsPage() {
           )}
         </div>
         <div className="w-2/3 bg-white flex flex-col">
-          <MessageThread
-            product={product}
-            messages={messages}
-            userId={user.id}
-          />
-          <form
-            onSubmit={handleSubmit}
-            className="flex gap-4 p-4 border-t border-darker-grey"
-          >
-            <button>
-              <img src="/icons/media-message.svg" alt="" />
-            </button>
-            <textarea
-              placeholder="Aa"
-              id="content"
-              name="content"
-              className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
-              rows="1"
+          {isNewMessageSearch ? (
+            <NewMessageSearch />
+          ) : (
+            <MessageThread
+              product={product}
+              messages={messages}
+              userId={user.id}
+              handleSubmit={handleSubmit}
             />
-            <button
-              type="submit"
-              className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
-            >
-              Envoyer
-              <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
-                <img src="/icons/send-message.svg" alt="" />
-              </span>
-            </button>
-          </form>
+          )}
         </div>
       </div>
     </div>
