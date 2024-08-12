@@ -14,18 +14,24 @@ export default function SearchBar({ className }) {
   }
 
   return (
-    <div className="p-7">
+    <div className="p-7 flex flex-col">
       <input
         className={`pl-5 border border-pale-grey rounded-full h-11 w-full ${className}`}
         type="text"
         placeholder="Rechercher un membre"
         onChange={(e) => handleSearchChange(e)}
       />
-      {users.length > 0 ? (
-        users.map(({ id, username }) => <div key={id}>{username}</div>)
-      ) : (
-        <p>Aucun résultat</p>
-      )}
+      <ul className="overflow-y-scroll h-[500px]">
+        {users.length > 0 ? (
+          users.map(({ id, username }) => (
+            <li key={id} className="p-5">
+              {username}
+            </li>
+          ))
+        ) : (
+          <p className="p-5">Aucun résultat</p>
+        )}
+      </ul>
     </div>
   );
 }
