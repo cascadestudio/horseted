@@ -30,27 +30,27 @@ export default function MessageThread({ product, messages, userId }) {
           <img src="/icons/thread-info.svg" alt="Thread Info" />
         </button>
       </div>
-      <div className="p-10 flex flex-col gap-y-4 max-h-[500px] overflow-y-scroll">
-        <div className="message-container self-start">
+      <ul className="p-10 flex flex-col gap-y-4 overflow-y-scroll flex-1">
+        <li className="message-container self-start">
           <p>Bonjour, moi c’est {seller.username}</p>
           {/* TODO Clem : intégration premier message vendeur */}
-        </div>
+        </li>
         {messages.length > 0 &&
           reversedMessages.map((message) => {
             const { id, content, senderId } = message;
             const isFromUser = userId === senderId;
             return (
-              <div
+              <li
                 key={id}
                 className={`message-container ${
                   isFromUser ? "self-end" : "self-start"
                 }`}
               >
                 <p>{content}</p>
-              </div>
+              </li>
             );
           })}
-      </div>
+      </ul>
     </>
   );
 }

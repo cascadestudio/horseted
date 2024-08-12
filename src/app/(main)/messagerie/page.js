@@ -121,58 +121,56 @@ function ThreadsPage() {
   return (
     <div className="container mx-auto pb-10">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="border border-darker-grey rounded-3xl overflow-hidden mt-10">
-        <div className="flex">
-          <div className="w-1/3 border-e border-darker-grey">
-            <div className="flex justify-between items-center p-6 border-b border-pale-grey">
-              <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
-                Messages
-              </h1>
-              <button>
-                <img src="/icons/new-message.svg" alt="Nouveau message" />
-              </button>
-            </div>
-            {threads.length !== 0 ? (
-              <ThreadList
-                threads={threads}
-                handleThreadClick={handleThreadClick}
-                activeThreadId={activeThreadId}
-              />
-            ) : (
-              <p>Pas de convesations</p>
-            )}
+      <div className="border border-darker-grey rounded-3xl overflow-hidden mt-10 flex h-[580px]">
+        <div className="w-1/3 border-e border-darker-grey flex flex-col">
+          <div className="flex justify-between items-center p-6 border-b border-pale-grey">
+            <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
+              Messages
+            </h1>
+            <button>
+              <img src="/icons/new-message.svg" alt="Nouveau message" />
+            </button>
           </div>
-          <div className="w-2/3 bg-white">
-            <MessageThread
-              product={product}
-              messages={messages}
-              userId={user.id}
+          {threads.length !== 0 ? (
+            <ThreadList
+              threads={threads}
+              handleThreadClick={handleThreadClick}
+              activeThreadId={activeThreadId}
             />
-            <form
-              onSubmit={handleSubmit}
-              className="flex gap-4 p-4 border-t border-darker-grey"
+          ) : (
+            <p>Pas de convesations</p>
+          )}
+        </div>
+        <div className="w-2/3 bg-white flex flex-col">
+          <MessageThread
+            product={product}
+            messages={messages}
+            userId={user.id}
+          />
+          <form
+            onSubmit={handleSubmit}
+            className="flex gap-4 p-4 border-t border-darker-grey"
+          >
+            <button>
+              <img src="/icons/media-message.svg" alt="" />
+            </button>
+            <textarea
+              placeholder="Aa"
+              id="content"
+              name="content"
+              className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
+              rows="1"
+            />
+            <button
+              type="submit"
+              className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
             >
-              <button>
-                <img src="/icons/media-message.svg" alt="" />
-              </button>
-              <textarea
-                placeholder="Aa"
-                id="content"
-                name="content"
-                className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
-                rows="1"
-              />
-              <button
-                type="submit"
-                className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
-              >
-                Envoyer
-                <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
-                  <img src="/icons/send-message.svg" alt="" />
-                </span>
-              </button>
-            </form>
-          </div>
+              Envoyer
+              <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
+                <img src="/icons/send-message.svg" alt="" />
+              </span>
+            </button>
+          </form>
         </div>
       </div>
     </div>

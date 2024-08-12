@@ -21,7 +21,7 @@ export default function ThreadList({
   }
 
   return (
-    <ul className="overflow-y-scroll max-h-[500px]">
+    <ul className="overflow-y-scroll">
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
         const isActive = id === activeThreadId;
