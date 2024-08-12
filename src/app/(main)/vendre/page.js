@@ -16,6 +16,7 @@ export default function SellPage() {
       <div className="bg-white">
         <div className="flex justify-between container mx-auto px-5 py-2">
           <div className="flex items-center">
+            {/* add logic to close btn */}
             <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
             <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
               Vendre un article
