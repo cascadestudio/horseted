@@ -23,9 +23,11 @@ function ThreadsPage() {
     getThreads();
   }, []);
 
-  useEffect(() => {
-    getMessages(activeThreadId);
-  }, [activeThreadId]);
+  // useEffect(() => {
+  //   if (activeThreadId !== null) {
+  //     getMessages(activeThreadId);
+  //   }
+  // }, [activeThreadId]);
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
@@ -134,6 +136,7 @@ function ThreadsPage() {
               <ThreadList
                 threads={threads}
                 handleThreadClick={handleThreadClick}
+                activeThreadId={activeThreadId}
               />
             ) : (
               <p>Pas de convesations</p>

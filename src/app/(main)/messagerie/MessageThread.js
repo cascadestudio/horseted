@@ -31,7 +31,11 @@ export default function MessageThread({ product, messages, userId }) {
         </button>
       </div>
       <div className="p-10 flex flex-col gap-y-4 max-h-[500px] overflow-y-scroll">
-        {messages.length > 0 ? (
+        <div className="message-container self-start">
+          <p>Bonjour, moi c’est {seller.username}</p>
+          {/* TODO Clem : intégration premier message vendeur */}
+        </div>
+        {messages.length > 0 &&
           reversedMessages.map((message) => {
             const { id, content, senderId } = message;
             const isFromUser = userId === senderId;
@@ -45,13 +49,7 @@ export default function MessageThread({ product, messages, userId }) {
                 <p>{content}</p>
               </div>
             );
-          })
-        ) : (
-          <div className="message-container self-start">
-            <p>Bonjour, moi c’est {seller.username}</p>
-            {/* TODO Clem : intégration premier message vendeur */}
-          </div>
-        )}
+          })}
       </div>
     </>
   );

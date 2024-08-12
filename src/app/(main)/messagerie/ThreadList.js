@@ -3,7 +3,11 @@ import { formatDate } from "@/utils/formatDate";
 import getImage from "@/utils/getImage";
 import { useEffect, useState } from "react";
 
-export default function ThreadList({ threads, handleThreadClick }) {
+export default function ThreadList({
+  threads,
+  handleThreadClick,
+  activeThreadId,
+}) {
   const [avatarSrc, setAvatarSrc] = useState(null);
   // console.log("threads =>", threads);
   useEffect(() => {
@@ -17,14 +21,17 @@ export default function ThreadList({ threads, handleThreadClick }) {
   }
 
   return (
-    <ul>
+    <ul className="overflow-y-scroll max-h-[500px]">
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
+        const isActive = id === activeThreadId;
         return (
           <li key={id}>
             <button
               onClick={() => handleThreadClick(id, productId)}
-              className="flex p-4 items-center justify-start gap-4 border-b border-pale-grey w-full text-left"
+              className={`flex p-4 items-center justify-start gap-4 border-b border-pale-grey w-full text-left ${
+                isActive && "bg-white"
+              }`}
             >
               <AvatarDisplay
                 avatarSrc={avatarSrc}
