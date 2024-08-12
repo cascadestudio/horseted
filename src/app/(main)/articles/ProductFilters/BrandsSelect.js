@@ -3,7 +3,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function BrandSelect({ activeBrands, onBrandsChange }) {
+export default function BrandSelect({
+  activeBrands = [],
+  onBrandsChange,
+  className,
+  isBlack,
+}) {
   const [brands, setBrands] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,7 +46,12 @@ export default function BrandSelect({ activeBrands, onBrandsChange }) {
   };
 
   return (
-    <Dropdown title="Marques" isActive={activeBrands.length > 0}>
+    <Dropdown
+      className={className}
+      title="Marques"
+      isActive={activeBrands.length > 0}
+      isBlack={isBlack}
+    >
       <div className="flex flex-col">
         <div className="flex items-center mb-4 border-black border-b">
           <img

@@ -5,12 +5,12 @@ import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
 import profilePicture from "@/assets/images/profilePicture.jpg";
 import Image from "next/image";
-import StarIcon from "@/assets/icons/StarIcon";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
 import BundleSummaryModal from "./BundleSummaryModal";
 import OfferModal from "../ProductInfoSection/OfferModal";
+import StarRating from "@/components/StarRating";
 
 export default function CreateBundleModal({
   username,
@@ -87,14 +87,7 @@ export default function CreateBundleModal({
               />
               <div className="ml-4">
                 <h4 className="font-bold">{username}</h4>
-                <div className="flex items-center">
-                  <StarIcon className="h-3 w-auto lg:h-5" />
-                  <StarIcon className="h-3 w-auto lg:h-5" />
-                  <StarIcon className="h-3 w-auto lg:h-5" />
-                  <StarIcon className="h-3 w-auto lg:h-5" />
-                  <StarIcon className="h-3 w-auto lg:h-5" />
-                  <span className="text-sm ml-2">({review.count})</span>
-                </div>
+                <StarRating rating={review.rating} count={review.count} />
               </div>
             </div>
           </div>
