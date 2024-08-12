@@ -3,17 +3,14 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 
 export default function SearchBar({ className }) {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && searchTerm.trim() !== "") {
-      getUsers();
-    }
+  const [users, setUsers] = useState([]);
+  const handleSearchChange = (e) => {
+    getUsers(e.target.value);
   };
 
-  async function getUsers() {
+  async function getUsers(searchTerm) {
     const users = await fetchHorseted(`/users?terms=${searchTerm}`);
-    console.log("users =>", users);
+    setUsers(users.items);
   }
 
   return (
@@ -22,10 +19,13 @@ export default function SearchBar({ className }) {
         className={`pl-5 border border-pale-grey rounded-full h-11 w-full ${className}`}
         type="text"
         placeholder="Rechercher un membre"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyDown={handleKeyDown}
+        onChange={(e) => handleSearchChange(e)}
       />
+      {users.length > 0 ? (
+        users.map(({ id, username }) => <div key={id}>{username}</div>)
+      ) : (
+        <p>Aucun résultat</p>
+      )}
     </div>
   );
 }
