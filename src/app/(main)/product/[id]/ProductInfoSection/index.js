@@ -1,19 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
-import profilePicture from "@/assets/images/profilePicture.jpg";
-import StarRating from "@/components/StarRating";
-import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { formatDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
 import { formatNumber } from "@/utils/formatNumber";
 import FavoriteButton from "@/components/FavoriteButton";
+import SellerBlock from "./SellerBlock";
 import {
   stateTranslations,
   shippingSizeTranslations,
@@ -21,7 +18,7 @@ import {
 
 export default function ProductPageClient({
   product,
-  userData,
+  sellerData,
   userProducts,
   params,
   className,
@@ -77,9 +74,12 @@ export default function ProductPageClient({
     size,
   } = product;
 
+  console.log("productId =>", id);
+
   const formattedDate = formatDate(createdAt);
 
-  const { username, review } = userData;
+  const { username, review } = sellerData;
+
   return (
     <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
@@ -189,39 +189,7 @@ export default function ProductPageClient({
           </tr>
         </tbody>
       </table>
-      <div className="flex justify-between w-full mt-3 mb-5">
-        <div className="flex">
-          <Image
-            src={profilePicture}
-            alt="Photo de profil"
-            className="h-14 w-14 object-cover rounded-full"
-          />
-          <div className="flex flex-col justify-center min-w-0">
-            <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate">
-              {username}
-            </h4>
-            <StarRating
-              className="ml-3"
-              rating={review.rating}
-              count={review.count}
-            />
-          </div>
-        </div>
-        <div className="flex items-center">
-          <Link
-            href="#"
-            className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
-          >
-            <MessageGreenIcon />
-          </Link>
-          <Button
-            href="#"
-            className="text-xs lg:text-sm h-8 px-4 py-2 max-w-24 lg:max-w-[110px]"
-          >
-            Voir le profil
-          </Button>
-        </div>
-      </div>
+      <SellerBlock sellerData={sellerData} productId={id} />
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal

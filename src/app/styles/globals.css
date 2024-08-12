@@ -62,3 +62,7 @@
 .animate-spin {
   animation: spin 1s linear infinite;
 }
+
+.message-container {
+  @apply border border-pale-grey rounded-md p-6 max-w-[500px];
+}

@@ -26,11 +26,7 @@ export default function Settings() {
 
   useEffect(() => {
     if (formData.avatar) {
-      fetchAvatar(
-        formData.avatar.files.thumbnail200,
-        user.auth.accessToken,
-        setAvatarSrc
-      );
+      fetchAvatar(formData.avatar.files.thumbnail200, user.auth.accessToken);
     }
   }, [formData.avatar]);
 
@@ -61,6 +57,97 @@ export default function Settings() {
   const handleDeleteAccount = async () => {
     await deleteUserAccount(user.auth.accessToken, router);
   };
+
+  function initializeFormData(user) {
+    return {
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      email: user?.auth.email || "",
+      description: user?.description || "",
+      avatar: user?.avatar || null,
+      city: user?.city || "",
+    };
+  }
+
+  async function fetchAvatar(file, token) {
+    const avatarSrc = await getImage(file, "client", token);
+    setAvatarSrc(avatarSrc);
+  }
+
+  async function updateAvatar(file, token) {
+    const formdata = new FormData();
+    formdata.append("avatar", file);
+    const response = await fetchHorseted(`/users/me`, token, "PATCH", formdata);
+    return response?.avatar;
+  }
+
+  function prepareFormData(formData) {
+    const formDataToSend = new FormData();
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] !== null) {
+        formDataToSend.append(key, formData[key]);
+      }
+    });
+    return formDataToSend;
+  }
+
+  async function updateUserDetails(formDataToSend, user) {
+    if (formDataToSend.get("email") !== user?.auth.email) {
+      try {
+        await updateEmail(user.auth, formDataToSend.get("email"));
+        console.log("Email updated successfully.");
+      } catch (error) {
+        console.log(`Failed to update email: ${error.message}`);
+      }
+    }
+    const data = await fetchHorseted(
+      `/users/me`,
+      user.auth.accessToken,
+      "PATCH",
+      formDataToSend
+    );
+  }
+
+  async function deleteUserAccount(token, router) {
+    await fetchHorseted(`/users/me`, token, "DELETE");
+    router.push("/");
+  }
+
+  const AvatarInput = ({ onChange }) => (
+    <label
+      htmlFor="avatar"
+      className="absolute top-0 right-0 flex items-center cursor-pointer"
+    >
+      <ModifyIcon className="w-9 h-9" />
+      <input
+        onChange={onChange}
+        type="file"
+        name="avatar"
+        id="avatar"
+        accept="image/*"
+        className="hidden"
+      />
+    </label>
+  );
+
+  const CityDataList = () => (
+    <datalist id="cities">
+      {[
+        "Paris",
+        "Lille",
+        "Marseille",
+        "Lyon",
+        "Nantes",
+        "Brest",
+        "Toulouse",
+        "Montpellier",
+        "Nice",
+        "Strasbourg",
+      ].map((city) => (
+        <option key={city} value={city} />
+      ))}
+    </datalist>
+  );
 
   return (
     <section>
@@ -210,94 +297,3 @@ export default function Settings() {
     </section>
   );
 }
-
-function initializeFormData(user) {
-  return {
-    firstName: user?.firstName || "",
-    lastName: user?.lastName || "",
-    email: user?.auth.email || "",
-    description: user?.description || "",
-    avatar: user?.avatar || null,
-    city: user?.city || "",
-  };
-}
-
-async function fetchAvatar(file, token, setAvatarSrc) {
-  const avatarSrc = await getImage(file, "client", token);
-  setAvatarSrc(avatarSrc);
-}
-
-async function updateAvatar(file, token) {
-  const formdata = new FormData();
-  formdata.append("avatar", file);
-  const response = await fetchHorseted(`/users/me`, token, "PATCH", formdata);
-  return response?.avatar;
-}
-
-function prepareFormData(formData) {
-  const formDataToSend = new FormData();
-  Object.keys(formData).forEach((key) => {
-    if (formData[key] !== null) {
-      formDataToSend.append(key, formData[key]);
-    }
-  });
-  return formDataToSend;
-}
-
-async function updateUserDetails(formDataToSend, user) {
-  if (formDataToSend.get("email") !== user?.auth.email) {
-    try {
-      await updateEmail(user.auth, formDataToSend.get("email"));
-      console.log("Email updated successfully.");
-    } catch (error) {
-      console.log(`Failed to update email: ${error.message}`);
-    }
-  }
-  const data = await fetchHorseted(
-    `/users/me`,
-    user.auth.accessToken,
-    "PATCH",
-    formDataToSend
-  );
-}
-
-async function deleteUserAccount(token, router) {
-  await fetchHorseted(`/users/me`, token, "DELETE");
-  router.push("/");
-}
-
-const AvatarInput = ({ onChange }) => (
-  <label
-    htmlFor="avatar"
-    className="absolute top-0 right-0 flex items-center cursor-pointer"
-  >
-    <ModifyIcon className="w-9 h-9" />
-    <input
-      onChange={onChange}
-      type="file"
-      name="avatar"
-      id="avatar"
-      accept="image/*"
-      className="hidden"
-    />
-  </label>
-);
-
-const CityDataList = () => (
-  <datalist id="cities">
-    {[
-      "Paris",
-      "Lille",
-      "Marseille",
-      "Lyon",
-      "Nantes",
-      "Brest",
-      "Toulouse",
-      "Montpellier",
-      "Nice",
-      "Strasbourg",
-    ].map((city) => (
-      <option key={city} value={city} />
-    ))}
-  </datalist>
-);
