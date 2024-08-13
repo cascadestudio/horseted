@@ -87,7 +87,7 @@ export default function CreateBundleModal({
               />
               <div className="ml-4">
                 <h4 className="font-bold">{username}</h4>
-                <StarRating rating={review.rating} count={review.count} />
+                <StarRating review={review} />
               </div>
             </div>
           </div>

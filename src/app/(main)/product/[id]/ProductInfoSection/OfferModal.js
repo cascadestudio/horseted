@@ -1,21 +1,40 @@
 import Modal from "@/components/Modal";
+import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
-export default function OfferModal({ price, onClose }) {
+export default function OfferModal({ price, onClose, product }) {
+  const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const number = parseFloat(e.target.offer.value);
-    if (number > price) {
+    const offer = parseFloat(e.target.offer.value);
+    if (offer > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      // TODO: POST /orders?price
-      // console.log("Offer: ", number);
+      // POST /orders?price
+      postOrder(offer);
       onClose();
     }
   };
+
+  async function postOrder(offer) {
+    const body = {
+      productIds: [product.id],
+      price: offer,
+    };
+    const order = await fetchHorseted(
+      `/orders`,
+      accessToken,
+      "POST",
+      body,
+      true,
+      true
+    );
+    return order.id;
+  }
 
   return (
     <Modal

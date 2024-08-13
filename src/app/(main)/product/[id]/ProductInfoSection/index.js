@@ -211,7 +211,11 @@ export default function ProductPageClient({
         />
       )}
       {isOfferModalOpen && (
-        <OfferModal price={price} onClose={handleCloseOfferModal} />
+        <OfferModal
+          price={price}
+          onClose={handleCloseOfferModal}
+          product={product}
+        />
       )}
     </section>
   );
