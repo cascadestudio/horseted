@@ -9,6 +9,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
+import Spinner from "@/components/Spinner";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
@@ -43,18 +44,6 @@ function ThreadsPage() {
     }
   }, [activeThreadId, threads]);
 
-  async function getOrder(orderId) {
-    try {
-      setLoading(true);
-      const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
-      setOrder(order);
-    } catch (err) {
-      setError(err.message || "Failed to fetch order");
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
 
@@ -84,6 +73,36 @@ function ThreadsPage() {
     setActiveThreadId(id);
     getMessages(id);
     getProduct(productId);
+  }
+
+  const handleNewMessageSearchClick = () => {
+    setIsNewMessageSearch(!isNewMessageSearch);
+    setActiveThreadId(null);
+  };
+
+  const handleNewMessageClick = (user) => {
+    setNewMessageSeller(user);
+    setIsNewMessageSearch(false);
+    setMessages([]);
+    setProduct(null);
+  };
+
+  const breadcrumbs = [
+    { label: "Accueil", href: "/" },
+    { label: "Mon compte", href: "/account" },
+    { label: "Messagerie" },
+  ];
+
+  async function getOrder(orderId) {
+    try {
+      setLoading(true);
+      const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
+      setOrder(order);
+    } catch (err) {
+      setError(err.message || "Failed to fetch order");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function handleSubmit(e) {
@@ -180,24 +199,6 @@ function ThreadsPage() {
     }
   }
 
-  const handleNewMessageSearchClick = () => {
-    setIsNewMessageSearch(!isNewMessageSearch);
-    setActiveThreadId(null);
-  };
-
-  const handleNewMessageClick = (user) => {
-    setNewMessageSeller(user);
-    setIsNewMessageSearch(false);
-    setMessages([]);
-    setProduct(null);
-  };
-
-  const breadcrumbs = [
-    { label: "Accueil", href: "/" },
-    { label: "Mon compte", href: "/account" },
-    { label: "Messagerie" },
-  ];
-
   return (
     <div className="container mx-auto pb-10">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -212,7 +213,7 @@ function ThreadsPage() {
             </button>
           </div>
           {loading ? (
-            <p>Loading...</p>
+            <Spinner />
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : threads.length !== 0 ? (
