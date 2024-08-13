@@ -2,12 +2,10 @@
 
 import StarIcon from "@/assets/icons/StarIcon";
 
-export default function StarRating({
-  className,
-  rating,
-  count,
-  showCount = true,
-}) {
+export default function StarRating({ className, review, showCount = true }) {
+  if (!review) return null;
+
+  const { count, rating } = review;
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 !== 0;
 

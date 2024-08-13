@@ -74,8 +74,6 @@ export default function ProductPageClient({
     size,
   } = product;
 
-  console.log("productId =>", id);
-
   const formattedDate = formatDate(createdAt);
 
   const { username, review } = sellerData;
