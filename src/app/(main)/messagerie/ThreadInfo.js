@@ -6,8 +6,7 @@ import SignalementModal from "./Modals/SignalementModal";
 import { useAuthContext } from "@/context/AuthContext";
 import UserBlockModal from "./Modals/UserBlockModal";
 
-export default function threadInfo({ seller, product, order }) {
-  // console.log("order =>", order);
+export default function threadInfo({ seller, product, order, onDeleteThread }) {
   const { user, accessToken } = useAuthContext();
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
@@ -38,7 +37,9 @@ export default function threadInfo({ seller, product, order }) {
               <button onClick={() => setIsUserBlockModal(!isUserBlockModal)}>
                 Bloquer
               </button>
-              <button>Supprimer la conversation</button>
+              <button onClick={onDeleteThread}>
+                Supprimer la conversation
+              </button>
             </div>
           )}
         </div>

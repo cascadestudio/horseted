@@ -13,6 +13,8 @@ export default function MessageThread({
   order,
   seller,
   setSeller,
+  activeThreadId,
+  onDeleteThread,
 }) {
   // console.log("order =>", order);
 
@@ -51,7 +53,13 @@ export default function MessageThread({
       </div>
       <div className="p-10 flex-1 flex overflow-y-scroll">
         {isInfo ? (
-          <ThreadInfo seller={seller} product={product} order={order} />
+          <ThreadInfo
+            seller={seller}
+            product={product}
+            order={order}
+            activeThreadId={activeThreadId}
+            onDeleteThread={onDeleteThread}
+          />
         ) : (
           <ul className="flex flex-col gap-y-4  flex-1">
             <li className="message-container self-start">

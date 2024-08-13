@@ -204,6 +204,20 @@ function ThreadsPage() {
     }
   }
 
+  async function onDeleteThread() {
+    fetchHorseted(
+      `/threads/${activeThreadId}`,
+      accessToken,
+      "DELETE",
+      null,
+      false,
+      true
+    );
+    console.log("Thread deleted successfully.");
+    getThreads();
+    initWithLastThread();
+  }
+
   return (
     <div className="container mx-auto pb-10">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -247,6 +261,8 @@ function ThreadsPage() {
               order={order}
               seller={seller}
               setSeller={setSeller}
+              activeThreadId={activeThreadId}
+              onDeleteThread={onDeleteThread}
             />
           )}
         </div>

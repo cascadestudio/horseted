@@ -32,21 +32,21 @@ export default async function fetchHorseted(
   isDebug &&
     console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
 
-  try {
-    const response = await fetch(url, options);
+  // try {
+  const response = await fetch(url, options);
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw new Error(
-        `Failed to fetch ${query}: ${
-          errorResponse.message || response.statusText
-        }`
-      );
-    }
+  // if (!response.ok) {
+  //   const errorResponse = await response.json();
+  //   throw new Error(
+  //     `Failed to fetch ${query}: ${
+  //       errorResponse.message || response.statusText
+  //     }`
+  //   );
+  // }
 
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching Horseted API:", error);
-    throw error;
-  }
+  return await response.json();
+  // } catch (error) {
+  //   console.error("Error fetching Horseted API:", error);
+  //   throw error;
+  // }
 }
