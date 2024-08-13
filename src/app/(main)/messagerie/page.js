@@ -41,6 +41,8 @@ function ThreadsPage() {
       } else {
         setOrder(null);
       }
+    } else {
+      initWithLastThread();
     }
   }, [activeThreadId, threads]);
 
