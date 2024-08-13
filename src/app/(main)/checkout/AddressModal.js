@@ -25,8 +25,8 @@ export default function AddressModal({
 
   // console.log("formData =>", formData);
 
-  const handleIsAddressSaved = (event) => {
-    setIsAddressSaved(event.target.checked);
+  const handleIsAddressSaved = (e) => {
+    setIsAddressSaved(e.target.checked);
   };
 
   const handleChange = (e) => {
