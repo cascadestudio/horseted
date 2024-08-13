@@ -1,6 +1,8 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import "@/app/styles/globals.css";
+import CloseButton from "@/assets/icons/CloseButton";
+import ThreadInfo from "./ThreadInfo";
 
 export default function MessageThread({
   product,
@@ -10,8 +12,7 @@ export default function MessageThread({
   newMessageSeller,
 }) {
   const [seller, setSeller] = useState(null);
-
-  // console.log("seller =>", seller);
+  const [isInfo, setIsInfo] = useState(false);
 
   useEffect(() => {
     if (!product) return;
@@ -36,31 +37,41 @@ export default function MessageThread({
         ) : (
           <h2>Nouveau message</h2>
         )}
-        <button>
-          <img src="/icons/thread-info.svg" alt="Thread Info" />
+        <button onClick={() => setIsInfo(!isInfo)}>
+          {isInfo ? (
+            <CloseButton />
+          ) : (
+            <img src="/icons/thread-info.svg" alt="Thread Info" />
+          )}
         </button>
       </div>
-      <ul className="p-10 flex flex-col gap-y-4 overflow-y-scroll flex-1">
-        <li className="message-container self-start">
-          <p>Bonjour, moi c’est {seller?.username}</p>
-          {/* TODO Clem : intégration premier message vendeur */}
-        </li>
-        {messages.length > 0 &&
-          reversedMessages.map((message) => {
-            const { id, content, senderId } = message;
-            const isFromUser = userId === senderId;
-            return (
-              <li
-                key={id}
-                className={`message-container ${
-                  isFromUser ? "self-end" : "self-start"
-                }`}
-              >
-                <p>{content}</p>
-              </li>
-            );
-          })}
-      </ul>
+      <div className="p-10 flex-1 flex">
+        {isInfo ? (
+          <ThreadInfo seller={seller} product={product} />
+        ) : (
+          <ul className="flex flex-col gap-y-4 overflow-y-scroll flex-1">
+            <li className="message-container self-start">
+              <p>Bonjour, moi c’est {seller?.username}</p>
+              {/* TODO Clem : intégration premier message vendeur */}
+            </li>
+            {messages.length > 0 &&
+              reversedMessages.map((message) => {
+                const { id, content, senderId } = message;
+                const isFromUser = userId === senderId;
+                return (
+                  <li
+                    key={id}
+                    className={`message-container ${
+                      isFromUser ? "self-end" : "self-start"
+                    }`}
+                  >
+                    <p>{content}</p>
+                  </li>
+                );
+              })}
+          </ul>
+        )}
+      </div>
       <form
         onSubmit={handleSubmit}
         className="flex gap-4 p-4 border-t border-darker-grey"

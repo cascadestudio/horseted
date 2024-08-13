@@ -107,6 +107,7 @@ function ThreadsPage() {
   }
 
   async function postThread(message) {
+    // TODO: create a new thread from search results
     const body = {
       userId: user.id,
       productId: product.id,
