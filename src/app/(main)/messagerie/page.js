@@ -21,8 +21,8 @@ function ThreadsPage() {
   const [newMessageSeller, setNewMessageSeller] = useState(null);
   const [order, setOrder] = useState(null);
   const [seller, setSeller] = useState(null);
-
-  // console.log("threads =>", threads);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getThreads();
@@ -34,18 +34,25 @@ function ThreadsPage() {
       const activeThread = threads.find(
         (thread) => thread.id === activeThreadId
       );
-      console.log("activeThread =>", activeThread);
-      if (activeThread.orderId !== null) {
+
+      if (activeThread && activeThread.orderId !== null) {
         getOrder(activeThread.orderId);
       } else {
         setOrder(null);
       }
     }
-  }, [activeThreadId]);
+  }, [activeThreadId, threads]);
 
   async function getOrder(orderId) {
-    const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
-    setOrder(order);
+    try {
+      setLoading(true);
+      const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
+      setOrder(order);
+    } catch (err) {
+      setError(err.message || "Failed to fetch order");
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -63,7 +70,7 @@ function ThreadsPage() {
     } else {
       initWithLastThread();
     }
-  }, [searchParams, threads]);
+  }, [searchParams]);
 
   const initWithLastThread = () => {
     if (threads.length !== 0) {
@@ -92,51 +99,85 @@ function ThreadsPage() {
   }
 
   async function getThreads() {
-    const threads = await fetchHorseted("/threads", accessToken);
-    setThreads(threads);
+    try {
+      setLoading(true);
+      const threads = await fetchHorseted("/threads", accessToken);
+      setThreads(threads);
+    } catch (err) {
+      setError(err.message || "Failed to fetch threads");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getMessages(id) {
-    const messages = await fetchHorseted(
-      `/threads/${id}/messages`,
-      accessToken
-    );
-    setMessages(messages);
+    try {
+      setLoading(true);
+      const messages = await fetchHorseted(
+        `/threads/${id}/messages`,
+        accessToken
+      );
+      setMessages(messages);
+    } catch (err) {
+      setError(err.message || "Failed to fetch messages");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getProduct(productId) {
-    const product = await fetchHorseted(`/products/${productId}`);
-    setProduct(product);
+    try {
+      setLoading(true);
+      const product = await fetchHorseted(`/products/${productId}`);
+      setProduct(product);
+    } catch (err) {
+      setError(err.message || "Failed to fetch product");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function postMessage(message) {
     const body = {
       content: message,
     };
-    await fetchHorseted(
-      `/threads/${activeThreadId}/messages`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
+    try {
+      setLoading(true);
+      await fetchHorseted(
+        `/threads/${activeThreadId}/messages`,
+        accessToken,
+        "POST",
+        body,
+        true
+      );
+    } catch (err) {
+      setError(err.message || "Failed to post message");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function postThread(message) {
     const body = {
-      userId: seller.id,
+      userId: seller?.id,
       productId: product ? product.id : null,
       content: message,
-      // medias: [0],
     };
-    const newThread = await fetchHorseted(
-      `/threads`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
-    setActiveThreadId(newThread.id);
+    try {
+      setLoading(true);
+      const newThread = await fetchHorseted(
+        `/threads`,
+        accessToken,
+        "POST",
+        body,
+        true
+      );
+      setActiveThreadId(newThread.id);
+    } catch (err) {
+      setError(err.message || "Failed to create new thread");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const handleNewMessageSearchClick = () => {
@@ -170,14 +211,18 @@ function ThreadsPage() {
               <img src="/icons/new-message.svg" alt="Nouveau message" />
             </button>
           </div>
-          {threads.length !== 0 ? (
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">{error}</p>
+          ) : threads.length !== 0 ? (
             <ThreadList
               threads={threads}
               handleThreadClick={handleThreadClick}
               activeThreadId={activeThreadId}
             />
           ) : (
-            <p>Pas de convesations</p>
+            <p>Pas de conversations</p>
           )}
         </div>
         <div className="w-2/3 bg-white flex flex-col">
