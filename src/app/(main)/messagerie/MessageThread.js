@@ -10,7 +10,9 @@ export default function MessageThread({
   userId,
   handleSubmit,
   newMessageSeller,
+  order,
 }) {
+  // console.log("order =>", order);
   const [seller, setSeller] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
 
@@ -45,11 +47,11 @@ export default function MessageThread({
           )}
         </button>
       </div>
-      <div className="p-10 flex-1 flex">
+      <div className="p-10 flex-1 flex overflow-y-scroll">
         {isInfo ? (
           <ThreadInfo seller={seller} product={product} />
         ) : (
-          <ul className="flex flex-col gap-y-4 overflow-y-scroll flex-1">
+          <ul className="flex flex-col gap-y-4  flex-1">
             <li className="message-container self-start">
               <p>Bonjour, moi c’est {seller?.username}</p>
               {/* TODO Clem : intégration premier message vendeur */}
@@ -69,6 +71,9 @@ export default function MessageThread({
                   </li>
                 );
               })}
+            {order && order.status === "paid" && (
+              <div>Terminé ! Merci pour votre commande sur Horseted</div>
+            )}
           </ul>
         )}
       </div>

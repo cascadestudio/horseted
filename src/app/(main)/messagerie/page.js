@@ -19,8 +19,9 @@ function ThreadsPage() {
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [newMessageSeller, setNewMessageSeller] = useState(null);
+  const [order, setOrder] = useState(null);
 
-  // console.log("newMessageSeller =>", newMessageSeller);
+  // console.log("activeThread =>", activeThread);
 
   useEffect(() => {
     getThreads();
@@ -29,8 +30,20 @@ function ThreadsPage() {
   useEffect(() => {
     if (activeThreadId !== null) {
       getMessages(activeThreadId);
+      const activeThread = threads.find(
+        (thread) => thread.id === activeThreadId
+      );
+
+      if (activeThread.orderId !== null) {
+        getOrder(activeThread.orderId);
+      }
     }
   }, [activeThreadId]);
+
+  async function getOrder(orderId) {
+    const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
+    setOrder(order);
+  }
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
@@ -178,6 +191,7 @@ function ThreadsPage() {
               userId={user.id}
               handleSubmit={handleSubmit}
               newMessageSeller={newMessageSeller}
+              order={order}
             />
           )}
         </div>
