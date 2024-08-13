@@ -20,8 +20,9 @@ function ThreadsPage() {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [newMessageSeller, setNewMessageSeller] = useState(null);
   const [order, setOrder] = useState(null);
+  const [seller, setSeller] = useState(null);
 
-  // console.log("activeThread =>", activeThread);
+  // console.log("threads =>", threads);
 
   useEffect(() => {
     getThreads();
@@ -33,9 +34,11 @@ function ThreadsPage() {
       const activeThread = threads.find(
         (thread) => thread.id === activeThreadId
       );
-
+      console.log("activeThread =>", activeThread);
       if (activeThread.orderId !== null) {
         getOrder(activeThread.orderId);
+      } else {
+        setOrder(null);
       }
     }
   }, [activeThreadId]);
@@ -120,10 +123,9 @@ function ThreadsPage() {
   }
 
   async function postThread(message) {
-    // TODO: create a new thread from search results
     const body = {
-      userId: user.id,
-      productId: product.id,
+      userId: seller.id,
+      productId: product ? product.id : null,
       content: message,
       // medias: [0],
     };
@@ -192,6 +194,8 @@ function ThreadsPage() {
               handleSubmit={handleSubmit}
               newMessageSeller={newMessageSeller}
               order={order}
+              seller={seller}
+              setSeller={setSeller}
             />
           )}
         </div>

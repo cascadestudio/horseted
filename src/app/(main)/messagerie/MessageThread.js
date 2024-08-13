@@ -11,9 +11,11 @@ export default function MessageThread({
   handleSubmit,
   newMessageSeller,
   order,
+  seller,
+  setSeller,
 }) {
-  // console.log("order =>", order);
-  const [seller, setSeller] = useState(null);
+  console.log("order =>", order);
+
   const [isInfo, setIsInfo] = useState(false);
 
   useEffect(() => {
