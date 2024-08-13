@@ -19,9 +19,6 @@ function ThreadsPage() {
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
 
-  // console.log("threads =>", threads);
-  // console.log("activeThreadId =>", activeThreadId);
-
   useEffect(() => {
     getThreads();
   }, []);

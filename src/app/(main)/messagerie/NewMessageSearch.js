@@ -1,9 +1,12 @@
 "use client";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 
 export default function SearchBar({ className }) {
   const [users, setUsers] = useState([]);
+  console.log("users", users);
+
   const handleSearchChange = (e) => {
     getUsers(e.target.value);
   };
@@ -23,8 +26,9 @@ export default function SearchBar({ className }) {
       />
       <ul className="overflow-y-scroll h-[500px]">
         {users.length > 0 ? (
-          users.map(({ id, username }) => (
+          users.map(({ id, username, avatar }) => (
             <li key={id} className="p-5">
+              <AvatarDisplay avatar={avatar} size={43} />
               {username}
             </li>
           ))
