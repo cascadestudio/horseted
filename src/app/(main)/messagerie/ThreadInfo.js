@@ -2,14 +2,16 @@ import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
 import React, { useState } from "react";
-import SignalementModal from "./SignalementModal";
+import SignalementModal from "./Modals/SignalementModal";
 import { useAuthContext } from "@/context/AuthContext";
+import UserBlockModal from "./Modals/UserBlockModal";
 
 export default function threadInfo({ seller, product, order }) {
   // console.log("order =>", order);
-  const { accessToken } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
+  const [isUserBlockModal, setIsUserBlockModal] = useState(false);
 
   return (
     <>
@@ -33,7 +35,9 @@ export default function threadInfo({ seller, product, order }) {
               >
                 Signaler
               </button>
-              <button>Bloquer</button>
+              <button onClick={() => setIsUserBlockModal(!isUserBlockModal)}>
+                Bloquer
+              </button>
               <button>Supprimer la conversation</button>
             </div>
           )}
@@ -63,6 +67,14 @@ export default function threadInfo({ seller, product, order }) {
           setIsSignalementModal={setIsSignalementModal}
           sellerId={seller.id}
           productId={product.id}
+        />
+      )}
+      {isUserBlockModal && (
+        <UserBlockModal
+          accessToken={accessToken}
+          setIsUserBlockModal={setIsUserBlockModal}
+          userId={user.id}
+          seller={seller}
         />
       )}
     </>
