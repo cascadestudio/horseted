@@ -96,7 +96,10 @@ function ThreadsPage() {
   async function getOrder(orderId) {
     try {
       setLoading(true);
-      const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
+      const order = await fetchHorseted(
+        `/orders/${orderId}/tracking`,
+        accessToken
+      );
       setOrder(order);
     } catch (err) {
       setError(err.message || "Failed to fetch order");

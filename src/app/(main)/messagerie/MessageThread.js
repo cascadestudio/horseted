@@ -14,7 +14,7 @@ export default function MessageThread({
   seller,
   setSeller,
 }) {
-  console.log("order =>", order);
+  // console.log("order =>", order);
 
   const [isInfo, setIsInfo] = useState(false);
 
@@ -51,7 +51,7 @@ export default function MessageThread({
       </div>
       <div className="p-10 flex-1 flex overflow-y-scroll">
         {isInfo ? (
-          <ThreadInfo seller={seller} product={product} />
+          <ThreadInfo seller={seller} product={product} order={order} />
         ) : (
           <ul className="flex flex-col gap-y-4  flex-1">
             <li className="message-container self-start">
@@ -73,7 +73,7 @@ export default function MessageThread({
                   </li>
                 );
               })}
-            {order && order.status === "paid" && (
+            {order && order.statuses[0] === "delivered" && (
               <div>Terminé ! Merci pour votre commande sur Horseted</div>
             )}
           </ul>
