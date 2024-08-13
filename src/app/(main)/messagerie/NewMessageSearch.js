@@ -3,9 +3,8 @@ import AvatarDisplay from "@/components/AvatarDisplay";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 
-export default function SearchBar({ className }) {
+export default function NewMessageSearch({ threads, handleClick }) {
   const [users, setUsers] = useState([]);
-  console.log("users", users);
 
   const handleSearchChange = (e) => {
     getUsers(e.target.value);
@@ -13,25 +12,36 @@ export default function SearchBar({ className }) {
 
   async function getUsers(searchTerm) {
     const users = await fetchHorseted(`/users?terms=${searchTerm}`);
-    setUsers(users.items);
+    const usersWithoutThreads = users.items.filter(
+      (user) => !threads.some((thread) => thread.authors[0].id === user.id)
+    );
+    setUsers(usersWithoutThreads);
   }
 
   return (
     <div className="p-7 flex flex-col">
       <input
-        className={`pl-5 border border-pale-grey rounded-full h-11 w-full ${className}`}
+        className="pl-5 border border-pale-grey rounded-full h-11 w-full"
         type="text"
         placeholder="Rechercher un membre"
         onChange={(e) => handleSearchChange(e)}
       />
       <ul className="overflow-y-scroll h-[500px]">
         {users.length > 0 ? (
-          users.map(({ id, username, avatar }) => (
-            <li key={id} className="p-5">
-              <AvatarDisplay avatar={avatar} size={43} />
-              {username}
-            </li>
-          ))
+          users.map((user) => {
+            const { id, username, avatar } = user;
+            return (
+              <li key={id} className="p-5">
+                <button
+                  className="flex items-center w-full"
+                  onClick={() => handleClick(user)}
+                >
+                  <AvatarDisplay avatar={avatar} size={43} />
+                  {username}
+                </button>
+              </li>
+            );
+          })
         ) : (
           <p className="p-5">Aucun résultat</p>
         )}

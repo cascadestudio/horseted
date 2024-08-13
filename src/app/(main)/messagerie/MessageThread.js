@@ -7,37 +7,42 @@ export default function MessageThread({
   messages,
   userId,
   handleSubmit,
+  newMessageSeller,
 }) {
-  const [seller, setSeller] = useState({});
+  const [seller, setSeller] = useState(null);
 
   // console.log("seller =>", seller);
 
   useEffect(() => {
     if (!product) return;
-
     const fetchSeller = async () => {
       const sellerData = await fetchHorseted(`/users/${product.userId}`);
       setSeller(sellerData);
     };
-
     fetchSeller();
   }, [product]);
 
-  const reversedMessages = [...messages].reverse();
+  useEffect(() => {
+    setSeller(newMessageSeller);
+  }, [newMessageSeller]);
 
-  if (!product) return null;
+  const reversedMessages = [...messages].reverse();
 
   return (
     <>
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
-        <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
+        {product ? (
+          <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
+        ) : (
+          <h2>Nouveau message</h2>
+        )}
         <button>
           <img src="/icons/thread-info.svg" alt="Thread Info" />
         </button>
       </div>
       <ul className="p-10 flex flex-col gap-y-4 overflow-y-scroll flex-1">
         <li className="message-container self-start">
-          <p>Bonjour, moi c’est {seller.username}</p>
+          <p>Bonjour, moi c’est {seller?.username}</p>
           {/* TODO Clem : intégration premier message vendeur */}
         </li>
         {messages.length > 0 &&

@@ -18,6 +18,9 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
+  const [newMessageSeller, setNewMessageSeller] = useState(null);
+
+  // console.log("newMessageSeller =>", newMessageSeller);
 
   useEffect(() => {
     getThreads();
@@ -64,7 +67,6 @@ function ThreadsPage() {
     e.preventDefault();
     const message = e.target.content.value;
     if (activeThreadId === null) {
-      console.log("creating new thread");
       await postThread(message);
       await getThreads();
     } else {
@@ -121,6 +123,18 @@ function ThreadsPage() {
     setActiveThreadId(newThread.id);
   }
 
+  const handleNewMessageSearchClick = () => {
+    setIsNewMessageSearch(!isNewMessageSearch);
+    setActiveThreadId(null);
+  };
+
+  const handleNewMessageClick = (user) => {
+    setNewMessageSeller(user);
+    setIsNewMessageSearch(false);
+    setMessages([]);
+    setProduct(null);
+  };
+
   const breadcrumbs = [
     { label: "Accueil", href: "/" },
     { label: "Mon compte", href: "/account" },
@@ -136,7 +150,7 @@ function ThreadsPage() {
             <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
               Messages
             </h1>
-            <button onClick={() => setIsNewMessageSearch(!isNewMessageSearch)}>
+            <button onClick={handleNewMessageSearchClick}>
               <img src="/icons/new-message.svg" alt="Nouveau message" />
             </button>
           </div>
@@ -152,13 +166,17 @@ function ThreadsPage() {
         </div>
         <div className="w-2/3 bg-white flex flex-col">
           {isNewMessageSearch ? (
-            <NewMessageSearch />
+            <NewMessageSearch
+              threads={threads}
+              handleClick={handleNewMessageClick}
+            />
           ) : (
             <MessageThread
               product={product}
               messages={messages}
               userId={user.id}
               handleSubmit={handleSubmit}
+              newMessageSeller={newMessageSeller}
             />
           )}
         </div>
