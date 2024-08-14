@@ -24,6 +24,7 @@ function ThreadsPage() {
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const productIdParam = searchParams.get("productId");
 
   useEffect(() => {
     getThreads();
@@ -45,25 +46,18 @@ function ThreadsPage() {
   };
 
   useEffect(() => {
-    if (threads.length > 0 && activeThreadId !== null) {
-      initWithLastThread();
-    }
-  }, [threads]);
-
-  useEffect(() => {
-    const productIdParam = searchParams.get("productId");
     if (productIdParam) {
-      handleThreadFromProductPage(productIdParam);
-    }
-  }, [searchParams]);
-
-  const handleThreadFromProductPage = (productIdParam) => {
-    if (threads.length > 0) {
-      findIfThreadAlreadyExist(productIdParam);
+      if (threads.length > 0) {
+        findIfThreadAlreadyExist(productIdParam);
+      } else {
+        initNewThread(productIdParam);
+      }
     } else {
-      initNewThread(productIdParam);
+      if (activeThreadId !== null) {
+        initWithLastThread();
+      }
     }
-  };
+  }, [threads, productIdParam]);
 
   const findIfThreadAlreadyExist = (productIdParam) => {
     const threadAlreadyExist = threads.find((thread) =>
