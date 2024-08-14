@@ -55,9 +55,9 @@ function ThreadsPage() {
         initNewThread(productIdParam);
       }
     } else {
-      if (activeThreadId !== null) {
-        initWithLastThread();
-      }
+      // if (activeThreadId !== null) {
+      initWithLastThread();
+      // }
     }
   }, [threads, productIdParam]);
 
@@ -82,7 +82,9 @@ function ThreadsPage() {
     if (threads.length > 0) {
       setActiveThreadId(threads[0].id);
       getMessages(threads[0].id);
-      getProduct(threads[0].productId);
+      if (threads[0].productId) {
+        getProduct(threads[0].productId);
+      }
     }
   };
 

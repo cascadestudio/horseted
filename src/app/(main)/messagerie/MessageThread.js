@@ -39,7 +39,7 @@ export default function MessageThread({
         {product ? (
           <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
         ) : (
-          <h2>Nouveau message</h2>
+          <h2>Nouvelle discussion</h2>
         )}
         <button onClick={() => setIsInfo(!isInfo)}>
           {isInfo ? (

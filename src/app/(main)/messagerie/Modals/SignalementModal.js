@@ -32,7 +32,7 @@ export default function SignalementModal({
       type: selectedType,
       message: message,
       userId: sellerId,
-      productId: productId,
+      productId: productId || null,
     };
     fetchHorseted("/signalements", accessToken, "POST", body, true, true);
     setIsSignalementModal(false);

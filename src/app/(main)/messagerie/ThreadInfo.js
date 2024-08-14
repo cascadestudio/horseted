@@ -43,11 +43,13 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
             </div>
           )}
         </div>
-        <div className="flex items-center p-5">
-          <ClientProductImage product={product} size={"small"} />
-          {product.title}
-          {product.price}€
-        </div>
+        {product && (
+          <div className="flex items-center p-5">
+            <ClientProductImage product={product} size={"small"} />
+            {product.title}
+            {product.price}€
+          </div>
+        )}
         {order && order.statuses[0].status === "readyToSend" && (
           <div>
             <p>Commande validée !</p>
@@ -67,7 +69,7 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
           accessToken={accessToken}
           setIsSignalementModal={setIsSignalementModal}
           sellerId={seller.id}
-          productId={product.id}
+          productId={product.id || null}
         />
       )}
       {isUserBlockModal && (
