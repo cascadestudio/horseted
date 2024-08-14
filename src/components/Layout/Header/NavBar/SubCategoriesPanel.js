@@ -1,7 +1,6 @@
 import ProductCategories from "./ProductCategories";
 import { useEffect, useState, useRef } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useIsClickOutsideElement } from "@/utils/hooks";
 
 export default function SubCategoriesPanel({ parentId, panelRef }) {
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
@@ -36,21 +35,18 @@ export default function SubCategoriesPanel({ parentId, panelRef }) {
     return (
       <div
         ref={panelRef}
-        className="absolute top-[44px] bg-white border border-dark-green rounded-b-[20px] flex z-10"
+        className="absolute top-[44px] bg-white border border-dark-green rounded-b-[20px] flex z-10 py-2"
       >
-        <ul className="border-r">
+        <ul className="border-r px-2">
           {subCategories?.map((category) => {
             const { name, id } = category;
             const isActive = selectedSubCategoriesId === id;
             return (
-              <li
-                key={name}
-                className={`pt-6 pb-4 px-6  ${
-                  isActive && " border-b-2 border-dark-green text-dark-green"
-                }`}
-              >
+              <li key={name}>
                 <button
-                  className={`capitalize`}
+                  className={`text-left w-full px-6 pt-4 pb-3 mb-1 capitalize whitespace-nowrap font-semibold ${
+                    isActive && "border-b border-light-green text-light-green"
+                  }`}
                   onClick={() => handleClick(id)}
                 >
                   {name}

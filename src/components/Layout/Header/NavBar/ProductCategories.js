@@ -21,13 +21,16 @@ export default function ProductCategories({ parentId }) {
 
   if (itemCategories.length > 0) {
     return (
-      <div key={itemCategories} className="p-5">
-        <ul>
+      <div key={itemCategories} className="px-5 py-2">
+        <ul className={itemCategories.length > 12 ? `columns-2` : ``}>
           {itemCategories.map((category) => {
             const { name, id } = category;
             return (
               <li key={name} className="">
-                <Link href={`/articles?categoryId=${id}&categoryName=${name}`}>
+                <Link
+                  className="whitespace-nowrap font-medium p-2 block"
+                  href={`/articles?categoryId=${id}&categoryName=${name}`}
+                >
                   {name}
                 </Link>
               </li>

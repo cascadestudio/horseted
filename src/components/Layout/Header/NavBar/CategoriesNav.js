@@ -38,11 +38,14 @@ export default function CategoriesNav({ categories }) {
             <button
               ref={buttonRef}
               onClick={() => handleClick(id)}
-              className={` capitalize py-3 px-6 text-center ${
-                isActive && " border-b-2 border-dark-green text-dark-green"
+              className={`relative capitalize py-3 px-6 text-center ${
+                isActive && "text-light-green border-"
               }`}
             >
               {capitalizeText(name)}
+              {isActive && (
+                <span className="absolute bottom-1 left-0 right-0 h-0.5 bg-light-green"></span>
+              )}
             </button>
             {isOpen && isActive && (
               <SubCategoriesPanel
