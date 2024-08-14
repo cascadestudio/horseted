@@ -251,8 +251,6 @@ function ThreadsPage() {
           </div>
           {loading ? (
             <Spinner />
-          ) : error ? (
-            <p className="text-red-500">{error}</p>
           ) : threads.length !== 0 ? (
             <ThreadList
               threads={threads}
