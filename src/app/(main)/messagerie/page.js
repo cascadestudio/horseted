@@ -40,7 +40,6 @@ function ThreadsPage() {
 
   const handleThreadOrderInfo = () => {
     const activeThread = threads.find((thread) => thread.id === activeThreadId);
-    console.log(activeThread);
     if (activeThread && activeThread.orderId !== null) {
       getOrder(activeThread.orderId);
     } else {
@@ -56,9 +55,7 @@ function ThreadsPage() {
         initNewThread(productIdParam);
       }
     } else {
-      // if (activeThreadId !== null) {
       initWithLastThread();
-      // }
     }
   }, [threads, productIdParam]);
 
@@ -118,7 +115,11 @@ function ThreadsPage() {
       setLoading(true);
       const order = await fetchHorseted(
         `/orders/${orderId}/tracking`,
-        accessToken
+        accessToken,
+        "GET",
+        null,
+        false,
+        false
       );
       setOrder(order);
     } catch (err) {
