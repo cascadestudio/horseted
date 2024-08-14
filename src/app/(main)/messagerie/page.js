@@ -30,38 +30,58 @@ function ThreadsPage() {
   }, []);
 
   useEffect(() => {
-    if (activeThreadId !== null) {
-      getMessages(activeThreadId);
-      const activeThread = threads.find(
-        (thread) => thread.id === activeThreadId
-      );
+    if (activeThreadId === null) return;
+    getMessages(activeThreadId);
+    handleThreadOrderInfo();
+  }, [activeThreadId]);
 
-      if (activeThread && activeThread.orderId !== null) {
-        getOrder(activeThread.orderId);
-      } else {
-        setOrder(null);
-      }
+  const handleThreadOrderInfo = () => {
+    const activeThread = threads.find((thread) => thread.id === activeThreadId);
+    if (activeThread && activeThread.orderId !== null) {
+      getOrder(activeThread.orderId);
     } else {
+      setOrder(null);
+    }
+  };
+
+  useEffect(() => {
+    if (threads.length > 0 && activeThreadId !== null) {
       initWithLastThread();
     }
-  }, [activeThreadId, threads]);
+  }, [threads]);
 
   useEffect(() => {
     const productIdParam = searchParams.get("productId");
-
-    if (productIdParam && threads.length > 0) {
-      const thread = threads.find((thread) =>
-        String(thread.productId).includes(productIdParam)
-      );
-
-      if (thread) {
-        setActiveThreadId(thread.id);
-      }
-      getProduct(productIdParam);
-    } else {
-      initWithLastThread();
+    if (productIdParam) {
+      handleThreadFromProductPage(productIdParam);
     }
   }, [searchParams]);
+
+  const handleThreadFromProductPage = (productIdParam) => {
+    if (threads.length > 0) {
+      findIfThreadAlreadyExist(productIdParam);
+    } else {
+      initNewThread(productIdParam);
+    }
+  };
+
+  const findIfThreadAlreadyExist = (productIdParam) => {
+    const threadAlreadyExist = threads.find((thread) =>
+      String(thread.productId).includes(productIdParam)
+    );
+    if (threadAlreadyExist) {
+      setActiveThreadId(threadAlreadyExist.id);
+    } else {
+      initNewThread(productIdParam);
+    }
+  };
+
+  const initNewThread = (productIdParam) => {
+    console.log("productIdParam =>", productIdParam);
+    setActiveThreadId(null);
+    setMessages([]);
+    getProduct(productIdParam);
+  };
 
   const initWithLastThread = () => {
     if (threads.length !== 0) {
