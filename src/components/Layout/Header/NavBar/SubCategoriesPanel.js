@@ -2,7 +2,7 @@ import ProductCategories from "./ProductCategories";
 import { useEffect, useState, useRef } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 
-export default function SubCategoriesPanel({ parentId, panelRef }) {
+export default function SubCategoriesPanel({ parentId, panelRef, setIsOpen }) {
   const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const isSubCategories = subCategories.length > 0;
@@ -56,7 +56,10 @@ export default function SubCategoriesPanel({ parentId, panelRef }) {
           })}
         </ul>
         {selectedSubCategoriesId !== null && (
-          <ProductCategories parentId={selectedSubCategoriesId} />
+          <ProductCategories
+            parentId={selectedSubCategoriesId}
+            setIsOpen={setIsOpen}
+          />
         )}
       </div>
     );

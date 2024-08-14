@@ -13,16 +13,21 @@ export default function SearchBar({ className }) {
   };
 
   return (
-    <input
-      className={
-        className +
-        " grow border border-black rounded-full h-11 w-full lg:w-auto"
-      }
-      type="text"
-      placeholder="Rechercher un article ou un membre"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      onKeyDown={handleKeyDown}
-    />
+    <div className="relative grow">
+      <input
+        className={`${className} grow border border-black rounded-full h-11 w-full pl-16 py-0 text-base`}
+        type="text"
+        placeholder="Rechercher un article ou un membre"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={handleKeyDown}
+      />
+      <img
+        className="h-5 w-5 absolute left-4 top-1/2 -translate-y-1/2 "
+        src="/icons/search.svg"
+        alt=""
+      />
+      <span className="bg-black h-5 w-px absolute left-12 top-1/2 -translate-y-1/2"></span>
+    </div>
   );
 }

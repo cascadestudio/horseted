@@ -52,6 +52,7 @@ export default function CategoriesNav({ categories }) {
                 panelRef={panelRef}
                 parentId={id}
                 buttonRef={buttonRef}
+                setIsOpen={setIsOpen}
               />
             )}
           </li>
