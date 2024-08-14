@@ -15,11 +15,9 @@ export default function MessageThread({
   setSeller,
   activeThreadId,
   onDeleteThread,
+  isInfo,
+  setIsInfo,
 }) {
-  // console.log("order =>", order);
-
-  const [isInfo, setIsInfo] = useState(false);
-
   useEffect(() => {
     if (!product) return;
     const fetchSeller = async () => {

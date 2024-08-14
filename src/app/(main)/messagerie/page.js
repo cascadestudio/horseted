@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import NewMessageSearch from "./NewMessageSearch";
 import Spinner from "@/components/Spinner";
 
 function ThreadsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
@@ -25,6 +26,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const productIdParam = searchParams.get("productId");
+  const [isInfo, setIsInfo] = useState(false);
 
   useEffect(() => {
     getThreads();
@@ -71,14 +73,13 @@ function ThreadsPage() {
   };
 
   const initNewThread = (productIdParam) => {
-    console.log("productIdParam =>", productIdParam);
     setActiveThreadId(null);
     setMessages([]);
     getProduct(productIdParam);
   };
 
   const initWithLastThread = () => {
-    if (threads.length !== 0) {
+    if (threads.length > 0) {
       setActiveThreadId(threads[0].id);
       getMessages(threads[0].id);
       getProduct(threads[0].productId);
@@ -130,6 +131,7 @@ function ThreadsPage() {
     if (activeThreadId === null) {
       await postThread(message);
       await getThreads();
+      router.replace("/messagerie", undefined, { shallow: true });
     } else {
       await postMessage(message);
       getMessages(activeThreadId);
@@ -208,6 +210,7 @@ function ThreadsPage() {
         accessToken,
         "POST",
         body,
+        true,
         true
       );
       setActiveThreadId(newThread.id);
@@ -219,7 +222,7 @@ function ThreadsPage() {
   }
 
   async function onDeleteThread() {
-    fetchHorseted(
+    await fetchHorseted(
       `/threads/${activeThreadId}`,
       accessToken,
       "DELETE",
@@ -227,9 +230,8 @@ function ThreadsPage() {
       false,
       true
     );
-    console.log("Thread deleted successfully.");
-    getThreads();
-    initWithLastThread();
+    await getThreads();
+    setIsInfo(false);
   }
 
   return (
@@ -277,6 +279,8 @@ function ThreadsPage() {
               setSeller={setSeller}
               activeThreadId={activeThreadId}
               onDeleteThread={onDeleteThread}
+              setIsInfo={setIsInfo}
+              isInfo={isInfo}
             />
           )}
         </div>
