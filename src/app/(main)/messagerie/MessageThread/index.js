@@ -1,13 +1,13 @@
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "@/app/styles/globals.css";
 import CloseButton from "@/assets/icons/CloseButton";
 import ThreadInfo from "./ThreadInfo";
+import Message from "./Message";
 
 export default function MessageThread({
   product,
   messages,
-  userId,
   handleSubmit,
   newMessageSeller,
   order,
@@ -17,6 +17,8 @@ export default function MessageThread({
   onDeleteThread,
   isInfo,
   setIsInfo,
+  userId,
+  accessToken,
 }) {
   useEffect(() => {
     if (!product) return;
@@ -65,20 +67,15 @@ export default function MessageThread({
               {/* TODO Clem : intégration premier message vendeur */}
             </li>
             {messages.length > 0 &&
-              reversedMessages.map((message) => {
-                const { id, content, senderId } = message;
-                const isFromUser = userId === senderId;
-                return (
-                  <li
-                    key={id}
-                    className={`message-container ${
-                      isFromUser ? "self-end" : "self-start"
-                    }`}
-                  >
-                    <p>{content}</p>
-                  </li>
-                );
-              })}
+              reversedMessages.map((message) => (
+                <Message
+                  message={message}
+                  key={message.id}
+                  userId={userId}
+                  accessToken={accessToken}
+                  product={product}
+                />
+              ))}
             {order && order.statuses[0] === "delivered" && (
               <div>Terminé ! Merci pour votre commande sur Horseted</div>
             )}

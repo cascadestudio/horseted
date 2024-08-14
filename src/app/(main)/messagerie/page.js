@@ -281,6 +281,7 @@ function ThreadsPage() {
               onDeleteThread={onDeleteThread}
               setIsInfo={setIsInfo}
               isInfo={isInfo}
+              accessToken={accessToken}
             />
           )}
         </div>

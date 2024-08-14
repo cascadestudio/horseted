@@ -2,9 +2,9 @@ import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
 import React, { useState } from "react";
-import SignalementModal from "./Modals/SignalementModal";
+import SignalementModal from "../Modals/SignalementModal";
 import { useAuthContext } from "@/context/AuthContext";
-import UserBlockModal from "./Modals/UserBlockModal";
+import UserBlockModal from "../Modals/UserBlockModal";
 
 export default function threadInfo({ seller, product, order, onDeleteThread }) {
   const { user, accessToken } = useAuthContext();
