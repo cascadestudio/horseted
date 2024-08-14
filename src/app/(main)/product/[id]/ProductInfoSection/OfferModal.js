@@ -2,8 +2,9 @@ import Modal from "@/components/Modal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-
+import { useRouter } from "next/navigation";
 export default function OfferModal({ price, onClose, product }) {
+  const router = useRouter();
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -14,8 +15,8 @@ export default function OfferModal({ price, onClose, product }) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      // POST /orders?price
       postOrder(offer);
+      router.push(`/messagerie?productId=${product.id}`);
       onClose();
     }
   };

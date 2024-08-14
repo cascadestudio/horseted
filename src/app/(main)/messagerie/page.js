@@ -40,6 +40,7 @@ function ThreadsPage() {
 
   const handleThreadOrderInfo = () => {
     const activeThread = threads.find((thread) => thread.id === activeThreadId);
+    console.log(activeThread);
     if (activeThread && activeThread.orderId !== null) {
       getOrder(activeThread.orderId);
     } else {
