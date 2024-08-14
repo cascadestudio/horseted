@@ -74,8 +74,6 @@ export default function ProductPageClient({
     size,
   } = product;
 
-  console.log("productId =>", id);
-
   const formattedDate = formatDate(createdAt);
 
   const { username, review } = sellerData;
@@ -213,7 +211,11 @@ export default function ProductPageClient({
         />
       )}
       {isOfferModalOpen && (
-        <OfferModal price={price} onClose={handleCloseOfferModal} />
+        <OfferModal
+          price={price}
+          onClose={handleCloseOfferModal}
+          product={product}
+        />
       )}
     </section>
   );

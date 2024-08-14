@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
@@ -9,8 +9,10 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
+import Spinner from "@/components/Spinner";
 
 function ThreadsPage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
@@ -18,42 +20,69 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
-
-  // console.log("threads =>", threads);
-  // console.log("activeThreadId =>", activeThreadId);
+  const [newMessageSeller, setNewMessageSeller] = useState(null);
+  const [order, setOrder] = useState(null);
+  const [seller, setSeller] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const productIdParam = searchParams.get("productId");
+  const [isInfo, setIsInfo] = useState(false);
 
   useEffect(() => {
     getThreads();
   }, []);
 
   useEffect(() => {
-    if (activeThreadId !== null) {
-      getMessages(activeThreadId);
-    }
+    if (activeThreadId === null) return;
+    getMessages(activeThreadId);
+    handleThreadOrderInfo();
   }, [activeThreadId]);
 
+  const handleThreadOrderInfo = () => {
+    const activeThread = threads.find((thread) => thread.id === activeThreadId);
+    if (activeThread && activeThread.orderId !== null) {
+      getOrder(activeThread.orderId);
+    } else {
+      setOrder(null);
+    }
+  };
+
   useEffect(() => {
-    const productIdParam = searchParams.get("productId");
-
-    if (productIdParam && threads.length > 0) {
-      const thread = threads.find((thread) =>
-        String(thread.productId).includes(productIdParam)
-      );
-
-      if (thread) {
-        setActiveThreadId(thread.id);
+    if (productIdParam) {
+      if (threads.length > 0) {
+        findIfThreadAlreadyExist(productIdParam);
+      } else {
+        initNewThread(productIdParam);
       }
-      getProduct(productIdParam);
     } else {
       initWithLastThread();
     }
-  }, [searchParams, threads]);
+  }, [threads, productIdParam]);
+
+  const findIfThreadAlreadyExist = (productIdParam) => {
+    const threadAlreadyExist = threads.find((thread) =>
+      String(thread.productId).includes(productIdParam)
+    );
+    if (threadAlreadyExist) {
+      setActiveThreadId(threadAlreadyExist.id);
+    } else {
+      initNewThread(productIdParam);
+    }
+  };
+
+  const initNewThread = (productIdParam) => {
+    setActiveThreadId(null);
+    setMessages([]);
+    getProduct(productIdParam);
+  };
 
   const initWithLastThread = () => {
-    if (threads.length !== 0) {
+    if (threads.length > 0) {
       setActiveThreadId(threads[0].id);
       getMessages(threads[0].id);
-      getProduct(threads[0].productId);
+      if (threads[0].productId) {
+        getProduct(threads[0].productId);
+      }
     }
   };
 
@@ -63,13 +92,50 @@ function ThreadsPage() {
     getProduct(productId);
   }
 
+  const handleNewMessageSearchClick = () => {
+    setIsNewMessageSearch(!isNewMessageSearch);
+    setActiveThreadId(null);
+  };
+
+  const handleNewMessageClick = (user) => {
+    setNewMessageSeller(user);
+    setIsNewMessageSearch(false);
+    setMessages([]);
+    setProduct(null);
+  };
+
+  const breadcrumbs = [
+    { label: "Accueil", href: "/" },
+    { label: "Mon compte", href: "/account" },
+    { label: "Messagerie" },
+  ];
+
+  async function getOrder(orderId) {
+    try {
+      setLoading(true);
+      const order = await fetchHorseted(
+        `/orders/${orderId}/tracking`,
+        accessToken,
+        "GET",
+        null,
+        false,
+        false
+      );
+      setOrder(order);
+    } catch (err) {
+      setError(err.message || "Failed to fetch order");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     const message = e.target.content.value;
     if (activeThreadId === null) {
-      console.log("creating new thread");
       await postThread(message);
       await getThreads();
+      router.replace("/messagerie", undefined, { shallow: true });
     } else {
       await postMessage(message);
       getMessages(activeThreadId);
@@ -77,58 +143,100 @@ function ThreadsPage() {
   }
 
   async function getThreads() {
-    const threads = await fetchHorseted("/threads", accessToken);
-    setThreads(threads);
+    try {
+      setLoading(true);
+      const threads = await fetchHorseted("/threads", accessToken);
+      setThreads(threads);
+    } catch (err) {
+      setError(err.message || "Failed to fetch threads");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getMessages(id) {
-    const messages = await fetchHorseted(
-      `/threads/${id}/messages`,
-      accessToken
-    );
-    setMessages(messages);
+    try {
+      setLoading(true);
+      const messages = await fetchHorseted(
+        `/threads/${id}/messages`,
+        accessToken
+      );
+      setMessages(messages);
+    } catch (err) {
+      setError(err.message || "Failed to fetch messages");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getProduct(productId) {
-    const product = await fetchHorseted(`/products/${productId}`);
-    setProduct(product);
+    try {
+      setLoading(true);
+      const product = await fetchHorseted(`/products/${productId}`);
+      setProduct(product);
+    } catch (err) {
+      setError(err.message || "Failed to fetch product");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function postMessage(message) {
     const body = {
       content: message,
     };
-    await fetchHorseted(
-      `/threads/${activeThreadId}/messages`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
+    try {
+      setLoading(true);
+      await fetchHorseted(
+        `/threads/${activeThreadId}/messages`,
+        accessToken,
+        "POST",
+        body,
+        true
+      );
+    } catch (err) {
+      setError(err.message || "Failed to post message");
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function postThread(message) {
     const body = {
-      userId: user.id,
-      productId: product.id,
+      userId: seller?.id,
+      productId: product ? product.id : null,
       content: message,
-      // medias: [0],
     };
-    const newThread = await fetchHorseted(
-      `/threads`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
-    setActiveThreadId(newThread.id);
+    try {
+      setLoading(true);
+      const newThread = await fetchHorseted(
+        `/threads`,
+        accessToken,
+        "POST",
+        body,
+        true,
+        true
+      );
+      setActiveThreadId(newThread.id);
+    } catch (err) {
+      setError(err.message || "Failed to create new thread");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  const breadcrumbs = [
-    { label: "Accueil", href: "/" },
-    { label: "Mon compte", href: "/account" },
-    { label: "Messagerie" },
-  ];
+  async function onDeleteThread() {
+    await fetchHorseted(
+      `/threads/${activeThreadId}`,
+      accessToken,
+      "DELETE",
+      null,
+      false,
+      true
+    );
+    await getThreads();
+    setIsInfo(false);
+  }
 
   return (
     <div className="container mx-auto pb-10">
@@ -139,29 +247,43 @@ function ThreadsPage() {
             <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
               Messages
             </h1>
-            <button onClick={() => setIsNewMessageSearch(!isNewMessageSearch)}>
+            <button onClick={handleNewMessageSearchClick}>
               <img src="/icons/new-message.svg" alt="Nouveau message" />
             </button>
           </div>
-          {threads.length !== 0 ? (
+          {loading ? (
+            <Spinner />
+          ) : threads.length !== 0 ? (
             <ThreadList
               threads={threads}
               handleThreadClick={handleThreadClick}
               activeThreadId={activeThreadId}
             />
           ) : (
-            <p>Pas de convesations</p>
+            <p>Pas de conversations</p>
           )}
         </div>
         <div className="w-2/3 bg-white flex flex-col">
           {isNewMessageSearch ? (
-            <NewMessageSearch />
+            <NewMessageSearch
+              threads={threads}
+              handleClick={handleNewMessageClick}
+            />
           ) : (
             <MessageThread
               product={product}
               messages={messages}
               userId={user.id}
               handleSubmit={handleSubmit}
+              newMessageSeller={newMessageSeller}
+              order={order}
+              seller={seller}
+              setSeller={setSeller}
+              activeThreadId={activeThreadId}
+              onDeleteThread={onDeleteThread}
+              setIsInfo={setIsInfo}
+              isInfo={isInfo}
+              accessToken={accessToken}
             />
           )}
         </div>

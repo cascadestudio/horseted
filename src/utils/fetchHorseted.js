@@ -32,21 +32,27 @@ export default async function fetchHorseted(
   isDebug &&
     console.log("Fetching Horseted API with", "URL:", url, "Options:", options);
 
-  try {
-    const response = await fetch(url, options);
+  const response = await fetch(url, options);
 
-    if (!response.ok) {
-      const errorResponse = await response.json();
-      throw new Error(
-        `Failed to fetch ${query}: ${
-          errorResponse.message || response.statusText
-        }`
-      );
-    }
+  // Check if the response has a JSON content type and if the body is not empty
+  const contentType = response.headers.get("content-type");
 
+  if (response.ok && contentType && contentType.includes("application/json")) {
     return await response.json();
-  } catch (error) {
-    console.error("Error fetching Horseted API:", error);
-    throw error;
+  } else if (response.ok) {
+    // If the response is okay but doesn't contain JSON, return null or an empty object
+    return null;
+  } else {
+    // Handle non-OK responses
+    const errorResponse =
+      contentType && contentType.includes("application/json")
+        ? await response.json()
+        : { message: response.statusText };
+
+    throw new Error(
+      `Failed to fetch ${query}: ${
+        errorResponse.message || response.statusText
+      }`
+    );
   }
 }

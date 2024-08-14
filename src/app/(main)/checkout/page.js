@@ -26,7 +26,7 @@ const CheckOutPage = () => {
   const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
 
-  // console.log("shippingMethods =>", shippingMethods);
+  console.log("isAddressSaved =>", isAddressSaved);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -176,14 +176,18 @@ const CheckOutPage = () => {
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
                 <p className="justify-self-end">{productsPriceSum()} €</p>
-                <p>Frais de port</p>
-                <p className="justify-self-end">
-                  {shippingMethods[0]?.price} €
-                </p>
-                <p className="font-extrabold">Total</p>
-                <p className="font-extrabold justify-self-end">
-                  {productsPriceSum() + shippingMethods[0]?.price} €
-                </p>
+                {shippingMethods[0] && (
+                  <>
+                    <p>Frais de port</p>
+                    <p className="justify-self-end">
+                      {shippingMethods[0]?.price} €
+                    </p>
+                    <p className="font-extrabold">Total</p>
+                    <p className="font-extrabold justify-self-end">
+                      {productsPriceSum() + shippingMethods[0]?.price} €
+                    </p>
+                  </>
+                )}
               </div>
               {activePaymentMethodId ? (
                 <>

@@ -8,17 +8,7 @@ export default function ThreadList({
   handleThreadClick,
   activeThreadId,
 }) {
-  const [avatarSrc, setAvatarSrc] = useState(null);
-  // console.log("threads =>", threads);
-  useEffect(() => {
-    const avatarFile = threads[0].authors[0].avatar.files.thumbnail200;
-    fetchAvatar(avatarFile);
-  }, []);
-
-  async function fetchAvatar(file) {
-    const avatarSrc = await getImage(file, "client");
-    setAvatarSrc(avatarSrc);
-  }
+  const avatar = threads[0].authors[0].avatar;
 
   return (
     <ul className="overflow-y-scroll">
@@ -33,11 +23,7 @@ export default function ThreadList({
                 isActive && "bg-white"
               }`}
             >
-              <AvatarDisplay
-                avatarSrc={avatarSrc}
-                size="sm"
-                className="flex-none"
-              />
+              <AvatarDisplay avatar={avatar} size={54} className="flex-none" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center">
                   <h2 className="font-bold mr-2">{authors[0].username}</h2>

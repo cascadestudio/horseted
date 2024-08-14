@@ -1,21 +1,41 @@
 import Modal from "@/components/Modal";
+import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
-
-export default function OfferModal({ price, onClose }) {
+import { useAuthContext } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+export default function OfferModal({ price, onClose, product }) {
+  const router = useRouter();
+  const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const number = parseFloat(e.target.offer.value);
-    if (number > price) {
+    const offer = parseFloat(e.target.offer.value);
+    if (offer > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      // TODO: POST /orders?price
-      // console.log("Offer: ", number);
+      postOrder(offer);
+      router.push(`/messagerie?productId=${product.id}`);
       onClose();
     }
   };
+
+  async function postOrder(offer) {
+    const body = {
+      productIds: [product.id],
+      price: offer,
+    };
+    const order = await fetchHorseted(
+      `/orders`,
+      accessToken,
+      "POST",
+      body,
+      true,
+      true
+    );
+    return order.id;
+  }
 
   return (
     <Modal

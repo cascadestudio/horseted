@@ -20,11 +20,7 @@ export default function SellerBlock({ sellerData, productId }) {
           <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate">
             {username}
           </h4>
-          <StarRating
-            className="ml-3"
-            rating={review.rating}
-            count={review.count}
-          />
+          <StarRating className="ml-3" review={review} />
         </div>
       </div>
       <div className="flex items-center">
