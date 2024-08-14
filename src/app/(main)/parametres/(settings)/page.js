@@ -16,8 +16,11 @@ import { formatDate } from "@/utils/formatDate";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
+import useHandleSignout from "@/hooks/useHandleSignout";
 
 export default function Settings() {
+  const handleSignout = useHandleSignout();
+
   const { user } = useAuthContext();
   const router = useRouter();
   const [formData, setFormData] = useState(initializeFormData(user));
@@ -46,6 +49,7 @@ export default function Settings() {
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
+    console.log("file =>", file);
     if (file) {
       const updatedAvatar = await updateAvatar(file, user.auth.accessToken);
       if (updatedAvatar) {
@@ -77,7 +81,16 @@ export default function Settings() {
   async function updateAvatar(file, token) {
     const formdata = new FormData();
     formdata.append("avatar", file);
-    const response = await fetchHorseted(`/users/me`, token, "PATCH", formdata);
+
+    const response = await fetchHorseted(
+      `/users/me`,
+      token,
+      "PATCH",
+      formdata,
+      false,
+      true
+    );
+    console.log("response =>", response);
     return response?.avatar;
   }
 
@@ -154,9 +167,7 @@ export default function Settings() {
       <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
         <Button
           variant="transparent-red"
-          onClick={() => {
-            signOut(getAuth()).then(() => router.push("/"));
-          }}
+          onClick={handleSignout}
           className="mt-5 lg:mt-0 col-span-2 lg:col-start-2 lg:col-span-1 w-full lg:w-fit place-self-start lg:place-self-end"
         >
           <LogOutIcon className="mr-3" />
