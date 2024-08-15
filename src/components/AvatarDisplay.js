@@ -10,7 +10,7 @@ export default function AvatarDisplay({ avatar, className = "", size }) {
     if (!avatar) return;
     const file = avatar.files.thumbnail200;
     fetchAvatar(file);
-  }, []);
+  }, [avatar]);
 
   async function fetchAvatar(file) {
     const avatarSrc = await getImage(file, "client");
