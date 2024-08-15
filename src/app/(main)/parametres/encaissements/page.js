@@ -1,9 +1,70 @@
+"use client";
+
 import UploadIcon from "@/assets/icons/UploadIcon";
 import Button from "@/components/Button";
 import { TextInput } from "@/components/input";
 import Checkbox from "@/components/input/Checkbox";
+import { useAuthContext } from "@/context/AuthContext";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useEffect, useState } from "react";
 
 export default function Transactions() {
+  const { user, accessToken } = useAuthContext();
+  const [files, setFiles] = useState({
+    frontDocument: null,
+    backDocument: null,
+    frontAdditionalDocument: null,
+    backAdditionalDocument: null,
+  });
+
+  console.log("files =>", files);
+
+  // const [formData, setFormData] = useState({
+  //   firstName: seller?.firstName || "",
+  //   lastName: "",
+  //   dateOfBirth: "",
+  //   verificationStatus: "unverified",
+  //   ibanLast4: "string",
+  //   documents: {
+  //     back: "string",
+  //     front: "string",
+  //     detailsCode: "document_corrupt",
+  //   },
+  //   additionalDocument: {
+  //     back: "string",
+  //     front: "string",
+  //     detailsCode: "document_corrupt",
+  //   },
+  //   payoutsEnabled: true,
+  //   address: {
+  //     street: "string",
+  //     city: "string",
+  //     postalCode: "string",
+  //   },
+  // });
+
+  useEffect(() => {
+    // getSellerData();
+  }, []);
+
+  const getSellerData = async () => {
+    const response = await fetchHorseted(
+      "/users/me/seller_account",
+      accessToken
+    );
+    console.log("response =>", response);
+  };
+
+  // const handleChange = () => {};
+
+  const handleFileChange = async (e) => {
+    const { name, value, files } = e.target;
+    const file = files[0];
+    if (file) {
+      setFiles((prev) => ({ ...prev, [name]: file }));
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
       <p className="text-xs font-semibold col-span-2">
@@ -14,10 +75,25 @@ export default function Transactions() {
         <h2 className="font-mcqueen text-[24px] font-bold">
           Informations vendeur
         </h2>
-        <TextInput label="Prénom" placeholder="Prénom" />
-        <TextInput label="Nom" placeholder="Nom" />
-        <TextInput label="Date de naissance" placeholder="Date de naissance" />
-        <TextInput label="IBAN" placeholder="FR********" />
+        {/* <TextInput
+          value=""
+          onChange={handleChange}
+          label="Prénom"
+          placeholder="Prénom"
+        />
+        <TextInput value="" label="Nom" placeholder="Nom" />
+        <TextInput
+          value=""
+          onChange={handleChange}
+          label="Date de naissance"
+          placeholder="Date de naissance"
+        />
+        <TextInput
+          value=""
+          onChange={handleChange}
+          label="IBAN"
+          placeholder="FR********"
+        /> */}
         <h3 className="font-mcqueen font-semibold mt-6">
           Adresse d’expédition :
         </h3>
@@ -40,7 +116,12 @@ export default function Transactions() {
           <p className="text-sm font-semibold uppercase text-center">
             Passeport
           </p>
-          <input type="file" name="passport" className="hidden" />
+          <input
+            onChange={handleFileChange}
+            type="file"
+            name="frontDocument"
+            className="hidden"
+          />
         </label>
         <p className="text-center uppercase text-xl">ou</p>
         <p className="text-center uppercase text-light-green mb-2">
@@ -50,16 +131,26 @@ export default function Transactions() {
           <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
             <UploadIcon />
             <p className="text-sm font-semibold uppercase text-center">Recto</p>
-            <input type="file" name="idRecto" className="hidden" />
+            <input
+              onChange={handleFileChange}
+              type="file"
+              name="frontAdditionalDocument"
+              className="hidden"
+            />
           </label>
           <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
             <UploadIcon />
             <p className="text-sm font-semibold uppercase text-center">Verso</p>
-            <input type="file" name="idVerso" className="hidden" />
+            <input
+              onChange={handleFileChange}
+              type="file"
+              name="backAdditionalDocument"
+              className="hidden"
+            />
           </label>
         </div>
         <label className="flex items-start mt-12 mb-7">
-          <Checkbox />
+          <Checkbox value="" onChange={() => {}} />
           <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
             J’accepte que mon identité soit vérifiée par Horseted
           </span>
