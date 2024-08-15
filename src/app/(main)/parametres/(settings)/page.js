@@ -25,7 +25,7 @@ export default function Settings() {
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
-    // birthDate: user?.birthDate || "",
+    birthDate: user?.birthDate || "",
     email: user?.auth.email || "",
     description: user?.description || "",
     city: user?.city || "",
