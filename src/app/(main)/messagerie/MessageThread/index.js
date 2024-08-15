@@ -36,7 +36,7 @@ export default function MessageThread({
   const reversedMessages = [...messages].reverse();
 
   return (
-    <div className="flex flex-col h-full flex-1">
+    <div className="flex flex-col min-h-[400px] flex-1">
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
         {product ? (
           <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
