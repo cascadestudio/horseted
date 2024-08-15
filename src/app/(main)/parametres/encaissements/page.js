@@ -22,29 +22,12 @@ export default function Transactions() {
   console.log("isLoading =>", isLoading);
   console.log("files =>", files);
 
-  // const [formData, setFormData] = useState({
-  //   firstName: seller?.firstName || "",
-  //   lastName: "",
-  //   dateOfBirth: "",
-  //   verificationStatus: "unverified",
-  //   ibanLast4: "string",
-  //   documents: {
-  //     back: "string",
-  //     front: "string",
-  //     detailsCode: "document_corrupt",
-  //   },
-  //   additionalDocument: {
-  //     back: "string",
-  //     front: "string",
-  //     detailsCode: "document_corrupt",
-  //   },
-  //   payoutsEnabled: true,
-  //   address: {
-  //     street: "string",
-  //     city: "string",
-  //     postalCode: "string",
-  //   },
-  // });
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    IBAN: "",
+  });
 
   useEffect(() => {
     // getSellerData();
@@ -58,7 +41,7 @@ export default function Transactions() {
     console.log("response =>", response);
   };
 
-  // const handleChange = () => {};
+  const handleChange = () => {};
 
   const handleFileChange = (e) => {
     const { name, value, files } = e.target;
@@ -109,25 +92,38 @@ export default function Transactions() {
         <h2 className="font-mcqueen text-[24px] font-bold">
           Informations vendeur
         </h2>
-        {/* <TextInput
-            value=""
-            onChange={handleChange}
-            label="Prénom"
-            placeholder="Prénom"
-          />
-          <TextInput value="" label="Nom" placeholder="Nom" />
-          <TextInput
-            value=""
-            onChange={handleChange}
-            label="Date de naissance"
-            placeholder="Date de naissance"
-          />
-          <TextInput
-            value=""
-            onChange={handleChange}
-            label="IBAN"
-            placeholder="FR********"
-          /> */}
+        <TextInput
+          onChange={handleChange}
+          label="Prénom"
+          placeholder="Prénom"
+          name="firstName"
+          value={formData.firstName}
+          required
+        />
+        <TextInput
+          onChange={handleChange}
+          label="Prénom"
+          placeholder="Prénom"
+          name="lastName"
+          value={formData.lastName}
+          required
+        />
+        <TextInput
+          onChange={handleChange}
+          label="Date de naissance"
+          placeholder="Date de naissance"
+          name="birthDate"
+          value={formData.dateOfBirth}
+          required
+        />
+        <TextInput
+          onChange={handleChange}
+          label="IBAN"
+          placeholder="FR********"
+          name="IBAN"
+          value={formData.IBAN}
+          required
+        />
         <h3 className="font-mcqueen font-semibold mt-6">
           Adresse d’expédition :
         </h3>
