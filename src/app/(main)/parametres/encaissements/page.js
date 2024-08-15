@@ -2,6 +2,7 @@
 
 import UploadIcon from "@/assets/icons/UploadIcon";
 import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 import { TextInput } from "@/components/input";
 import Checkbox from "@/components/input/Checkbox";
 import { useAuthContext } from "@/context/AuthContext";
@@ -16,7 +17,9 @@ export default function Transactions() {
     frontAdditionalDocument: null,
     backAdditionalDocument: null,
   });
+  const [isLoading, setIsLoading] = useState(false);
 
+  console.log("isLoading =>", isLoading);
   console.log("files =>", files);
 
   // const [formData, setFormData] = useState({
@@ -57,7 +60,7 @@ export default function Transactions() {
 
   // const handleChange = () => {};
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const { name, value, files } = e.target;
     const file = files[0];
     if (file) {
@@ -65,8 +68,39 @@ export default function Transactions() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = convertToFormData(files);
+    setIsLoading(true);
+    const response = await fetchHorseted(
+      "/users/me/files",
+      accessToken,
+      "POST",
+      formData,
+      false,
+      true
+    );
+    setIsLoading(false);
+    console.log("response =>", response);
+  };
+
+  const convertToFormData = (files) => {
+    const formData = new FormData();
+    for (const key in files) {
+      if (files.hasOwnProperty(key) && files[key] !== null) {
+        formData.append(key, files[key]);
+      }
+    }
+    return formData;
+  };
+
+  if (isLoading) return <Spinner />;
+
   return (
-    <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4"
+    >
       <p className="text-xs font-semibold col-span-2">
         Pour vendre des produits sur Horseted, vous devez valider votre identité
         avec le formulaire ci-dessous.
@@ -76,24 +110,24 @@ export default function Transactions() {
           Informations vendeur
         </h2>
         {/* <TextInput
-          value=""
-          onChange={handleChange}
-          label="Prénom"
-          placeholder="Prénom"
-        />
-        <TextInput value="" label="Nom" placeholder="Nom" />
-        <TextInput
-          value=""
-          onChange={handleChange}
-          label="Date de naissance"
-          placeholder="Date de naissance"
-        />
-        <TextInput
-          value=""
-          onChange={handleChange}
-          label="IBAN"
-          placeholder="FR********"
-        /> */}
+            value=""
+            onChange={handleChange}
+            label="Prénom"
+            placeholder="Prénom"
+          />
+          <TextInput value="" label="Nom" placeholder="Nom" />
+          <TextInput
+            value=""
+            onChange={handleChange}
+            label="Date de naissance"
+            placeholder="Date de naissance"
+          />
+          <TextInput
+            value=""
+            onChange={handleChange}
+            label="IBAN"
+            placeholder="FR********"
+          /> */}
         <h3 className="font-mcqueen font-semibold mt-6">
           Adresse d’expédition :
         </h3>
@@ -155,8 +189,10 @@ export default function Transactions() {
             J’accepte que mon identité soit vérifiée par Horseted
           </span>
         </label>
-        <Button className="w-full">Envoyer</Button>
+        <Button type="submit" className="w-full">
+          Envoyer
+        </Button>
       </div>
-    </div>
+    </form>
   );
 }

@@ -12,11 +12,12 @@ import VacationModeIcon from "@/assets/icons/VacationModeIcon";
 
 const pages = [
   { title: "Paramètres du profil", path: "", icon: SettingsProfileIcon },
-  {
-    title: "Personnalisation",
-    path: "personalisation",
-    icon: PersonalisationIcon,
-  },
+  // Pas pour la v1
+  // {
+  //   title: "Personnalisation",
+  //   path: "personalisation",
+  //   icon: PersonalisationIcon,
+  // },
   { title: "Paiements", path: "paiements", icon: PaymentsIcon },
   { title: "Encaissements", path: "encaissements", icon: CashIcon },
   { title: "Adresses", path: "adresses", icon: AddressesIcon },
