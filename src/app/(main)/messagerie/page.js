@@ -241,8 +241,8 @@ function ThreadsPage() {
   return (
     <div className="container mx-auto pb-10">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="border border-darker-grey rounded-3xl overflow-hidden mt-10 flex h-[580px]">
-        <div className="w-1/3 border-e border-darker-grey flex flex-col">
+      <div className="border border-darker-grey rounded-3xl overflow-hidden mt-10 flex flex-col sm:flex-row h-screen sm:h-[580px]">
+        <div className="sm:w-1/3 sm:border-e border-darker-grey flex flex-col">
           <div className="flex justify-between items-center p-6 border-b border-pale-grey">
             <h1 className="flex-1 flex justify-center text-xl font-mcqueen font-bold">
               Messages
@@ -263,7 +263,7 @@ function ThreadsPage() {
             <p>Pas de conversations</p>
           )}
         </div>
-        <div className="w-2/3 bg-white flex flex-col">
+        <div className="h-full sm:w-2/3 bg-white flex flex-col flex-1">
           {isNewMessageSearch ? (
             <NewMessageSearch
               threads={threads}

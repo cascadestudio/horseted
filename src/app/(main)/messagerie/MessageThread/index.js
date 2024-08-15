@@ -36,7 +36,7 @@ export default function MessageThread({
   const reversedMessages = [...messages].reverse();
 
   return (
-    <>
+    <div className="flex flex-col h-full flex-1">
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
         {product ? (
           <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
@@ -61,7 +61,7 @@ export default function MessageThread({
             onDeleteThread={onDeleteThread}
           />
         ) : (
-          <ul className="flex flex-col gap-y-4  flex-1">
+          <ul className="flex flex-col gap-y-4 flex-1">
             <li className="message-container self-start">
               <p>Bonjour, moi c’est {seller?.username}</p>
               {/* TODO Clem : intégration premier message vendeur */}
@@ -84,7 +84,7 @@ export default function MessageThread({
       </div>
       <form
         onSubmit={handleSubmit}
-        className="flex gap-4 p-4 border-t border-darker-grey"
+        className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0"
       >
         <button>
           <img src="/icons/media-message.svg" alt="" />
@@ -98,14 +98,14 @@ export default function MessageThread({
         />
         <button
           type="submit"
-          className="flex bg-dark-green text-white rounded-full p-1 ps-6 font-bold items-center"
+          className="flex border border-light-green sm:border-none sm:bg-dark-green text-white rounded-full p-1 sm:ps-6 font-bold items-center"
         >
-          Envoyer
-          <span className="ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
+          <span className="hidden sm:inline">Envoyer</span>
+          <span className="sm:ml-2 bg-white rounded-full h-7 w-7 flex items-center justify-center">
             <img src="/icons/send-message.svg" alt="" />
           </span>
         </button>
       </form>
-    </>
+    </div>
   );
 }
