@@ -3,11 +3,11 @@
 import UploadIcon from "@/assets/icons/UploadIcon";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
-import { TextInput } from "@/components/input";
 import Checkbox from "@/components/input/Checkbox";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
+import CreateStripeAccount from "./CreateStripeAccount";
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
@@ -19,15 +19,8 @@ export default function Transactions() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log("isLoading =>", isLoading);
-  console.log("files =>", files);
-
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    IBAN: "",
-  });
+  // console.log("isLoading =>", isLoading);
+  // console.log("files =>", files);
 
   useEffect(() => {
     // getSellerData();
@@ -40,8 +33,6 @@ export default function Transactions() {
     );
     console.log("response =>", response);
   };
-
-  const handleChange = () => {};
 
   const handleFileChange = (e) => {
     const { name, value, files } = e.target;
@@ -88,52 +79,8 @@ export default function Transactions() {
         Pour vendre des produits sur Horseted, vous devez valider votre identité
         avec le formulaire ci-dessous.
       </p>
-      <div className="col-span-2 lg:col-span-1">
-        <h2 className="font-mcqueen text-[24px] font-bold">
-          Informations vendeur
-        </h2>
-        <TextInput
-          onChange={handleChange}
-          label="Prénom"
-          placeholder="Prénom"
-          name="firstName"
-          value={formData.firstName}
-          required
-        />
-        <TextInput
-          onChange={handleChange}
-          label="Prénom"
-          placeholder="Prénom"
-          name="lastName"
-          value={formData.lastName}
-          required
-        />
-        <TextInput
-          onChange={handleChange}
-          label="Date de naissance"
-          placeholder="Date de naissance"
-          name="birthDate"
-          value={formData.dateOfBirth}
-          required
-        />
-        <TextInput
-          onChange={handleChange}
-          label="IBAN"
-          placeholder="FR********"
-          name="IBAN"
-          value={formData.IBAN}
-          required
-        />
-        <h3 className="font-mcqueen font-semibold mt-6">
-          Adresse d’expédition :
-        </h3>
-        <button className="flex items-center py-3 px-5 pl-0 mb-5 bg-light-grey w-full">
-          <span className="mr-5 w-10 h-10 flex items-center justify-center bg-white border border-light-green rounded-full text-4xl text-light-green">
-            +
-          </span>
-          Ajouter une adresse
-        </button>
-      </div>
+      <CreateStripeAccount />
+
       <div className="col-span-2 lg:col-span-1">
         <h2 className="font-mcqueen text-[24px] font-bold">
           Vérification de l’identité
