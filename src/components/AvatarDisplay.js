@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 export default function AvatarDisplay({ avatar, className = "", size }) {
   const [avatarSrc, setAvatarSrc] = useState(null);
 
-  console.log("avatar =>", avatar);
-
   useEffect(() => {
     if (!avatar) return;
     const file = avatar.files.thumbnail200;

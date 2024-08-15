@@ -22,35 +22,27 @@ export default function Settings() {
   const handleSignout = useHandleSignout();
   const { user, accessToken } = useAuthContext();
   const router = useRouter();
-  const [formData, setFormData] = useState(initializeFormData(user));
+
+  const [formData, setFormData] = useState({
+    firstName: user.firstName || "",
+    lastName: user.lastName || "",
+    email: user.auth.email || "",
+    description: user?.description || "",
+    city: user.city || "",
+    avatar: user.avatar.id || null,
+  });
+  const [avatar, setAvatar] = useState(null);
   const [showCity, setShowCity] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   console.log("formData =>", formData);
 
-  function initializeFormData(user) {
-    return {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
-      email: user?.auth.email || "",
-      description: user?.description || "",
-      avatar: user?.avatar || null,
-      city: user?.city || "",
-    };
-  }
-
-  // useEffect(() => {
-  //   if (formData.avatar) {
-  //     fetchAvatar(formData.avatar.files.thumbnail200);
-  //   }
-  // }, [formData.avatar]);
-
   useEffect(() => {
-    setFormData(initializeFormData(user));
-  }, [user]);
-
-  useEffect(() => {
-    const formDataToSend = prepareFormData(formData);
-    updateUserDetails(formDataToSend);
+    if (isMounted) {
+      patchUser();
+    } else {
+      setIsMounted(true);
+    }
   }, [formData]);
 
   const handleChange = (e) => {
@@ -62,9 +54,8 @@ export default function Settings() {
     const file = e.target.files[0];
     if (file) {
       const media = await postMedia(file);
-      if (media) {
-        setFormData((prev) => ({ ...prev, avatar: media.id }));
-      }
+      setAvatar(media);
+      setFormData((prev) => ({ ...prev, avatar: media.id }));
     }
   };
 
@@ -86,30 +77,22 @@ export default function Settings() {
     await deleteUserAccount(user.auth.accessToken, router);
   };
 
-  function prepareFormData(formData) {
-    const formDataToSend = new FormData();
-    Object.keys(formData).forEach((key) => {
-      if (formData[key] !== null) {
-        formDataToSend.append(key, formData[key]);
-      }
-    });
-    return formDataToSend;
-  }
-
-  async function updateUserDetails(formDataToSend) {
-    if (formDataToSend.get("email") !== user?.auth.email) {
-      try {
-        await updateEmail(user.auth, formDataToSend.get("email"));
-        console.log("Email updated successfully.");
-      } catch (error) {
-        console.log(`Failed to update email: ${error.message}`);
-      }
-    }
-    const data = await fetchHorseted(
+  async function patchUser() {
+    // if (formDataToSend.get("email") !== user?.auth.email) {
+    //   try {
+    //     await updateEmail(user.auth, formDataToSend.get("email"));
+    //     console.log("Email updated successfully.");
+    //   } catch (error) {
+    //     console.log(`Failed to update email: ${error.message}`);
+    //   }
+    // }
+    await fetchHorseted(
       `/users/me`,
       accessToken,
       "PATCH",
-      formDataToSend
+      formData,
+      true,
+      true
     );
   }
 
@@ -167,12 +150,12 @@ export default function Settings() {
         </Button>
         <div className="flex items-center mb-10 col-span-2 lg:col-span-1 ">
           <div className="relative w-fit mr-8">
-            <AvatarDisplay avatar={formData.avatar} size={84} />
+            <AvatarDisplay avatar={avatar || user.avatar} size={84} />
             <AvatarInput onChange={handleAvatarChange} />
           </div>
           <div className="self-end mb-3">
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
-            <span className="text-lg text-grey">{user?.username}*</span>
+            <span className="text-lg text-grey">{user.username}*</span>
           </div>
         </div>
         <div className="flex flex-col col-span-2 lg:col-span-1">
