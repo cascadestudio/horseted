@@ -20,47 +20,12 @@ import useHandleSignout from "@/hooks/useHandleSignout";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
-
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const router = useRouter();
   const [formData, setFormData] = useState(initializeFormData(user));
-  const [avatarSrc, setAvatarSrc] = useState(null);
   const [showCity, setShowCity] = useState(false);
 
-  useEffect(() => {
-    if (formData.avatar) {
-      fetchAvatar(formData.avatar.files.thumbnail200, user.auth.accessToken);
-    }
-  }, [formData.avatar]);
-
-  useEffect(() => {
-    setFormData(initializeFormData(user));
-  }, [user]);
-
-  useEffect(() => {
-    const formDataToSend = prepareFormData(formData);
-    updateUserDetails(formDataToSend, user, router, setFormData);
-  }, [formData]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    console.log("file =>", file);
-    if (file) {
-      const updatedAvatar = await updateAvatar(file, user.auth.accessToken);
-      if (updatedAvatar) {
-        setFormData((prev) => ({ ...prev, avatar: updatedAvatar }));
-      }
-    }
-  };
-
-  const handleDeleteAccount = async () => {
-    await deleteUserAccount(user.auth.accessToken, router);
-  };
+  console.log("formData =>", formData);
 
   function initializeFormData(user) {
     return {
@@ -73,26 +38,53 @@ export default function Settings() {
     };
   }
 
-  async function fetchAvatar(file, token) {
-    const avatarSrc = await getImage(file, "client", token);
-    setAvatarSrc(avatarSrc);
-  }
+  // useEffect(() => {
+  //   if (formData.avatar) {
+  //     fetchAvatar(formData.avatar.files.thumbnail200);
+  //   }
+  // }, [formData.avatar]);
 
-  async function updateAvatar(file, token) {
+  useEffect(() => {
+    setFormData(initializeFormData(user));
+  }, [user]);
+
+  useEffect(() => {
+    const formDataToSend = prepareFormData(formData);
+    updateUserDetails(formDataToSend);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const media = await postMedia(file);
+      if (media) {
+        setFormData((prev) => ({ ...prev, avatar: media.id }));
+      }
+    }
+  };
+
+  async function postMedia(file) {
     const formdata = new FormData();
-    formdata.append("avatar", file);
-
-    const response = await fetchHorseted(
-      `/users/me`,
-      token,
-      "PATCH",
+    formdata.append("media", file);
+    const media = await fetchHorseted(
+      `/medias`,
+      accessToken,
+      "POST",
       formdata,
       false,
       true
     );
-    console.log("response =>", response);
-    return response?.avatar;
+    return media;
   }
+
+  const handleDeleteAccount = async () => {
+    await deleteUserAccount(user.auth.accessToken, router);
+  };
 
   function prepareFormData(formData) {
     const formDataToSend = new FormData();
@@ -104,7 +96,7 @@ export default function Settings() {
     return formDataToSend;
   }
 
-  async function updateUserDetails(formDataToSend, user) {
+  async function updateUserDetails(formDataToSend) {
     if (formDataToSend.get("email") !== user?.auth.email) {
       try {
         await updateEmail(user.auth, formDataToSend.get("email"));
@@ -115,7 +107,7 @@ export default function Settings() {
     }
     const data = await fetchHorseted(
       `/users/me`,
-      user.auth.accessToken,
+      accessToken,
       "PATCH",
       formDataToSend
     );
@@ -175,7 +167,7 @@ export default function Settings() {
         </Button>
         <div className="flex items-center mb-10 col-span-2 lg:col-span-1 ">
           <div className="relative w-fit mr-8">
-            <AvatarDisplay avatarSrc={avatarSrc} />
+            <AvatarDisplay avatar={formData.avatar} size={84} />
             <AvatarInput onChange={handleAvatarChange} />
           </div>
           <div className="self-end mb-3">

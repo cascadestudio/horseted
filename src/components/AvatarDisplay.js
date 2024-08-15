@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 export default function AvatarDisplay({ avatar, className = "", size }) {
   const [avatarSrc, setAvatarSrc] = useState(null);
 
+  console.log("avatar =>", avatar);
+
   useEffect(() => {
     if (!avatar) return;
     const file = avatar.files.thumbnail200;
     fetchAvatar(file);
-  }, []);
+  }, [avatar]);
 
   async function fetchAvatar(file) {
     const avatarSrc = await getImage(file, "client");
