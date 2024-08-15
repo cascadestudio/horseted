@@ -7,12 +7,11 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
-import getImage from "@/utils/getImage";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 import CityIcon from "@/assets/icons/CityIcon";
-import { formatDate } from "@/utils/formatDate";
+import { dateToISO, ISOtoDate } from "@/utils/formatDate";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
@@ -24,12 +23,13 @@ export default function Settings() {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    firstName: user.firstName || "",
-    lastName: user.lastName || "",
-    email: user.auth.email || "",
+    firstName: user?.firstName || "",
+    lastName: user?.lastName || "",
+    // birthDate: user?.birthDate || "",
+    email: user?.auth.email || "",
     description: user?.description || "",
-    city: user.city || "",
-    avatar: user.avatar.id || null,
+    city: user?.city || "",
+    avatar: user?.avatar.id || null,
   });
   const [avatar, setAvatar] = useState(null);
   const [showCity, setShowCity] = useState(false);
@@ -47,7 +47,17 @@ export default function Settings() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "birthDate") {
+      handleBirthDateChange(value);
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleBirthDateChange = (date) => {
+    const ISO = dateToISO(date);
+    console.log("birthDate =>", ISO);
+    setFormData((prev) => ({ ...prev, birthDate: ISO }));
   };
 
   const handleAvatarChange = async (e) => {
@@ -86,14 +96,14 @@ export default function Settings() {
     //     console.log(`Failed to update email: ${error.message}`);
     //   }
     // }
-    await fetchHorseted(
+    const user = await fetchHorseted(
       `/users/me`,
       accessToken,
       "PATCH",
       formData,
-      true,
       true
     );
+    console.log("user =>", user);
   }
 
   async function deleteUserAccount(token, router) {
@@ -220,8 +230,9 @@ export default function Settings() {
         />
         <TextInput
           label="Date de naissance"
-          name="birthday"
-          value={formData.birthday ? formatDate(formData.birthday) : ""}
+          name="birthDate"
+          // value={formData.birthDate && formatDate(formData.birthDate)}
+          value={formData.birthDate}
           onChange={handleChange}
           type="text"
           onFocus={(e) => (e.target.type = "date")}
