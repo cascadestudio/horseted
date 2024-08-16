@@ -58,11 +58,21 @@ export default function Transactions() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // checkFormValidity();
+    if (!isFormValid()) return;
     setIsLoading(true);
     await createStripeAccount();
-    // await postFiles();
+    await postFiles();
     setIsLoading(false);
+  };
+
+  const isFormValid = () => {
+    const fileInput = document.querySelector('input[name="frontDocument"]');
+    if (!fileInput.files.length) {
+      alert("Please select a file.");
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const addDateOfBirth = () => {
@@ -80,14 +90,6 @@ export default function Transactions() {
     };
   };
 
-  const checkFormValidity = () => {
-    const fileInput = document.querySelector('input[name="frontDocument"]');
-    if (!fileInput.files.length) {
-      alert("Please select a file.");
-      return;
-    }
-  };
-
   const createStripeAccount = async () => {
     const stripeAccountFormWithDate = addDateOfBirth();
     try {
@@ -97,8 +99,9 @@ export default function Transactions() {
         stripeAccountFormWithDate
       );
       setAccountToken(accountToken);
+      console.log("accountToken =>", accountToken);
     } catch (error) {
-      console.error("Error creating Stripe account:", error);
+      alert("Error creating Stripe account:", error);
     }
   };
 
