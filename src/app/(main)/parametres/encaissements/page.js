@@ -12,6 +12,8 @@ export default function Transactions() {
   const [sellerData, setSellerData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log("sellerData =>", sellerData);
+
   useEffect(() => {
     getSellerData();
   }, []);
@@ -27,8 +29,8 @@ export default function Transactions() {
 
   if (isLoading) return <Spinner />;
 
-  if (sellerData === null)
-    return <CreateSellerAccount accessToken={accessToken} user={user} />;
+  // if (sellerData === null)
+  return <CreateSellerAccount accessToken={accessToken} user={user} />;
 
-  return <DisplaySellerAccount sellerData={sellerData} />;
+  // return <DisplaySellerAccount sellerData={sellerData} user={user} />;
 }

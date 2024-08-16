@@ -12,6 +12,7 @@ export default function Modal({
   children,
   buttonText,
   className,
+  isNotForm,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -55,14 +56,32 @@ export default function Modal({
             <CloseButton className="h-7 w-7" />
           </div>
         </div>
-        <form onSubmit={handleSubmit} className={"lg:px-16 mb-9 " + className}>
-          {children}
-          {buttonText && (
-            <Button className="w-full text-xl h-12 mt-4" type="submit">
-              {buttonText}
-            </Button>
-          )}
-        </form>
+        {isNotForm ? (
+          <div className="lg:px-16 mb-9">
+            {children}
+            {buttonText && (
+              <Button
+                onClick={() => onClose()}
+                className="w-full text-xl h-12 mt-4"
+                type="button"
+              >
+                {buttonText}
+              </Button>
+            )}
+          </div>
+        ) : (
+          <form
+            onSubmit={handleSubmit}
+            className={"lg:px-16 mb-9 " + className}
+          >
+            {children}
+            {buttonText && (
+              <Button className="w-full text-xl h-12 mt-4" type="submit">
+                {buttonText}
+              </Button>
+            )}
+          </form>
+        )}
       </div>
     </div>
   );

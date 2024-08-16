@@ -23,6 +23,11 @@ export default function CreateSellerAccount({ accessToken, user }) {
       first_name: "",
       last_name: "",
       email: user?.auth.email,
+      address: {
+        line1: "",
+        city: "",
+        postal_code: "",
+      },
       dob: {
         day: null,
         month: null,
@@ -41,6 +46,8 @@ export default function CreateSellerAccount({ accessToken, user }) {
     frontAdditionalDocument: null,
     backAdditionalDocument: null,
   });
+
+  console.log("stripeAccountForm =>", stripeAccountForm);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
