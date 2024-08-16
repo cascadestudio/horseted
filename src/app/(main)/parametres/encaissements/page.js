@@ -1,13 +1,13 @@
 "use client";
 
-import UploadIcon from "@/assets/icons/UploadIcon";
-import Button from "@/components/Button";
-import Spinner from "@/components/Spinner";
-import Checkbox from "@/components/input/Checkbox";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
-import CreateStripeAccount from "./CreateStripeAccount";
+import CreateStripeAccountForm from "./CreateStripeAccountForm";
+import HandleFilesForm from "./HandleFilesForm";
+import Button from "@/components/Button";
+import { objectToFormData } from "@/utils/objectToFormData";
+import Spinner from "@/components/Spinner";
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
@@ -17,10 +17,8 @@ export default function Transactions() {
     frontAdditionalDocument: null,
     backAdditionalDocument: null,
   });
-  const [isLoading, setIsLoading] = useState(false);
 
-  // console.log("isLoading =>", isLoading);
-  // console.log("files =>", files);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // getSellerData();
@@ -34,18 +32,24 @@ export default function Transactions() {
     console.log("response =>", response);
   };
 
-  const handleFileChange = (e) => {
-    const { name, value, files } = e.target;
-    const file = files[0];
-    if (file) {
-      setFiles((prev) => ({ ...prev, [name]: file }));
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    checkFormValidity();
+    setIsLoading(true);
+    await postFiles();
+    setIsLoading(false);
+  };
+
+  const checkFormValidity = () => {
+    const fileInput = document.querySelector('input[name="frontDocument"]');
+    if (!fileInput.files.length) {
+      alert("Please select a file.");
+      return;
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = convertToFormData(files);
-    setIsLoading(true);
+  const postFiles = async () => {
+    const formData = objectToFormData(files);
     const response = await fetchHorseted(
       "/users/me/files",
       accessToken,
@@ -54,18 +58,7 @@ export default function Transactions() {
       false,
       true
     );
-    setIsLoading(false);
     console.log("response =>", response);
-  };
-
-  const convertToFormData = (files) => {
-    const formData = new FormData();
-    for (const key in files) {
-      if (files.hasOwnProperty(key) && files[key] !== null) {
-        formData.append(key, files[key]);
-      }
-    }
-    return formData;
   };
 
   if (isLoading) return <Spinner />;
@@ -79,63 +72,11 @@ export default function Transactions() {
         Pour vendre des produits sur Horseted, vous devez valider votre identité
         avec le formulaire ci-dessous.
       </p>
-      <CreateStripeAccount />
-
-      <div className="col-span-2 lg:col-span-1">
-        <h2 className="font-mcqueen text-[24px] font-bold">
-          Vérification de l’identité
-        </h2>
-        <h3 className="font-mcqueen font-semibold mb-2">
-          Document d’identité :
-        </h3>
-        <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
-          <UploadIcon />
-          <p className="text-sm font-semibold uppercase text-center">
-            Passeport
-          </p>
-          <input
-            onChange={handleFileChange}
-            type="file"
-            name="frontDocument"
-            className="hidden"
-          />
-        </label>
-        <p className="text-center uppercase text-xl">ou</p>
-        <p className="text-center uppercase text-light-green mb-2">
-          Carte d'identité
-        </p>
-        <div className="flex gap-8">
-          <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
-            <UploadIcon />
-            <p className="text-sm font-semibold uppercase text-center">Recto</p>
-            <input
-              onChange={handleFileChange}
-              type="file"
-              name="frontAdditionalDocument"
-              className="hidden"
-            />
-          </label>
-          <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
-            <UploadIcon />
-            <p className="text-sm font-semibold uppercase text-center">Verso</p>
-            <input
-              onChange={handleFileChange}
-              type="file"
-              name="backAdditionalDocument"
-              className="hidden"
-            />
-          </label>
-        </div>
-        <label className="flex items-start mt-12 mb-7">
-          <Checkbox value="" onChange={() => {}} />
-          <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
-            J’accepte que mon identité soit vérifiée par Horseted
-          </span>
-        </label>
-        <Button type="submit" className="w-full">
-          Envoyer
-        </Button>
-      </div>
+      <CreateStripeAccountForm />
+      <HandleFilesForm setFiles={setFiles} />
+      <Button type="submit" className="w-full">
+        Envoyer
+      </Button>
     </form>
   );
 }
