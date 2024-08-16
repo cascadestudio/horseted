@@ -34,8 +34,8 @@ export default function CreateStripeAccount({
       />
       <TextInput
         onChange={handleChange}
-        label="Prénom"
-        placeholder="Prénom"
+        label="Nom"
+        placeholder="Nom"
         name="last_name"
         value={stripeAccountForm.individual.last_name}
         required

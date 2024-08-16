@@ -17,12 +17,9 @@ const stripePromise = loadStripe(
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [stripeTokens, setStripeTokens] = useState({
-    accountToken: "",
-    bankAccountToken: "",
-  });
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [stripeAccountForm, setStripeAccountForm] = useState({
+    tos_shown_and_accepted: true,
     business_type: "individual",
     individual: {
       first_name: "",
@@ -47,10 +44,8 @@ export default function Transactions() {
     backAdditionalDocument: null,
   });
 
-  console.log("stripeTokens =>", stripeTokens);
-
   useEffect(() => {
-    // getSellerData();
+    getSellerData();
   }, []);
 
   const getSellerData = async () => {
@@ -58,15 +53,18 @@ export default function Transactions() {
       "/users/me/seller_account",
       accessToken
     );
-    console.log("response =>", response);
+    console.log("getSellerData =>", response);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid()) return;
     setIsLoading(true);
-    await createStripeAccount();
-    await createStripeBankAccount();
+    const accountToken = await createStripeAccount();
+    console.log("accountToken =>", accountToken);
+    const bankAccountToken = await createStripeBankAccount();
+    console.log("bankAccountToken =>", bankAccountToken);
+    await createSellerAccount(accountToken, bankAccountToken);
     await postFiles();
     setIsLoading(false);
   };
@@ -104,8 +102,8 @@ export default function Transactions() {
         "account",
         stripeAccountFormWithDate
       );
-      console.log("accountToken =>", accountToken);
-      setStripeTokens({ ...stripeTokens, accountToken: accountToken.id });
+      const token = accountToken.token.id;
+      return token;
     } catch (error) {
       alert("Error creating Stripe account:", error);
     }
@@ -118,14 +116,27 @@ export default function Transactions() {
         "bank_account",
         stripeBankAccountForm
       );
-      console.log("bankAccountToken =>", bankAccountToken);
-      setStripeTokens({
-        ...stripeTokens,
-        bankAccountToken: bankAccountToken.id,
-      });
+      const token = bankAccountToken.token.id;
+      return token;
     } catch (error) {
       alert("Error creating Stripe bank account:", error);
     }
+  };
+
+  const createSellerAccount = async (accountToken, bankAccountToken) => {
+    const body = {
+      accountToken: accountToken,
+      bankAccountToken: bankAccountToken,
+    };
+    const response = await fetchHorseted(
+      "/users/me/seller_account",
+      accessToken,
+      "POST",
+      body,
+      true,
+      true
+    );
+    console.log("response =>", response);
   };
 
   const postFiles = async () => {
