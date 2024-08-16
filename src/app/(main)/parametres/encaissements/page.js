@@ -8,9 +8,31 @@ import HandleFilesForm from "./HandleFilesForm";
 import Button from "@/components/Button";
 import { objectToFormData } from "@/utils/objectToFormData";
 import Spinner from "@/components/Spinner";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [accountToken, setAccountToken] = useState(null);
+  const [stripeForm, setStripeForm] = useState({
+    IBAN: "",
+    business_type: "individual",
+    individual: {
+      first_name: "",
+      last_name: "",
+      email: user?.auth.email,
+      dob: {
+        day: null,
+        month: null,
+        year: null,
+      },
+    },
+  });
   const [files, setFiles] = useState({
     frontDocument: null,
     backDocument: null,
@@ -18,7 +40,9 @@ export default function Transactions() {
     backAdditionalDocument: null,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
+  console.log("stripeForm =>", stripeForm);
+  console.log("accountToken =>", accountToken);
+  console.log("error =>", error);
 
   useEffect(() => {
     // getSellerData();
@@ -32,11 +56,17 @@ export default function Transactions() {
     console.log("response =>", response);
   };
 
+  const handleStripeFormChange = (e) => {
+    const { name, value } = e.target;
+    setStripeForm({ ...stripeForm, [name]: value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    checkFormValidity();
+    // checkFormValidity();
     setIsLoading(true);
-    await postFiles();
+    await createStripeAccount();
+    // await postFiles();
     setIsLoading(false);
   };
 
@@ -45,6 +75,37 @@ export default function Transactions() {
     if (!fileInput.files.length) {
       alert("Please select a file.");
       return;
+    }
+  };
+
+  const createStripeAccount = async () => {
+    setError(null);
+
+    try {
+      const stripe = await stripePromise;
+
+      const accountData = {
+        business_type: "individual",
+        individual: {
+          first_name: "John",
+          last_name: "Doe",
+          email: "john.doe@example.com",
+          dob: {
+            day: 1,
+            month: 1,
+            year: 1990,
+          },
+        },
+      };
+
+      if (stripeForm) {
+        const accountToken = await stripe.createToken("account", stripeForm);
+        setAccountToken(accountToken);
+      } else {
+        throw new Error(accountData.error || "Failed to create account token");
+      }
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -72,7 +133,10 @@ export default function Transactions() {
         Pour vendre des produits sur Horseted, vous devez valider votre identité
         avec le formulaire ci-dessous.
       </p>
-      <CreateStripeAccountForm />
+      <CreateStripeAccountForm
+        handleChange={handleStripeFormChange}
+        stripeForm={stripeForm}
+      />
       <HandleFilesForm setFiles={setFiles} />
       <Button type="submit" className="w-full">
         Envoyer
