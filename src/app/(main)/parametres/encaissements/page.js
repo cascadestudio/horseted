@@ -16,11 +16,11 @@ const stripePromise = loadStripe(
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
-  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [accountToken, setAccountToken] = useState(null);
-  const [stripeForm, setStripeForm] = useState({
-    IBAN: "",
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [stripeAccountForm, setStripeAccountForm] = useState({
+    // IBAN: "",
     business_type: "individual",
     individual: {
       first_name: "",
@@ -40,9 +40,9 @@ export default function Transactions() {
     backAdditionalDocument: null,
   });
 
-  console.log("stripeForm =>", stripeForm);
-  console.log("accountToken =>", accountToken);
-  console.log("error =>", error);
+  // console.log("dateOfBirth =>", dateOfBirth);
+  // console.log("stripeAccountForm =>", stripeAccountForm);
+  // console.log("accountToken =>", accountToken);
 
   useEffect(() => {
     // getSellerData();
@@ -56,11 +56,6 @@ export default function Transactions() {
     console.log("response =>", response);
   };
 
-  const handleStripeFormChange = (e) => {
-    const { name, value } = e.target;
-    setStripeForm({ ...stripeForm, [name]: value });
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     // checkFormValidity();
@@ -68,6 +63,21 @@ export default function Transactions() {
     await createStripeAccount();
     // await postFiles();
     setIsLoading(false);
+  };
+
+  const addDateOfBirth = () => {
+    const date = new Date(dateOfBirth);
+    return {
+      ...stripeAccountForm,
+      individual: {
+        ...stripeAccountForm.individual,
+        dob: {
+          day: date.getDate(),
+          month: date.getMonth() + 1,
+          year: date.getFullYear(),
+        },
+      },
+    };
   };
 
   const checkFormValidity = () => {
@@ -79,33 +89,16 @@ export default function Transactions() {
   };
 
   const createStripeAccount = async () => {
-    setError(null);
-
+    const stripeAccountFormWithDate = addDateOfBirth();
     try {
       const stripe = await stripePromise;
-
-      const accountData = {
-        business_type: "individual",
-        individual: {
-          first_name: "John",
-          last_name: "Doe",
-          email: "john.doe@example.com",
-          dob: {
-            day: 1,
-            month: 1,
-            year: 1990,
-          },
-        },
-      };
-
-      if (stripeForm) {
-        const accountToken = await stripe.createToken("account", stripeForm);
-        setAccountToken(accountToken);
-      } else {
-        throw new Error(accountData.error || "Failed to create account token");
-      }
+      const accountToken = await stripe.createToken(
+        "account",
+        stripeAccountFormWithDate
+      );
+      setAccountToken(accountToken);
     } catch (error) {
-      setError(error.message);
+      console.error("Error creating Stripe account:", error);
     }
   };
 
@@ -134,8 +127,10 @@ export default function Transactions() {
         avec le formulaire ci-dessous.
       </p>
       <CreateStripeAccountForm
-        handleChange={handleStripeFormChange}
-        stripeForm={stripeForm}
+        setStripeAccountForm={setStripeAccountForm}
+        stripeAccountForm={stripeAccountForm}
+        dateOfBirth={dateOfBirth}
+        setDateOfBirth={setDateOfBirth}
       />
       <HandleFilesForm setFiles={setFiles} />
       <Button type="submit" className="w-full">

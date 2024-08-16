@@ -1,6 +1,22 @@
 import { TextInput } from "@/components/input";
 
-export default function CreateStripeAccount({ handleChange, stripeForm }) {
+export default function CreateStripeAccount({
+  setStripeAccountForm,
+  stripeAccountForm,
+  setDateOfBirth,
+  dateOfBirth,
+}) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setStripeAccountForm({
+      ...stripeAccountForm,
+      individual: {
+        ...stripeAccountForm.individual,
+        [name]: value,
+      },
+    });
+  };
+
   return (
     <div className="col-span-2 lg:col-span-1">
       <h2 className="font-mcqueen text-[24px] font-bold">
@@ -11,7 +27,7 @@ export default function CreateStripeAccount({ handleChange, stripeForm }) {
         label="Prénom"
         placeholder="Prénom"
         name="first_name"
-        value={stripeForm.first_name}
+        value={stripeAccountForm.individual.first_name}
         required
       />
       <TextInput
@@ -19,25 +35,26 @@ export default function CreateStripeAccount({ handleChange, stripeForm }) {
         label="Prénom"
         placeholder="Prénom"
         name="last_name"
-        value={stripeForm.last_name}
+        value={stripeAccountForm.individual.last_name}
         required
       />
       <TextInput
-        onChange={handleChange}
+        type="date"
+        onChange={(e) => setDateOfBirth(e.target.value)}
         label="Date de naissance"
         placeholder="Date de naissance"
-        name="birthDate"
-        value={stripeForm.dateOfBirth}
+        name="dateOfBirth"
+        value={dateOfBirth}
         required
       />
-      <TextInput
+      {/* <TextInput
         onChange={handleChange}
         label="IBAN"
         placeholder="FR********"
         name="IBAN"
         value={stripeForm.IBAN}
         required
-      />
+      /> */}
       <h3 className="font-mcqueen font-semibold mt-6">
         Adresse d’expédition :
       </h3>
