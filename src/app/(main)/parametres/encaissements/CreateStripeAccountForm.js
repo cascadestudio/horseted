@@ -5,6 +5,8 @@ export default function CreateStripeAccount({
   stripeAccountForm,
   setDateOfBirth,
   dateOfBirth,
+  setStripeBankAccountForm,
+  stripeBankAccountForm,
 }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,14 +49,19 @@ export default function CreateStripeAccount({
         value={dateOfBirth}
         required
       />
-      {/* <TextInput
-        onChange={handleChange}
+      <TextInput
+        onChange={(e) =>
+          setStripeBankAccountForm({
+            ...stripeBankAccountForm,
+            account_number: e.target.value,
+          })
+        }
         label="IBAN"
         placeholder="FR********"
         name="IBAN"
-        value={stripeForm.IBAN}
+        value={stripeBankAccountForm.account_number}
         required
-      /> */}
+      />
       <h3 className="font-mcqueen font-semibold mt-6">
         Adresse d’expédition :
       </h3>

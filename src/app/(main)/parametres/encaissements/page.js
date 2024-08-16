@@ -17,10 +17,12 @@ const stripePromise = loadStripe(
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [accountToken, setAccountToken] = useState(null);
+  const [stripeTokens, setStripeTokens] = useState({
+    accountToken: "",
+    bankAccountToken: "",
+  });
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [stripeAccountForm, setStripeAccountForm] = useState({
-    // IBAN: "",
     business_type: "individual",
     individual: {
       first_name: "",
@@ -33,6 +35,11 @@ export default function Transactions() {
       },
     },
   });
+  const [stripeBankAccountForm, setStripeBankAccountForm] = useState({
+    country: "FR",
+    currency: "eur",
+    account_number: null, //Test IBAN FR1420041010050500013M02606
+  });
   const [files, setFiles] = useState({
     frontDocument: null,
     backDocument: null,
@@ -40,9 +47,7 @@ export default function Transactions() {
     backAdditionalDocument: null,
   });
 
-  // console.log("dateOfBirth =>", dateOfBirth);
-  // console.log("stripeAccountForm =>", stripeAccountForm);
-  // console.log("accountToken =>", accountToken);
+  console.log("stripeTokens =>", stripeTokens);
 
   useEffect(() => {
     // getSellerData();
@@ -61,6 +66,7 @@ export default function Transactions() {
     if (!isFormValid()) return;
     setIsLoading(true);
     await createStripeAccount();
+    await createStripeBankAccount();
     await postFiles();
     setIsLoading(false);
   };
@@ -98,10 +104,27 @@ export default function Transactions() {
         "account",
         stripeAccountFormWithDate
       );
-      setAccountToken(accountToken);
       console.log("accountToken =>", accountToken);
+      setStripeTokens({ ...stripeTokens, accountToken: accountToken.id });
     } catch (error) {
       alert("Error creating Stripe account:", error);
+    }
+  };
+
+  const createStripeBankAccount = async () => {
+    try {
+      const stripe = await stripePromise;
+      const bankAccountToken = await stripe.createToken(
+        "bank_account",
+        stripeBankAccountForm
+      );
+      console.log("bankAccountToken =>", bankAccountToken);
+      setStripeTokens({
+        ...stripeTokens,
+        bankAccountToken: bankAccountToken.id,
+      });
+    } catch (error) {
+      alert("Error creating Stripe bank account:", error);
     }
   };
 
@@ -134,6 +157,8 @@ export default function Transactions() {
         stripeAccountForm={stripeAccountForm}
         dateOfBirth={dateOfBirth}
         setDateOfBirth={setDateOfBirth}
+        stripeBankAccountForm={stripeBankAccountForm}
+        setStripeBankAccountForm={setStripeBankAccountForm}
       />
       <HandleFilesForm setFiles={setFiles} />
       <Button type="submit" className="w-full">
