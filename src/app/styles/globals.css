@@ -64,5 +64,5 @@
 }
 
 .message-container {
-  @apply border border-pale-grey rounded-md p-6 max-w-[500px];
+  @apply border border-pale-grey rounded-md p-3 max-w-[500px] text-sm font-medium;
 }

@@ -4,6 +4,9 @@ import "@/app/styles/globals.css";
 import CloseButton from "@/assets/icons/CloseButton";
 import ThreadInfo from "./ThreadInfo";
 import Message from "./Message";
+import StarRating from "@/components/StarRating";
+import CityIcon from "@/assets/icons/CityIcon";
+import capitalizeText from "@/utils/capitalizeText";
 
 export default function MessageThread({
   product,
@@ -63,8 +66,17 @@ export default function MessageThread({
         ) : (
           <ul className="flex flex-col gap-y-4 flex-1">
             <li className="message-container self-start">
-              <p>Bonjour, moi c’est {seller?.username}</p>
-              {/* TODO Clem : intégration premier message vendeur */}
+              <p className="font-medium text-sm">
+                <span className="font-bold">Bonjour</span>, moi c’est{" "}
+                {seller?.username}
+              </p>
+              <StarRating review={seller?.review} />
+              <div className="text-grey flex items-center gap-2 mt-3">
+                <CityIcon className="h-3 stroke-current fill-none" />
+                <span className="text-xs font-medium">
+                  {seller?.city ? capitalizeText(seller?.city) : ""}
+                </span>
+              </div>
             </li>
             {messages.length > 0 &&
               reversedMessages.map((message) => (
