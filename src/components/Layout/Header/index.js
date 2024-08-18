@@ -16,7 +16,9 @@ export default function Header() {
             <HorsetedLogo className="h-8 lg:h-auto" />
           </Link>
           <SearchBar className="hidden lg:block" />
-          <Button className="hidden lg:block">Vendre</Button>
+          <Button href="/vendre" className="hidden lg:flex">
+            Vendre
+          </Button>
           <AccountHandler />
         </div>
         <SearchBar className="lg:hidden mt-4" />
