@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
-import { formatDate } from "@/utils/formatDate";
+import { ISOtoDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
 import { formatNumber } from "@/utils/formatNumber";
@@ -74,7 +74,7 @@ export default function ProductPageClient({
     size,
   } = product;
 
-  const formattedDate = formatDate(createdAt);
+  const formattedDate = ISOtoDate(createdAt);
 
   const { username, review } = sellerData;
 

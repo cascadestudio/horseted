@@ -1,7 +1,5 @@
 import AvatarDisplay from "@/components/AvatarDisplay";
-import { formatDate } from "@/utils/formatDate";
-import getImage from "@/utils/getImage";
-import { useEffect, useState } from "react";
+import { ISOtoDate } from "@/utils/formatDate";
 
 export default function ThreadList({
   threads,
@@ -36,7 +34,7 @@ export default function ThreadList({
                 </p>
               </div>
               <p className="font-poppins font-medium self-start flex text-sm">
-                {formatDate(lastMessage.createdAt)}
+                {ISOtoDate(lastMessage.createdAt)}
                 {/* TODO date in hours if less than one day ago and in nb of days if less than one week */}
               </p>
             </button>
