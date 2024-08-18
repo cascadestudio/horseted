@@ -5,6 +5,11 @@ import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import Link from "next/link";
 import useHandleSignout from "@/hooks/useHandleSignout";
+import MyAccountIcon from "@/assets/icons/MyAccountIcon";
+import ChevronRight from "@/assets/icons/ChevronRight";
+import ChevronDown from "@/assets/icons/ChevronDown";
+import OrdersIcon from "@/assets/icons/OrdersIcon";
+import SettingsIcon from "@/assets/icons/SettingsIcon";
 
 export default function MyAccountDropDown() {
   const handleSignout = useHandleSignout();
@@ -24,22 +29,59 @@ export default function MyAccountDropDown() {
 
   return (
     <div ref={dropdownRef}>
-      <Button onClick={handleClick} className="hidden lg:block" variant="white">
-        Mon compte
+      <Button
+        onClick={handleClick}
+        className="hidden lg:flex lg:items-center lg:gap-[10px]"
+        variant="white"
+      >
+        <p>Mon compte</p>
+        <ChevronDown className="w-3" />
       </Button>
       {isClickDropdown && !isClickOutside && (
-        <div className="absolute top-[51px] bg-white border border-dark-green rounded-b-[20px] flex p-5 z-10">
-          <ul>
+        <div className="absolute top-[55px] bg-white border border-dark-green rounded-b-[20px] flex p-3 pb-2 z-10 w-[300px]">
+          <ul className="w-full">
             <li>
-              <Link href="/account">Mon compte</Link>
+              <Link
+                href="/account"
+                className="flex items-center justify-between p-5 border-b border-light-grey"
+              >
+                <div className="flex items-center gap-4">
+                  <MyAccountIcon className="w-[18px] h-[18px]" />
+                  <p className="font-semibold">Mon compte</p>
+                </div>
+                <ChevronRight className="h-3" />
+              </Link>
             </li>
             <li>
-              <Link href="/orders">Commandes</Link>
+              <Link
+                href="/orders"
+                className="flex items-center justify-between p-5 border-b border-light-grey"
+              >
+                <div className="flex items-center justify-center gap-[18px]">
+                  <OrdersIcon className="w-3 h-5 ml-[3px]" />
+                  <p className="font-semibold">Commandes</p>
+                </div>
+                <ChevronRight className="h-3" />
+              </Link>
             </li>
             <li>
-              <Link href="/parametres">Paramètres</Link>
+              <Link
+                href="/parametres"
+                className="flex items-center justify-between p-5 border-b border-light-grey"
+              >
+                <div className="flex items-center gap-4">
+                  <SettingsIcon className="w-[18px] h-[18px]" />
+                  <p className="font-semibold">Paramètres</p>
+                </div>
+                <ChevronRight className="h-3" />
+              </Link>
             </li>
-            <button onClick={handleSignout}>Se déconnecter</button>
+            <button
+              onClick={handleSignout}
+              className="p-5 text-center font-semibold text-red w-full"
+            >
+              Se déconnecter
+            </button>
           </ul>
         </div>
       )}
