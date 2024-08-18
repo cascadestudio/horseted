@@ -22,6 +22,8 @@ export default function HeroCarousel() {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
     beforeChange: (current, next) => setSlideIndex(next),
     responsive: [
       {
@@ -77,7 +79,7 @@ export default function HeroCarousel() {
             src={heroImage2}
             alt="hero image 2"
             sizes="100vh"
-            className="w-full object-cover h-[calc(100vh-134px)]"
+            className="w-full h-[calc(100vh-var(--header-height))] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
           <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>
@@ -87,7 +89,7 @@ export default function HeroCarousel() {
             src={heroImage3}
             alt="hero image 3"
             sizes="100vh"
-            className="w-full object-cover h-[calc(100vh-134px)]"
+            className="w-full h-[calc(100vh-var(--header-height))] object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-30% to-black/70 lg:hidden"></div>
           <div className="hidden lg:block lg:absolute lg:inset-0 lg:via-transparent lg:via-70% lg:bg-gradient-to-tr lg:from-black/70 lg:to-transparent"></div>
