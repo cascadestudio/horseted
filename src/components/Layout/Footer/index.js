@@ -26,7 +26,7 @@ export default function Footer() {
                 l’argent dès maintenant !
               </p>
             </div>
-            <Button href="/sellproduct" variant="transparent-black">
+            <Button href="/vendre" variant="transparent-black">
               Vendre un équipement{" "}
               <RightArrow color="black" className="lg:ml-3" />
             </Button>
@@ -78,7 +78,7 @@ export default function Footer() {
         <div className="container mx-auto pt-12 lg:pt-[87px] px-11 lg:flex lg:justify-around lg:px-0">
           <div className="flex flex-col mb-8">
             <HorsetedBlackIcon className="h-24 self-center mb-3 lg:h-40 lg:mb-7" />
-            <Button className="px-16 w-full lg:w-auto">
+            <Button href="/vendre" className="px-16 w-full lg:w-auto">
               Vendre maintenant
             </Button>
           </div>
@@ -92,7 +92,7 @@ export default function Footer() {
                 <a href="#">Aide</a>
               </li>
               <li>
-                <a href="#">Vendre</a>
+                <a href="/vendre">Vendre</a>
               </li>
               <li>
                 <a href="#">Acheter</a>
