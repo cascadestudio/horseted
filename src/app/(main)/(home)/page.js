@@ -98,7 +98,7 @@ export default async function Home() {
             src={missionImage2}
             alt="Mission Image 2"
             sizes="(min-width: 1024px) 590px, 100vw"
-            className="hidden lg:block object-cover rounded-lg lg:h-[820px]"
+            className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-auto"
           />
         </div>
         <div>

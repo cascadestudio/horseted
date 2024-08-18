@@ -64,7 +64,6 @@ export default function HeroCarousel() {
       <Slider {...settings}>
         <div className="relative">
           <Image
-            quality="90"
             src={heroImage1}
             alt="hero image 1"
             priority
