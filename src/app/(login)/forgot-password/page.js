@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
-import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
+import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import LeftArrow from "@/assets/icons/LeftArrow";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
@@ -36,7 +36,11 @@ export default function forgotPasswordPage() {
             <Link href="/" className="justify-self-start">
               <LeftArrow className="w-[18px] lg:w-7" />
             </Link>
-            <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
+            <Image
+              src={HorsetedLogoBlackHorizontal}
+              alt="HorsetedLogoBlackHorizontal"
+              className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
+            />
           </div>
         </div>
         <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col justify-between h-[calc(100vh_-_var(--header-height)-120px)] lg:max-w-[505px] lg:pb-4 lg:pt-[60px] lg:h-[calc(100vh_-_var(--header-height))] xl:px-0">

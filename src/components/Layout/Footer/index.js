@@ -1,5 +1,5 @@
 import Image from "next/image";
-import HorsetedBlackIcon from "@/assets/logos/HorsetedBlackIcon";
+import HorsetedLogoBlackIcon from "@/assets/logos/HorsetedLogoBlackIcon.svg";
 import Button from "@/components/Button";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
 import YoutubeIcon from "@/assets/icons/YoutubeIcon";
@@ -76,8 +76,11 @@ export default function Footer() {
           </div>
         </div>
         <div className="container mx-auto pt-12 lg:pt-[87px] px-11 lg:flex lg:justify-around lg:px-0">
-          <div className="flex flex-col mb-8">
-            <HorsetedBlackIcon className="h-24 self-center mb-3 lg:h-40 lg:mb-7" />
+          <div className="flex items-center flex-col mb-8">
+            <Image
+              src={HorsetedLogoBlackIcon}
+              className="h-24 w-24 self-center mb-3 lg:h-40 lg:w-40 lg:mb-7"
+            />
             <Button href="/vendre" className="px-16 w-full lg:w-auto">
               Vendre maintenant
             </Button>

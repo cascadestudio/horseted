@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
-import HorsetedLogo from "@/assets/logos/HorsetedLogo.js";
+import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import LeftArrow from "@/assets/icons/LeftArrow";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
@@ -58,7 +58,11 @@ export default function signupPage() {
             <Link href="/" className="justify-self-start">
               <LeftArrow className="w-[18px] lg:w-7" />
             </Link>
-            <HorsetedLogo className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52" />
+            <Image
+              src={HorsetedLogoBlackHorizontal}
+              alt="HorsetedLogoBlackHorizontal"
+              className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
+            />{" "}
           </div>
         </div>
         <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[505px] lg:pb-10 lg:pt-[60px] xl:px-0">

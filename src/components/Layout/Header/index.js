@@ -1,4 +1,5 @@
-import HorsetedLogo from "@/assets/logos/HorsetedLogo";
+import Image from "next/image";
+import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import Button from "@/components/Button";
 import SearchBar from "./SearchBar";
 import BurgerIcon from "./BurgerIcon";
@@ -13,7 +14,12 @@ export default function Header() {
         <div className="flex justify-between items-center gap-x-7 py-5 ">
           <BurgerIcon className="lg:hidden" />
           <Link href="/">
-            <HorsetedLogo className="h-8 lg:h-auto" />
+            <Image
+              src={HorsetedLogoBlackHorizontal}
+              alt="HorsetedLogoBlackHorizontal"
+              priority
+              className="w-[210px] h-[45px]"
+            />
           </Link>
           <SearchBar className="hidden lg:block" />
           <Button href="/vendre" className="hidden lg:flex">
