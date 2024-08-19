@@ -11,11 +11,11 @@ import AddressCard from "./AddressCard";
 export default function Addresses() {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
+  const [isDeliverySimilar, setIsDeliverySimilar] = useState(false);
   const [modal, setModal] = useState({
     isOpen: false,
     type: "",
   });
-  const [isDeliverySimilar, setIsDeliverySimilar] = useState(false);
 
   console.log("addresses =>", addresses);
 
@@ -34,6 +34,20 @@ export default function Addresses() {
   const shippingAddresses = addresses.filter(
     (address) => address.type === "shipping"
   );
+
+  const handleIsDeliverySimilar = async () => {
+    setIsDeliverySimilar(!isDeliverySimilar);
+    // if (deliveryAddresses.length > 0 && shippingAddresses.length === 0) {
+    //   let lastAddress = deliveryAddresses[0];
+    //   lastAddress.type = "shipping";
+    //   await postAddress(lastAddress);
+    // }
+  };
+
+  async function postAddress(newAddress) {
+    const query = `/users/me/addresses`;
+    await fetchHorseted(query, accessToken, "POST", newAddress, true);
+  }
 
   return (
     <div className="grid grid-cols-1 lg:pt-14 lg:grid-cols-2 lg:gap-x-14 gap-y-4 lg:gap-y-2">
@@ -63,7 +77,7 @@ export default function Addresses() {
             className="mr-2"
             value={isDeliverySimilar}
             checked={isDeliverySimilar}
-            onChange={() => setIsDeliverySimilar(!isDeliverySimilar)}
+            onChange={handleIsDeliverySimilar}
           />
           Identique à l’adresse de livraison
         </label>
@@ -88,9 +102,11 @@ export default function Addresses() {
       </div>
       {modal.isOpen && (
         <AddressModal
+          isDeliverySimilar={isDeliverySimilar}
           type={modal.type}
           setIsModal={() => setModal((prev) => ({ ...prev, isOpen: false }))}
           getAddresses={getAddresses}
+          postAddress={postAddress}
         />
       )}
     </div>

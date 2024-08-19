@@ -1,12 +1,15 @@
 import { TextInput } from "@/components/input";
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@/context/AuthContext";
+import { useState } from "react";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function AddressModal({ setIsModal, getAddresses, type }) {
-  const { accessToken } = useAuthContext();
+export default function AddressModal({
+  setIsModal,
+  getAddresses,
+  type,
+  isDeliverySimilar,
+  postAddress,
+}) {
   const [address, setAddress] = useState({
     fullName: "",
     street: "",
@@ -18,7 +21,7 @@ export default function AddressModal({ setIsModal, getAddresses, type }) {
     isDefault: false,
   });
 
-  console.log("address =>", address);
+  // console.log("address =>", address);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -31,14 +34,14 @@ export default function AddressModal({ setIsModal, getAddresses, type }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsModal(false);
-    await postAddress();
+    let newAddress = address;
+    await postAddress(newAddress);
+    if (isDeliverySimilar) {
+      newAddress.type = "shipping";
+      await postAddress(newAddress);
+    }
     getAddresses();
   };
-
-  async function postAddress() {
-    const query = `/users/me/addresses`;
-    await fetchHorseted(query, accessToken, "POST", address, true);
-  }
 
   return (
     <Modal

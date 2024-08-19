@@ -1,3 +1,5 @@
+"use client";
+
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 import fetchHorseted from "@/utils/fetchHorseted";
@@ -7,7 +9,7 @@ export default function AddressCard({ address, getAddresses, accessToken }) {
 
   async function deleteAddress(addressId) {
     const query = `/users/me/addresses/${addressId}`;
-    await fetchHorseted(query, accessToken, "DELETE");
+    await fetchHorseted(query, accessToken, "DELETE", null, false, true);
     getAddresses();
   }
 
