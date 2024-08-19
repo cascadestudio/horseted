@@ -31,7 +31,7 @@ export default function Addresses() {
   const deliveryAddresses = addresses.filter(
     (address) => address.type === "delivery"
   );
-  const billingAddresses = addresses.filter(
+  const shippingAddresses = addresses.filter(
     (address) => address.type === "shipping"
   );
 
@@ -68,9 +68,22 @@ export default function Addresses() {
           Identique à l’adresse de livraison
         </label>
         {!isDeliverySimilar && (
-          <AddAddressButton
-            onClick={() => setModal({ isOpen: true, type: "shipping" })}
-          />
+          <div>
+            {shippingAddresses.length > 0 &&
+              shippingAddresses.map((address) => {
+                return (
+                  <AddressCard
+                    address={address}
+                    key={address.id}
+                    getAddresses={getAddresses}
+                    accessToken={accessToken}
+                  />
+                );
+              })}
+            <AddAddressButton
+              onClick={() => setModal({ isOpen: true, type: "shipping" })}
+            />
+          </div>
         )}
       </div>
       {modal.isOpen && (
