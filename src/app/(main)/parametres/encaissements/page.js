@@ -12,6 +12,8 @@ export default function Transactions() {
   const [sellerData, setSellerData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log("sellerData =>", sellerData);
+
   useEffect(() => {
     getSellerData();
   }, []);

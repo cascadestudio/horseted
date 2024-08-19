@@ -5,7 +5,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 
-export default function AddressModal({ setIsModal, getAddresses }) {
+export default function AddressModal({ setIsModal, getAddresses, type }) {
   const { accessToken } = useAuthContext();
   const [address, setAddress] = useState({
     fullName: "",
@@ -14,11 +14,11 @@ export default function AddressModal({ setIsModal, getAddresses }) {
     city: "",
     country: "FR",
     additionalInfos: "1er étage",
-    type: "delivery",
+    type: type,
     isDefault: false,
   });
 
-  // console.log("address =>", address);
+  console.log("address =>", address);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
