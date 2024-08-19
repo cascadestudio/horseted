@@ -41,34 +41,43 @@ export default function Addresses() {
     setAddresses(adresses);
   }
 
+  async function deleteAddress(addressId) {
+    const query = `/users/me/addresses/${addressId}`;
+    await fetchHorseted(query, accessToken, "DELETE");
+    getAddresses();
+  }
+
   return (
     <div className="grid grid-cols-1 lg:pt-14 lg:grid-cols-2 lg:gap-x-14 gap-y-4 lg:gap-y-2">
       <h3 className="text-[24px] font-mcqueen font-bold mb-2 lg:col-start-1">
         Adresse de livraison
       </h3>
       {addresses.length > 0 &&
-        addresses.map((address) => (
-          <div
-            className="bg-white rounded-xl p-5 border border-lighter-grey lg:col-start-1 flex justify-between items-center"
-            key={address.id}
-          >
-            <div className="text-sm">
-              <p>{address.street}</p>
-              <p>
-                {address.postalCode} {address.city}
-              </p>
-              <p>{address.additionalInfos}</p>
+        addresses.map((address) => {
+          const { id, street, postalCode, city, additionalInfos } = address;
+          return (
+            <div
+              className="bg-white rounded-xl p-5 border border-lighter-grey lg:col-start-1 flex justify-between items-center"
+              key={id}
+            >
+              <div className="text-sm">
+                <p>{street}</p>
+                <p>
+                  {postalCode} {city}
+                </p>
+                <p>{additionalInfos}</p>
+              </div>
+              <div className="flex gap-2">
+                <button>
+                  <ModifyIcon className="w-9 h-9" />
+                </button>
+                <button onClick={() => deleteAddress(id)}>
+                  <DeleteIcon className="w-9 h-9 text-red" />
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button>
-                <ModifyIcon className="w-9 h-9" />
-              </button>
-              <button>
-                <DeleteIcon className="w-9 h-9 text-red" />
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       <button
         onClick={() => setIsModal(true)}
         className="flex items-center px-5 mt-4 bg-light-grey w-full col-start-1"
