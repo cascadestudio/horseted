@@ -5,7 +5,7 @@ import ModifyIcon from "@/assets/icons/ModifyIcon";
 import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function AddressCard({ address, getAddresses, accessToken }) {
-  const { id, street, postalCode, city, additionalInfos } = address;
+  const { id, street, postalCode, city, additionalInfos, isDefault } = address;
 
   async function deleteAddress(addressId) {
     const query = `/users/me/addresses/${addressId}`;
@@ -15,7 +15,9 @@ export default function AddressCard({ address, getAddresses, accessToken }) {
 
   return (
     <div
-      className="bg-white rounded-xl p-5 border border-lighter-grey lg:col-start-1 flex justify-between items-center"
+      className={`bg-white rounded-xl p-5 border  lg:col-start-1 flex justify-between items-center ${
+        isDefault ? "border-light-green" : "border-lighter-grey"
+      }`}
       key={id}
     >
       <div className="text-sm">
