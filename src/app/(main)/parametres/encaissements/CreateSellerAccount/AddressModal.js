@@ -3,12 +3,12 @@ import Modal from "@/components/Modal";
 
 export default function AddressModal({
   setIsModal,
-  stripeAccountForm,
+  address,
   setStripeAccountForm,
+  setIsAdressValid,
 }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setStripeAccountForm((prevState) => ({
       ...prevState,
       individual: {
@@ -21,17 +21,29 @@ export default function AddressModal({
     }));
   };
 
+  const handleSubmit = () => {
+    const isAdressValid = Object.values(address).every((value) => value !== "");
+
+    if (!isAdressValid) {
+      alert("Veuillez renseigner toutes les informations");
+    } else {
+      setIsAdressValid(true);
+      setIsModal(false);
+    }
+  };
+
   return (
     <Modal
       isNotForm
       buttonText="Ajouter"
       title="Ajouter une adresse"
       onClose={() => setIsModal(false)}
+      onSubmit={handleSubmit}
     >
       <TextInput
         label="N° et nom de rue"
         name="line1"
-        value={stripeAccountForm.individual.address.line1}
+        value={address.line1}
         onChange={handleChange}
         required
         placeholder="Ex : 1 avenue de la Paix"
@@ -39,7 +51,7 @@ export default function AddressModal({
       <TextInput
         label="Code postal"
         name="postal_code"
-        value={stripeAccountForm.individual.address.postal_code}
+        value={address.postal_code}
         onChange={handleChange}
         required
         placeholder="Ex : 75 015"
@@ -47,7 +59,7 @@ export default function AddressModal({
       <TextInput
         label="Ville"
         name="city"
-        value={stripeAccountForm.individual.address.city}
+        value={address.city}
         onChange={handleChange}
         required
       />

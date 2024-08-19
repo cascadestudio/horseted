@@ -61,7 +61,7 @@ export default function Modal({
             {children}
             {buttonText && (
               <Button
-                onClick={() => onClose()}
+                onClick={() => onSubmit()}
                 className="w-full text-xl h-12 mt-4"
                 type="button"
               >

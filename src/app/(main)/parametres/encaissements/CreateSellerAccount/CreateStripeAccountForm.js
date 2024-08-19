@@ -1,7 +1,5 @@
-import Modal from "@/components/Modal";
 import { TextInput } from "@/components/input";
-import AddressModal from "./AddressModal";
-import { useState } from "react";
+import SellerAdress from "./SellerAdress";
 
 export default function CreateStripeAccount({
   stripeAccountForm,
@@ -10,9 +8,9 @@ export default function CreateStripeAccount({
   setDateOfBirth,
   stripeBankAccountForm,
   setStripeBankAccountForm,
+  isAdressValid,
+  setIsAdressValid,
 }) {
-  const [isModal, setIsModal] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setStripeAccountForm({
@@ -70,31 +68,12 @@ export default function CreateStripeAccount({
       <h3 className="font-mcqueen font-semibold mt-6">
         Adresse d’expédition :
       </h3>
-      <button
-        type="button"
-        onClick={() => setIsModal(true)}
-        className="flex items-center py-3 px-5 pl-0 mb-5 bg-light-grey w-full"
-      >
-        <span className="mr-5 w-10 h-10 flex items-center justify-center bg-white border border-light-green rounded-full text-4xl text-light-green">
-          +
-        </span>
-        Ajouter une adresse
-      </button>
-      {stripeAccountForm.individual.address && (
-        <div>
-          {stripeAccountForm.individual.address.line1}
-          <br />
-          {stripeAccountForm.individual.address.postal_code}
-          {stripeAccountForm.individual.address.city}
-        </div>
-      )}
-      {isModal && (
-        <AddressModal
-          stripeAccountForm={stripeAccountForm}
-          setStripeAccountForm={setStripeAccountForm}
-          setIsModal={setIsModal}
-        />
-      )}
+      <SellerAdress
+        isAdressValid={isAdressValid}
+        setIsAdressValid={setIsAdressValid}
+        address={stripeAccountForm.individual.address}
+        setStripeAccountForm={setStripeAccountForm}
+      />
     </div>
   );
 }

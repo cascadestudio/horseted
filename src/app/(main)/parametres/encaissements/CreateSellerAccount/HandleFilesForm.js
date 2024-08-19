@@ -1,10 +1,12 @@
-import React, { forwardRef, useImperativeHandle, useState } from "react";
 import Checkbox from "@/components/input/Checkbox";
 import UploadIcon from "@/assets/icons/UploadIcon";
+import { useState } from "react";
 
 const HandleFiles = ({ setFiles }) => {
+  const [isConsent, setIsConsent] = useState(false);
+
   const handleFileChange = (e) => {
-    const { name, value, files } = e.target;
+    const { name, files } = e.target;
     const file = files[0];
     if (file) {
       setFiles((prev) => ({ ...prev, [name]: file }));
@@ -54,7 +56,12 @@ const HandleFiles = ({ setFiles }) => {
         </label>
       </div>
       <label className="flex items-start mt-12 mb-7">
-        <Checkbox value="" onChange={() => {}} />
+        <Checkbox
+          value={isConsent}
+          checked={isConsent}
+          onChange={() => setIsConsent(!isConsent)}
+          required
+        />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           J’accepte que mon identité soit vérifiée par Horseted
         </span>
