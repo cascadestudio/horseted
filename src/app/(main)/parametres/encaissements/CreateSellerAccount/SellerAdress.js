@@ -1,4 +1,4 @@
-import AddressModal from "./AddressModal";
+import AddressModal from "./SellerAddressModal";
 import { useState } from "react";
 
 export default function SellerAdress({

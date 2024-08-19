@@ -1,4 +1,4 @@
-import AddressModal from "./AddressModal";
+import AddressModal from "@/components/Modal/AddressModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
@@ -12,12 +12,11 @@ export default function Address({
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
   const [isModal, setIsModal] = useState(false);
-  // const {fullName, street, postalCode, city} = activeAddress
 
   // console.log("addresses =>", addresses);
 
   useEffect(() => {
-    getAdress(accessToken, setAddresses);
+    getAdress();
   }, []);
 
   useEffect(() => {
@@ -25,6 +24,11 @@ export default function Address({
       setActiveAddress(addresses[1]);
     }
   }, [addresses]);
+
+  async function getAdress() {
+    const adresses = await fetchHorseted(`/users/me/addresses`, accessToken);
+    setAddresses(adresses);
+  }
 
   return (
     <>
@@ -35,14 +39,6 @@ export default function Address({
         ) : (
           <p>Aucune adresse</p>
         )}
-
-        {/* {addresses?.length > 0 ? (
-          addresses.map((address) => {
-            return <p key={address.id}>{address.fullName}</p>;
-          })
-        ) : (
-          <p>Aucune adresse</p>
-        )} */}
         <button onClick={() => setIsModal(true)}>Ajouter une adresse</button>
       </div>
       {isModal && (
@@ -55,9 +51,4 @@ export default function Address({
       )}
     </>
   );
-}
-
-async function getAdress(accessToken, setFormData) {
-  const adresses = await fetchHorseted(`/users/me/addresses`, accessToken);
-  setFormData(adresses);
 }
