@@ -16,6 +16,7 @@ const stripePromise = loadStripe(
 export default function CreateSellerAccount({ accessToken, user }) {
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [isAdressValid, setIsAdressValid] = useState(false);
   const [stripeAccountForm, setStripeAccountForm] = useState({
     tos_shown_and_accepted: true,
     business_type: "individual",
@@ -42,12 +43,11 @@ export default function CreateSellerAccount({ accessToken, user }) {
   });
   const [files, setFiles] = useState({
     frontDocument: null,
-    backDocument: null,
     frontAdditionalDocument: null,
     backAdditionalDocument: null,
   });
 
-  console.log("stripeAccountForm =>", stripeAccountForm);
+  // console.log("files =>", files);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,9 +63,16 @@ export default function CreateSellerAccount({ accessToken, user }) {
   };
 
   const isFormValid = () => {
-    const fileInput = document.querySelector('input[name="frontDocument"]');
-    if (!fileInput.files.length) {
-      alert("Please select a file.");
+    const isDocumentValid =
+      files.frontDocument !== null ||
+      (files.frontAdditionalDocument !== null &&
+        files.backAdditionalDocument !== null);
+
+    if (!isAdressValid) {
+      alert("Veuillez ajouter une adresse");
+      return false;
+    } else if (!isDocumentValid) {
+      alert("Veuiller sélectionner un document d'identité");
       return false;
     } else {
       return true;
@@ -99,6 +106,7 @@ export default function CreateSellerAccount({ accessToken, user }) {
       return token;
     } catch (error) {
       alert("Error creating Stripe account:", error);
+      console.log("Error creating Stripe account:", error);
     }
   };
 
@@ -163,6 +171,8 @@ export default function CreateSellerAccount({ accessToken, user }) {
         setDateOfBirth={setDateOfBirth}
         stripeBankAccountForm={stripeBankAccountForm}
         setStripeBankAccountForm={setStripeBankAccountForm}
+        isAdressValid={isAdressValid}
+        setIsAdressValid={setIsAdressValid}
       />
       <HandleFilesForm setFiles={setFiles} />
       <Button type="submit" className="w-full">

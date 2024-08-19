@@ -7,10 +7,12 @@ export default function Checkbox({
   value,
   disabled,
   name,
+  required,
 }) {
   return (
     <div className={`w-4 h-4 lg:w-5 lg:h-5 relative ${className}`}>
       <input
+        required={required}
         name={name}
         value={value || false}
         type="checkbox"
