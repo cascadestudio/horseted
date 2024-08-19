@@ -29,7 +29,7 @@ export default function Settings() {
     email: user?.auth.email || "",
     description: user?.description || "",
     city: user?.city || "",
-    avatar: user?.avatar.id || null,
+    avatar: user?.avatar?.id || null,
   });
   const [avatar, setAvatar] = useState(null);
   const [showCity, setShowCity] = useState(false);

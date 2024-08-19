@@ -44,7 +44,7 @@ export default function CreateSellerAccount({ accessToken, user }) {
   const [files, setFiles] = useState({
     frontDocument: null,
     frontAdditionalDocument: null,
-    backAdditionalDocument: null,
+    backAdditionalDocument: null, // la maquette fait galérer, occupe toi juste du recto / verso et oublie le passeport pour l’instant. je vais essayer de faire changer ça à alex
   });
 
   // console.log("files =>", files);

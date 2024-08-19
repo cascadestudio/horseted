@@ -1,4 +1,4 @@
-import AddressModal from "@/components/Modal/AddressModal";
+import AddressModal from "./AddressModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";

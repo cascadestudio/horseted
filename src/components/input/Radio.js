@@ -11,7 +11,7 @@ export default function Radio({ value, checked, onChange, className }) {
       <input
         className="hidden"
         type="radio"
-        value={value}
+        value={value || false}
         checked={checked}
         onChange={onChange}
       />
