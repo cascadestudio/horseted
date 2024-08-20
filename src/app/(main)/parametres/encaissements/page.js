@@ -5,13 +5,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import CreateSellerAccount from "./CreateSellerAccount";
 import DisplaySellerAccount from "./DisplaySellerAccount";
-import Spinner from "@/components/Spinner";
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
   const [sellerData, setSellerData] = useState(null);
 
-  console.log("sellerData =>", sellerData);
+  // console.log("sellerData =>", sellerData);
 
   useEffect(() => {
     getSellerData();
