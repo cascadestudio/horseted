@@ -1,4 +1,5 @@
 "use client";
+import NextArrow from "@/assets/icons/NextArrow";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
@@ -26,18 +27,19 @@ export default function NewMessageSearch({ threads, handleClick }) {
         placeholder="Rechercher un membre"
         onChange={(e) => handleSearchChange(e)}
       />
-      <ul className="overflow-y-scroll h-[500px]">
+      <ul className="overflow-y-scroll h-[500px] mt-3">
         {users.length > 0 ? (
           users.map((user) => {
             const { id, username, avatar } = user;
             return (
-              <li key={id} className="p-5">
+              <li key={id} className="px-5 py-3 border-b">
                 <button
                   className="flex items-center w-full"
                   onClick={() => handleClick(user)}
                 >
-                  <AvatarDisplay avatar={avatar} size={43} />
-                  {username}
+                  <AvatarDisplay avatar={avatar} size={43} className="mr-4" />
+                  <p className="font-semibold">{username}</p>
+                  <NextArrow className="ml-auto" />
                 </button>
               </li>
             );
