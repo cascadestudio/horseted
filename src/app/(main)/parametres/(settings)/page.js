@@ -35,7 +35,7 @@ export default function Settings() {
   const [showCity, setShowCity] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  console.log("formData =>", formData);
+  console.log("user =>", user);
 
   useEffect(() => {
     if (isMounted) {
@@ -83,10 +83,6 @@ export default function Settings() {
     return media;
   }
 
-  const handleDeleteAccount = async () => {
-    await deleteUserAccount(user.auth.accessToken, router);
-  };
-
   async function patchUser() {
     // if (formDataToSend.get("email") !== user?.auth.email) {
     //   try {
@@ -106,10 +102,10 @@ export default function Settings() {
     console.log("user =>", user);
   }
 
-  async function deleteUserAccount(token, router) {
-    await fetchHorseted(`/users/me`, token, "DELETE");
+  const handleDeleteAccount = async () => {
+    await fetchHorseted(`/users/me`, accessToken, "DELETE", null, false, true);
     router.push("/");
-  }
+  };
 
   const AvatarInput = ({ onChange }) => (
     <label

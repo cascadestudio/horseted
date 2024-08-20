@@ -30,7 +30,7 @@ export default function DisplaySellerAccount({ sellerData }) {
         <h2 className="font-mcqueen text-[24px] font-bold">
           Vérification de l’identité
         </h2>
-        {verificationStatus === "unverified" && ( // Voir avec Jojo pour les autres status
+        {verificationStatus === "pending" && ( // Voir avec Jojo pour les autres status
           <p className="text-light-yellow">En cours</p>
         )}
         {firstName} <br />

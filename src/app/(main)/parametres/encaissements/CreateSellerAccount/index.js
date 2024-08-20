@@ -13,7 +13,11 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-export default function CreateSellerAccount({ accessToken, user }) {
+export default function CreateSellerAccount({
+  accessToken,
+  user,
+  getSellerData,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [isAdressValid, setIsAdressValid] = useState(false);
@@ -43,8 +47,9 @@ export default function CreateSellerAccount({ accessToken, user }) {
   });
   const [files, setFiles] = useState({
     frontDocument: null,
-    frontAdditionalDocument: null,
-    backAdditionalDocument: null, // la maquette fait galérer, occupe toi juste du recto / verso et oublie le passeport pour l’instant. je vais essayer de faire changer ça à alex
+    backDocument: null,
+    // frontAdditionalDocument: null,
+    // backAdditionalDocument: null, // la maquette fait galérer, occupe toi juste du recto / verso et oublie le passeport pour l’instant. je vais essayer de faire changer ça à alex
   });
 
   // console.log("files =>", files);
@@ -53,12 +58,13 @@ export default function CreateSellerAccount({ accessToken, user }) {
     e.preventDefault();
     if (!isFormValid()) return;
     setIsLoading(true);
+    await postFiles();
     const accountToken = await createStripeAccount();
     console.log("accountToken =>", accountToken);
     const bankAccountToken = await createStripeBankAccount();
     console.log("bankAccountToken =>", bankAccountToken);
     await createSellerAccount(accountToken, bankAccountToken);
-    await postFiles();
+    getSellerData();
     setIsLoading(false);
   };
 
@@ -137,7 +143,7 @@ export default function CreateSellerAccount({ accessToken, user }) {
       true,
       true
     );
-    console.log("response =>", response);
+    console.log("createSellerAccount =>", response);
   };
 
   const postFiles = async () => {
@@ -150,7 +156,7 @@ export default function CreateSellerAccount({ accessToken, user }) {
       false,
       true
     );
-    console.log("response =>", response);
+    console.log("postFiles =>", response);
   };
 
   if (isLoading) return <Spinner />;

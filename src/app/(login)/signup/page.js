@@ -14,6 +14,7 @@ import TickIcon from "@/assets/icons/TickIcon";
 import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
 import fetchHorseted from "@/utils/fetchHorseted";
+import Spinner from "@/components/Spinner";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -21,16 +22,21 @@ export default function signupPage() {
   const [username, setUsername] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleForm = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const { result, error } = await signUp(email, password);
     if (error) {
-      return console.log(error);
+      alert(error);
+      console.log(error);
+      return;
     } else {
       const firebaseToken = result.user.accessToken;
       await postUser(firebaseToken);
     }
+    setIsLoading(false);
     return router.push("/");
   };
 
@@ -53,143 +59,149 @@ export default function signupPage() {
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
       <div className="lg:w-1/2">
-        <div className="border-b border-black lg:border-none">
-          <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
-            <Link href="/" className="justify-self-start">
-              <LeftArrow className="w-[18px] lg:w-7" />
-            </Link>
-            <Image
-              src={HorsetedLogoBlackHorizontal}
-              alt="HorsetedLogoBlackHorizontal"
-              className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
-            />{" "}
-          </div>
-        </div>
-        <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[505px] lg:pb-10 lg:pt-[60px] xl:px-0">
-          <h1 className="text-center font-mcqueen font-bold text-[22px] lg:text-[36px]">
-            Créer un compte
-          </h1>
-          <form
-            onSubmit={handleForm}
-            className=" border-b border-black mb-6 pb-6"
-          >
-            <label htmlFor="email">
-              <p className="mt-4 font-mcqueen font-semibold">Email :</p>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                type="email"
-                name="email"
-                id="email"
-                placeholder="exemple@mail.com"
-              />
-            </label>
-            <label htmlFor="password">
-              <p className="mt-[18px] font-mcqueen font-semibold">
-                Mot de passe :
-              </p>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Mot de passe"
-              />
-            </label>
-            <label htmlFor="username">
-              <p className="mt-[18px] font-mcqueen font-semibold">
-                Nom d'utilisateur :
-              </p>
-              <div className="flex items-center border-b border-black">
-                <span className="text-black font-mcqueen font-semibold mr-2 pb-1">
-                  @
-                </span>
-                <input
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  type="text"
-                  name="username"
-                  id="username"
-                  placeholder="sophiemarceau"
-                  className="border-none pl-1"
-                />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <div className="border-b border-black lg:border-none">
+              <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
+                <Link href="/" className="justify-self-start">
+                  <LeftArrow className="w-[18px] lg:w-7" />
+                </Link>
+                <Image
+                  src={HorsetedLogoBlackHorizontal}
+                  alt="HorsetedLogoBlackHorizontal"
+                  className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
+                />{" "}
               </div>
-            </label>
-            <div className="mt-4">
-              <label className="flex items-start mt-3">
-                <Checkbox
-                  checked={newsletter}
-                  onChange={() => setNewsletter(!newsletter)}
-                />
-                <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
-                  Je souhaite recevoir par e-mail des offres personnalisées et
-                  les dernières mises à jour.
-                </span>
-              </label>
-              <label className="flex items-start mt-3">
-                <div className="w-4 h-4 lg:w-5 lg:h-5 relative">
+            </div>
+            <div className="container mx-auto px-5 pt-5 pb-14 flex flex-col lg:max-w-[505px] lg:pb-10 lg:pt-[60px] xl:px-0">
+              <h1 className="text-center font-mcqueen font-bold text-[22px] lg:text-[36px]">
+                Créer un compte
+              </h1>
+              <form
+                onSubmit={handleForm}
+                className=" border-b border-black mb-6 pb-6"
+              >
+                <label htmlFor="email">
+                  <p className="mt-4 font-mcqueen font-semibold">Email :</p>
                   <input
-                    type="checkbox"
-                    size="10"
+                    onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="appearance-none peer cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="exemple@mail.com"
                   />
-                  <TickIcon
-                    width={10}
-                    height={7}
-                    className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer peer-checked:visible invisible"
+                </label>
+                <label htmlFor="password">
+                  <p className="mt-[18px] font-mcqueen font-semibold">
+                    Mot de passe :
+                  </p>
+                  <input
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Mot de passe"
+                  />
+                </label>
+                <label htmlFor="username">
+                  <p className="mt-[18px] font-mcqueen font-semibold">
+                    Nom d'utilisateur :
+                  </p>
+                  <div className="flex items-center border-b border-black">
+                    <span className="text-black font-mcqueen font-semibold mr-2 pb-1">
+                      @
+                    </span>
+                    <input
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                      type="text"
+                      name="username"
+                      id="username"
+                      placeholder="sophiemarceau"
+                      className="border-none pl-1"
+                    />
+                  </div>
+                </label>
+                <div className="mt-4">
+                  <label className="flex items-start mt-3">
+                    <Checkbox
+                      checked={newsletter}
+                      onChange={() => setNewsletter(!newsletter)}
+                    />
+                    <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
+                      Je souhaite recevoir par e-mail des offres personnalisées
+                      et les dernières mises à jour.
+                    </span>
+                  </label>
+                  <label className="flex items-start mt-3">
+                    <div className="w-4 h-4 lg:w-5 lg:h-5 relative">
+                      <input
+                        type="checkbox"
+                        size="10"
+                        required
+                        className="appearance-none peer cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent"
+                      />
+                      <TickIcon
+                        width={10}
+                        height={7}
+                        className="absolute w-auto inset-0 mx-auto mt-[6px] cursor-pointer peer-checked:visible invisible"
+                      />
+                    </div>
+                    <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
+                      J’accepte les{" "}
+                      <a href="#" className="underline">
+                        conditions d’utilisation
+                      </a>
+                      , j’ai lu la{" "}
+                      <a href="#" className="underline">
+                        politique de confidentialité
+                      </a>{" "}
+                      et j’ai + de 18 ans.
+                    </span>
+                  </label>
+                </div>
+                <Button
+                  className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
+                  type="submit"
+                >
+                  Créer un compte
+                </Button>
+              </form>
+              <a
+                href="#"
+                className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto mb-8"
+              >
+                <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
+                  <Image
+                    src={GoogleIcon}
+                    alt="Google Icon"
+                    className="h-5 w-5 lg:h-6 lg:w-6"
                   />
                 </div>
-                <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
-                  J’accepte les{" "}
-                  <a href="#" className="underline">
-                    conditions d’utilisation
-                  </a>
-                  , j’ai lu la{" "}
-                  <a href="#" className="underline">
-                    politique de confidentialité
-                  </a>{" "}
-                  et j’ai + de 18 ans.
+                <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
+                  Continuer avec Google
                 </span>
-              </label>
+              </a>
+              <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
+                Se connecter
+              </h2>
+              <p className="text-center mb-3 lg:text-[18px]">
+                Vous avez déjà un compte ?
+              </p>
+              <Button
+                href="/signin"
+                variant="transparent-green"
+                className="w-full text-xl h-[52px] lg:w-[335px] lg:self-center"
+              >
+                Se connecter
+              </Button>
             </div>
-            <Button
-              className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
-              type="submit"
-            >
-              Créer un compte
-            </Button>
-          </form>
-          <a
-            href="#"
-            className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto mb-8"
-          >
-            <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-              <Image
-                src={GoogleIcon}
-                alt="Google Icon"
-                className="h-5 w-5 lg:h-6 lg:w-6"
-              />
-            </div>
-            <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
-              Continuer avec Google
-            </span>
-          </a>
-          <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
-            Se connecter
-          </h2>
-          <p className="text-center mb-3 lg:text-[18px]">
-            Vous avez déjà un compte ?
-          </p>
-          <Button
-            href="/signin"
-            variant="transparent-green"
-            className="w-full text-xl h-[52px] lg:w-[335px] lg:self-center"
-          >
-            Se connecter
-          </Button>
-        </div>
+          </>
+        )}
       </div>
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
