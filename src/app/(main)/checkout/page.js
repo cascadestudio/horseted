@@ -136,15 +136,19 @@ const CheckOutPage = () => {
                 <h2 className="font-bold text-lg">
                   {products.length > 1 ? "Lot d’articles" : products[0].title}
                 </h2>
-                <p>{products.length} article</p>
-                {products.map((product) => (
-                  <ClientProductImage
-                    key={product.id}
-                    product={product}
-                    size="small"
-                    className="w-10 mt-5"
-                  />
-                ))}
+                <p>
+                  {products.length} article{products.length > 1 ? "s" : ""}
+                </p>
+                <div className="flex">
+                  {products.map((product) => (
+                    <ClientProductImage
+                      key={product.id}
+                      product={product}
+                      size="small"
+                      className="w-10 mt-5 mr-5"
+                    />
+                  ))}
+                </div>
               </div>
               <p className="font-bold text-lg">{productsPriceSum()} €</p>
             </div>

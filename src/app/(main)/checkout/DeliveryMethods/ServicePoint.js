@@ -11,6 +11,8 @@ export default function ServicePoint({
 
   const { name, street, code, city, carrier } = activeServicePoint;
 
+  // console.log("carrier =>", carrier);
+
   return (
     <>
       <div>
