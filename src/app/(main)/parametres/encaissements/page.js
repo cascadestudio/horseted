@@ -5,14 +5,12 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import CreateSellerAccount from "./CreateSellerAccount";
 import DisplaySellerAccount from "./DisplaySellerAccount";
-import Spinner from "@/components/Spinner";
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
   const [sellerData, setSellerData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  console.log("sellerData =>", sellerData);
+  // console.log("sellerData =>", sellerData);
 
   useEffect(() => {
     getSellerData();
@@ -23,11 +21,8 @@ export default function Transactions() {
       "/users/me/seller_account",
       accessToken
     );
-    setIsLoading(false);
     setSellerData(response);
   };
-
-  if (isLoading) return <Spinner />;
 
   if (sellerData === null)
     return <CreateSellerAccount accessToken={accessToken} user={user} />;
