@@ -21,11 +21,18 @@ export default function Transactions() {
       "/users/me/seller_account",
       accessToken
     );
+    console.log("getSellerData =>", response);
     setSellerData(response);
   };
 
   if (sellerData === null)
-    return <CreateSellerAccount accessToken={accessToken} user={user} />;
+    return (
+      <CreateSellerAccount
+        accessToken={accessToken}
+        user={user}
+        getSellerData={getSellerData}
+      />
+    );
 
   return <DisplaySellerAccount sellerData={sellerData} />;
 }

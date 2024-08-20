@@ -22,12 +22,12 @@ const HandleFiles = ({ setFiles }) => {
       <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
         <UploadIcon />
         <p className="text-sm font-semibold uppercase text-center">Passeport</p>
-        <input
+        {/* <input
           onChange={handleFileChange}
           type="file"
           name="frontDocument"
           className="hidden"
-        />
+        /> */}
       </label>
       <p className="text-center uppercase text-xl">ou</p>
       <p className="text-center uppercase text-light-green mb-2">
@@ -40,7 +40,7 @@ const HandleFiles = ({ setFiles }) => {
           <input
             onChange={handleFileChange}
             type="file"
-            name="frontAdditionalDocument"
+            name="frontDocument"
             className="hidden"
           />
         </label>
@@ -50,7 +50,7 @@ const HandleFiles = ({ setFiles }) => {
           <input
             onChange={handleFileChange}
             type="file"
-            name="backAdditionalDocument"
+            name="backDocument"
             className="hidden"
           />
         </label>
