@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
-import Toggle from "./Toggle";
+import Toggle from "../../../../components/input/Toggle";
 import Spinner from "@/components/Spinner";
 
 export default function Notifications() {
@@ -93,7 +93,6 @@ export default function Notifications() {
               label={label}
               name={name}
               checked={settingState}
-              setSettings={setSettings}
               handleChange={handleChange}
             />
           );
