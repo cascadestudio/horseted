@@ -43,15 +43,15 @@ export default function MessageThread({
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
         {product ? (
           <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
-        ) : (
+        ) : seller ? (
           <h2>Nouvelle discussion</h2>
-        )}
+        ) : null}
         <button onClick={() => setIsInfo(!isInfo)}>
           {isInfo ? (
             <CloseButton />
-          ) : (
+          ) : seller ? (
             <img src="/icons/thread-info.svg" alt="Thread Info" />
-          )}
+          ) : null}
         </button>
       </div>
       <div className="p-10 flex-1 flex overflow-y-scroll">
@@ -65,19 +65,23 @@ export default function MessageThread({
           />
         ) : (
           <ul className="flex flex-col gap-y-4 flex-1">
-            <li className="message-container self-start">
-              <p className="font-medium text-sm">
-                <span className="font-bold">Bonjour</span>, moi c’est{" "}
-                {seller?.username}
-              </p>
-              <StarRating review={seller?.review} />
-              <div className="text-grey flex items-center gap-2 mt-3">
-                <CityIcon className="h-3 stroke-current fill-none" />
-                <span className="text-xs font-medium">
-                  {seller?.city ? capitalizeText(seller?.city) : ""}
-                </span>
-              </div>
-            </li>
+            {seller ? (
+              <li className="message-container self-start">
+                <p className="font-medium text-sm">
+                  <span className="font-bold">Bonjour</span>, moi c’est{" "}
+                  {seller?.username}
+                </p>
+                <StarRating review={seller?.review} />
+                <div className="text-grey flex items-center gap-2 mt-3">
+                  <CityIcon className="h-3 stroke-current fill-none" />
+                  <span className="text-xs font-medium">
+                    {seller?.city ? capitalizeText(seller?.city) : ""}
+                  </span>
+                </div>
+              </li>
+            ) : (
+              <p>Pas de messages</p>
+            )}
             {messages.length > 0 &&
               reversedMessages.map((message) => (
                 <Message
