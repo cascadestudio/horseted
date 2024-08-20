@@ -19,7 +19,7 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
   return (
     <>
       <div className="flex flex-col w-full px-10 py-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between relative">
           <div className="flex items-center py-2 border-b  w-full">
             <AvatarDisplay
               avatar={seller.avatar}
@@ -33,18 +33,30 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
             </button>
           </div>
           {isDropdown && (
-            <div className="flex flex-col items-start">
+            <div className="flex flex-col items-start absolute bg-white border border-dark-grey rounded-lg p-4 font-semibold gap-3 right-0 top-14">
               <button
                 onClick={() => setIsSignalementModal(!isSignalementModal)}
+                className="flex items-center gap-2"
               >
+                <img src="/icons/signaler.svg" alt="" />
                 Signaler
               </button>
-              <button onClick={() => setIsUserBlockModal(!isUserBlockModal)}>
+              <button
+                onClick={() => setIsUserBlockModal(!isUserBlockModal)}
+                className="flex items-center gap-2"
+              >
+                <img src="/icons/bloquer.svg" alt="" />
                 Bloquer
               </button>
-              <button onClick={onDeleteThread}>
-                Supprimer la conversation
-              </button>
+              {!order && (
+                <button
+                  onClick={onDeleteThread}
+                  className="flex items-center gap-2"
+                >
+                  <img src="/icons/supprimer-conversation.svg" alt="" />
+                  Supprimer la conversation
+                </button>
+              )}
             </div>
           )}
         </div>
