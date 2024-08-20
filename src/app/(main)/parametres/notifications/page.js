@@ -41,8 +41,6 @@ export default function Notifications() {
     },
   ];
 
-  // console.log("settings =>", settings);
-
   useEffect(() => {
     getSettings();
   }, []);
@@ -73,7 +71,6 @@ export default function Notifications() {
   const handleChange = (e) => {
     setHasFormChanged(true);
     const { name, checked } = e.target;
-    console.log(name, checked);
     setSettings((prev) => ({
       ...prev,
       [name]: checked,
@@ -90,7 +87,6 @@ export default function Notifications() {
       <form className="w-full">
         {settingsData.map(({ label, name }) => {
           const settingState = settings[name];
-          console.log(name, settingState);
           return (
             <Toggle
               key={name}
