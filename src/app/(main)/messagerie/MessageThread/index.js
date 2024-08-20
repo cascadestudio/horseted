@@ -42,7 +42,9 @@ export default function MessageThread({
     <div className="flex flex-col min-h-[400px] flex-1">
       <div className="flex justify-between items-center p-6 border-b border-pale-grey">
         {product ? (
-          <h2 className="text-xl font-mcqueen font-bold">{product.title}</h2>
+          <h2 className="text-xl font-mcqueen font-bold capitalize">
+            {product.title}
+          </h2>
         ) : seller ? (
           <h2>Nouvelle discussion</h2>
         ) : null}
@@ -54,8 +56,8 @@ export default function MessageThread({
           ) : null}
         </button>
       </div>
-      <div className="p-10 flex-1 flex overflow-y-scroll">
-        {isInfo ? (
+      <div className="flex-1 flex overflow-y-scroll">
+        {isInfo && seller && product ? (
           <ThreadInfo
             seller={seller}
             product={product}
@@ -64,7 +66,7 @@ export default function MessageThread({
             onDeleteThread={onDeleteThread}
           />
         ) : (
-          <ul className="flex flex-col gap-y-4 flex-1">
+          <ul className="flex flex-col gap-y-4 flex-1 p-10">
             {seller ? (
               <li className="message-container self-start">
                 <p className="font-medium text-sm">

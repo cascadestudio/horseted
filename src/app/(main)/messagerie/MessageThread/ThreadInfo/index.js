@@ -2,9 +2,11 @@ import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
 import React, { useState } from "react";
-import SignalementModal from "../Modals/SignalementModal";
+import SignalementModal from "../../Modals/SignalementModal";
 import { useAuthContext } from "@/context/AuthContext";
-import UserBlockModal from "../Modals/UserBlockModal";
+import UserBlockModal from "../../Modals/UserBlockModal";
+import NextArrow from "@/assets/icons/NextArrow";
+import OrderInfo from "./OrderInfo";
 
 export default function threadInfo({ seller, product, order, onDeleteThread }) {
   const { user, accessToken } = useAuthContext();
@@ -12,21 +14,24 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);
 
+  console.log("order =>", order);
+
   return (
     <>
-      <div className="flex flex-col w-full">
-        <div className="flex items-center p-5 justify-between">
-          <div className="flex items-center">
+      <div className="flex flex-col w-full px-10 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center py-2 border-b  w-full">
             <AvatarDisplay
               avatar={seller.avatar}
               size={54}
-              className="flex-none"
+              className="flex-none mr-4"
             />
             {seller.username}
+            <NextArrow className="ml-auto mr-10" />
+            <button className="p-2" onClick={() => setIsDropdown(!isDropdown)}>
+              <ThreeDotsIcon />
+            </button>
           </div>
-          <button className="px-2" onClick={() => setIsDropdown(!isDropdown)}>
-            <ThreeDotsIcon />
-          </button>
           {isDropdown && (
             <div className="flex flex-col items-start">
               <button
@@ -44,25 +49,21 @@ export default function threadInfo({ seller, product, order, onDeleteThread }) {
           )}
         </div>
         {product && (
-          <div className="flex items-center p-5">
-            <ClientProductImage product={product} size={"small"} />
-            {product.title}
-            {product.price}€
-          </div>
-        )}
-        {order && order.statuses[0].status === "readyToSend" && (
-          <div>
-            <p>Commande validée !</p>
-            <p>La commande est validée et en attente de livraison.</p>
+          <div className="flex items-start py-5">
+            <ClientProductImage
+              className="w-12 mr-4"
+              product={product}
+              size="small"
+            />
             <div>
-              <p>Numéro de suivi colissimo créé</p>
-              <p>{order.number}</p>
-              <p>{order.createdAt}</p>
-              <p>Colis en attente de livraison</p>
-              <p>{order.statuses[0].updatedAt}</p>
+              <h3 className="text-lg font-mcqueen font-bold capitalize">
+                {product.title}
+              </h3>
+              <p className="text-sm font-poppins">{product.price}€</p>
             </div>
           </div>
         )}
+        {order && <OrderInfo order={order} />}
       </div>
       {isSignalementModal && (
         <SignalementModal

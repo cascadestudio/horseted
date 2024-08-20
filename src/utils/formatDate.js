@@ -7,6 +7,16 @@ export function ISOtoDate(ISO) {
   return new Intl.DateTimeFormat("fr-FR", options).format(new Date(ISO));
 }
 
+export function ISOtoShortDate(ISODate) {
+  const date = new Date(ISODate);
+
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const year = date.getUTCFullYear();
+
+  return `${month}/${day}/${year}`;
+}
+
 export function dateToISO(dateString) {
   // Split the input date string (e.g., "13/09/1989")
   const [day, month, year] = dateString.split("/").map(Number);
