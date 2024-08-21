@@ -10,7 +10,7 @@ export default function Transactions() {
   const { user, accessToken } = useAuthContext();
   const [sellerData, setSellerData] = useState(null);
 
-  // console.log("sellerData =>", sellerData);
+  console.log("sellerData =>", sellerData);
 
   useEffect(() => {
     getSellerData();
