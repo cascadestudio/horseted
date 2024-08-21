@@ -123,11 +123,11 @@ function AccountPage() {
             {activeTab === "products" && (
               <div>
                 <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
-                  {/* <ProductCard productId="1" />
-                  <ProductCard productId="1" />
-                  <ProductCard productId="1" />
-                  <ProductCard productId="1" />
-                  <ProductCard productId="1" /> */}
+                  <ProductCard productId="500" />
+                  <ProductCard productId="500" />
+                  <ProductCard productId="500" />
+                  <ProductCard productId="500" />
+                  <ProductCard productId="500" />
                 </section>
               </div>
             )}

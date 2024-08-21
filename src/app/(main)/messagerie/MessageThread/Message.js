@@ -19,6 +19,7 @@ export default function Message({ message, userId, accessToken, product }) {
 
   switch (type) {
     case "newOffer":
+      if (!product) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">

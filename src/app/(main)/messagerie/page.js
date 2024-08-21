@@ -1,20 +1,25 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Spinner from "@/components/Spinner";
+// Local Components
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
-import Spinner from "@/components/Spinner";
+import NewMessageForm from "./NewMessageForm";
+import MessageHeader from "./MessageHeader";
+import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
+  const searchParams = useSearchParams();
+  const productIdParam = searchParams.get("productId");
+
   const [threads, setThreads] = useState([]);
   const [activeThreadId, setActiveThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -24,9 +29,9 @@ function ThreadsPage() {
   const [order, setOrder] = useState(null);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const productIdParam = searchParams.get("productId");
   const [isInfo, setIsInfo] = useState(false);
+
+  // console.log("threads =>", threads);
 
   useEffect(() => {
     getThreads();
@@ -89,7 +94,9 @@ function ThreadsPage() {
   function handleThreadClick(id, productId) {
     setActiveThreadId(id);
     getMessages(id);
-    getProduct(productId);
+    if (productId) {
+      getProduct(productId);
+    }
   }
 
   const handleNewMessageSearchClick = () => {
@@ -111,118 +118,33 @@ function ThreadsPage() {
   ];
 
   async function getOrder(orderId) {
-    try {
-      setLoading(true);
-      const order = await fetchHorseted(
-        `/orders/${orderId}/tracking`,
-        accessToken,
-        "GET",
-        null,
-        false,
-        false
-      );
-      setOrder(order);
-    } catch (err) {
-      setError(err.message || "Failed to fetch order");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const message = e.target.content.value;
-    if (activeThreadId === null) {
-      await postThread(message);
-      await getThreads();
-      router.replace("/messagerie", undefined, { shallow: true });
-    } else {
-      await postMessage(message);
-      getMessages(activeThreadId);
-    }
+    const order = await fetchHorseted(
+      `/orders/${orderId}/tracking`,
+      accessToken,
+      "GET",
+      null,
+      false,
+      false
+    );
+    setOrder(order);
   }
 
   async function getThreads() {
-    try {
-      setLoading(true);
-      const threads = await fetchHorseted("/threads", accessToken);
-      setThreads(threads);
-    } catch (err) {
-      setError(err.message || "Failed to fetch threads");
-    } finally {
-      setLoading(false);
-    }
+    const threads = await fetchHorseted("/threads", accessToken);
+    setThreads(threads);
   }
 
   async function getMessages(id) {
-    try {
-      setLoading(true);
-      const messages = await fetchHorseted(
-        `/threads/${id}/messages`,
-        accessToken
-      );
-      setMessages(messages);
-    } catch (err) {
-      setError(err.message || "Failed to fetch messages");
-    } finally {
-      setLoading(false);
-    }
+    const messages = await fetchHorseted(
+      `/threads/${id}/messages`,
+      accessToken
+    );
+    setMessages(messages);
   }
 
   async function getProduct(productId) {
-    try {
-      setLoading(true);
-      const product = await fetchHorseted(`/products/${productId}`);
-      setProduct(product);
-    } catch (err) {
-      setError(err.message || "Failed to fetch product");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function postMessage(message) {
-    const body = {
-      content: message,
-    };
-    try {
-      setLoading(true);
-      await fetchHorseted(
-        `/threads/${activeThreadId}/messages`,
-        accessToken,
-        "POST",
-        body,
-        true
-      );
-    } catch (err) {
-      setError(err.message || "Failed to post message");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function postThread(message) {
-    const body = {
-      userId: seller?.id,
-      productId: product ? product.id : null,
-      content: message,
-    };
-    try {
-      setLoading(true);
-      const newThread = await fetchHorseted(
-        `/threads`,
-        accessToken,
-        "POST",
-        body,
-        true,
-        true
-      );
-      setActiveThreadId(newThread.id);
-    } catch (err) {
-      setError(err.message || "Failed to create new thread");
-    } finally {
-      setLoading(false);
-    }
+    const product = await fetchHorseted(`/products/${productId}`);
+    setProduct(product);
   }
 
   async function onDeleteThread() {
@@ -270,21 +192,45 @@ function ThreadsPage() {
               handleClick={handleNewMessageClick}
             />
           ) : (
-            <MessageThread
-              product={product}
-              messages={messages}
-              userId={user.id}
-              handleSubmit={handleSubmit}
-              newMessageSeller={newMessageSeller}
-              order={order}
-              seller={seller}
-              setSeller={setSeller}
-              activeThreadId={activeThreadId}
-              onDeleteThread={onDeleteThread}
-              setIsInfo={setIsInfo}
-              isInfo={isInfo}
-              accessToken={accessToken}
-            />
+            <>
+              <MessageHeader
+                product={product}
+                seller={seller}
+                setIsInfo={setIsInfo}
+                isInfo={isInfo}
+              />
+              {isInfo && seller && product ? (
+                <ThreadInfo
+                  seller={seller}
+                  product={product}
+                  order={order}
+                  activeThreadId={activeThreadId}
+                  onDeleteThread={onDeleteThread}
+                />
+              ) : (
+                <>
+                  <MessageThread
+                    product={product}
+                    messages={messages}
+                    newMessageSeller={newMessageSeller}
+                    userId={user.id}
+                    order={order}
+                    seller={seller}
+                    setSeller={setSeller}
+                    accessToken={accessToken}
+                  />
+                  <NewMessageForm
+                    getThreads={getThreads}
+                    activeThreadId={activeThreadId}
+                    setActiveThreadId={setActiveThreadId}
+                    getMessages={getMessages}
+                    sellerId={seller?.id}
+                    productId={product?.id}
+                    accessToken={accessToken}
+                  />
+                </>
+              )}
+            </>
           )}
         </div>
       </div>
