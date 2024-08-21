@@ -12,18 +12,19 @@ import { useEffect, useState } from "react";
 import getImage from "@/utils/getImage";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
-import Image from "next/image";
 import Spinner from "@/components/Spinner";
 import ProductMedia from "./ProductMedia";
 import Category from "./Category";
+import State from "./State";
+import Size from "./Size";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
   const [product, setProduct] = useState({
     title: "",
-    price: 0,
+    price: null,
     description: "",
-    sizeId: 0,
+    sizeId: null,
     categoryId: null,
     brand: "",
     materials: [],
@@ -105,27 +106,8 @@ export default function SellPage() {
           </label>
         </div>
         <Category product={product} setProduct={setProduct} />
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            État* :
-          </h3>
-          <StateSelect
-            title="État de l’article"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Taille :
-          </h3>
-          {/* // TODO : add activesSizes in SizesSelect */}
-          <SizesSelect
-            title="Sélectionner une taille"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
+        <State product={product} setProduct={setProduct} />
+        <Size product={product} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Couleurs :

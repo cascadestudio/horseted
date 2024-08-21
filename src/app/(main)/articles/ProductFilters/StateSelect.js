@@ -6,6 +6,7 @@ export default function StateSelect({
   activeState,
   className,
   isBlack,
+  title = "État",
 }) {
   const states = [
     {
@@ -42,7 +43,7 @@ export default function StateSelect({
 
   return (
     <Dropdown
-      title="État"
+      title={title}
       className={className}
       isBlack={isBlack}
       isActive={activeState !== ""}
