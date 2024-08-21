@@ -11,7 +11,6 @@ import capitalizeText from "@/utils/capitalizeText";
 export default function MessageThread({
   product,
   messages,
-  handleSubmit,
   newMessageSeller,
   order,
   seller,
