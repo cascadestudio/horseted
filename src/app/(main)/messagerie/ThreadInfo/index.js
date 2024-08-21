@@ -7,6 +7,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import UserBlockModal from "../Modals/UserBlockModal";
 import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
+import Link from "next/link";
 
 export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
   const { user, accessToken } = useAuthContext();
@@ -14,20 +15,26 @@ export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);
 
-  console.log("order =>", order);
+  // console.log("order =>", order);
 
   return (
     <>
       <div className="flex flex-col w-full px-10 py-4">
         <div className="flex items-center justify-between relative">
-          <div className="flex items-center py-2 border-b  w-full">
-            <AvatarDisplay
-              avatar={seller.avatar}
-              size={54}
-              className="flex-none mr-4"
-            />
-            {seller.username}
-            <NextArrow className="ml-auto mr-10" />
+          <div className="flex items-center py-2 border-b w-full">
+            <Link
+              // href={`/vendeur/${seller.id}`}
+              href={`/vendeur`}
+              className="flex items-center w-full"
+            >
+              <AvatarDisplay
+                avatar={seller.avatar}
+                size={54}
+                className="flex-none mr-4"
+              />
+              {seller.username}
+              <NextArrow className="ml-auto mr-10" />
+            </Link>
             <button className="p-2" onClick={() => setIsDropdown(!isDropdown)}>
               <ThreeDotsIcon />
             </button>
