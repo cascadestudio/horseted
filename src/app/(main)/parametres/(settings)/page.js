@@ -166,7 +166,7 @@ export default function Settings() {
         </div>
         <div className="flex flex-col col-span-2 lg:col-span-1">
           <div className="relative flex items-center border border-black rounded-md p-3">
-            <CityIcon className="w-5 h-5 text-gray-500 mr-3" />
+            <CityIcon className="w-5 h-5 stroke-current fill-none mr-3" />
             <span className="flex-grow font-poppins font-medium">
               {formData.city || "Sélectionnez une ville"}
             </span>

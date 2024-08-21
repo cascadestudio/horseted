@@ -82,7 +82,7 @@ function AccountPage() {
               {user?.username}
             </p>
             <div className="flex gap-2 items-center font-medium text-sm mb-4">
-              <CityIcon className="w-3" />
+              <CityIcon className="w-3 stroke-current fill-none" />
               <p>Montpellier (34)</p>
             </div>
             <p className="text-sm leading-6">
