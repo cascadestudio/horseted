@@ -15,68 +15,34 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import Spinner from "@/components/Spinner";
+import ProductMedia from "./ProductMedia";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
   const [product, setProduct] = useState({
-    title: "string",
+    title: "",
     price: 0,
-    description: "string",
+    description: "",
     sizeId: 0,
     categoryId: 0,
-    brand: "string",
-    materials: ["string"],
-    state: "good",
-    shipping: "small",
-    colors: ["string"],
+    brand: "",
+    materials: [],
+    state: "",
+    shipping: "",
+    colors: [],
     medias: [],
   });
-  const [isImageLoading, setIsImageLoading] = useState(false);
-  const [imageSrcs, setImageSrcs] = useState([]);
 
-  // console.log("imageSrcs =>", imageSrcs);
-
-  const handleMediaChange = async (e) => {
-    const files = Array.from(e.target.files);
-    // console.log("files =>", files);
-    if (files) {
-      setIsImageLoading(true);
-      files.forEach(async (file) => {
-        const media = await postMedia(file);
-        console.log("media =>", media);
-        setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
-        await getMedia(media.files.thumbnail200);
-      });
-      setIsImageLoading(false);
-    }
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
   };
-
-  async function postMedia(file) {
-    const formdata = new FormData();
-    formdata.append("media", file);
-    const media = await fetchHorseted(
-      `/medias`,
-      accessToken,
-      "POST",
-      formdata,
-      false,
-      true
-    );
-    return media;
-  }
-
-  async function getMedia(file) {
-    const src = await getImage(file, "client");
-    // console.log("src =>", src);
-    setImageSrcs((prev) => [...prev, src]);
-  }
 
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
       <div className="bg-white">
         <div className="flex justify-between container mx-auto px-5 py-2">
           <div className="flex items-center">
-            {/* add logic to close btn */}
             <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
             <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
               Vendre un article
@@ -85,59 +51,22 @@ export default function SellPage() {
         </div>
       </div>
       <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
+        <ProductMedia accessToken={accessToken} setProduct={setProduct} />
         <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px]">Photos* :</h3>
-
-          <label className="text-light-green flex flex-col items-center justify-center max-w-[700px] w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer min-h-[122px]">
-            {isImageLoading ? (
-              <Spinner />
-            ) : (
-              <>
-                <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-                  +
-                </span>
-                <p className="font-bold font-mcqueen text-center">
-                  Ajouter des photos
-                </p>
-                <p className="font-medium text-sm text-black">
-                  Ajoutez jusqu’à 10 photos
-                </p>
-                <input
-                  onChange={handleMediaChange}
-                  type="file"
-                  name="photos"
-                  className="hidden"
-                  accept="image/png, image/jpeg"
-                  multiple
-                  max={10}
-                  required
-                />
-              </>
-            )}
-          </label>
-          {imageSrcs.length > 0 &&
-            imageSrcs.map((imageSrc, index) => (
-              <Image
-                key={index}
-                src={imageSrc}
-                className={`object-cover rounded-full`}
-                width={100}
-                height={100}
-                alt="Avatar"
-              />
-            ))}
-        </div>
-        {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
             Titre de l'article* :
           </h3>
           <TextInput
+            onChange={handleFormChange}
+            name="title"
+            value={product.title}
+            required
             className="max-w-[700px]"
             hideLabel
             placeholder="Ex : Couverture de poney"
           />
         </div>
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
             Description de l'article :
           </h3>
