@@ -10,16 +10,24 @@ export default function NewMessageForm({
 }) {
   const [message, setMessage] = useState("");
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
     if (activeThreadId === null) {
       await postThread(message);
       await getThreads();
-      router.replace("/messagerie", undefined, { shallow: true });
+      // router.replace("/messagerie", undefined, { shallow: true });
     } else {
       await postMessage(message);
       getMessages(activeThreadId);
     }
+    setMessage("");
   }
 
   async function postThread(message) {
@@ -68,6 +76,7 @@ export default function NewMessageForm({
         name="content"
         className="flex-1 border border-pale-grey rounded-full resize-none ps-4 pt-[5px] h-[38px]"
         rows="1"
+        onKeyDown={handleKeyDown}
       />
       <button
         type="submit"

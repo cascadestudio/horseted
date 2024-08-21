@@ -36,7 +36,7 @@ export default function MessageThread({
     setSeller(newMessageSeller);
   }, [newMessageSeller]);
 
-  const reversedMessages = [...messages].reverse();
+  // const reversedMessages = [...messages].reverse();
 
   return (
     <div className="flex flex-col min-h-[400px] flex-1">
@@ -67,7 +67,7 @@ export default function MessageThread({
           />
         ) : (
           <ul className="flex flex-col gap-y-4 flex-1 p-10">
-            {seller ? (
+            {seller && (
               <li className="message-container self-start">
                 <p className="font-medium text-sm">
                   <span className="font-bold">Bonjour</span>, moi c’est{" "}
@@ -81,11 +81,9 @@ export default function MessageThread({
                   </span>
                 </div>
               </li>
-            ) : (
-              <p>Pas de messages</p>
             )}
             {messages.length > 0 &&
-              reversedMessages.map((message) => (
+              messages.map((message) => (
                 <Message
                   message={message}
                   key={message.id}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
@@ -13,7 +13,6 @@ import Spinner from "@/components/Spinner";
 import NewMessageForm from "./NewMessageForm";
 
 function ThreadsPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
   const [threads, setThreads] = useState([]);
@@ -25,7 +24,6 @@ function ThreadsPage() {
   const [order, setOrder] = useState(null);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const productIdParam = searchParams.get("productId");
   const [isInfo, setIsInfo] = useState(false);
 
