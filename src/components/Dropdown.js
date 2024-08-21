@@ -16,6 +16,8 @@ export default function Dropdown({
     buttonRef
   );
 
+  // console.log("isActive =>", isActive);
+
   useEffect(() => {
     if (isClickOutside) {
       setIsOpen(false);
@@ -28,17 +30,22 @@ export default function Dropdown({
     setIsClickOutside(false);
   }
 
+  const handleStyle = () => {
+    if (isActive) {
+      return "border-light-green text-light-green bg-lighter-green";
+    }
+    if (isBlack) {
+      return "text-black border-black";
+    } else {
+      return "text-medium-grey border-medium-grey ";
+    }
+  };
+
   return (
     <div className={className} ref={panelRef}>
       <button
         onClick={handleClick}
-        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${
-          isBlack
-            ? "text-black border-black"
-            : isActive
-            ? "border-light-green text-light-green bg-lighter-green"
-            : "text-medium-grey border-medium-grey "
-        }
+        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${handleStyle()}
         ${className}`}
       >
         {title}

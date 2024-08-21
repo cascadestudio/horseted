@@ -165,7 +165,7 @@ export default function ProductsPage() {
         />
         <CategorySelect
           onClickProductCategory={handleCategoryChange}
-          activeCategory={activeCategory}
+          activeCategory={activeCategory !== null ? activeCategory.id : null}
         />
         <BrandsSelect
           activeBrands={activeBrands}

@@ -12,6 +12,8 @@ export default function ProductCategorySelect({
 }) {
   const [productCategory, setProductCategory] = useState([]);
 
+  // console.log("activeCategory =>", activeCategory);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -48,7 +50,7 @@ export default function ProductCategorySelect({
                 <Radio
                   className="ml-10"
                   value={name}
-                  checked={activeCategory?.name === name || false}
+                  checked={activeCategory === id || false}
                   onChange={() => onClickProductCategory(id, name)}
                 />
               </label>

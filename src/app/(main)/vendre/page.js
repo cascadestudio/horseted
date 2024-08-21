@@ -3,7 +3,6 @@
 import CloseButton from "@/assets/icons/CloseButton";
 import Dropdown from "@/components/Dropdown";
 import { TextInput } from "@/components/input";
-import CategorySelect from "../articles/ProductFilters/CategorySelect";
 import StateSelect from "../articles/ProductFilters/StateSelect";
 import SizesSelect from "../articles/ProductFilters/SizesSelect";
 import BrandSelect from "../articles/ProductFilters/BrandsSelect";
@@ -16,6 +15,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import Image from "next/image";
 import Spinner from "@/components/Spinner";
 import ProductMedia from "./ProductMedia";
+import Category from "./Category";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
@@ -24,7 +24,7 @@ export default function SellPage() {
     price: 0,
     description: "",
     sizeId: 0,
-    categoryId: 0,
+    categoryId: null,
     brand: "",
     materials: [],
     state: "",
@@ -32,6 +32,8 @@ export default function SellPage() {
     colors: [],
     medias: [],
   });
+
+  console.log("product =>", product);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -66,11 +68,15 @@ export default function SellPage() {
             placeholder="Ex : Couverture de poney"
           />
         </div>
-        {/* <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
             Description de l'article :
           </h3>
           <TextInput
+            onChange={handleFormChange}
+            name="description"
+            value={product.description}
+            required
             className="max-w-[700px]"
             hideLabel
             type="textarea"
@@ -85,11 +91,12 @@ export default function SellPage() {
           >
             <div className="flex items-center border-b border-black">
               <input
+                onChange={handleFormChange}
+                name="price"
+                value={product.price}
                 required
                 type="number"
                 step="0.01"
-                name="offer"
-                id="offer"
                 placeholder="Ex : 20"
                 className="focus:outline-none border-none bg-transparent w-full placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap"
               />
@@ -97,16 +104,7 @@ export default function SellPage() {
             </div>
           </label>
         </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Catégorie* :
-          </h3>
-          <CategorySelect
-            title="Sélectionner une catégorie"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
+        <Category product={product} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             État* :
@@ -121,7 +119,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Taille :
           </h3>
-          // TODO : add activesSizes in SizesSelect
+          {/* // TODO : add activesSizes in SizesSelect */}
           <SizesSelect
             title="Sélectionner une taille"
             className="w-full max-w-[700px]"
@@ -132,7 +130,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Couleurs :
           </h3>
-          // TODO : add colors to select
+          {/* // TODO : add colors to select */}
           <Dropdown
             title="Sélectionner une couleur"
             className="w-full max-w-[700px]"
@@ -163,14 +161,14 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Livraison* :
           </h3>
-          // TODO : add shipping sizes
+          {/* // TODO : add shipping sizes */}
           <Dropdown
             title="Sélectionner une taille de colis"
             className="w-full max-w-[700px]"
             isBlack
           />
-        </div> */}
-        {/* <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button> */}
+        </div>
+        <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
       </div>
     </div>
   );
