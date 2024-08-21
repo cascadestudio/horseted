@@ -13,8 +13,11 @@ import ClientProductImage from "@/components/ClientProductImage";
 import UserForm from "./User";
 import Button from "@/components/Button";
 import StripeProvider from "@/components/StripeProvider";
+import { useRouter } from "next/navigation";
+import Spinner from "@/components/Spinner";
 
 const CheckOutPage = () => {
+  const router = useRouter();
   const { user, accessToken } = useAuthContext();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
@@ -26,7 +29,7 @@ const CheckOutPage = () => {
   const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
 
-  console.log("isAddressSaved =>", isAddressSaved);
+  // console.log("isAddressSaved =>", isAddressSaved);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -43,9 +46,11 @@ const CheckOutPage = () => {
   }, [productIds]);
 
   async function handlePayment() {
+    setLoading(true);
     const orderId = await postOrders();
     const paymentResponse = await ordersPayment(orderId);
     handlePaymentResponse(paymentResponse);
+    setLoading(false);
   }
 
   const productsPriceSum = () => {
@@ -102,7 +107,7 @@ const CheckOutPage = () => {
     // console.log("Payment response:", paymentResponse);
     if (paymentResponse.status === "succeeded") {
       console.log("Payment successful");
-      alert("Payment successful");
+      router.push(`/messagerie`);
     }
     if (paymentResponse.status === "requires_action") {
       const paymentIntenturl = paymentResponse.nextAction.url;
@@ -120,7 +125,11 @@ const CheckOutPage = () => {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
