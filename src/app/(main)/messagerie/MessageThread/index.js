@@ -1,8 +1,6 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect } from "react";
 import "@/app/styles/globals.css";
-import CloseButton from "@/assets/icons/CloseButton";
-import ThreadInfo from "./ThreadInfo";
 import Message from "./Message";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";

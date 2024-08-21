@@ -1,3 +1,5 @@
+import CloseButton from "@/assets/icons/CloseButton";
+
 export default function MessageHeader({ product, seller, setIsInfo, isInfo }) {
   return (
     <div className="flex justify-between items-center p-6 border-b border-pale-grey">

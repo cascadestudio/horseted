@@ -6,12 +6,14 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Spinner from "@/components/Spinner";
+// Local Components
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
-import Spinner from "@/components/Spinner";
 import NewMessageForm from "./NewMessageForm";
 import MessageHeader from "./MessageHeader";
+import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
