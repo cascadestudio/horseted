@@ -9,8 +9,68 @@ import SizesSelect from "../articles/ProductFilters/SizesSelect";
 import BrandSelect from "../articles/ProductFilters/BrandsSelect";
 import MaterialSelect from "../articles/ProductFilters/MaterialsSelect";
 import Button from "@/components/Button";
+import { useEffect, useState } from "react";
+import getImage from "@/utils/getImage";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useAuthContext } from "@/context/AuthContext";
+import Image from "next/image";
+import Spinner from "@/components/Spinner";
 
 export default function SellPage() {
+  const { accessToken } = useAuthContext();
+  const [product, setProduct] = useState({
+    title: "string",
+    price: 0,
+    description: "string",
+    sizeId: 0,
+    categoryId: 0,
+    brand: "string",
+    materials: ["string"],
+    state: "good",
+    shipping: "small",
+    colors: ["string"],
+    medias: [],
+  });
+  const [isImageLoading, setIsImageLoading] = useState(false);
+  const [imageSrcs, setImageSrcs] = useState([]);
+
+  // console.log("imageSrcs =>", imageSrcs);
+
+  const handleMediaChange = async (e) => {
+    const files = Array.from(e.target.files);
+    // console.log("files =>", files);
+    if (files) {
+      setIsImageLoading(true);
+      files.forEach(async (file) => {
+        const media = await postMedia(file);
+        console.log("media =>", media);
+        setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
+        await getMedia(media.files.thumbnail200);
+      });
+      setIsImageLoading(false);
+    }
+  };
+
+  async function postMedia(file) {
+    const formdata = new FormData();
+    formdata.append("media", file);
+    const media = await fetchHorseted(
+      `/medias`,
+      accessToken,
+      "POST",
+      formdata,
+      false,
+      true
+    );
+    return media;
+  }
+
+  async function getMedia(file) {
+    const src = await getImage(file, "client");
+    // console.log("src =>", src);
+    setImageSrcs((prev) => [...prev, src]);
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
       <div className="bg-white">
@@ -27,20 +87,47 @@ export default function SellPage() {
       <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">Photos* :</h3>
-          <label className="text-light-green flex flex-col items-center justify-center max-w-[700px] w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer">
-            <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-              +
-            </span>
-            <p className="font-bold font-mcqueen text-center">
-              Ajouter des photos
-            </p>
-            <p className="font-medium text-sm text-black">
-              Ajoutez jusqu’à 10 photos
-            </p>
-            <input type="file" name="photos" className="hidden" />
+
+          <label className="text-light-green flex flex-col items-center justify-center max-w-[700px] w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer min-h-[122px]">
+            {isImageLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+                  +
+                </span>
+                <p className="font-bold font-mcqueen text-center">
+                  Ajouter des photos
+                </p>
+                <p className="font-medium text-sm text-black">
+                  Ajoutez jusqu’à 10 photos
+                </p>
+                <input
+                  onChange={handleMediaChange}
+                  type="file"
+                  name="photos"
+                  className="hidden"
+                  accept="image/png, image/jpeg"
+                  multiple
+                  max={10}
+                  required
+                />
+              </>
+            )}
           </label>
+          {imageSrcs.length > 0 &&
+            imageSrcs.map((imageSrc, index) => (
+              <Image
+                key={index}
+                src={imageSrc}
+                className={`object-cover rounded-full`}
+                width={100}
+                height={100}
+                alt="Avatar"
+              />
+            ))}
         </div>
-        <div className="w-full flex justify-center">
+        {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
             Titre de l'article* :
           </h3>
@@ -105,7 +192,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Taille :
           </h3>
-          {/* TODO : add activesSizes in SizesSelect */}
+          // TODO : add activesSizes in SizesSelect
           <SizesSelect
             title="Sélectionner une taille"
             className="w-full max-w-[700px]"
@@ -116,7 +203,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Couleurs :
           </h3>
-          {/* TODO : add colors to select */}
+          // TODO : add colors to select
           <Dropdown
             title="Sélectionner une couleur"
             className="w-full max-w-[700px]"
@@ -147,14 +234,14 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Livraison* :
           </h3>
-          {/* TODO : add shipping sizes */}
+          // TODO : add shipping sizes
           <Dropdown
             title="Sélectionner une taille de colis"
             className="w-full max-w-[700px]"
             isBlack
           />
-        </div>
-        <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
+        </div> */}
+        {/* <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button> */}
       </div>
     </div>
   );
