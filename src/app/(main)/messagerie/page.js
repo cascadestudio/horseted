@@ -16,8 +16,10 @@ import MessageHeader from "./MessageHeader";
 import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
-  const searchParams = useSearchParams();
   const { user, accessToken } = useAuthContext();
+  const searchParams = useSearchParams();
+  const productIdParam = searchParams.get("productId");
+
   const [threads, setThreads] = useState([]);
   const [activeThreadId, setActiveThreadId] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -27,8 +29,9 @@ function ThreadsPage() {
   const [order, setOrder] = useState(null);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(false);
-  const productIdParam = searchParams.get("productId");
   const [isInfo, setIsInfo] = useState(false);
+
+  // console.log("threads =>", threads);
 
   useEffect(() => {
     getThreads();
@@ -91,7 +94,9 @@ function ThreadsPage() {
   function handleThreadClick(id, productId) {
     setActiveThreadId(id);
     getMessages(id);
-    getProduct(productId);
+    if (productId) {
+      getProduct(productId);
+    }
   }
 
   const handleNewMessageSearchClick = () => {
@@ -219,6 +224,8 @@ function ThreadsPage() {
                     activeThreadId={activeThreadId}
                     setActiveThreadId={setActiveThreadId}
                     getMessages={getMessages}
+                    sellerId={seller?.id}
+                    productId={product?.id}
                     accessToken={accessToken}
                   />
                 </>

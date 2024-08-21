@@ -7,6 +7,8 @@ export default function NewMessageForm({
   activeThreadId,
   getMessages,
   accessToken,
+  sellerId,
+  productId,
 }) {
   const [message, setMessage] = useState("");
 
@@ -32,8 +34,8 @@ export default function NewMessageForm({
 
   async function postThread(message) {
     const body = {
-      userId: seller?.id,
-      productId: product ? product.id : null,
+      userId: sellerId,
+      productId: productId ? productId : null,
       content: message,
     };
     const newThread = await fetchHorseted(
