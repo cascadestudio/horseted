@@ -14,7 +14,12 @@ const withAuth = (WrappedComponent) => {
       }
     }, [user, loading, router]);
 
-    if (loading) return <Spinner />;
+    if (loading)
+      return (
+        <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
+          <Spinner />;
+        </div>
+      );
 
     if (!user) {
       return null;
