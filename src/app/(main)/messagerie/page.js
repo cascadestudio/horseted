@@ -112,61 +112,33 @@ function ThreadsPage() {
   ];
 
   async function getOrder(orderId) {
-    try {
-      setLoading(true);
-      const order = await fetchHorseted(
-        `/orders/${orderId}/tracking`,
-        accessToken,
-        "GET",
-        null,
-        false,
-        false
-      );
-      setOrder(order);
-    } catch (err) {
-      setError(err.message || "Failed to fetch order");
-    } finally {
-      setLoading(false);
-    }
+    const order = await fetchHorseted(
+      `/orders/${orderId}/tracking`,
+      accessToken,
+      "GET",
+      null,
+      false,
+      false
+    );
+    setOrder(order);
   }
 
   async function getThreads() {
-    try {
-      setLoading(true);
-      const threads = await fetchHorseted("/threads", accessToken);
-      setThreads(threads);
-    } catch (err) {
-      setError(err.message || "Failed to fetch threads");
-    } finally {
-      setLoading(false);
-    }
+    const threads = await fetchHorseted("/threads", accessToken);
+    setThreads(threads);
   }
 
   async function getMessages(id) {
-    try {
-      setLoading(true);
-      const messages = await fetchHorseted(
-        `/threads/${id}/messages`,
-        accessToken
-      );
-      setMessages(messages);
-    } catch (err) {
-      setError(err.message || "Failed to fetch messages");
-    } finally {
-      setLoading(false);
-    }
+    const messages = await fetchHorseted(
+      `/threads/${id}/messages`,
+      accessToken
+    );
+    setMessages(messages);
   }
 
   async function getProduct(productId) {
-    try {
-      setLoading(true);
-      const product = await fetchHorseted(`/products/${productId}`);
-      setProduct(product);
-    } catch (err) {
-      setError(err.message || "Failed to fetch product");
-    } finally {
-      setLoading(false);
-    }
+    const product = await fetchHorseted(`/products/${productId}`);
+    setProduct(product);
   }
 
   async function onDeleteThread() {
