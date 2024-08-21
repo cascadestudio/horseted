@@ -10,6 +10,7 @@ import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
 import Spinner from "@/components/Spinner";
+import NewMessageForm from "./NewMessageForm";
 
 function ThreadsPage() {
   const router = useRouter();
@@ -129,19 +130,6 @@ function ThreadsPage() {
     }
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const message = e.target.content.value;
-    if (activeThreadId === null) {
-      await postThread(message);
-      await getThreads();
-      router.replace("/messagerie", undefined, { shallow: true });
-    } else {
-      await postMessage(message);
-      getMessages(activeThreadId);
-    }
-  }
-
   async function getThreads() {
     try {
       setLoading(true);
@@ -176,50 +164,6 @@ function ThreadsPage() {
       setProduct(product);
     } catch (err) {
       setError(err.message || "Failed to fetch product");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function postMessage(message) {
-    const body = {
-      content: message,
-    };
-    try {
-      setLoading(true);
-      await fetchHorseted(
-        `/threads/${activeThreadId}/messages`,
-        accessToken,
-        "POST",
-        body,
-        true
-      );
-    } catch (err) {
-      setError(err.message || "Failed to post message");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function postThread(message) {
-    const body = {
-      userId: seller?.id,
-      productId: product ? product.id : null,
-      content: message,
-    };
-    try {
-      setLoading(true);
-      const newThread = await fetchHorseted(
-        `/threads`,
-        accessToken,
-        "POST",
-        body,
-        true,
-        true
-      );
-      setActiveThreadId(newThread.id);
-    } catch (err) {
-      setError(err.message || "Failed to create new thread");
     } finally {
       setLoading(false);
     }
@@ -270,21 +214,29 @@ function ThreadsPage() {
               handleClick={handleNewMessageClick}
             />
           ) : (
-            <MessageThread
-              product={product}
-              messages={messages}
-              userId={user.id}
-              handleSubmit={handleSubmit}
-              newMessageSeller={newMessageSeller}
-              order={order}
-              seller={seller}
-              setSeller={setSeller}
-              activeThreadId={activeThreadId}
-              onDeleteThread={onDeleteThread}
-              setIsInfo={setIsInfo}
-              isInfo={isInfo}
-              accessToken={accessToken}
-            />
+            <>
+              <MessageThread
+                product={product}
+                messages={messages}
+                userId={user.id}
+                newMessageSeller={newMessageSeller}
+                order={order}
+                seller={seller}
+                setSeller={setSeller}
+                activeThreadId={activeThreadId}
+                onDeleteThread={onDeleteThread}
+                setIsInfo={setIsInfo}
+                isInfo={isInfo}
+                accessToken={accessToken}
+              />
+              <NewMessageForm
+                getThreads={getThreads}
+                activeThreadId={activeThreadId}
+                setActiveThreadId={setActiveThreadId}
+                getMessages={getMessages}
+                accessToken={accessToken}
+              />
+            </>
           )}
         </div>
       </div>
