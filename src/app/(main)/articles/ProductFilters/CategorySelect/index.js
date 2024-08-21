@@ -18,6 +18,8 @@ export default function CategorySelect({
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
 
+  // console.log("activeCategory =>", activeCategory);
+
   useEffect(() => {
     const fetchCategories = async () => {
       try {

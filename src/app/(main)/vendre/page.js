@@ -3,20 +3,48 @@
 import CloseButton from "@/assets/icons/CloseButton";
 import Dropdown from "@/components/Dropdown";
 import { TextInput } from "@/components/input";
-import CategorySelect from "../articles/ProductFilters/CategorySelect";
 import StateSelect from "../articles/ProductFilters/StateSelect";
 import SizesSelect from "../articles/ProductFilters/SizesSelect";
 import BrandSelect from "../articles/ProductFilters/BrandsSelect";
 import MaterialSelect from "../articles/ProductFilters/MaterialsSelect";
 import Button from "@/components/Button";
+import { useEffect, useState } from "react";
+import getImage from "@/utils/getImage";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useAuthContext } from "@/context/AuthContext";
+import Image from "next/image";
+import Spinner from "@/components/Spinner";
+import ProductMedia from "./ProductMedia";
+import Category from "./Category";
 
 export default function SellPage() {
+  const { accessToken } = useAuthContext();
+  const [product, setProduct] = useState({
+    title: "",
+    price: 0,
+    description: "",
+    sizeId: 0,
+    categoryId: null,
+    brand: "",
+    materials: [],
+    state: "",
+    shipping: "",
+    colors: [],
+    medias: [],
+  });
+
+  console.log("product =>", product);
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
       <div className="bg-white">
         <div className="flex justify-between container mx-auto px-5 py-2">
           <div className="flex items-center">
-            {/* add logic to close btn */}
             <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
             <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
               Vendre un article
@@ -25,26 +53,16 @@ export default function SellPage() {
         </div>
       </div>
       <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px]">Photos* :</h3>
-          <label className="text-light-green flex flex-col items-center justify-center max-w-[700px] w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer">
-            <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-              +
-            </span>
-            <p className="font-bold font-mcqueen text-center">
-              Ajouter des photos
-            </p>
-            <p className="font-medium text-sm text-black">
-              Ajoutez jusqu’à 10 photos
-            </p>
-            <input type="file" name="photos" className="hidden" />
-          </label>
-        </div>
+        <ProductMedia accessToken={accessToken} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
             Titre de l'article* :
           </h3>
           <TextInput
+            onChange={handleFormChange}
+            name="title"
+            value={product.title}
+            required
             className="max-w-[700px]"
             hideLabel
             placeholder="Ex : Couverture de poney"
@@ -55,6 +73,10 @@ export default function SellPage() {
             Description de l'article :
           </h3>
           <TextInput
+            onChange={handleFormChange}
+            name="description"
+            value={product.description}
+            required
             className="max-w-[700px]"
             hideLabel
             type="textarea"
@@ -69,11 +91,12 @@ export default function SellPage() {
           >
             <div className="flex items-center border-b border-black">
               <input
+                onChange={handleFormChange}
+                name="price"
+                value={product.price}
                 required
                 type="number"
                 step="0.01"
-                name="offer"
-                id="offer"
                 placeholder="Ex : 20"
                 className="focus:outline-none border-none bg-transparent w-full placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap"
               />
@@ -81,16 +104,7 @@ export default function SellPage() {
             </div>
           </label>
         </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Catégorie* :
-          </h3>
-          <CategorySelect
-            title="Sélectionner une catégorie"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
+        <Category product={product} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             État* :
@@ -105,7 +119,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Taille :
           </h3>
-          {/* TODO : add activesSizes in SizesSelect */}
+          {/* // TODO : add activesSizes in SizesSelect */}
           <SizesSelect
             title="Sélectionner une taille"
             className="w-full max-w-[700px]"
@@ -116,7 +130,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Couleurs :
           </h3>
-          {/* TODO : add colors to select */}
+          {/* // TODO : add colors to select */}
           <Dropdown
             title="Sélectionner une couleur"
             className="w-full max-w-[700px]"
@@ -147,7 +161,7 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Livraison* :
           </h3>
-          {/* TODO : add shipping sizes */}
+          {/* // TODO : add shipping sizes */}
           <Dropdown
             title="Sélectionner une taille de colis"
             className="w-full max-w-[700px]"

@@ -1,9 +1,23 @@
 import Checkbox from "@/components/input/Checkbox";
 import UploadIcon from "@/assets/icons/UploadIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { objectToFormData } from "@/utils/objectToFormData";
 
-const HandleFiles = ({ setFiles }) => {
+const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
   const [isConsent, setIsConsent] = useState(false);
+  const [files, setFiles] = useState({
+    frontDocument: null,
+    backDocument: null,
+    // frontAdditionalDocument: null,
+    // backAdditionalDocument: null, // la maquette fait galérer, occupe toi juste du recto / verso et oublie le passeport pour l’instant. je vais essayer de faire changer ça à alex
+  });
+
+  useEffect(() => {
+    if (files.frontDocument || files.backDocument) {
+      postFiles();
+    }
+  }, [files]);
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
@@ -11,6 +25,33 @@ const HandleFiles = ({ setFiles }) => {
     if (file) {
       setFiles((prev) => ({ ...prev, [name]: file }));
     }
+  };
+
+  const postFiles = async () => {
+    const formData = objectToFormData(files);
+    const filesIds = await fetchHorseted(
+      "/users/me/files",
+      accessToken,
+      "POST",
+      formData,
+      false,
+      true
+    );
+    console.log("filesIds =>", filesIds);
+    setStripeAccountForm((prevState) => ({
+      ...prevState,
+      individual: {
+        ...prevState.individual,
+        verification: {
+          ...prevState.individual.verification,
+          document: {
+            ...prevState.individual.verification.document,
+            front: filesIds.frontDocument,
+            back: filesIds.backDocument,
+          },
+        },
+      },
+    }));
   };
 
   return (
@@ -60,7 +101,7 @@ const HandleFiles = ({ setFiles }) => {
           value={isConsent}
           checked={isConsent}
           onChange={() => setIsConsent(!isConsent)}
-          required
+          required={true}
         />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           J’accepte que mon identité soit vérifiée par Horseted

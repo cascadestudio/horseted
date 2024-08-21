@@ -5,7 +5,6 @@ import { useState } from "react";
 import CreateStripeAccountForm from "./CreateStripeAccountForm";
 import HandleFilesForm from "./HandleFilesForm";
 import Button from "@/components/Button";
-import { objectToFormData } from "@/utils/objectToFormData";
 import Spinner from "@/components/Spinner";
 import { loadStripe } from "@stripe/stripe-js";
 
@@ -38,6 +37,12 @@ export default function CreateSellerAccount({
         month: null,
         year: null,
       },
+      verification: {
+        document: {
+          back: null,
+          front: null,
+        },
+      },
     },
   });
   const [stripeBankAccountForm, setStripeBankAccountForm] = useState({
@@ -45,20 +50,13 @@ export default function CreateSellerAccount({
     currency: "eur",
     account_number: null, //Test IBAN FR1420041010050500013M02606
   });
-  const [files, setFiles] = useState({
-    frontDocument: null,
-    backDocument: null,
-    // frontAdditionalDocument: null,
-    // backAdditionalDocument: null, // la maquette fait galérer, occupe toi juste du recto / verso et oublie le passeport pour l’instant. je vais essayer de faire changer ça à alex
-  });
 
-  // console.log("files =>", files);
+  console.log("stripeAccountForm =>", stripeAccountForm);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid()) return;
     setIsLoading(true);
-    await postFiles();
     const accountToken = await createStripeAccount();
     console.log("accountToken =>", accountToken);
     const bankAccountToken = await createStripeBankAccount();
@@ -70,10 +68,8 @@ export default function CreateSellerAccount({
 
   const isFormValid = () => {
     const isDocumentValid =
-      files.frontDocument !== null ||
-      (files.frontAdditionalDocument !== null &&
-        files.backAdditionalDocument !== null);
-
+      stripeAccountForm.individual.verification.document.front !== null &&
+      stripeAccountForm.individual.verification.document.back !== null;
     if (!isAdressValid) {
       alert("Veuillez ajouter une adresse");
       return false;
@@ -100,7 +96,7 @@ export default function CreateSellerAccount({
     };
   };
 
-  const createStripeAccount = async () => {
+  const createStripeAccount = async (filesIds) => {
     const stripeAccountFormWithDate = addDateOfBirth();
     try {
       const stripe = await stripePromise;
@@ -146,19 +142,6 @@ export default function CreateSellerAccount({
     console.log("createSellerAccount =>", response);
   };
 
-  const postFiles = async () => {
-    const formData = objectToFormData(files);
-    const response = await fetchHorseted(
-      "/users/me/files",
-      accessToken,
-      "POST",
-      formData,
-      false,
-      true
-    );
-    console.log("postFiles =>", response);
-  };
-
   if (isLoading) return <Spinner />;
 
   return (
@@ -180,7 +163,10 @@ export default function CreateSellerAccount({
         isAdressValid={isAdressValid}
         setIsAdressValid={setIsAdressValid}
       />
-      <HandleFilesForm setFiles={setFiles} />
+      <HandleFilesForm
+        setStripeAccountForm={setStripeAccountForm}
+        accessToken={accessToken}
+      />
       <Button type="submit" className="w-full">
         Envoyer
       </Button>

@@ -33,6 +33,9 @@ export default function DisplaySellerAccount({ sellerData }) {
         {verificationStatus === "pending" && ( // Voir avec Jojo pour les autres status
           <p className="text-light-yellow">En cours</p>
         )}
+        {verificationStatus === "verified" && ( // Voir avec Jojo pour les autres status
+          <p className="text-light-green">Vérifié</p>
+        )}
         {firstName} <br />
         {lastName} <br />
         {dateOfBirth} <br />
