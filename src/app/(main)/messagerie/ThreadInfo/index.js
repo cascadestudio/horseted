@@ -1,21 +1,37 @@
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SignalementModal from "../Modals/SignalementModal";
 import { useAuthContext } from "@/context/AuthContext";
 import UserBlockModal from "../Modals/UserBlockModal";
 import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
+import { useIsClickOutsideElement } from "@/utils/hooks";
 
 export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
   const { user, accessToken } = useAuthContext();
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);
+  const dropdownRef = useRef();
+  const [isClickOutside, setIsClickOutside] =
+    useIsClickOutsideElement(dropdownRef);
 
   // console.log("order =>", order);
+
+  useEffect(() => {
+    if (isClickOutside) {
+      setIsDropdown(false);
+      setIsClickOutside(false);
+    }
+  }, [isClickOutside, setIsClickOutside]);
+
+  function handleClick() {
+    setIsDropdown(!isDropdown);
+    setIsClickOutside(false);
+  }
 
   return (
     <>
@@ -35,12 +51,15 @@ export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
               {seller.username}
               <NextArrow className="ml-auto mr-10" />
             </Link>
-            <button className="p-2" onClick={() => setIsDropdown(!isDropdown)}>
+            <button className="p-2" onClick={handleClick}>
               <ThreeDotsIcon />
             </button>
           </div>
           {isDropdown && (
-            <div className="flex flex-col items-start absolute bg-white border border-dark-grey rounded-lg p-4 font-semibold gap-3 right-0 top-14">
+            <div
+              ref={dropdownRef}
+              className="flex flex-col items-start absolute bg-white border border-dark-grey rounded-lg p-4 font-semibold gap-3 right-0 top-14"
+            >
               <button
                 onClick={() => setIsSignalementModal(!isSignalementModal)}
                 className="flex items-center gap-2"
