@@ -11,6 +11,7 @@ import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
 import Spinner from "@/components/Spinner";
 import NewMessageForm from "./NewMessageForm";
+import MessageHeader from "./MessageHeader";
 
 function ThreadsPage() {
   const searchParams = useSearchParams();
@@ -185,27 +186,41 @@ function ThreadsPage() {
             />
           ) : (
             <>
-              <MessageThread
+              <MessageHeader
                 product={product}
-                messages={messages}
-                userId={user.id}
-                newMessageSeller={newMessageSeller}
-                order={order}
                 seller={seller}
-                setSeller={setSeller}
-                activeThreadId={activeThreadId}
-                onDeleteThread={onDeleteThread}
                 setIsInfo={setIsInfo}
                 isInfo={isInfo}
-                accessToken={accessToken}
               />
-              <NewMessageForm
-                getThreads={getThreads}
-                activeThreadId={activeThreadId}
-                setActiveThreadId={setActiveThreadId}
-                getMessages={getMessages}
-                accessToken={accessToken}
-              />
+              {isInfo && seller && product ? (
+                <ThreadInfo
+                  seller={seller}
+                  product={product}
+                  order={order}
+                  activeThreadId={activeThreadId}
+                  onDeleteThread={onDeleteThread}
+                />
+              ) : (
+                <>
+                  <MessageThread
+                    product={product}
+                    messages={messages}
+                    newMessageSeller={newMessageSeller}
+                    userId={user.id}
+                    order={order}
+                    seller={seller}
+                    setSeller={setSeller}
+                    accessToken={accessToken}
+                  />
+                  <NewMessageForm
+                    getThreads={getThreads}
+                    activeThreadId={activeThreadId}
+                    setActiveThreadId={setActiveThreadId}
+                    getMessages={getMessages}
+                    accessToken={accessToken}
+                  />
+                </>
+              )}
             </>
           )}
         </div>
