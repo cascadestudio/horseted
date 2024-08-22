@@ -9,7 +9,6 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
-import { dateToISO, ISOtoDate } from "@/utils/formatDate";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
@@ -71,6 +70,11 @@ export default function Settings() {
   const handleDeleteAccount = async () => {
     await fetchHorseted(`/users/me`, accessToken, "DELETE", null, false, true);
     router.push("/");
+  };
+
+  const formatDate = (isoDate) => {
+    if (!isoDate) return "";
+    return isoDate.split("T")[0];
   };
 
   return (
@@ -135,12 +139,11 @@ export default function Settings() {
         <TextInput
           label="Date de naissance"
           name="birthDate"
-          value={formData.birthDate}
+          value={formatDate(formData.birthDate)}
           onChange={handleChange}
           type="date"
           required
           className="col-span-2 lg:col-span-1"
-          placeholder="jj/mm/aaaa"
         />
         <TextInput
           label="Présentation"
