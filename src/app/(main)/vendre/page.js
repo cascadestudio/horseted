@@ -18,6 +18,7 @@ import Size from "./selects/Size";
 import Colors from "./selects/Colors";
 import Brand from "./selects/Brand";
 import Materials from "./selects/Materials";
+import Shipping from "./selects/Shipping";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
@@ -132,6 +133,7 @@ export default function SellPage() {
         <Colors product={product} setProduct={setProduct} />
         <Brand product={product} setProduct={setProduct} />
         <Materials product={product} setProduct={setProduct} />
+        <Shipping product={product} setProduct={setProduct} />
 
         {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
