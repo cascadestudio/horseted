@@ -54,8 +54,8 @@ export default function Colors({ product, setProduct }) {
                 </div>
                 <Checkbox
                   className="ml-10"
-                  value={name}
-                  checked={product.colors.includes(name)}
+                  value={hex}
+                  checked={product.colors.includes(hex)}
                   onChange={handleCheckboxChange}
                 />
               </label>

@@ -8,8 +8,6 @@ export default function ProductMedia({ accessToken, setProduct }) {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [imageSrcs, setImageSrcs] = useState([]);
 
-  console.log("isImageLoading =>", isImageLoading);
-
   const handleMediaChange = async (e) => {
     const files = Array.from(e.target.files);
     const isFileLimit = imageSrcs.length + files.length > 10;

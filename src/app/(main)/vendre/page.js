@@ -33,35 +33,14 @@ export default function SellPage() {
     medias: [],
   });
 
-  // {
-  //   "title": "string",
-  //   "price": 0,
-  //   "description": "string",
-  //   "sizeId": 0,
-  //   "categoryId": 0,
-  //   "brand": "string",
-  //   "materials": [
-  //     "string"
-  //   ],
-  //   "state": "good",
-  //   "shipping": "small",
-  //   "colors": [
-  //     "string"
-  //   ],
-  //   "medias": [
-  //     0
-  //   ]
-  // }
-
-  console.log("product =>", product);
+  // console.log("product =>", product);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async () => {
     console.log("product =>", product);
     const response = await fetchHorseted(
       "/products",
@@ -148,7 +127,10 @@ export default function SellPage() {
         <Brand product={product} setProduct={setProduct} />
         <Materials product={product} setProduct={setProduct} />
         <Shipping product={product} setProduct={setProduct} />
-        <Button type="submit" className="w-full max-w-[900px] mb-5">
+        <Button
+          onClick={handleFormSubmit}
+          className="w-full max-w-[900px] mb-5"
+        >
           Publier l'article
         </Button>
       </form>
