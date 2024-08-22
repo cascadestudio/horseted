@@ -42,7 +42,7 @@ export default function MyAccountDropDown() {
           <ul className="w-full">
             <li>
               <Link
-                href="/account"
+                href="/mon-compte"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
               >
                 <div className="flex items-center gap-4">
