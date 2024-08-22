@@ -8,20 +8,22 @@ export default function ProductMedia({ accessToken, setProduct }) {
   const [isImageLoading, setIsImageLoading] = useState(false);
   const [imageSrcs, setImageSrcs] = useState([]);
 
-  // console.log("imageSrcs =>", imageSrcs);
+  console.log("isImageLoading =>", isImageLoading);
 
   const handleMediaChange = async (e) => {
     const files = Array.from(e.target.files);
-    // console.log("files =>", files);
+    const isFileLimit = imageSrcs.length + files.length > 10;
+    console.log("isFileLimit =>", isFileLimit);
+    if (isFileLimit) return alert("Vous avez dépassé la limite de 10 photos");
     if (files) {
-      setIsImageLoading(true);
       files.forEach(async (file) => {
+        setIsImageLoading(true);
         const media = await postMedia(file);
         console.log("media =>", media);
         setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
         await getMedia(media.files.thumbnail200);
+        setIsImageLoading(false);
       });
-      setIsImageLoading(false);
     }
   };
 
@@ -41,7 +43,6 @@ export default function ProductMedia({ accessToken, setProduct }) {
 
   async function getMedia(file) {
     const src = await getImage(file, "client");
-    // console.log("src =>", src);
     setImageSrcs((prev) => [...prev, src]);
   }
 

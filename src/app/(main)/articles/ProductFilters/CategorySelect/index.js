@@ -50,7 +50,7 @@ export default function CategorySelect({
     <Dropdown
       className={className}
       title={title}
-      isActive={activeCategory !== null}
+      isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
     >
       <div className="min-w-64 min-h-64 py-4">

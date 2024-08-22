@@ -60,6 +60,20 @@ export default function SellPage() {
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    console.log("product =>", product);
+    const response = await fetchHorseted(
+      "/products",
+      accessToken,
+      "POST",
+      product,
+      true,
+      true
+    );
+    console.log("response =>", response);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
       <div className="bg-white">
@@ -72,7 +86,10 @@ export default function SellPage() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
+      <form
+        onSubmit={handleFormSubmit}
+        className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7"
+      >
         <ProductMedia accessToken={accessToken} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
@@ -131,8 +148,10 @@ export default function SellPage() {
         <Brand product={product} setProduct={setProduct} />
         <Materials product={product} setProduct={setProduct} />
         <Shipping product={product} setProduct={setProduct} />
-        <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
-      </div>
+        <Button type="submit" className="w-full max-w-[900px] mb-5">
+          Publier l'article
+        </Button>
+      </form>
     </div>
   );
 }

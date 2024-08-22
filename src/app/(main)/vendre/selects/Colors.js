@@ -33,7 +33,7 @@ export default function Colors({ product, setProduct }) {
         Couleurs :
       </h3>
       <Dropdown
-        title="Sélectionner une couleur"
+        title="Sélectionner une ou plusieurs couleurs"
         className="w-full max-w-[700px]"
         isBlack
       >

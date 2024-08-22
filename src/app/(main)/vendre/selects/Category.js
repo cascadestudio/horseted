@@ -17,7 +17,6 @@ export default function Category({ product, setProduct }) {
       <CategorySelect
         onClickProductCategory={handleChange}
         activeCategory={product.categoryId}
-        required
         title={
           activeCategoryName === ""
             ? "Sélectionner une catégorie"
