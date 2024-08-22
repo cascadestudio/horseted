@@ -33,7 +33,27 @@ export default function SellPage() {
     medias: [],
   });
 
-  // console.log("product =>", product);
+  // {
+  //   "title": "string",
+  //   "price": 0,
+  //   "description": "string",
+  //   "sizeId": 0,
+  //   "categoryId": 0,
+  //   "brand": "string",
+  //   "materials": [
+  //     "string"
+  //   ],
+  //   "state": "good",
+  //   "shipping": "small",
+  //   "colors": [
+  //     "string"
+  //   ],
+  //   "medias": [
+  //     0
+  //   ]
+  // }
+
+  console.log("product =>", product);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
