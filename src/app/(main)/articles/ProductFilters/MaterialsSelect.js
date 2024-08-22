@@ -45,7 +45,7 @@ export default function MaterialSelect({
       title="Matières"
       isActive={activeMaterials.length > 0}
     >
-      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
+      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll py-4 pe-3">
         {materials.map(({ name }) => (
           <label
             key={name}

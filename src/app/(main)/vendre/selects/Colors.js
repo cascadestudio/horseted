@@ -3,7 +3,7 @@ import Checkbox from "@/components/input/Checkbox";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 
-export default function Color({ product, setProduct }) {
+export default function Colors({ product, setProduct }) {
   const [colors, setColors] = useState([]);
 
   useEffect(() => {
