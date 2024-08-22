@@ -50,7 +50,7 @@ export default function CitySelect() {
           <input
             className="border-none"
             type="text"
-            placeholder="Rechercher une marque"
+            placeholder="Rechercher une ville"
             value={searchTerm}
             onChange={handleFilterChange}
           />

@@ -7,19 +7,16 @@ import Image from "next/image";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
-import AvatarDisplay from "@/components/AvatarDisplay";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
-import CityIcon from "@/assets/icons/CityIcon";
 import { dateToISO, ISOtoDate } from "@/utils/formatDate";
 import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
-import Dropdown from "@/components/Dropdown";
-import BrandSelect from "../../articles/ProductFilters/BrandsSelect";
 import CitySelect from "./CitySelect";
 import DisplayCity from "./DisplayCity";
+import Avatar from "./Avatar";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
@@ -35,10 +32,9 @@ export default function Settings() {
     city: user?.city || "",
     avatar: user?.avatar?.id || null,
   });
-  const [avatar, setAvatar] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
-  // console.log("user =>", user);
+  console.log("formData =>", formData);
 
   useEffect(() => {
     if (isMounted) {
@@ -50,41 +46,8 @@ export default function Settings() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "birthDate") {
-      handleBirthDateChange(value);
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const handleBirthDateChange = (date) => {
-    const ISO = dateToISO(date);
-    console.log("birthDate =>", ISO);
-    setFormData((prev) => ({ ...prev, birthDate: ISO }));
-  };
-
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const media = await postMedia(file);
-      setAvatar(media);
-      setFormData((prev) => ({ ...prev, avatar: media.id }));
-    }
-  };
-
-  async function postMedia(file) {
-    const formdata = new FormData();
-    formdata.append("media", file);
-    const media = await fetchHorseted(
-      `/medias`,
-      accessToken,
-      "POST",
-      formdata,
-      false,
-      true
-    );
-    return media;
-  }
 
   async function patchUser() {
     // if (formDataToSend.get("email") !== user?.auth.email) {
@@ -110,23 +73,6 @@ export default function Settings() {
     router.push("/");
   };
 
-  const AvatarInput = ({ onChange }) => (
-    <label
-      htmlFor="avatar"
-      className="absolute top-0 right-0 flex items-center cursor-pointer"
-    >
-      <ModifyIcon className="w-9 h-9" />
-      <input
-        onChange={onChange}
-        type="file"
-        name="avatar"
-        id="avatar"
-        accept="image/*"
-        className="hidden"
-      />
-    </label>
-  );
-
   return (
     <section>
       <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
@@ -139,10 +85,7 @@ export default function Settings() {
           Se déconnecter
         </Button>
         <div className="flex items-center mb-10 col-span-2 lg:col-span-1 ">
-          <div className="relative w-fit mr-8">
-            <AvatarDisplay avatar={avatar || user.avatar} size={84} />
-            <AvatarInput onChange={handleAvatarChange} />
-          </div>
+          <Avatar setFormData={setFormData} user={user} />
           <div className="self-end mb-3">
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
             <span className="text-lg text-grey">{user.username}*</span>
@@ -192,12 +135,9 @@ export default function Settings() {
         <TextInput
           label="Date de naissance"
           name="birthDate"
-          // value={formData.birthDate && formatDate(formData.birthDate)}
           value={formData.birthDate}
           onChange={handleChange}
-          type="text"
-          onFocus={(e) => (e.target.type = "date")}
-          onBlur={(e) => (e.target.type = "text")}
+          type="date"
           required
           className="col-span-2 lg:col-span-1"
           placeholder="jj/mm/aaaa"
