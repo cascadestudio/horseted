@@ -5,21 +5,38 @@ import Button from "@/components/Button";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ReviewCard from "@/components/ReviewCard";
 import CreateBundleModal from "../product/[id]/CreateBundleModal";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 function SellerPage() {
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(5.9);
 
+  // console.log("user =>", user);
+
   const handleOpenCreateBundleModal = () => setIsCreateBundleModalOpen(true);
   const handleCloseCreateBundleModal = () => setIsCreateBundleModalOpen(false);
+
+  useEffect(() => {
+    if (user) {
+      getProducts();
+    }
+  }, [user]);
+
+  const getProducts = async () => {
+    const products = await fetchHorseted(
+      `/products?userId=${user.id}`,
+      accessToken
+    );
+    console.log("products =>", products);
+  };
 
   // TODO: Fetch products
   // TODO: Fetch reviews
