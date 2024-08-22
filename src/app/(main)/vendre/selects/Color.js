@@ -37,7 +37,7 @@ export default function Color({ product, setProduct }) {
         className="w-full max-w-[700px]"
         isBlack
       >
-        <div className={`flex flex-col gap-y-4 max-w-96 `}>
+        <div className="flex flex-col gap-y-4 py-4 max-h-96 overflow-y-scroll pe-3">
           {colors.map((color, index) => {
             const { hex, name } = color;
             return (
@@ -45,7 +45,13 @@ export default function Color({ product, setProduct }) {
                 key={index}
                 className="flex justify-between items-center cursor-pointer font-semibold"
               >
-                <div>{name}</div>
+                <div className="flex items-center">
+                  <aside
+                    className="h-8 w-8 rounded-full mr-2"
+                    style={{ backgroundColor: `${hex}` }}
+                  ></aside>
+                  <p className="capitalize">{name}</p>
+                </div>
                 <Checkbox
                   className="ml-10"
                   value={name}
