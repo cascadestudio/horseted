@@ -18,6 +18,7 @@ export default function HeroCarousel() {
   const settings = {
     arrows: false,
     dots: true,
+    fade: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
