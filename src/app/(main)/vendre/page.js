@@ -19,6 +19,7 @@ import Shipping from "./selects/Shipping";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState({
     title: "",
     price: "",
@@ -41,7 +42,7 @@ export default function SellPage() {
   };
 
   const handleFormSubmit = async () => {
-    console.log("product =>", product);
+    setIsLoading(true);
     const response = await fetchHorseted(
       "/products",
       accessToken,
@@ -50,8 +51,11 @@ export default function SellPage() {
       true,
       true
     );
+    setIsLoading(false);
     console.log("response =>", response);
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
