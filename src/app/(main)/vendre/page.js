@@ -16,6 +16,7 @@ import Category from "./selects/Category";
 import State from "./selects/State";
 import Size from "./selects/Size";
 import Color from "./selects/Color";
+import Brand from "./selects/Brand";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
@@ -128,6 +129,7 @@ export default function SellPage() {
         <State product={product} setProduct={setProduct} />
         <Size product={product} setProduct={setProduct} />
         <Color product={product} setProduct={setProduct} />
+        <Brand product={product} setProduct={setProduct} />
 
         {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
