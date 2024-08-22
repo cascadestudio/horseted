@@ -28,7 +28,6 @@ function AccountPage() {
     console.log("products =>", products);
   };
 
-  // TODO: Fetch products
   // TODO: Fetch reviews
   const reviews = [
     {
@@ -113,16 +112,18 @@ function AccountPage() {
         </div>
         <div className="mt-8">
           <div className="flex border-b border-lighter-grey">
-            <button
-              className={`px-4 py-2 text-lg font-medium font-mcqueen ${
-                activeTab === "products"
-                  ? "text-light-green border-b-[3px] border-light-green"
-                  : "text-grey"
-              }`}
-              onClick={() => setActiveTab("products")}
-            >
-              Produits
-            </button>
+            {products.length > 0 && (
+              <button
+                className={`px-4 py-2 text-lg font-medium font-mcqueen ${
+                  activeTab === "products"
+                    ? "text-light-green border-b-[3px] border-light-green"
+                    : "text-grey"
+                }`}
+                onClick={() => setActiveTab("products")}
+              >
+                Produits
+              </button>
+            )}
             <button
               className={`px-4 py-2 text-lg font-medium font-mcqueen ${
                 activeTab === "reviews"
@@ -135,14 +136,12 @@ function AccountPage() {
             </button>
           </div>
           <div className="mt-4">
-            {activeTab === "products" && (
-              <div>
-                <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
-                  {products.map((product, index) => (
-                    <ProductCard key={index} product={product} />
-                  ))}
-                </section>
-              </div>
+            {activeTab === "products" && products.length > 0 && (
+              <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
+                {products.map((product, index) => (
+                  <ProductCard key={index} product={product} />
+                ))}
+              </section>
             )}
             {activeTab === "reviews" && (
               <div>

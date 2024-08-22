@@ -20,6 +20,7 @@ export default function AvatarDisplay({ avatar, className = "", size }) {
   return (
     <Image
       src={avatarSrc || placeholderImage}
+      style={{ width: size, height: size }}
       className={`${className} object-cover rounded-full`}
       width={size}
       height={size}
