@@ -44,6 +44,7 @@ export default function Dropdown({
   return (
     <div className={className} ref={panelRef}>
       <button
+        type="button"
         onClick={handleClick}
         className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${handleStyle()}
         ${className}`}

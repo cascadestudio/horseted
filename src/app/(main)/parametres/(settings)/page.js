@@ -16,6 +16,10 @@ import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
+import Dropdown from "@/components/Dropdown";
+import BrandSelect from "../../articles/ProductFilters/BrandsSelect";
+import CitySelect from "./CitySelect";
+import DisplayCity from "./DisplayCity";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
@@ -32,10 +36,9 @@ export default function Settings() {
     avatar: user?.avatar?.id || null,
   });
   const [avatar, setAvatar] = useState(null);
-  const [showCity, setShowCity] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  console.log("user =>", user);
+  // console.log("user =>", user);
 
   useEffect(() => {
     if (isMounted) {
@@ -124,25 +127,6 @@ export default function Settings() {
     </label>
   );
 
-  const CityDataList = () => (
-    <datalist id="cities">
-      {[
-        "Paris",
-        "Lille",
-        "Marseille",
-        "Lyon",
-        "Nantes",
-        "Brest",
-        "Toulouse",
-        "Montpellier",
-        "Nice",
-        "Strasbourg",
-      ].map((city) => (
-        <option key={city} value={city} />
-      ))}
-    </datalist>
-  );
-
   return (
     <section>
       <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
@@ -165,40 +149,21 @@ export default function Settings() {
           </div>
         </div>
         <div className="flex flex-col col-span-2 lg:col-span-1">
-          <div className="relative flex items-center border border-black rounded-md p-3">
+          <CitySelect />
+
+          {/* TODO : Intégrer CitySelect comme dessous */}
+
+          {/* <div className="relative flex items-center border border-black rounded-md p-3">
             <CityIcon className="w-5 h-5 stroke-current fill-none mr-3" />
             <span className="flex-grow font-poppins font-medium">
               {formData.city || "Sélectionnez une ville"}
             </span>
-            <label htmlFor="city" className="flex items-center cursor-pointer">
+            <label className="flex items-center cursor-pointer">
               <ModifyIcon className="w-9 h-9" />
             </label>
-            <input
-              onChange={handleChange}
-              type="file"
-              name="city"
-              id="city"
-              className="hidden"
-            />
-            <CityDataList />
-          </div>
-          <div className="flex items-center justify-end mt-3">
-            <label htmlFor="publicCity">
-              <span className="text-sm mr-2">
-                Afficher publiquement la ville
-              </span>
-              <div className="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
-                <input
-                  type="checkbox"
-                  id="publicCity"
-                  checked={showCity}
-                  onChange={() => setShowCity(!showCity)}
-                  className="absolute block w-4 h-4 rounded-full bg-grey border-none appearance-none cursor-pointer top-1 checked:right-1 right-5 checked:bg-light-green"
-                />
-                <div className="block overflow-hidden h-6 rounded-full bg-white cursor-pointer border border-grey"></div>
-              </div>
-            </label>
-          </div>
+          </div> */}
+
+          <DisplayCity accessToken={accessToken} />
         </div>
         <TextInput
           label="Email"
