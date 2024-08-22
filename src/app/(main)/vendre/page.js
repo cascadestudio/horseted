@@ -1,31 +1,30 @@
 "use client";
 
+import { useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
+import fetchHorseted from "@/utils/fetchHorseted";
 import CloseButton from "@/assets/icons/CloseButton";
 import Dropdown from "@/components/Dropdown";
 import { TextInput } from "@/components/input";
-import StateSelect from "../articles/ProductFilters/StateSelect";
-import SizesSelect from "../articles/ProductFilters/SizesSelect";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
+
+import ProductMedia from "./selects/ProductMedia";
 import BrandSelect from "../articles/ProductFilters/BrandsSelect";
 import MaterialSelect from "../articles/ProductFilters/MaterialsSelect";
-import Button from "@/components/Button";
-import { useEffect, useState } from "react";
-import getImage from "@/utils/getImage";
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useAuthContext } from "@/context/AuthContext";
-import Spinner from "@/components/Spinner";
-import ProductMedia from "./ProductMedia";
-import Category from "./Category";
-import State from "./State";
-import Size from "./Size";
+import Category from "./selects/Category";
+import State from "./selects/State";
+import Size from "./selects/Size";
+import Color from "./selects/Color";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
   const [product, setProduct] = useState({
     title: "",
-    price: null,
+    price: "",
     description: "",
-    sizeId: null,
-    categoryId: null,
+    sizeId: "",
+    categoryId: "",
     brand: "",
     materials: [],
     state: "",
@@ -34,7 +33,7 @@ export default function SellPage() {
     medias: [],
   });
 
-  console.log("product =>", product);
+  // console.log("product =>", product);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -108,18 +107,9 @@ export default function SellPage() {
         <Category product={product} setProduct={setProduct} />
         <State product={product} setProduct={setProduct} />
         <Size product={product} setProduct={setProduct} />
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Couleurs :
-          </h3>
-          {/* // TODO : add colors to select */}
-          <Dropdown
-            title="Sélectionner une couleur"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
+        <Color product={product} setProduct={setProduct} />
+
+        {/* <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Marques :
           </h3>
@@ -143,13 +133,12 @@ export default function SellPage() {
           <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
             Livraison* :
           </h3>
-          {/* // TODO : add shipping sizes */}
           <Dropdown
             title="Sélectionner une taille de colis"
             className="w-full max-w-[700px]"
             isBlack
           />
-        </div>
+        </div> */}
         <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CategorySelect from "../articles/ProductFilters/CategorySelect";
+import CategorySelect from "../../articles/ProductFilters/CategorySelect";
 
 export default function Category({ product, setProduct }) {
   const [activeCategoryName, setActiveCategoryName] = useState("");

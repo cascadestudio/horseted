@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SizesSelect from "../articles/ProductFilters/SizesSelect";
+import SizesSelect from "../../articles/ProductFilters/SizesSelect";
 
 export default function Size({ product, setProduct }) {
   const [activeSizes, setActiveSizes] = useState([]);
@@ -8,7 +8,7 @@ export default function Size({ product, setProduct }) {
     setProduct((prev) => ({ ...prev, size: activeSizes }));
   }, [activeSizes]);
 
-  console.log("activeSizes =>", activeSizes);
+  // console.log("activeSizes =>", activeSizes);
 
   if (product.categoryId === null) return;
   return (
