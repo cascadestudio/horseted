@@ -5,13 +5,28 @@ import Button from "@/components/Button";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ReviewCard from "@/components/ReviewCard";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 function AccountPage() {
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    const products = await fetchHorseted(
+      `/products?userId=${user.id}`,
+      accessToken
+    );
+    setProducts(products.items);
+    console.log("products =>", products);
+  };
 
   // TODO: Fetch products
   // TODO: Fetch reviews
@@ -106,7 +121,7 @@ function AccountPage() {
               }`}
               onClick={() => setActiveTab("products")}
             >
-              Sellerie
+              Produits
             </button>
             <button
               className={`px-4 py-2 text-lg font-medium font-mcqueen ${
@@ -123,11 +138,9 @@ function AccountPage() {
             {activeTab === "products" && (
               <div>
                 <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
-                  <ProductCard productId="500" />
-                  <ProductCard productId="500" />
-                  <ProductCard productId="500" />
-                  <ProductCard productId="500" />
-                  <ProductCard productId="500" />
+                  {products.map((product, index) => (
+                    <ProductCard key={index} product={product} />
+                  ))}
                 </section>
               </div>
             )}
