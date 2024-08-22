@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
+import Radio from "@/components/input/Radio";
 
 export default function SizesSelect({
-  activeSizes = [],
+  activeSizes,
   categoryId,
   setActiveSizes,
   className,
   isBlack,
+  isRadio,
+  onSizeChange,
 }) {
   const [sizes, setSizes] = useState([]);
 
@@ -43,7 +46,7 @@ export default function SizesSelect({
       isActive={activeSizes.length > 0}
       isBlack={isBlack}
     >
-      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll pe-3">
+      <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll py-4 pe-3">
         {sizes.map((size) => {
           const { id, value } = size;
 
@@ -53,12 +56,21 @@ export default function SizesSelect({
               className="flex justify-between items-center cursor-pointer font-semibold"
             >
               {value}
-              <Checkbox
-                className="ml-20"
-                value={size.value}
-                onChange={() => handleCheckboxChange(size)}
-                checked={activeSizes?.includes(size)}
-              />
+              {isRadio ? (
+                <Radio
+                  className="ml-20"
+                  value={id}
+                  onChange={onSizeChange}
+                  checked={activeSizes?.includes(id)}
+                />
+              ) : (
+                <Checkbox
+                  className="ml-20"
+                  value={value}
+                  onChange={() => handleCheckboxChange(size)}
+                  checked={activeSizes?.includes(size)}
+                />
+              )}
             </label>
           );
         })}

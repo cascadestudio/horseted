@@ -4,14 +4,11 @@ import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import CloseButton from "@/assets/icons/CloseButton";
-import Dropdown from "@/components/Dropdown";
 import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
 import ProductMedia from "./selects/ProductMedia";
-import BrandSelect from "../articles/ProductFilters/BrandsSelect";
-import MaterialSelect from "../articles/ProductFilters/MaterialsSelect";
 import Category from "./selects/Category";
 import State from "./selects/State";
 import Size from "./selects/Size";
@@ -134,37 +131,6 @@ export default function SellPage() {
         <Brand product={product} setProduct={setProduct} />
         <Materials product={product} setProduct={setProduct} />
         <Shipping product={product} setProduct={setProduct} />
-
-        {/* <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Marques :
-          </h3>
-          <BrandSelect
-            title="Sélectionner une marque"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Matières :
-          </h3>
-          <MaterialSelect
-            title="Sélectionner une matière"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Livraison* :
-          </h3>
-          <Dropdown
-            title="Sélectionner une taille de colis"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div> */}
         <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
       </div>
     </div>
