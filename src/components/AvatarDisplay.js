@@ -2,8 +2,14 @@ import Image from "next/image";
 import placeholderImage from "@/assets/images/placeholder.svg";
 import getImage from "@/utils/getImage";
 import { useEffect, useState } from "react";
+import Spinner from "./Spinner";
 
-export default function AvatarDisplay({ avatar, className = "", size }) {
+export default function AvatarDisplay({
+  avatar,
+  className = "",
+  size,
+  isLoading,
+}) {
   const [avatarSrc, setAvatarSrc] = useState(null);
 
   useEffect(() => {
@@ -18,12 +24,19 @@ export default function AvatarDisplay({ avatar, className = "", size }) {
   }
 
   return (
-    <Image
-      src={avatarSrc || placeholderImage}
-      className={`${className} object-cover rounded-full`}
-      width={size}
-      height={size}
-      alt="Avatar"
-    />
+    <div style={{ width: size, height: size }}>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Image
+          src={avatarSrc || placeholderImage}
+          style={{ width: size, height: size }}
+          className={`${className} object-cover rounded-full`}
+          width={size}
+          height={size}
+          alt="Avatar"
+        />
+      )}
+    </div>
   );
 }

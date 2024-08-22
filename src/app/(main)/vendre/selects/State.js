@@ -1,4 +1,4 @@
-import StateSelect from "../articles/ProductFilters/StateSelect";
+import StateSelect from "../../articles/ProductFilters/StateSelect";
 
 export default function Category({ product, setProduct }) {
   const handleChange = (e) => {

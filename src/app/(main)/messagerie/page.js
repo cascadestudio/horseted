@@ -113,7 +113,7 @@ function ThreadsPage() {
 
   const breadcrumbs = [
     { label: "Accueil", href: "/" },
-    { label: "Mon compte", href: "/account" },
+    { label: "Mon compte", href: "/mon-compte" },
     { label: "Messagerie" },
   ];
 

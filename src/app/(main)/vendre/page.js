@@ -1,31 +1,31 @@
 "use client";
 
-import CloseButton from "@/assets/icons/CloseButton";
-import Dropdown from "@/components/Dropdown";
-import { TextInput } from "@/components/input";
-import StateSelect from "../articles/ProductFilters/StateSelect";
-import SizesSelect from "../articles/ProductFilters/SizesSelect";
-import BrandSelect from "../articles/ProductFilters/BrandsSelect";
-import MaterialSelect from "../articles/ProductFilters/MaterialsSelect";
-import Button from "@/components/Button";
-import { useEffect, useState } from "react";
-import getImage from "@/utils/getImage";
-import fetchHorseted from "@/utils/fetchHorseted";
+import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import fetchHorseted from "@/utils/fetchHorseted";
+import CloseButton from "@/assets/icons/CloseButton";
+import { TextInput } from "@/components/input";
+import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
-import ProductMedia from "./ProductMedia";
-import Category from "./Category";
-import State from "./State";
-import Size from "./Size";
+
+import ProductMedia from "./selects/ProductMedia";
+import Category from "./selects/Category";
+import State from "./selects/State";
+import Size from "./selects/Size";
+import Colors from "./selects/Colors";
+import Brand from "./selects/Brand";
+import Materials from "./selects/Materials";
+import Shipping from "./selects/Shipping";
 
 export default function SellPage() {
   const { accessToken } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [product, setProduct] = useState({
     title: "",
-    price: null,
+    price: "",
     description: "",
-    sizeId: null,
-    categoryId: null,
+    sizeId: "",
+    categoryId: "",
     brand: "",
     materials: [],
     state: "",
@@ -34,12 +34,28 @@ export default function SellPage() {
     medias: [],
   });
 
-  console.log("product =>", product);
+  // console.log("product =>", product);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleFormSubmit = async () => {
+    setIsLoading(true);
+    const response = await fetchHorseted(
+      "/products",
+      accessToken,
+      "POST",
+      product,
+      true,
+      true
+    );
+    setIsLoading(false);
+    console.log("response =>", response);
+  };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="min-h-screen flex flex-col bg-light-grey">
@@ -53,7 +69,10 @@ export default function SellPage() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
+      <form
+        onSubmit={handleFormSubmit}
+        className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7"
+      >
         <ProductMedia accessToken={accessToken} setProduct={setProduct} />
         <div className="w-full flex justify-center">
           <h3 className="font-mcqueen font-semibold w-[200px]">
@@ -108,50 +127,17 @@ export default function SellPage() {
         <Category product={product} setProduct={setProduct} />
         <State product={product} setProduct={setProduct} />
         <Size product={product} setProduct={setProduct} />
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Couleurs :
-          </h3>
-          {/* // TODO : add colors to select */}
-          <Dropdown
-            title="Sélectionner une couleur"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Marques :
-          </h3>
-          <BrandSelect
-            title="Sélectionner une marque"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Matières :
-          </h3>
-          <MaterialSelect
-            title="Sélectionner une matière"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <div className="w-full flex justify-center">
-          <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
-            Livraison* :
-          </h3>
-          {/* // TODO : add shipping sizes */}
-          <Dropdown
-            title="Sélectionner une taille de colis"
-            className="w-full max-w-[700px]"
-            isBlack
-          />
-        </div>
-        <Button className="w-full max-w-[900px] mb-5">Publier l'article</Button>
-      </div>
+        <Colors product={product} setProduct={setProduct} />
+        <Brand product={product} setProduct={setProduct} />
+        <Materials product={product} setProduct={setProduct} />
+        <Shipping product={product} setProduct={setProduct} />
+        <Button
+          onClick={handleFormSubmit}
+          className="w-full max-w-[900px] mb-5"
+        >
+          Publier l'article
+        </Button>
+      </form>
     </div>
   );
 }
