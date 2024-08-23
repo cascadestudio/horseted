@@ -20,18 +20,22 @@ export default function AvatarDisplay({
 
   async function fetchAvatar(file) {
     const avatarSrc = await getImage(file, "client");
+    console.log("avatarSrc =>", avatarSrc);
     setAvatarSrc(avatarSrc);
   }
 
   return (
-    <div style={{ width: size, height: size }}>
+    <div
+      style={{ width: size, height: size }}
+      className={`flex-shrink-0 ${className}`}
+    >
       {isLoading ? (
         <Spinner />
       ) : (
         <Image
           src={avatarSrc || placeholderImage}
           style={{ width: size, height: size }}
-          className={`${className} object-cover rounded-full`}
+          className={`object-cover rounded-full`}
           width={size}
           height={size}
           alt="Avatar"

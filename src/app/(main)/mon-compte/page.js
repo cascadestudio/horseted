@@ -15,6 +15,8 @@ function AccountPage() {
   const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
 
+  console.log("user =>", user);
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -25,7 +27,6 @@ function AccountPage() {
       accessToken
     );
     setProducts(products.items);
-    console.log("products =>", products);
   };
 
   // TODO: Fetch reviews
@@ -85,95 +86,94 @@ function AccountPage() {
     },
   ];
 
-  if (user)
-    return (
-      <div className="container mx-auto pt-7 pb-12 px-5 lg:px-0">
-        <div className="flex flex-col lg:flex-row gap-4 items-center">
-          <AvatarDisplay avatarSrc={user?.avatar} className="h-32 w-32" />
-          <div className="flex flex-col items-center lg:items-start lg:pt-12">
-            <StarRating rating="4.5" count="6" />
-            <p className="text-[22px] font-mcqueen font-semibold">
-              {user?.username}
-            </p>
-            <div className="flex gap-2 items-center font-medium text-sm mb-4">
-              <CityIcon className="w-3 stroke-current fill-none" />
-              <p>Montpellier (34)</p>
-            </div>
-            <p className="text-sm leading-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip
-            </p>
+  return (
+    <div className="container mx-auto pt-7 pb-12 px-5 lg:px-0">
+      <div className="flex flex-col lg:flex-row gap-4 items-center">
+        <AvatarDisplay avatar={user.avatar} size={130} />
+        <div className="flex flex-col items-center lg:items-start lg:pt-12">
+          <StarRating rating="4.5" count="6" />
+          <p className="text-[22px] font-mcqueen font-semibold">
+            {user.username}
+          </p>
+          <div className="flex gap-2 items-center font-medium text-sm mb-4">
+            <CityIcon className="w-3 stroke-current fill-none" />
+            <p>Montpellier (34)</p>
           </div>
-          <Button href="/parametres" className="lg:ml-36">
-            Modifier mon profil
-          </Button>
+          <p className="text-sm leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip
+          </p>
         </div>
-        <div className="mt-8">
-          <div className="flex border-b border-lighter-grey">
-            {products.length > 0 && (
-              <button
-                className={`px-4 py-2 text-lg font-medium font-mcqueen ${
-                  activeTab === "products"
-                    ? "text-light-green border-b-[3px] border-light-green"
-                    : "text-grey"
-                }`}
-                onClick={() => setActiveTab("products")}
-              >
-                Produits
-              </button>
-            )}
+        <Button href="/parametres" className="lg:ml-36">
+          Modifier mon profil
+        </Button>
+      </div>
+      <div className="mt-8">
+        <div className="flex border-b border-lighter-grey">
+          {products.length > 0 && (
             <button
               className={`px-4 py-2 text-lg font-medium font-mcqueen ${
-                activeTab === "reviews"
+                activeTab === "products"
                   ? "text-light-green border-b-[3px] border-light-green"
                   : "text-grey"
               }`}
-              onClick={() => setActiveTab("reviews")}
+              onClick={() => setActiveTab("products")}
             >
-              Évaluations
+              Produits
             </button>
-          </div>
-          <div className="mt-4">
-            {activeTab === "products" && products.length > 0 && (
-              <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
-                {products.map((product, index) => (
-                  <ProductCard key={index} product={product} />
-                ))}
-              </section>
-            )}
-            {activeTab === "reviews" && (
-              <div>
-                <div className="flex flex-col items-center justify-center border-b border-lighter-grey mb-8 pb-5">
-                  <p className="font-mcqueen font-semibold text-[40px] leading-[48px]">
-                    4.5
-                  </p>
-                  <p className="font-mcqueen">{reviews.length} évaluations</p>
-                  <StarRating rating="4.5" count="6" />
-                </div>
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
-                  {reviews.map((review, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col items-center break-inside-avoid mb-3"
-                    >
-                      <ReviewCard
-                        avatarSrc={review.avatarSrc}
-                        author={review.author}
-                        date={review.date}
-                        rating={review.rating}
-                        comment={review.comment}
-                      />
-                    </div>
-                  ))}
-                </div>
+          )}
+          <button
+            className={`px-4 py-2 text-lg font-medium font-mcqueen ${
+              activeTab === "reviews"
+                ? "text-light-green border-b-[3px] border-light-green"
+                : "text-grey"
+            }`}
+            onClick={() => setActiveTab("reviews")}
+          >
+            Évaluations
+          </button>
+        </div>
+        <div className="mt-4">
+          {activeTab === "products" && products.length > 0 && (
+            <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
+              {products.map((product, index) => (
+                <ProductCard key={index} product={product} />
+              ))}
+            </section>
+          )}
+          {activeTab === "reviews" && (
+            <div>
+              <div className="flex flex-col items-center justify-center border-b border-lighter-grey mb-8 pb-5">
+                <p className="font-mcqueen font-semibold text-[40px] leading-[48px]">
+                  4.5
+                </p>
+                <p className="font-mcqueen">{reviews.length} évaluations</p>
+                <StarRating rating="4.5" count="6" />
               </div>
-            )}
-          </div>
+              <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
+                {reviews.map((review, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col items-center break-inside-avoid mb-3"
+                  >
+                    <ReviewCard
+                      avatarSrc={review.avatarSrc}
+                      author={review.author}
+                      date={review.date}
+                      rating={review.rating}
+                      comment={review.comment}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default withAuth(AccountPage);
