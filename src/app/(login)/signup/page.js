@@ -13,8 +13,8 @@ import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import TickIcon from "@/assets/icons/TickIcon";
 import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
-import fetchHorseted from "@/utils/fetchHorseted";
 import Spinner from "@/components/Spinner";
+import { postUser } from "@/utils/postUser";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -34,27 +34,15 @@ export default function signupPage() {
       return;
     } else {
       const firebaseToken = result.user.accessToken;
-      await postUser(firebaseToken);
+      await postUser({
+        firebaseToken: firebaseToken,
+        username: username,
+        newsletter: newsletter,
+      });
     }
     setIsLoading(false);
     return router.push("/");
   };
-
-  async function postUser(firebaseToken) {
-    const query = "/users";
-    const body = {
-      username: username,
-      newsLetter: newsletter,
-    };
-    const response = await fetchHorseted(
-      query,
-      firebaseToken,
-      "POST",
-      body,
-      true
-    );
-    // console.log("response =>", response);
-  }
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
