@@ -25,7 +25,7 @@ export default function Settings() {
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
-    birthDate: user?.birthDate || "",
+    birthDate: user?.birthDate || null,
     email: user?.auth.email || "",
     description: user?.description || "",
     city: user?.city || "",
@@ -33,7 +33,8 @@ export default function Settings() {
   });
   const [isMounted, setIsMounted] = useState(false);
 
-  console.log("formData =>", formData);
+  // console.log("formData =>", formData);
+  // console.log("user =>", user);
 
   useEffect(() => {
     if (isMounted) {
