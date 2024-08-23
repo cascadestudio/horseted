@@ -7,7 +7,6 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import LeftArrow from "@/assets/icons/LeftArrow";
-import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import TickIcon from "@/assets/icons/TickIcon";
@@ -15,6 +14,7 @@ import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -159,21 +159,7 @@ export default function signupPage() {
                   Créer un compte
                 </Button>
               </form>
-              <a
-                href="#"
-                className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto mb-8"
-              >
-                <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-                  <Image
-                    src={GoogleIcon}
-                    alt="Google Icon"
-                    className="h-5 w-5 lg:h-6 lg:w-6"
-                  />
-                </div>
-                <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
-                  Continuer avec Google
-                </span>
-              </a>
+              <GoogleSignInButton />
               <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
                 Se connecter
               </h2>
