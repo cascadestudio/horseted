@@ -20,7 +20,6 @@ export default function AvatarDisplay({
 
   async function fetchAvatar(file) {
     const avatarSrc = await getImage(file, "client");
-    console.log("avatarSrc =>", avatarSrc);
     setAvatarSrc(avatarSrc);
   }
 
