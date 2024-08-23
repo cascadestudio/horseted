@@ -10,7 +10,13 @@ import OrderInfo from "./OrderInfo";
 import Link from "next/link";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 
-export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
+export default function ThreadInfo({
+  seller,
+  product,
+  order,
+  onDeleteThread,
+  orderId,
+}) {
   const { user, accessToken } = useAuthContext();
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
@@ -32,6 +38,8 @@ export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
     setIsDropdown(!isDropdown);
     setIsClickOutside(false);
   }
+
+  const userType = user.id === seller.id ? "seller" : "buyer";
 
   return (
     <>
@@ -101,7 +109,14 @@ export default function ThreadInfo({ seller, product, order, onDeleteThread }) {
             </div>
           </div>
         )}
-        {order && <OrderInfo order={order} />}
+        {order && (
+          <OrderInfo
+            userType={userType}
+            order={order}
+            accessToken={accessToken}
+            orderId={orderId}
+          />
+        )}
       </div>
       {isSignalementModal && (
         <SignalementModal

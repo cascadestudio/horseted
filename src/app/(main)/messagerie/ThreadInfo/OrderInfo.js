@@ -1,10 +1,55 @@
+import Button from "@/components/Button";
+import fetchHorseted from "@/utils/fetchHorseted";
 import { ISOtoShortDate } from "@/utils/formatDate";
 
-export default function OrderInfo({ order }) {
+export default function OrderInfo({ order, userType, accessToken, orderId }) {
+  console.log("order =>", order);
+
+  const handleIsReceived = async () => {
+    const query = `/orders/${orderId}`;
+    const body = {
+      received: true,
+    };
+    await fetchHorseted(query, accessToken, "PATCH", body, true, true);
+  };
+
   return (
     <div className="p-5 border-dark-green border rounded-xl">
-      {/* <p>Commande validée !</p>
-  <p>La commande est validée et en attente de livraison.</p> */}
+      {order.statuses.map((status, index) => {
+        if (status.status === "readyToSend") {
+          return (
+            <div key={index}>
+              <p>Commande validée !</p>
+              <p>
+                La commande est validée et en attente de livraison
+                {userType === "seller" && " de votre part"}.
+              </p>
+              <Button onClick={handleIsReceived}>
+                Confirmer la réception (test)
+              </Button>
+              {/* Pas à cette étape mais pour tester */}
+            </div>
+          );
+        }
+        if (status.status === "delivered") {
+          return (
+            <div>
+              <Button onClick={handleIsReceived}>Confirmer la réception</Button>
+              <p>Commande Livrée !</p>;
+            </div>
+          );
+        }
+        if (status.status === "shipping") {
+          return <p>Commande en cour de livraison !</p>;
+        }
+        if (status.status === "availableAtServicePoint") {
+          return <p>Disponible en point relais !</p>;
+        }
+        if (status.status === "late") {
+          return <p>Commande en retard !</p>;
+        }
+      })}
+
       <div className="flex items-center mb-3">
         <img src="/icons/delivery-check.svg" alt="" />
         <div className="ml-5">
@@ -27,17 +72,21 @@ export default function OrderInfo({ order }) {
           </p>
         </div>
       </div>
-      {order.statuses[0].status === "readyToSend" && (
-        <div className="flex items-center">
-          <img src="/icons/delivery-check.svg" alt="" />
-          <div className="ml-5">
-            <p className="font-medium">Prêt à être livré</p>
-            <p className="text-sm font-poppins text-grey">
-              {ISOtoShortDate(order.statuses[0].updatedAt)}
-            </p>
-          </div>
-        </div>
-      )}
+      {order.statuses.map((status, index) => {
+        if (status.status === "readyToSend") {
+          return (
+            <div key={index} className="flex items-center">
+              <img src="/icons/delivery-check.svg" alt="" />
+              <div className="ml-5">
+                <p className="font-medium">Prêt à être livré</p>
+                <p className="text-sm font-poppins text-grey">
+                  {ISOtoShortDate(order.statuses[0].updatedAt)}
+                </p>
+              </div>
+            </div>
+          );
+        }
+      })}
     </div>
   );
 }
