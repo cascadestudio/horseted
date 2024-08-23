@@ -27,11 +27,12 @@ function ThreadsPage() {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [newMessageSeller, setNewMessageSeller] = useState(null);
   const [order, setOrder] = useState(null);
+  const [orderId, setOrderId] = useState(null);
   const [seller, setSeller] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("threads =>", threads);
+  // console.log("messages =>", messages);
 
   useEffect(() => {
     getThreads();
@@ -47,6 +48,7 @@ function ThreadsPage() {
     const activeThread = threads.find((thread) => thread.id === activeThreadId);
     if (activeThread && activeThread.orderId !== null) {
       getOrder(activeThread.orderId);
+      setOrderId(activeThread.orderId);
     } else {
       setOrder(null);
     }
@@ -203,6 +205,7 @@ function ThreadsPage() {
                 <ThreadInfo
                   seller={seller}
                   product={product}
+                  orderId={orderId}
                   order={order}
                   activeThreadId={activeThreadId}
                   onDeleteThread={onDeleteThread}
