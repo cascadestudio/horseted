@@ -6,7 +6,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 
 export default function SellerBlock({ sellerData, productId }) {
-  const { username, review } = sellerData;
+  const { username, review, id } = sellerData;
 
   return (
     <div className="flex justify-between w-full mt-3 mb-5">
@@ -31,7 +31,7 @@ export default function SellerBlock({ sellerData, productId }) {
           <MessageGreenIcon />
         </Link>
         <Button
-          href="#"
+          href={`/vendeur/${id}`}
           className="text-xs lg:text-sm h-8 px-4 py-2 max-w-24 lg:max-w-[110px]"
         >
           Voir le profil

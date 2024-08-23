@@ -1,5 +1,6 @@
 "use client";
 
+// TODO: Fetch products
 // TODO: Fetch reviews
 const reviews = [
   {
@@ -60,54 +61,91 @@ const reviews = [
 import { useAuthContext } from "@/context/AuthContext";
 import withAuth from "@/hoc/withAuth";
 import Button from "@/components/Button";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import StarRating from "@/components/StarRating";
+import CityIcon from "@/assets/icons/CityIcon";
 import { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
 import ReviewCard from "@/components/ReviewCard";
+import CreateBundleModal from "../../product/[id]/CreateBundleModal";
 import fetchHorseted from "@/utils/fetchHorseted";
-import ProfileInfo from "./ProfileInfo";
+import Spinner from "@/components/Spinner";
 
-function AccountPage() {
+function SellerPage({ params }) {
   const { user, accessToken } = useAuthContext();
   const [activeTab, setActiveTab] = useState("products");
-  const [products, setProducts] = useState([]);
+  const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
+  const [bundle, setBundle] = useState([]);
+  const [bundlePrice, setBundlePrice] = useState(0);
+  const [shippingPrice, setShippingPrice] = useState(5.9);
+  const [seller, setSeller] = useState(null);
 
   // console.log("user =>", user);
 
+  const handleOpenCreateBundleModal = () => setIsCreateBundleModalOpen(true);
+  const handleCloseCreateBundleModal = () => setIsCreateBundleModalOpen(false);
+
   useEffect(() => {
-    getProducts();
-  }, []);
+    if (user) {
+      getProducts();
+      getSeller();
+    }
+  }, [user]);
+
+  const getSeller = async () => {
+    const seller = await fetchHorseted(`/users/${params.id}`, accessToken);
+    setSeller(seller);
+  };
 
   const getProducts = async () => {
     const products = await fetchHorseted(
       `/products?userId=${user.id}`,
       accessToken
     );
-    setProducts(products.items);
+    console.log("products =>", products);
   };
+
+  if (!seller) return <Spinner />;
 
   return (
     <div className="container mx-auto pt-7 pb-12 px-5 lg:px-0">
       <div className="flex flex-col lg:flex-row gap-4 items-center">
-        <ProfileInfo profile={user} accessToken={accessToken} />
-        <Button href="/parametres" className="lg:ml-36">
-          Modifier mon profil
-        </Button>
+        <AvatarDisplay avatarSrc={seller.avatar} className="h-32 w-32" />
+        <div className="flex flex-col items-center lg:items-start lg:pt-12">
+          <StarRating rating="4.5" count="6" />
+          <p className="text-[22px] font-mcqueen font-semibold">
+            {seller.username}
+          </p>
+          <div className="flex gap-2 items-center font-medium text-sm mb-4">
+            <CityIcon className="w-3 stroke-current fill-none" />
+            <p>Montpellier (34)</p>
+          </div>
+          <p className="text-sm leading-6">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip
+          </p>
+        </div>
+        <div className="flex gap-3 lg:ml-8">
+          <Button variant="transparent-green" href="/messagerie">
+            Contacter
+          </Button>
+          <Button onClick={handleOpenCreateBundleModal}>Acheter un lot</Button>
+        </div>
       </div>
       <div className="mt-8">
         <div className="flex border-b border-lighter-grey">
-          {products.length > 0 && (
-            <button
-              className={`px-4 py-2 text-lg font-medium font-mcqueen ${
-                activeTab === "products"
-                  ? "text-light-green border-b-[3px] border-light-green"
-                  : "text-grey"
-              }`}
-              onClick={() => setActiveTab("products")}
-            >
-              Produits
-            </button>
-          )}
+          <button
+            className={`px-4 py-2 text-lg font-medium font-mcqueen ${
+              activeTab === "products"
+                ? "text-light-green border-b-[3px] border-light-green"
+                : "text-grey"
+            }`}
+            onClick={() => setActiveTab("products")}
+          >
+            Sellerie
+          </button>
           <button
             className={`px-4 py-2 text-lg font-medium font-mcqueen ${
               activeTab === "reviews"
@@ -120,12 +158,16 @@ function AccountPage() {
           </button>
         </div>
         <div className="mt-4">
-          {activeTab === "products" && products.length > 0 && (
-            <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
-              {products.map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))}
-            </section>
+          {activeTab === "products" && (
+            <div>
+              <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
+                <ProductCard productId="500" />
+                <ProductCard productId="500" />
+                <ProductCard productId="500" />
+                <ProductCard productId="500" />
+                <ProductCard productId="500" />
+              </section>
+            </div>
           )}
           {activeTab === "reviews" && (
             <div>
@@ -156,8 +198,23 @@ function AccountPage() {
           )}
         </div>
       </div>
+      {isCreateBundleModalOpen && (
+        <CreateBundleModal
+          username={user?.username}
+          review={{ rating: 4.5, count: 6 }}
+          userProducts={{ items: [] }}
+          bundle={bundle}
+          setBundle={setBundle}
+          bundlePrice={bundlePrice}
+          setBundlePrice={setBundlePrice}
+          shippingPrice={shippingPrice}
+          setShippingPrice={setShippingPrice}
+          isCreateBundleModalOpen={isCreateBundleModalOpen}
+          onCloseCreateBundleModal={handleCloseCreateBundleModal}
+        />
+      )}
     </div>
   );
 }
 
-export default withAuth(AccountPage);
+export default withAuth(SellerPage);
