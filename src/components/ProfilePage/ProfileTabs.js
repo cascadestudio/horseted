@@ -9,7 +9,7 @@ export default function ProfileTabs({ profile, accessToken }) {
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  // console.log("reviews =>", reviews);
+  console.log("products =>", products);
 
   useEffect(() => {
     if (profile) {
@@ -19,10 +19,8 @@ export default function ProfileTabs({ profile, accessToken }) {
   }, [profile]);
 
   const getProducts = async () => {
-    const products = await fetchHorseted(
-      `/products?userId=${profile.id}`,
-      accessToken
-    );
+    const query = `/products?userId=${profile.id}`;
+    const products = await fetchHorseted(query, accessToken);
     setProducts(products.items);
   };
 
@@ -31,7 +29,6 @@ export default function ProfileTabs({ profile, accessToken }) {
       `/users/${profile.id}/reviews`,
       accessToken
     );
-    console.log("reviews =>", reviews);
     setReviews(reviews);
   };
 

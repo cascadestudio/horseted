@@ -12,6 +12,8 @@ export default function ProfileInfo({ profile, accessToken }) {
     code: "",
   });
 
+  // console.log("profile =>", profile);
+
   useEffect(() => {
     // getCity();
     setLocation({ city: profile.city, code: "75" }); // TODO: voir avec Jonas comment gérer la ville

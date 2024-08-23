@@ -71,7 +71,6 @@ import ProfileTabs from "@/components/ProfilePage/ProfileTabs";
 
 function SellerPage({ params }) {
   const { user, accessToken } = useAuthContext();
-  const [activeTab, setActiveTab] = useState("products");
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
