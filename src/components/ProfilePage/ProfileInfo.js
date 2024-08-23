@@ -13,7 +13,8 @@ export default function ProfileInfo({ profile, accessToken }) {
   });
 
   useEffect(() => {
-    getCity();
+    // getCity();
+    setLocation({ city: profile.city, code: "75" }); // TODO: voir avec Jonas comment gérer la ville
   }, []);
 
   const getCity = async () => {
@@ -24,7 +25,6 @@ export default function ProfileInfo({ profile, accessToken }) {
     const shippingAddresses = addresses.find(
       (address) => address.type === "shipping"
     );
-
     let defaultAddress = {};
     let city = "";
     let code = "";
