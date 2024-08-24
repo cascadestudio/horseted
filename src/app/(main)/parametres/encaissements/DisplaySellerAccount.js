@@ -1,4 +1,8 @@
 import React from "react";
+import { ISOtoShortDate } from "@/utils/formatDate";
+import Image from "next/image";
+import CNIImageRecto from "@/assets/images/cni-recto.jpg";
+import CNIImageVerso from "@/assets/images/cni-verso.jpg";
 
 export default function DisplaySellerAccount() {
   //export default function DisplaySellerAccount({ sellerData }) {
@@ -52,18 +56,28 @@ export default function DisplaySellerAccount() {
         <h2 className="font-mcqueen text-[24px] font-bold">
           Vérification de l’identité
         </h2>
-        <div className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
+        <div className="flex flex-col gap-2 items-center justify-center p-9 w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer">
           {verificationStatus === "pending" && ( // Voir avec Jojo pour les autres status
-            <p className="text-light-yellow">En cours</p>
+            <p className="text-light-yellow bg-lighter-green py-2 px-[14px] border border-light-yellow rounded-3xl font-poppins font-medium mb-3">
+              En cours
+            </p>
           )}
           {verificationStatus === "verified" && ( // Voir avec Jojo pour les autres status
-            <p className="text-light-green bg-lighter-green py-2 px-[14px] border border-light-green rounded-3xl font-poppins font-medium">
+            <p className="text-light-green bg-lighter-green py-2 px-[14px] border border-light-green rounded-3xl font-poppins font-medium mb-3">
               Compte validé
             </p>
           )}
-          {firstName} <br />
-          {lastName} <br />
-          {dateOfBirth} <br />
+          <p className="rounded-md border border-lighter-grey p-4 w-full font-mcqueen font-semibold text-lg">
+            {firstName} {lastName}
+          </p>
+          <p className="rounded-md border border-lighter-grey p-4 w-full font-poppins font-semibold">
+            {ISOtoShortDate(dateOfBirth)}
+          </p>
+          <div className="flex gap-1 my-2">
+            <Image src={CNIImageRecto} width={185} height={115} />
+            <Image src={CNIImageVerso} width={185} height={115} />
+          </div>
+          <p className="text-sm text-red font-medium">Non modifiable</p>
         </div>
       </div>
     </div>
