@@ -3,6 +3,7 @@ import { ISOtoShortDate } from "@/utils/formatDate";
 import Image from "next/image";
 import CNIImageRecto from "@/assets/images/cni-recto.jpg";
 import CNIImageVerso from "@/assets/images/cni-verso.jpg";
+import Button from "@/components/Button";
 
 export default function DisplaySellerAccount() {
   //export default function DisplaySellerAccount({ sellerData }) {
@@ -16,7 +17,7 @@ export default function DisplaySellerAccount() {
     dateOfBirth: "1990-01-01",
     firstName: "John",
     lastName: "Doe",
-    verificationStatus: "verified",
+    verificationStatus: "pending",
   };
   const {
     ibanLast4,
@@ -57,8 +58,9 @@ export default function DisplaySellerAccount() {
           Vérification de l’identité
         </h2>
         <div className="flex flex-col gap-2 items-center justify-center p-9 w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer">
+          {/* Ajouter status "non valide" */}
           {verificationStatus === "pending" && ( // Voir avec Jojo pour les autres status
-            <p className="text-light-yellow bg-lighter-green py-2 px-[14px] border border-light-yellow rounded-3xl font-poppins font-medium mb-3">
+            <p className="text-dark-yellow bg-lighter-yellow py-2 px-[14px] border border-light-yellow rounded-3xl font-poppins font-medium mb-3">
               En cours
             </p>
           )}
@@ -74,11 +76,16 @@ export default function DisplaySellerAccount() {
             {ISOtoShortDate(dateOfBirth)}
           </p>
           <div className="flex gap-1 my-2">
+            {/* TODO Ajouter les images dynamiques */}
             <Image src={CNIImageRecto} width={185} height={115} />
             <Image src={CNIImageVerso} width={185} height={115} />
           </div>
           <p className="text-sm text-red font-medium">Non modifiable</p>
         </div>
+        {/* TODO Ajouter logique suppression compte */}
+        <Button className="mt-4 bg-red text-xhite w-full">
+          Supprimer mon profil vendeur
+        </Button>
       </div>
     </div>
   );
