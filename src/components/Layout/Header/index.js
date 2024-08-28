@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 import Link from "next/link";
 import AccountHandler from "./AccountHandler";
 import MobileMenu from "./MobileMenu";
+import MessageIcon from "@/assets/icons/MessageIcon";
 
 export default async function Header() {
   const categories = await fetchHorseted("/categories");
@@ -28,7 +29,10 @@ export default async function Header() {
           <Button href="/vendre" className="hidden lg:flex">
             Vendre
           </Button>
-          <AccountHandler />
+          <AccountHandler className={"hidden lg:block"} />
+          <Link className="lg:hidden" href="/messagerie">
+            <MessageIcon />
+          </Link>
         </div>
         <SearchBar className="lg:hidden mt-4" />
       </div>

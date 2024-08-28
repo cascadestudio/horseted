@@ -9,6 +9,7 @@ import SearchBar from "./SearchBar";
 import AccountHandler from "./AccountHandler";
 import BurgerIcon from "./BurgerIcon";
 import NavBar from "./NavBar";
+import CloseButton from "@/assets/icons/CloseButton";
 
 export default function MobileMenu({ categories }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -18,9 +19,9 @@ export default function MobileMenu({ categories }) {
   };
 
   return (
-    <div className="lg:hidden z-10 bg-white">
+    <div className="lg:hidden z-10 bg-white flex">
       <button onClick={toggleNav} aria-label="Toggle navigation">
-        <BurgerIcon />
+        {isNavOpen ? <CloseButton /> : <BurgerIcon />}
       </button>
 
       {isNavOpen && (

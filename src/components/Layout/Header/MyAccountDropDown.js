@@ -31,7 +31,7 @@ export default function MyAccountDropDown() {
     <div ref={dropdownRef}>
       <Button
         onClick={handleClick}
-        className="hidden lg:flex lg:items-center lg:gap-[10px]"
+        className=" lg:flex lg:items-center lg:gap-[10px]"
         variant="white"
       >
         <p>Mon compte</p>
