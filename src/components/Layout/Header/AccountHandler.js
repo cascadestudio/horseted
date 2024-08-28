@@ -14,16 +14,30 @@ export default function AccountHandler({ className }) {
       {user === null ? (
         <Link href="/signin">Se connecter / S’inscrire</Link>
       ) : (
-        <div className="flex items-center gap-4">
-          <MyAccountDropDown />
-          <Button noStyle withAuth href="/favoris">
-            <HeartIcon />
-          </Button>
-          <span className="bg-black h-5 w-px"></span>
-          <Link href="/messagerie">
-            <MessageIcon />
-          </Link>
-        </div>
+        <>
+          <div className="hidden lg:flex lg:items-center lg:gap-4">
+            <MyAccountDropDown />
+            <Button noStyle withAuth href="/favoris">
+              <HeartIcon />
+            </Button>
+            <span className="bg-black h-5 w-px"></span>
+            <Link href="/messagerie">
+              <MessageIcon />
+            </Link>
+          </div>
+          <div className="w-full lg:hidden">
+            <MyAccountDropDown className="w-full" />
+            <div className="flex items-center justify-center mt-5 gap-4">
+              <Button noStyle withAuth href="/favoris">
+                <HeartIcon />
+              </Button>
+              <span className="bg-black h-5 w-px"></span>
+              <Link href="/messagerie">
+                <MessageIcon />
+              </Link>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

@@ -14,27 +14,23 @@ export default async function Header() {
 
   return (
     <header className="lg:border-b border-b-light-green h-[var(--header-height)]">
-      <div className="container mx-auto px-5">
-        <div className="flex justify-between items-center gap-x-7 py-5">
+      <div className="container mx-auto">
+        <div className="flex justify-between items-center lg:gap-x-7 py-5">
           <MobileMenu categories={categories} />
           <Link href="/">
             <Image
               src={HorsetedLogoBlackHorizontal}
               alt="Horseted Logo"
               priority
-              className="w-[210px] h-[45px]"
+              className="hidden lg:block w-[210px] h-[45px]"
             />
           </Link>
           <SearchBar className="hidden lg:block" />
           <Button href="/vendre" className="hidden lg:flex">
             Vendre
           </Button>
-          <AccountHandler className={"hidden lg:block"} />
-          <Link className="lg:hidden" href="/messagerie">
-            <MessageIcon />
-          </Link>
+          <AccountHandler className="hidden lg:block" />
         </div>
-        <SearchBar className="lg:hidden mt-4" />
       </div>
       <NavBar categories={categories} className="hidden lg:flex" />
     </header>

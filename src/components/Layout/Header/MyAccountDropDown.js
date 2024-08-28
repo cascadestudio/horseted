@@ -11,7 +11,7 @@ import ChevronDown from "@/assets/icons/ChevronDown";
 import OrdersIcon from "@/assets/icons/OrdersIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 
-export default function MyAccountDropDown() {
+export default function MyAccountDropDown({ className }) {
   const handleSignout = useHandleSignout();
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -28,14 +28,14 @@ export default function MyAccountDropDown() {
   }
 
   return (
-    <div ref={dropdownRef}>
+    <div className={className} ref={dropdownRef}>
       <Button
         onClick={handleClick}
-        className=" lg:flex lg:items-center lg:gap-[10px]"
+        className="w-full lg:flex lg:items-center lg:gap-[10px]"
         variant="white"
       >
         <p>Mon compte</p>
-        <ChevronDown className="w-3" />
+        <ChevronDown className="hidden lg:block lg:w-3" />
       </Button>
       {isClickDropdown && !isClickOutside && (
         <div className="absolute top-[55px] bg-white border border-dark-green rounded-b-[20px] flex p-3 pb-2 z-10 w-[300px]">
