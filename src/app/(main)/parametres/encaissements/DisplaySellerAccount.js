@@ -1,9 +1,11 @@
 import React from "react";
+import { useState } from "react";
 import { ISOtoShortDate } from "@/utils/formatDate";
 import Image from "next/image";
 import CNIImageRecto from "@/assets/images/cni-recto.jpg";
 import CNIImageVerso from "@/assets/images/cni-verso.jpg";
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 
 export default function DisplaySellerAccount() {
   //export default function DisplaySellerAccount({ sellerData }) {
@@ -17,7 +19,7 @@ export default function DisplaySellerAccount() {
     dateOfBirth: "1990-01-01",
     firstName: "John",
     lastName: "Doe",
-    verificationStatus: "pending",
+    verificationStatus: "verified",
   };
   const {
     ibanLast4,
@@ -29,6 +31,8 @@ export default function DisplaySellerAccount() {
   } = sellerData;
 
   // console.log("sellerData =>", sellerData);
+
+  const [isModal, setIsModal] = useState(false);
 
   return (
     <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
@@ -82,11 +86,32 @@ export default function DisplaySellerAccount() {
           </div>
           <p className="text-sm text-red font-medium">Non modifiable</p>
         </div>
+        {verificationStatus === "pending" && (
+          <p className="text-center font-medium text-sm mt-5">
+            <a href="/contact" className="text-light-green underline">
+              Contactez-nous
+            </a>{" "}
+            pour modifier ces informations
+          </p>
+        )}
         {/* TODO Ajouter logique suppression compte */}
-        <Button className="mt-4 bg-red text-xhite w-full">
-          Supprimer mon profil vendeur
-        </Button>
+        {verificationStatus === "verified" && (
+          <Button
+            onClick={() => setIsModal(true)}
+            className="mt-4 bg-red text-xhite w-full"
+          >
+            Supprimer mon profil vendeur
+          </Button>
+        )}
       </div>
+      {isModal && (
+        <Modal
+          open={isModal}
+          onClose={() => setIsModal(false)}
+          buttonText="Supprimer mon profil vendeur"
+          title="Êtes-vous sûr ?"
+        />
+      )}
     </div>
   );
 }
