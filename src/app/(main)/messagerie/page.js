@@ -21,7 +21,7 @@ function ThreadsPage() {
   const productIdParam = searchParams.get("productId");
 
   const [threads, setThreads] = useState([]);
-  const [activeThreadId, setActiveThreadId] = useState(null);
+  const [activeThread, setActiveThread] = useState(null);
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
@@ -33,17 +33,18 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("messages =>", messages);
+  console.log("messages =>", messages);
 
   useEffect(() => {
     getThreads();
   }, []);
 
   useEffect(() => {
-    if (activeThreadId === null) return;
-    getMessages(activeThreadId);
+    if (activeThread === null) return;
+    getMessages(activeThread.id);
     handleThreadOrderInfo();
-  }, [activeThreadId]);
+    setRecipient(activeThread.authors[0]);
+  }, [activeThread]);
 
   useEffect(() => {
     if (productIdParam) {
@@ -58,7 +59,6 @@ function ThreadsPage() {
   }, [threads, productIdParam]);
 
   const handleThreadOrderInfo = () => {
-    const activeThread = threads.find((thread) => thread.id === activeThreadId);
     if (activeThread && activeThread.orderId !== null) {
       getOrder(activeThread.orderId);
       setOrderId(activeThread.orderId);
@@ -72,21 +72,21 @@ function ThreadsPage() {
       String(thread.productId).includes(productIdParam)
     );
     if (threadAlreadyExist) {
-      setActiveThreadId(threadAlreadyExist.id);
+      setActiveThread(threadAlreadyExist);
     } else {
       initNewThread(productIdParam);
     }
   };
 
   const initNewThread = (productIdParam) => {
-    setActiveThreadId(null);
+    setActiveThread(null);
     setMessages([]);
     getProduct(productIdParam);
   };
 
   const initWithLastThread = () => {
     if (threads.length > 0) {
-      setActiveThreadId(threads[0].id);
+      setActiveThread(threads[0]);
       getMessages(threads[0].id);
       setRecipient(threads[0].authors[0]);
       if (threads[0].productId) {
@@ -96,7 +96,7 @@ function ThreadsPage() {
   };
 
   function handleThreadClick(id, productId) {
-    setActiveThreadId(id);
+    setActiveThread(threads.find((thread) => thread.id === id));
     getMessages(id);
     if (productId) {
       getProduct(productId);
@@ -105,12 +105,13 @@ function ThreadsPage() {
 
   const handleNewMessageSearchClick = () => {
     setIsNewMessageSearch(!isNewMessageSearch);
-    setActiveThreadId(null);
+    setActiveThread(null);
   };
 
   const handleNewMessageClick = (user) => {
     // setNewMessageSeller(user);
-    setSeller(user);
+
+    setRecipient(user);
     setIsNewMessageSearch(false);
     setMessages([]);
     setProduct(null);
@@ -154,7 +155,7 @@ function ThreadsPage() {
 
   async function onDeleteThread() {
     await fetchHorseted(
-      `/threads/${activeThreadId}`,
+      `/threads/${activeThread?.id}`,
       accessToken,
       "DELETE",
       null,
@@ -184,7 +185,7 @@ function ThreadsPage() {
             <ThreadList
               threads={threads}
               handleThreadClick={handleThreadClick}
-              activeThreadId={activeThreadId}
+              activeThreadId={activeThread?.id}
             />
           ) : (
             <p>Pas de conversations</p>
@@ -210,7 +211,7 @@ function ThreadsPage() {
                   product={product}
                   orderId={orderId}
                   order={order}
-                  activeThreadId={activeThreadId}
+                  activeThreadId={activeThread?.id}
                   onDeleteThread={onDeleteThread}
                 />
               ) : (
@@ -228,8 +229,8 @@ function ThreadsPage() {
                   />
                   <NewMessageForm
                     getThreads={getThreads}
-                    activeThreadId={activeThreadId}
-                    setActiveThreadId={setActiveThreadId}
+                    activeThreadId={activeThread?.id}
+                    setActiveThread={setActiveThread}
                     getMessages={getMessages}
                     sellerId={seller?.id}
                     productId={product?.id}

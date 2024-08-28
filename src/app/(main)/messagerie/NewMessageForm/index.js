@@ -4,7 +4,7 @@ import MediaInput from "./MediaInput";
 
 export default function NewMessageForm({
   getThreads,
-  setActiveThreadId,
+  setActiveThread,
   activeThreadId,
   getMessages,
   accessToken,
@@ -45,6 +45,7 @@ export default function NewMessageForm({
       userId: sellerId,
       productId: productId ? productId : null,
       content: message.content,
+      medias: message.medias,
     };
     const newThread = await fetchHorseted(
       `/threads`,
@@ -54,7 +55,7 @@ export default function NewMessageForm({
       true,
       true
     );
-    setActiveThreadId(newThread.id);
+    setActiveThread(newThread);
   }
 
   async function postMessage(message) {
