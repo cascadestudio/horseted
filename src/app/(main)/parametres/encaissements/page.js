@@ -25,16 +25,14 @@ export default function Transactions() {
     setSellerData(response);
   };
 
-  // if (sellerData === null)
-  //   return (
-  //     <CreateSellerAccount
-  //       accessToken={accessToken}
-  //       user={user}
-  //       getSellerData={getSellerData}
-  //     />
-  //   );
+  if (sellerData === null)
+    return (
+      <CreateSellerAccount
+        accessToken={accessToken}
+        user={user}
+        getSellerData={getSellerData}
+      />
+    );
 
-  // return <DisplaySellerAccount sellerData={sellerData}/>;
-
-  return <DisplaySellerAccount />;
+  return <DisplaySellerAccount sellerData={sellerData} />;
 }

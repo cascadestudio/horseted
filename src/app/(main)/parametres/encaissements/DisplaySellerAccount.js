@@ -7,20 +7,20 @@ import CNIImageVerso from "@/assets/images/cni-verso.jpg";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 
-export default function DisplaySellerAccount() {
-  //export default function DisplaySellerAccount({ sellerData }) {
-  const sellerData = {
-    ibanLast4: "123",
-    address: {
-      city: "Paris",
-      postalCode: "75001",
-      street: "15 Rue de Rivoli",
-    },
-    dateOfBirth: "1990-01-01",
-    firstName: "John",
-    lastName: "Doe",
-    verificationStatus: "verified",
-  };
+//export default function DisplaySellerAccount() {
+export default function DisplaySellerAccount({ sellerData }) {
+  // const sellerData = {
+  //   ibanLast4: "123",
+  //   address: {
+  //     city: "Paris",
+  //     postalCode: "75001",
+  //     street: "15 Rue de Rivoli",
+  //   },
+  //   dateOfBirth: "1990-01-01",
+  //   firstName: "John",
+  //   lastName: "Doe",
+  //   verificationStatus: "verified",
+  // };
   const {
     ibanLast4,
     address,
@@ -81,8 +81,8 @@ export default function DisplaySellerAccount() {
           </p>
           <div className="flex gap-1 my-2">
             {/* TODO Ajouter les images dynamiques */}
-            <Image src={CNIImageRecto} width={185} height={115} />
-            <Image src={CNIImageVerso} width={185} height={115} />
+            <Image src={CNIImageRecto} width={185} height={115} alt="recto" />
+            <Image src={CNIImageVerso} width={185} height={115} alt="verso" />
           </div>
           <p className="text-sm text-red font-medium">Non modifiable</p>
         </div>
