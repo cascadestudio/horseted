@@ -1,5 +1,6 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
+import MediaInput from "./MediaInput";
 
 export default function NewMessageForm({
   getThreads,
@@ -67,9 +68,7 @@ export default function NewMessageForm({
       onSubmit={handleSubmit}
       className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0"
     >
-      <button>
-        <img src="/icons/media-message.svg" alt="" />
-      </button>
+      <MediaInput />
       <textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}

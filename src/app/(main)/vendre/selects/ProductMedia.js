@@ -1,8 +1,8 @@
 import { useState } from "react";
 import getImage from "@/utils/getImage";
-import fetchHorseted from "@/utils/fetchHorseted";
 import Image from "next/image";
 import Spinner from "@/components/Spinner";
+import { postMedia } from "@/utils/postMedia";
 
 export default function ProductMedia({ accessToken, setProduct }) {
   const [isImageLoading, setIsImageLoading] = useState(false);
@@ -24,20 +24,6 @@ export default function ProductMedia({ accessToken, setProduct }) {
       });
     }
   };
-
-  async function postMedia(file) {
-    const formdata = new FormData();
-    formdata.append("media", file);
-    const media = await fetchHorseted(
-      `/medias`,
-      accessToken,
-      "POST",
-      formdata,
-      false,
-      true
-    );
-    return media;
-  }
 
   async function getMedia(file) {
     const src = await getImage(file, "client");

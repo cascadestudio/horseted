@@ -9,27 +9,28 @@ import capitalizeText from "@/utils/capitalizeText";
 export default function MessageThread({
   product,
   messages,
-  newMessageSeller,
+  // newMessageSeller,
   order,
   seller,
   setSeller,
   userId,
   accessToken,
+  recipient,
 }) {
   useEffect(() => {
-    if (!product) return;
+    if (!recipient) return;
     const fetchSeller = async () => {
-      const sellerData = await fetchHorseted(`/users/${product.userId}`);
+      const sellerData = await fetchHorseted(`/users/${recipient.id}`);
       setSeller(sellerData);
     };
     fetchSeller();
-  }, [product]);
+  }, [recipient]);
 
-  useEffect(() => {
-    setSeller(newMessageSeller);
-  }, [newMessageSeller]);
+  // useEffect(() => {
+  //   setSeller(newMessageSeller);
+  // }, [newMessageSeller]);
 
-  // const reversedMessages = [...messages].reverse();
+  const reversedMessages = [...messages].reverse();
 
   return (
     <div className="flex flex-col min-h-[400px] flex-1">
@@ -50,8 +51,8 @@ export default function MessageThread({
               </div>
             </li>
           )}
-          {messages.length > 0 &&
-            messages.map((message) => (
+          {reversedMessages.length > 0 &&
+            reversedMessages.map((message) => (
               <Message
                 message={message}
                 key={message.id}

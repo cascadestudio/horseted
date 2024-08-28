@@ -25,14 +25,15 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
-  const [newMessageSeller, setNewMessageSeller] = useState(null);
+  // const [newMessageSeller, setNewMessageSeller] = useState(null);
   const [order, setOrder] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [seller, setSeller] = useState(null);
+  const [recipient, setRecipient] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("messages =>", messages);
+  console.log("seller =>", seller);
 
   useEffect(() => {
     getThreads();
@@ -43,16 +44,6 @@ function ThreadsPage() {
     getMessages(activeThreadId);
     handleThreadOrderInfo();
   }, [activeThreadId]);
-
-  const handleThreadOrderInfo = () => {
-    const activeThread = threads.find((thread) => thread.id === activeThreadId);
-    if (activeThread && activeThread.orderId !== null) {
-      getOrder(activeThread.orderId);
-      setOrderId(activeThread.orderId);
-    } else {
-      setOrder(null);
-    }
-  };
 
   useEffect(() => {
     if (productIdParam) {
@@ -65,6 +56,16 @@ function ThreadsPage() {
       initWithLastThread();
     }
   }, [threads, productIdParam]);
+
+  const handleThreadOrderInfo = () => {
+    const activeThread = threads.find((thread) => thread.id === activeThreadId);
+    if (activeThread && activeThread.orderId !== null) {
+      getOrder(activeThread.orderId);
+      setOrderId(activeThread.orderId);
+    } else {
+      setOrder(null);
+    }
+  };
 
   const findIfThreadAlreadyExist = (productIdParam) => {
     const threadAlreadyExist = threads.find((thread) =>
@@ -87,6 +88,7 @@ function ThreadsPage() {
     if (threads.length > 0) {
       setActiveThreadId(threads[0].id);
       getMessages(threads[0].id);
+      setRecipient(threads[0].authors[0]);
       if (threads[0].productId) {
         getProduct(threads[0].productId);
       }
@@ -107,7 +109,8 @@ function ThreadsPage() {
   };
 
   const handleNewMessageClick = (user) => {
-    setNewMessageSeller(user);
+    // setNewMessageSeller(user);
+    setSeller(user);
     setIsNewMessageSearch(false);
     setMessages([]);
     setProduct(null);
@@ -215,12 +218,13 @@ function ThreadsPage() {
                   <MessageThread
                     product={product}
                     messages={messages}
-                    newMessageSeller={newMessageSeller}
+                    // newMessageSeller={newMessageSeller}
                     userId={user.id}
                     order={order}
                     seller={seller}
                     setSeller={setSeller}
                     accessToken={accessToken}
+                    recipient={recipient}
                   />
                   <NewMessageForm
                     getThreads={getThreads}
