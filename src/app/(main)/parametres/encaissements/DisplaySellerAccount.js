@@ -35,12 +35,12 @@ export default function DisplaySellerAccount() {
   const [isModal, setIsModal] = useState(false);
 
   return (
-    <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4">
-      <div className="col-span-2 lg:col-span-1 flex flex-col">
+    <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4 mt-5 lg:mt-0">
+      <div className="col-span-2 lg:col-span-1 flex flex-col mb-8 lg:mb-0">
         <h2 className="font-mcqueen text-[24px] font-bold">
           Informations vendeur
         </h2>
-        <div className="border-b border-black mt-8 pb-2">
+        <div className="border-b border-black lg:mt-8 pb-2">
           <h3 className="font-mcqueen font-semibold mb-2">IBAN</h3>
           <div className="font-poppins font-medium text-sm">
             FR76 **** **** **** **** **** {ibanLast4}
