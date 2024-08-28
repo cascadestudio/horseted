@@ -16,6 +16,9 @@ import useHandleSignout from "@/hooks/useHandleSignout";
 import CitySelect from "./CitySelect";
 import DisplayCity from "./DisplayCity";
 import Avatar from "./Avatar";
+import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";
+import SignInModal from "@/components/SignInModal";
+import DeleteAccountButton from "./DeleteAccountButton";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
@@ -67,11 +70,6 @@ export default function Settings() {
     );
     console.log("user =>", user);
   }
-
-  const handleDeleteAccount = async () => {
-    await fetchHorseted(`/users/me`, accessToken, "DELETE", null, false, true);
-    router.push("/");
-  };
 
   const formatDate = (isoDate) => {
     if (!isoDate) return "";
@@ -186,12 +184,7 @@ export default function Settings() {
         </a>
       </div>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
-        <button
-          className="delete-button font-semibold text-[12px] text-red"
-          onClick={handleDeleteAccount}
-        >
-          Supprimer mon compte et mes données
-        </button>
+        <DeleteAccountButton />
         <p className="font-mcqueen text-[12px]">
           *Vous ne pouvez pas modifier votre identifiant.
         </p>
