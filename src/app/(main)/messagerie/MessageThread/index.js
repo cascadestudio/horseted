@@ -28,7 +28,7 @@ export default function MessageThread({
     if (!recipient) return;
     setLoading(true);
     const sellerData = await fetchHorseted(`/users/${recipient.id}`);
-    console.log("sellerData =>", sellerData);
+    // console.log("sellerData =>", sellerData);
     setSeller(sellerData);
     setLoading(false);
   };

@@ -17,7 +17,7 @@ export default function NewMessageForm({
   });
   const [imageSrcs, setImageSrcs] = useState([]);
 
-  // console.log("message =>", message);
+  // console.log("activeThreadId =>", activeThreadId);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -28,7 +28,7 @@ export default function NewMessageForm({
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (activeThreadId === null) {
+    if (!activeThreadId) {
       await postThread(message);
       await getThreads();
       // router.replace("/messagerie", undefined, { shallow: true });

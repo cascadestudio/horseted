@@ -33,7 +33,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  console.log("messages =>", messages);
+  // console.log("messages =>", messages);
 
   useEffect(() => {
     getThreads();
