@@ -1,12 +1,11 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import ClientProductImage from "@/components/ClientProductImage";
+import DisplayMedia from "./DisplayMedia";
 
 export default function Message({ message, userId, accessToken, product }) {
-  const { id, content, senderId, type, offerId } = message;
+  const { id, content, senderId, type, offerId, medias } = message;
   const [offerPrice, setOfferPrice] = useState(0);
-
-  // console.log("message =>", message);
 
   useEffect(() => {
     if (offerId) {
@@ -91,6 +90,7 @@ export default function Message({ message, userId, accessToken, product }) {
           }`}
         >
           <p>{content}</p>
+          {medias?.length > 0 && <DisplayMedia medias={medias} />}
         </li>
       );
     default:

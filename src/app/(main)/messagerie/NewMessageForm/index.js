@@ -17,7 +17,7 @@ export default function NewMessageForm({
   });
   const [imageSrcs, setImageSrcs] = useState([]);
 
-  console.log("message =>", message);
+  // console.log("message =>", message);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
