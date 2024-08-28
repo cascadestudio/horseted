@@ -16,7 +16,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
     if (files) {
       files.forEach(async (file) => {
         setIsImageLoading(true);
-        const media = await postMedia(file);
+        const media = await postMedia(file, accessToken);
         console.log("media =>", media);
         setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
         await getMedia(media.files.thumbnail200);

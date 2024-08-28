@@ -11,7 +11,13 @@ export default function NewMessageForm({
   sellerId,
   productId,
 }) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({
+    content: "",
+    medias: [],
+  });
+  const [imageSrcs, setImageSrcs] = useState([]);
+
+  console.log("message =>", message);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -30,14 +36,15 @@ export default function NewMessageForm({
       await postMessage(message);
       getMessages(activeThreadId);
     }
-    setMessage("");
+    setMessage({ medias: [], content: "" });
+    setImageSrcs([]);
   }
 
   async function postThread(message) {
     const body = {
       userId: sellerId,
       productId: productId ? productId : null,
-      content: message,
+      content: message.content,
     };
     const newThread = await fetchHorseted(
       `/threads`,
@@ -52,7 +59,8 @@ export default function NewMessageForm({
 
   async function postMessage(message) {
     const body = {
-      content: message,
+      content: message.content,
+      medias: message.medias,
     };
     await fetchHorseted(
       `/threads/${activeThreadId}/messages`,
@@ -68,10 +76,17 @@ export default function NewMessageForm({
       onSubmit={handleSubmit}
       className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0"
     >
-      <MediaInput />
+      <MediaInput
+        accessToken={accessToken}
+        setMessage={setMessage}
+        setImageSrcs={setImageSrcs}
+        imageSrcs={imageSrcs}
+      />
       <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        value={message.content}
+        onChange={(e) =>
+          setMessage((prev) => ({ ...prev, content: e.target.value }))
+        }
         placeholder="Aa"
         id="content"
         name="content"

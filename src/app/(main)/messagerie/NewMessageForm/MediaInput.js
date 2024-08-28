@@ -1,10 +1,16 @@
 import Spinner from "@/components/Spinner";
+import getImage from "@/utils/getImage";
 import { postMedia } from "@/utils/postMedia";
+import Image from "next/image";
 import { useState } from "react";
 
-export default function MediaInput() {
+export default function MediaInput({
+  accessToken,
+  setMessage,
+  setImageSrcs,
+  imageSrcs,
+}) {
   const [isImageLoading, setIsImageLoading] = useState(false);
-  const [imageSrcs, setImageSrcs] = useState([]);
 
   const handleMediaChange = async (e) => {
     const files = Array.from(e.target.files);
@@ -14,10 +20,11 @@ export default function MediaInput() {
     if (files) {
       files.forEach(async (file) => {
         setIsImageLoading(true);
-        const media = await postMedia(file);
+        const media = await postMedia(file, accessToken);
         console.log("media =>", media);
-        setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
-        await getMedia(media.files.thumbnail200);
+        setMessage((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
+        const src = await getImage(media.files.thumbnail200, "client");
+        setImageSrcs((prev) => [...prev, src]);
         setIsImageLoading(false);
       });
     }
