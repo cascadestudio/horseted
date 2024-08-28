@@ -25,10 +25,11 @@ export default function NewMessageSearch({ threads, handleClick }) {
         className="pl-5 border border-pale-grey rounded-full h-11 w-full"
         type="text"
         placeholder="Rechercher un membre"
-        onChange={(e) => handleSearchChange(e)}
+        onChange={handleSearchChange}
+        onFocus={handleSearchChange}
       />
       <ul className="overflow-y-scroll h-[500px] mt-3">
-        {users.length > 0 ? (
+        {users.length > 0 &&
           users.map((user) => {
             const { id, username, avatar } = user;
             return (
@@ -43,10 +44,7 @@ export default function NewMessageSearch({ threads, handleClick }) {
                 </button>
               </li>
             );
-          })
-        ) : (
-          <p className="p-5">Aucun résultat</p>
-        )}
+          })}
       </ul>
     </div>
   );

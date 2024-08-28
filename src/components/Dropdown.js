@@ -44,6 +44,7 @@ export default function Dropdown({
   return (
     <div className={className} ref={panelRef}>
       <button
+        type="button"
         onClick={handleClick}
         className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${handleStyle()}
         ${className}`}
@@ -75,7 +76,7 @@ export default function Dropdown({
         <div
           className={`absolute bg-light-grey border ${
             isBlack ? "border-black" : "border-light-green"
-          } rounded-xl p-5 mt-2 z-10 ${className}`}
+          } rounded-xl px-5 mt-2 z-10 ${className}`}
         >
           {children}
         </div>

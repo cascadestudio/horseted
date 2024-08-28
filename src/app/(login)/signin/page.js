@@ -5,11 +5,11 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import LeftArrow from "@/assets/icons/LeftArrow";
-import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
 import SigninForm from "./SigninForm";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 
 export default function signinPage() {
   return (
@@ -32,22 +32,7 @@ export default function signinPage() {
             <h1 className="text-center font-mcqueen font-bold text-[22px] leading-[48px] lg:text-[36px] lg:mb-3">
               Se connecter
             </h1>
-            <a
-              href="#"
-              className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto lg:mb-[55px]"
-            >
-              <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-                <Image
-                  src={GoogleIcon}
-                  alt="Google Icon"
-                  className="h-5 w-5 lg:h-6 lg:w-6"
-                  priority
-                />
-              </div>
-              <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
-                Continuer avec Google
-              </span>
-            </a>
+            <GoogleSignInButton />
             <Suspense fallback={<div>Loading...</div>}>
               <SigninForm />
             </Suspense>

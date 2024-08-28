@@ -6,6 +6,7 @@ export default function StateSelect({
   activeState,
   className,
   isBlack,
+  title = "État",
 }) {
   const states = [
     {
@@ -42,12 +43,12 @@ export default function StateSelect({
 
   return (
     <Dropdown
-      title="État"
+      title={title}
       className={className}
       isBlack={isBlack}
       isActive={activeState !== ""}
     >
-      <div className={`flex flex-col gap-y-4 max-w-96 ${className}`}>
+      <div className={`flex flex-col gap-y-4 max-w-96 py-4 ${className}`}>
         {states.map((state, index) => {
           const { label, param, description } = state;
           return (

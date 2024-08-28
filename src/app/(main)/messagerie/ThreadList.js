@@ -6,13 +6,12 @@ export default function ThreadList({
   handleThreadClick,
   activeThreadId,
 }) {
-  const avatar = threads[0].authors[0].avatar;
-
   return (
     <ul className="overflow-y-scroll">
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
         const isActive = id === activeThreadId;
+        const avatar = thread.authors[0].avatar;
         return (
           <li key={id}>
             <button

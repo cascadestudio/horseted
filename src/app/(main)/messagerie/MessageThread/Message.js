@@ -6,6 +6,8 @@ export default function Message({ message, userId, accessToken, product }) {
   const { id, content, senderId, type, offerId } = message;
   const [offerPrice, setOfferPrice] = useState(0);
 
+  // console.log("message =>", message);
+
   useEffect(() => {
     if (offerId) {
       getOffer();
@@ -18,7 +20,48 @@ export default function Message({ message, userId, accessToken, product }) {
   };
 
   switch (type) {
+    case "orderSent":
+      if (!product) break;
+      return (
+        <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
+          <div className="flex items-center">
+            <ClientProductImage
+              key={product.id}
+              product={product}
+              size="small"
+              className="w-24 h-14"
+            />
+            <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+              {product.title}
+            </div>
+          </div>
+          <p className="font-poppins font-medium text-sm whitespace-nowrap">
+            Colis envoyé !
+          </p>
+        </li>
+      );
+    case "orderDelivered":
+      if (!product) break;
+      return (
+        <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
+          <div className="flex items-center">
+            <ClientProductImage
+              key={product.id}
+              product={product}
+              size="small"
+              className="w-24 h-14"
+            />
+            <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+              {product.title}
+            </div>
+          </div>
+          <p className="font-poppins font-medium text-sm whitespace-nowrap">
+            Colis livré !
+          </p>
+        </li>
+      );
     case "newOffer":
+      if (!product) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">
