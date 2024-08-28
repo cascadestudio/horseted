@@ -25,7 +25,6 @@ function ThreadsPage() {
   const [messages, setMessages] = useState([]);
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
-  // const [newMessageSeller, setNewMessageSeller] = useState(null);
   const [order, setOrder] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [seller, setSeller] = useState(null);
@@ -33,7 +32,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("messages =>", messages);
+  // console.log("threads =>", threads);
 
   useEffect(() => {
     getThreads();
