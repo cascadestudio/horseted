@@ -13,6 +13,7 @@ export default function Modal({
   buttonText,
   className,
   isNotForm,
+  redButton,
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -62,7 +63,7 @@ export default function Modal({
             {buttonText && (
               <Button
                 onClick={() => onSubmit()}
-                className="w-full text-xl h-12 mt-4"
+                className={`w-full text-xl h-12 mt-4 ${redButton && "bg-red"}`}
                 type="button"
               >
                 {buttonText}
