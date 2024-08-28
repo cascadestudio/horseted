@@ -29,7 +29,7 @@ export default function CategoriesNav({ categories }) {
   }
 
   return (
-    <ul className="flex">
+    <ul className="lg:flex">
       {categories.map((category) => {
         const { name, id } = category;
         const isActive = selectedSubCategories === id;
