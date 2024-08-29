@@ -29,7 +29,7 @@ export default function CategoriesNav({ categories }) {
   }
 
   return (
-    <ul className="flex">
+    <ul className="lg:flex">
       {categories.map((category) => {
         const { name, id } = category;
         const isActive = selectedSubCategories === id;
@@ -38,7 +38,7 @@ export default function CategoriesNav({ categories }) {
             <button
               ref={buttonRef}
               onClick={() => handleClick(id)}
-              className={`relative capitalize py-3 px-6 text-center ${
+              className={`relative capitalize  py-3 px-6 text-center ${
                 isActive && "text-light-green border-"
               }`}
             >

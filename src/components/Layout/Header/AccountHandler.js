@@ -6,25 +6,41 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import MessageIcon from "@/assets/icons/MessageIcon";
 import Button from "@/components/Button";
 
-export default function AccountHandler() {
+export default function AccountHandler({ className }) {
   const { user } = useAuthContext();
 
   return (
-    <>
+    <div className={className}>
       {user === null ? (
-        <Link href="/signin">Se connecter / S’inscrire</Link>
+        <Button variant="transparent-green" href="/signin">
+          Se connecter / S’inscrire
+        </Button>
       ) : (
         <>
-          <MyAccountDropDown />
-          <Button noStyle withAuth href="/favoris">
-            <HeartIcon className="hidden lg:block" />
-          </Button>
-          <span className="bg-black h-5 w-px hidden lg:block"></span>
-          <Link href="/messagerie">
-            <MessageIcon />
-          </Link>
+          <div className="hidden lg:flex lg:items-center lg:gap-4">
+            <MyAccountDropDown />
+            <Button noStyle withAuth href="/favoris">
+              <HeartIcon />
+            </Button>
+            <span className="bg-black h-5 w-px"></span>
+            <Link href="/messagerie">
+              <MessageIcon />
+            </Link>
+          </div>
+          <div className="w-full lg:hidden">
+            <MyAccountDropDown className="w-full" />
+            <div className="flex items-center justify-center mt-5 gap-4">
+              <Button noStyle withAuth href="/favoris">
+                <HeartIcon />
+              </Button>
+              <span className="bg-black h-5 w-px"></span>
+              <Link href="/messagerie">
+                <MessageIcon />
+              </Link>
+            </div>
+          </div>
         </>
       )}
-    </>
+    </div>
   );
 }

@@ -15,7 +15,7 @@ export default function SearchBar({ className }) {
   return (
     <div className={`${className} relative grow`}>
       <input
-        className="grow border border-black rounded-full h-11 w-full pl-16 py-0 text-base"
+        className="grow border border-black rounded-full h-11 w-full pl-16 py-0 text-base placeholder:text-sm lg:placeholder:text-base"
         type="text"
         placeholder="Rechercher un article ou un membre"
         value={searchTerm}
