@@ -7,8 +7,8 @@ import CNIImageVerso from "@/assets/images/cni-verso.jpg";
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 
-//export default function DisplaySellerAccount() {
 export default function DisplaySellerAccount({ sellerData }) {
+  // export default function DisplaySellerAccount() {
   // const sellerData = {
   //   ibanLast4: "123",
   //   address: {
@@ -19,7 +19,7 @@ export default function DisplaySellerAccount({ sellerData }) {
   //   dateOfBirth: "1990-01-01",
   //   firstName: "John",
   //   lastName: "Doe",
-  //   verificationStatus: "verified",
+  //   verificationStatus: "not_valid",
   // };
   const {
     ibanLast4,
@@ -33,6 +33,10 @@ export default function DisplaySellerAccount({ sellerData }) {
   // console.log("sellerData =>", sellerData);
 
   const [isModal, setIsModal] = useState(false);
+
+  const deleteSellerAccount = async () => {
+    alert("A faire sur l'API");
+  };
 
   return (
     <div className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4 mt-5 lg:mt-0">
@@ -62,13 +66,17 @@ export default function DisplaySellerAccount({ sellerData }) {
           Vérification de l’identité
         </h2>
         <div className="flex flex-col gap-2 items-center justify-center p-9 w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer">
-          {/* Ajouter status "non valide" */}
-          {verificationStatus === "pending" && ( // Voir avec Jojo pour les autres status
+          {verificationStatus === "not_valid" && (
+            <p className="text-red bg-light-red py-2 px-[14px] border border-red rounded-3xl font-poppins font-medium mb-3">
+              Non valide
+            </p>
+          )}
+          {verificationStatus === "pending" && (
             <p className="text-dark-yellow bg-lighter-yellow py-2 px-[14px] border border-light-yellow rounded-3xl font-poppins font-medium mb-3">
               En cours
             </p>
           )}
-          {verificationStatus === "verified" && ( // Voir avec Jojo pour les autres status
+          {verificationStatus === "verified" && (
             <p className="text-light-green bg-lighter-green py-2 px-[14px] border border-light-green rounded-3xl font-poppins font-medium mb-3">
               Compte validé
             </p>
@@ -80,7 +88,7 @@ export default function DisplaySellerAccount({ sellerData }) {
             {ISOtoShortDate(dateOfBirth)}
           </p>
           <div className="flex gap-1 my-2">
-            {/* TODO Ajouter les images dynamiques */}
+            {/* TODO Ajouter les images dynamiques (API) */}
             <Image src={CNIImageRecto} width={185} height={115} alt="recto" />
             <Image src={CNIImageVerso} width={185} height={115} alt="verso" />
           </div>
@@ -94,7 +102,7 @@ export default function DisplaySellerAccount({ sellerData }) {
             pour modifier ces informations
           </p>
         )}
-        {/* TODO Ajouter logique suppression compte */}
+        {/* TODO API */}
         {verificationStatus === "verified" && (
           <Button
             onClick={() => setIsModal(true)}
@@ -110,6 +118,9 @@ export default function DisplaySellerAccount({ sellerData }) {
           onClose={() => setIsModal(false)}
           buttonText="Supprimer mon profil vendeur"
           title="Êtes-vous sûr ?"
+          isNotForm
+          onSubmit={deleteSellerAccount}
+          redButton
         />
       )}
     </div>

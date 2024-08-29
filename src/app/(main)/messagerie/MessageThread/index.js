@@ -1,35 +1,41 @@
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "@/app/styles/globals.css";
 import Message from "./Message";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
 import capitalizeText from "@/utils/capitalizeText";
+import Spinner from "@/components/Spinner";
 
 export default function MessageThread({
   product,
   messages,
-  newMessageSeller,
   order,
   seller,
   setSeller,
   userId,
   accessToken,
+  recipient,
 }) {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    if (!product) return;
-    const fetchSeller = async () => {
-      const sellerData = await fetchHorseted(`/users/${product.userId}`);
-      setSeller(sellerData);
-    };
+    setSeller(null);
     fetchSeller();
-  }, [product]);
+  }, [recipient]);
 
-  useEffect(() => {
-    setSeller(newMessageSeller);
-  }, [newMessageSeller]);
+  const fetchSeller = async () => {
+    if (!recipient) return;
+    setLoading(true);
+    const sellerData = await fetchHorseted(`/users/${recipient.id}`);
+    // console.log("sellerData =>", sellerData);
+    setSeller(sellerData);
+    setLoading(false);
+  };
 
-  // const reversedMessages = [...messages].reverse();
+  const reversedMessages = [...messages].reverse();
+
+  if (loading) return <Spinner />;
 
   return (
     <div className="flex flex-col min-h-[400px] flex-1">
@@ -50,8 +56,8 @@ export default function MessageThread({
               </div>
             </li>
           )}
-          {messages.length > 0 &&
-            messages.map((message) => (
+          {reversedMessages.length > 0 &&
+            reversedMessages.map((message) => (
               <Message
                 message={message}
                 key={message.id}

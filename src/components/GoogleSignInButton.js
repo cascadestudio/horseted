@@ -4,6 +4,7 @@ import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import Image from "next/image";
 import { postUser } from "@/utils/postUser";
 import { useRouter } from "next/navigation";
+import { getUser } from "@/utils/getUser";
 
 export default function GoogleSignInButton() {
   const router = useRouter();
@@ -12,11 +13,15 @@ export default function GoogleSignInButton() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       console.log("User signed in:", result.user);
-      await postUser({
-        firebaseToken: result.user.accessToken,
-        username: result.user.displayName,
-        newsletter: true,
-      });
+      const accessToken = result.user.accessToken;
+      const user = await getUser(accessToken);
+      if (!user) {
+        await postUser({
+          firebaseToken: accessToken,
+          username: result.user.displayName,
+          newsletter: true,
+        });
+      }
       return router.push("/");
     } catch (error) {
       console.error("Error during sign-in:", error);

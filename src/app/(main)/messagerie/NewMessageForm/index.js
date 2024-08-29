@@ -1,16 +1,23 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
+import MediaInput from "./MediaInput";
 
 export default function NewMessageForm({
   getThreads,
-  setActiveThreadId,
+  setActiveThread,
   activeThreadId,
   getMessages,
   accessToken,
   sellerId,
   productId,
 }) {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState({
+    content: "",
+    medias: [],
+  });
+  const [imageSrcs, setImageSrcs] = useState([]);
+
+  // console.log("activeThreadId =>", activeThreadId);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -21,7 +28,7 @@ export default function NewMessageForm({
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (activeThreadId === null) {
+    if (!activeThreadId) {
       await postThread(message);
       await getThreads();
       // router.replace("/messagerie", undefined, { shallow: true });
@@ -29,14 +36,16 @@ export default function NewMessageForm({
       await postMessage(message);
       getMessages(activeThreadId);
     }
-    setMessage("");
+    setMessage({ medias: [], content: "" });
+    setImageSrcs([]);
   }
 
   async function postThread(message) {
     const body = {
       userId: sellerId,
       productId: productId ? productId : null,
-      content: message,
+      content: message.content,
+      medias: message.medias,
     };
     const newThread = await fetchHorseted(
       `/threads`,
@@ -46,12 +55,13 @@ export default function NewMessageForm({
       true,
       true
     );
-    setActiveThreadId(newThread.id);
+    setActiveThread(newThread);
   }
 
   async function postMessage(message) {
     const body = {
-      content: message,
+      content: message.content,
+      medias: message.medias,
     };
     await fetchHorseted(
       `/threads/${activeThreadId}/messages`,
@@ -67,12 +77,17 @@ export default function NewMessageForm({
       onSubmit={handleSubmit}
       className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0"
     >
-      <button>
-        <img src="/icons/media-message.svg" alt="" />
-      </button>
+      <MediaInput
+        accessToken={accessToken}
+        setMessage={setMessage}
+        setImageSrcs={setImageSrcs}
+        imageSrcs={imageSrcs}
+      />
       <textarea
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        value={message.content}
+        onChange={(e) =>
+          setMessage((prev) => ({ ...prev, content: e.target.value }))
+        }
         placeholder="Aa"
         id="content"
         name="content"

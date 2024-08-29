@@ -2,7 +2,7 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
-import fetchHorseted from "@/utils/fetchHorseted";
+import { getUser } from "@/utils/getUser";
 
 const auth = getAuth(firebase_app);
 export const AuthContext = createContext({});
@@ -15,21 +15,11 @@ export const AuthContextProvider = ({ children }) => {
 
   // console.log("user =>", user);
 
-  async function fetchUser(accessToken) {
-    try {
-      const query = `/users/me`;
-      const data = await fetchHorseted(query, accessToken);
-      return data;
-    } catch (error) {
-      console.error(`Error fetching user`, error);
-    }
-  }
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          const apiUser = await fetchUser(firebaseUser.accessToken);
+          const apiUser = await getUser(firebaseUser.accessToken);
           setUser({ auth: firebaseUser, ...apiUser });
           setAccessToken(firebaseUser.accessToken);
         } catch (error) {
