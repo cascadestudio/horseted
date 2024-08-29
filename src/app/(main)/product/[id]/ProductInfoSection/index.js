@@ -214,7 +214,7 @@ export default function ProductPageClient({
         <OfferModal
           price={price}
           onClose={handleCloseOfferModal}
-          product={product}
+          products={product}
         />
       )}
     </section>

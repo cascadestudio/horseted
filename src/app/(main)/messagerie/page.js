@@ -17,8 +17,8 @@ import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
   const { user, accessToken } = useAuthContext();
-  const searchParams = useSearchParams();
-  const productIdParam = searchParams.get("productId");
+  // const searchParams = useSearchParams();
+  // const productIdParam = searchParams.get("productId");
 
   const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
@@ -32,7 +32,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("threads =>", threads);
+  console.log("threads =>", threads);
 
   useEffect(() => {
     getThreads();
@@ -46,16 +46,17 @@ function ThreadsPage() {
   }, [activeThread]);
 
   useEffect(() => {
-    if (productIdParam) {
-      if (threads.length > 0) {
-        findIfThreadAlreadyExist(productIdParam);
-      } else {
-        initNewThread(productIdParam);
-      }
-    } else {
-      initWithLastThread();
-    }
-  }, [threads, productIdParam]);
+    // if (productIdParam) {
+    //   if (threads.length > 0) {
+    //     findIfThreadAlreadyExist(productIdParam);
+    //   } else {
+    //     initNewThread(productIdParam);
+    //   }
+    // } else {
+    initWithLastThread();
+    // }
+    // }, [threads, productIdParam]);
+  }, [threads]);
 
   const handleThreadOrderInfo = () => {
     if (activeThread && activeThread.orderId !== null) {
@@ -97,6 +98,7 @@ function ThreadsPage() {
   function handleThreadClick(id, productId) {
     setActiveThread(threads.find((thread) => thread.id === id));
     getMessages(id);
+    setProduct(null);
     if (productId) {
       getProduct(productId);
     }
@@ -218,7 +220,6 @@ function ThreadsPage() {
                   <MessageThread
                     product={product}
                     messages={messages}
-                    // newMessageSeller={newMessageSeller}
                     userId={user.id}
                     order={order}
                     seller={seller}

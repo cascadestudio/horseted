@@ -1,29 +1,43 @@
 import Modal from "@/components/Modal";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-export default function OfferModal({ price, onClose, product }) {
+export default function OfferModal({ price, onClose, products }) {
   const router = useRouter();
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
+  const [productIds, setProductIds] = useState([]);
+
+  console.log("products =>", products);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const productIds = handleProductsIds();
+    console.log("productIds =>", productIds);
     const offer = parseFloat(e.target.offer.value);
     if (offer > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      postOrder(offer);
-      router.push(`/messagerie?productId=${product.id}`);
+      postOrder(productIds, offer);
+      // router.push(`/messagerie?productIds=${productIds.join(";")}`);
+      router.push(`/messagerie`);
       onClose();
     }
   };
 
-  async function postOrder(offer) {
+  const handleProductsIds = () => {
+    if (Array.isArray(products)) {
+      return products.map((product) => product.id);
+    } else {
+      return [products.id];
+    }
+  };
+
+  async function postOrder(productIds, offer) {
     const body = {
-      productIds: [product.id],
+      productIds: productIds,
       price: offer,
     };
     const order = await fetchHorseted(
