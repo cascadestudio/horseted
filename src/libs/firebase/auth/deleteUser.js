@@ -6,9 +6,9 @@ export const deleteFirebaseUser = async () => {
   auth.currentUser
     .delete()
     .then(() => {
-      console.log("User account deleted successfully");
+      console.log("Firebase user account deleted successfully");
     })
     .catch((error) => {
-      console.error("Error deleting user:", error);
+      console.error("Error deleting Firebase user:", error);
     });
 };

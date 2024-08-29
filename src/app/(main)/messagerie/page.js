@@ -17,8 +17,8 @@ import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
   const { user, accessToken } = useAuthContext();
-  const searchParams = useSearchParams();
-  const productIdParam = searchParams.get("productId");
+  // const searchParams = useSearchParams();
+  // const productIdParam = searchParams.get("productId");
 
   const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
@@ -26,13 +26,14 @@ function ThreadsPage() {
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [order, setOrder] = useState(null);
+  const [orderTracking, setOrderTracking] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [seller, setSeller] = useState(null);
   const [recipient, setRecipient] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("threads =>", threads);
+  // console.log("order =>", order);
 
   useEffect(() => {
     getThreads();
@@ -46,23 +47,24 @@ function ThreadsPage() {
   }, [activeThread]);
 
   useEffect(() => {
-    if (productIdParam) {
-      if (threads.length > 0) {
-        findIfThreadAlreadyExist(productIdParam);
-      } else {
-        initNewThread(productIdParam);
-      }
-    } else {
-      initWithLastThread();
-    }
-  }, [threads, productIdParam]);
+    // if (productIdParam) {
+    //   if (threads.length > 0) {
+    //     findIfThreadAlreadyExist(productIdParam);
+    //   } else {
+    //     initNewThread(productIdParam);
+    //   }
+    // } else {
+    initWithLastThread();
+    // }
+    // }, [threads, productIdParam]);
+  }, [threads]);
 
   const handleThreadOrderInfo = () => {
     if (activeThread && activeThread.orderId !== null) {
-      getOrder(activeThread.orderId);
+      getOrderTracking(activeThread.orderId);
       setOrderId(activeThread.orderId);
     } else {
-      setOrder(null);
+      setOrderTracking(null);
     }
   };
 
@@ -91,12 +93,16 @@ function ThreadsPage() {
       if (threads[0].productId) {
         getProduct(threads[0].productId);
       }
+      if (threads[0].orderId) {
+        getOrderTracking(threads[0].orderId);
+      }
     }
   };
 
   function handleThreadClick(id, productId) {
     setActiveThread(threads.find((thread) => thread.id === id));
     getMessages(id);
+    setProduct(null);
     if (productId) {
       getProduct(productId);
     }
@@ -125,6 +131,18 @@ function ThreadsPage() {
   async function getOrder(orderId) {
     const order = await fetchHorseted(
       `/orders/${orderId}/tracking`,
+      accessToken,
+      "GET",
+      null,
+      false,
+      false
+    );
+    setOrder(order);
+  }
+
+  async function getOrderTracking(orderId) {
+    const order = await fetchHorseted(
+      `/orders/${orderId}`,
       accessToken,
       "GET",
       null,
@@ -209,7 +227,7 @@ function ThreadsPage() {
                   seller={seller}
                   product={product}
                   orderId={orderId}
-                  order={order}
+                  orderTracking={orderTracking}
                   activeThreadId={activeThread?.id}
                   onDeleteThread={onDeleteThread}
                 />
@@ -218,9 +236,9 @@ function ThreadsPage() {
                   <MessageThread
                     product={product}
                     messages={messages}
-                    // newMessageSeller={newMessageSeller}
                     userId={user.id}
                     order={order}
+                    orderTracking={orderTracking}
                     seller={seller}
                     setSeller={setSeller}
                     accessToken={accessToken}

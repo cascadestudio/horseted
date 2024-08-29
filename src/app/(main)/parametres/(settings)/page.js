@@ -184,7 +184,7 @@ export default function Settings() {
         </a>
       </div>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
-        <DeleteAccountButton />
+        <DeleteAccountButton accessToken={accessToken} />
         <p className="font-mcqueen text-[12px]">
           *Vous ne pouvez pas modifier votre identifiant.
         </p>

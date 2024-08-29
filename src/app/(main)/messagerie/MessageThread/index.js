@@ -11,6 +11,7 @@ export default function MessageThread({
   product,
   messages,
   order,
+  orderTracking,
   seller,
   setSeller,
   userId,
@@ -64,9 +65,10 @@ export default function MessageThread({
                 userId={userId}
                 accessToken={accessToken}
                 product={product}
+                order={order}
               />
             ))}
-          {order && order.statuses[0] === "delivered" && (
+          {orderTracking && orderTracking.statuses[0] === "delivered" && (
             <div>Terminé ! Merci pour votre commande sur Horseted</div>
           )}
         </ul>

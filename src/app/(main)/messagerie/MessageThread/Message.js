@@ -1,26 +1,53 @@
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ClientProductImage from "@/components/ClientProductImage";
 import DisplayMedia from "./DisplayMedia";
 
-export default function Message({ message, userId, accessToken, product }) {
+export default function Message({
+  message,
+  userId,
+  // accessToken,
+  product,
+  order,
+}) {
+  // console.log("order =>", order);
+
   const { id, content, senderId, type, offerId, medias } = message;
-  const [offerPrice, setOfferPrice] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(null);
 
   useEffect(() => {
-    if (offerId) {
-      getOffer();
+    if (order) {
+      getProducts();
+      // if (order.offers[0].id) {
+      //   getOffer(order.offers[0].id);
+      // }
     }
-  }, [offerId]);
+  }, []);
 
-  const getOffer = async () => {
-    const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
-    setOfferPrice(offer.price);
+  const getProducts = async () => {
+    const products = await Promise.all(
+      order.items.map(
+        async (item) => await fetchHorseted(`/products/${item.productId}`)
+      )
+    );
+    const totalPrice = products.reduce(
+      (sum, product) => sum + product.price,
+      0
+    );
+
+    setTotalPrice(totalPrice);
+    setProducts(products);
   };
+
+  // const getOffer = async (offerId) => {
+  //   const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
+  //   console.log("offer =>", offer);
+  // };
 
   switch (type) {
     case "orderSent":
-      if (!product) break;
+      if (!products) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">
@@ -40,7 +67,7 @@ export default function Message({ message, userId, accessToken, product }) {
         </li>
       );
     case "orderDelivered":
-      if (!product) break;
+      if (!products) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">
@@ -60,24 +87,28 @@ export default function Message({ message, userId, accessToken, product }) {
         </li>
       );
     case "newOffer":
-      if (!product) break;
+      if (products.length === 0) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
-          <div className="flex items-center">
-            <ClientProductImage
-              key={product.id}
-              product={product}
-              size="small"
-              className="w-24 h-14"
-            />
-            <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
-              {product.title}
+          {products.map((product) => (
+            <div key={product.id} className="flex items-center">
+              <ClientProductImage
+                key={product.id}
+                product={product}
+                size="small"
+                className="w-24 h-14"
+              />
+              <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+                {product.title}
+              </div>
             </div>
-          </div>
+          ))}
           <p className="font-poppins font-medium text-sm whitespace-nowrap">
-            <span className="line-through">{product.price}€</span>
+            <span className="line-through">{totalPrice}€</span>
             {" > "}
-            <span className="font-bold text-light-green">{offerPrice}€</span>
+            <span className="font-bold text-light-green">
+              {order.offers[0].price}€
+            </span>
           </p>
         </li>
       );

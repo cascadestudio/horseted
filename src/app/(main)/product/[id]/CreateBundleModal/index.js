@@ -177,6 +177,7 @@ export default function CreateBundleModal({
           price={bundlePrice}
           onClose={handleCloseBundleOfferModal}
           handleOpenBundleOfferModal={handleOpenBundleOfferModal}
+          products={bundle}
         />
       )}
     </div>
