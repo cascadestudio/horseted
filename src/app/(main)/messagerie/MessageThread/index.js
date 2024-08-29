@@ -10,6 +10,7 @@ import Spinner from "@/components/Spinner";
 export default function MessageThread({
   product,
   messages,
+  order,
   orderTracking,
   seller,
   setSeller,
@@ -64,6 +65,7 @@ export default function MessageThread({
                 userId={userId}
                 accessToken={accessToken}
                 product={product}
+                order={order}
               />
             ))}
           {orderTracking && orderTracking.statuses[0] === "delivered" && (

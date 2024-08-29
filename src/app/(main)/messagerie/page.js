@@ -33,7 +33,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  console.log("order =>", order);
+  // console.log("order =>", order);
 
   useEffect(() => {
     getThreads();
@@ -237,6 +237,7 @@ function ThreadsPage() {
                     product={product}
                     messages={messages}
                     userId={user.id}
+                    order={order}
                     orderTracking={orderTracking}
                     seller={seller}
                     setSeller={setSeller}
