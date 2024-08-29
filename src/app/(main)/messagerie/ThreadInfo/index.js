@@ -13,7 +13,7 @@ import { useIsClickOutsideElement } from "@/utils/hooks";
 export default function ThreadInfo({
   seller,
   product,
-  order,
+  orderTracking,
   onDeleteThread,
   orderId,
 }) {
@@ -82,7 +82,7 @@ export default function ThreadInfo({
                 <img src="/icons/bloquer.svg" alt="" />
                 Bloquer
               </button>
-              {!order && (
+              {!orderTracking && (
                 <button
                   onClick={onDeleteThread}
                   className="flex items-center gap-2"
@@ -109,10 +109,10 @@ export default function ThreadInfo({
             </div>
           </div>
         )}
-        {order && (
+        {orderTracking && (
           <OrderInfo
             userType={userType}
-            order={order}
+            orderTracking={orderTracking}
             accessToken={accessToken}
             orderId={orderId}
           />

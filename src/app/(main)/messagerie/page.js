@@ -26,13 +26,14 @@ function ThreadsPage() {
   const [product, setProduct] = useState(null);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [order, setOrder] = useState(null);
+  const [orderTracking, setOrderTracking] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [seller, setSeller] = useState(null);
   const [recipient, setRecipient] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  console.log("threads =>", threads);
+  console.log("order =>", order);
 
   useEffect(() => {
     getThreads();
@@ -60,10 +61,10 @@ function ThreadsPage() {
 
   const handleThreadOrderInfo = () => {
     if (activeThread && activeThread.orderId !== null) {
-      getOrder(activeThread.orderId);
+      getOrderTracking(activeThread.orderId);
       setOrderId(activeThread.orderId);
     } else {
-      setOrder(null);
+      setOrderTracking(null);
     }
   };
 
@@ -91,6 +92,9 @@ function ThreadsPage() {
       setRecipient(threads[0].authors[0]);
       if (threads[0].productId) {
         getProduct(threads[0].productId);
+      }
+      if (threads[0].orderId) {
+        getOrderTracking(threads[0].orderId);
       }
     }
   };
@@ -127,6 +131,18 @@ function ThreadsPage() {
   async function getOrder(orderId) {
     const order = await fetchHorseted(
       `/orders/${orderId}/tracking`,
+      accessToken,
+      "GET",
+      null,
+      false,
+      false
+    );
+    setOrder(order);
+  }
+
+  async function getOrderTracking(orderId) {
+    const order = await fetchHorseted(
+      `/orders/${orderId}`,
       accessToken,
       "GET",
       null,
@@ -211,7 +227,7 @@ function ThreadsPage() {
                   seller={seller}
                   product={product}
                   orderId={orderId}
-                  order={order}
+                  orderTracking={orderTracking}
                   activeThreadId={activeThread?.id}
                   onDeleteThread={onDeleteThread}
                 />
@@ -221,7 +237,7 @@ function ThreadsPage() {
                     product={product}
                     messages={messages}
                     userId={user.id}
-                    order={order}
+                    orderTracking={orderTracking}
                     seller={seller}
                     setSeller={setSeller}
                     accessToken={accessToken}

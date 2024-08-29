@@ -7,8 +7,8 @@ export default function Message({ message, userId, accessToken, product }) {
   const { id, content, senderId, type, offerId, medias } = message;
   const [offerPrice, setOfferPrice] = useState(0);
 
-  console.log("message =>", message);
-  console.log("product =>", product);
+  // console.log("message =>", message);
+  // console.log("product =>", product);
 
   useEffect(() => {
     if (offerId) {
@@ -18,7 +18,7 @@ export default function Message({ message, userId, accessToken, product }) {
 
   const getOffer = async () => {
     const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
-    console.log("offer =>", offer);
+    // console.log("offer =>", offer);
     setOfferPrice(offer.price);
   };
 
