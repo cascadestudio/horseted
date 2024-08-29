@@ -7,7 +7,6 @@ import NavBar from "./NavBar";
 import Link from "next/link";
 import AccountHandler from "./AccountHandler";
 import MobileMenu from "./MobileMenu";
-import MessageIcon from "@/assets/icons/MessageIcon";
 
 export default async function Header() {
   const categories = await fetchHorseted("/categories");

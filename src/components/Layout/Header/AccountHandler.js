@@ -12,7 +12,9 @@ export default function AccountHandler({ className }) {
   return (
     <div className={className}>
       {user === null ? (
-        <Link href="/signin">Se connecter / S’inscrire</Link>
+        <Button variant="transparent-green" href="/signin">
+          Se connecter / S’inscrire
+        </Button>
       ) : (
         <>
           <div className="hidden lg:flex lg:items-center lg:gap-4">
