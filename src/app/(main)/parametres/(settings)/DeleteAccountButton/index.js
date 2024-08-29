@@ -1,14 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReAuthModal from "./ReAuthModal";
 
-export default function DeleteAccountButton() {
+export default function DeleteAccountButton({ accessToken }) {
   const [isReAuthModal, setIsReAuthModal] = useState(false);
-
-  const handleDeleteAccount = async () => {
-    await deleteFirebaseUser();
-    await fetchHorseted(`/users/me`, accessToken, "DELETE", null, false, true);
-    router.push("/");
-  };
 
   return (
     <>
@@ -18,7 +12,12 @@ export default function DeleteAccountButton() {
       >
         Supprimer mon compte et mes données
       </button>
-      {isReAuthModal && <ReAuthModal setIsReAuthModal={setIsReAuthModal} />}
+      {isReAuthModal && (
+        <ReAuthModal
+          setIsReAuthModal={setIsReAuthModal}
+          accessToken={accessToken}
+        />
+      )}
     </>
   );
 }
