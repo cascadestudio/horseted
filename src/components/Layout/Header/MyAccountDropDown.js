@@ -11,7 +11,7 @@ import ChevronDown from "@/assets/icons/ChevronDown";
 import OrdersIcon from "@/assets/icons/OrdersIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 
-export default function MyAccountDropDown({ className }) {
+export default function MyAccountDropDown({ className, setNavIsOpen }) {
   const handleSignout = useHandleSignout();
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -44,6 +44,7 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/mon-compte"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
+                onClick={() => setNavIsOpen(false)}
               >
                 <div className="flex items-center gap-4">
                   <MyAccountIcon className="w-[18px] h-[18px]" />
@@ -56,6 +57,7 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/orders"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
+                onClick={() => setNavIsOpen(false)}
               >
                 <div className="flex items-center justify-center gap-[18px]">
                   <OrdersIcon className="w-3 h-5 ml-[3px]" />
@@ -68,6 +70,7 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/parametres"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
+                onClick={() => setNavIsOpen(false)}
               >
                 <div className="flex items-center gap-4">
                   <SettingsIcon className="w-[18px] h-[18px]" />

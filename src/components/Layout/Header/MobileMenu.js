@@ -58,7 +58,10 @@ export default function MobileMenu({ categories }) {
                 Vendre
               </Button>
             </div>
-            <AccountHandler className="w-full px-5" />
+            <AccountHandler
+              setIsNavOpen={setIsNavOpen}
+              className="w-full px-5"
+            />
             <h3 className="uppercase font-semibold text-sm text-center mt-5 mb-1 border-t w-full pt-5">
               Parcourir
             </h3>

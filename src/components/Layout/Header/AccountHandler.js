@@ -6,7 +6,7 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import MessageIcon from "@/assets/icons/MessageIcon";
 import Button from "@/components/Button";
 
-export default function AccountHandler({ className }) {
+export default function AccountHandler({ className, setNavIsOpen }) {
   const { user } = useAuthContext();
 
   return (
@@ -28,13 +28,18 @@ export default function AccountHandler({ className }) {
             </Link>
           </div>
           <div className="w-full lg:hidden">
-            <MyAccountDropDown className="w-full" />
+            <MyAccountDropDown setNavIsOpen={setNavIsOpen} className="w-full" />
             <div className="flex items-center justify-center mt-5 gap-4">
-              <Button noStyle withAuth href="/favoris">
+              <Button
+                noStyle
+                withAuth
+                href="/favoris"
+                onClick={() => setNavIsOpen(false)}
+              >
                 <HeartIcon />
               </Button>
               <span className="bg-black h-5 w-px"></span>
-              <Link href="/messagerie">
+              <Link href="/messagerie" onClick={() => setNavIsOpen(false)}>
                 <MessageIcon />
               </Link>
             </div>
