@@ -27,11 +27,16 @@ export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
   return (
     <Modal
       isNotForm
-      title="Confirmer mes identifiants"
+      title="Suppression de compte"
       onClose={() => {
         setIsReAuthModal(false);
       }}
+      className="lg:px-1"
     >
+      <p className="text-center font-medium mb-10">
+        Vous êtes sur le point de supprimer définitivement votre compte. Cette
+        action est irréversible et supprimera définitivement toutes vos données.
+      </p>
       <a
         href="#"
         className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto"
@@ -48,9 +53,10 @@ export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
           Continuer avec Google
         </span>
       </a>
+
       <form
         onSubmit={handleForm}
-        className={`mt-3 border-b border-black mb-11 lg:pt-8 lg:border-b-0 lg:mb-[82px]`}
+        className={`mt-4 border-b border-black mb-11 lg:border-b-0 lg:mb-[82px]`}
       >
         <label htmlFor="email">
           <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
@@ -74,13 +80,14 @@ export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
             placeholder="Mot de passe"
           />
         </label>
-        <Button
-          className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
-          type="submit"
-          variant="red"
-        >
-          Supprimer
-        </Button>
+        <div className="flex items-center justify-between mt-8">
+          <Button className="grow" type="button" variant="red">
+            Annuler
+          </Button>
+          <button className="text-red font-semibold px-6" type="submit">
+            Je souhaite supprimer mon compte
+          </button>
+        </div>
       </form>
     </Modal>
   );

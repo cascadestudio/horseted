@@ -58,7 +58,7 @@ export default function Modal({
           </div>
         </div>
         {isNotForm ? (
-          <div className="lg:px-16 mb-9">
+          <div className={`lg:px-16 mb-9 ${className}`}>
             {children}
             {buttonText && (
               <Button
@@ -73,7 +73,7 @@ export default function Modal({
         ) : (
           <form
             onSubmit={handleSubmit}
-            className={"lg:px-16 mb-9 " + className}
+            className={`lg:px-16 mb-9 ${className}`}
           >
             {children}
             {buttonText && (
