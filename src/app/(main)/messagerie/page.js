@@ -222,7 +222,7 @@ function ThreadsPage() {
                 setIsInfo={setIsInfo}
                 isInfo={isInfo}
               />
-              {isInfo && seller && product ? (
+              {isInfo && seller ? (
                 <ThreadInfo
                   seller={seller}
                   product={product}
