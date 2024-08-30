@@ -114,8 +114,6 @@ function ThreadsPage() {
   };
 
   const handleNewMessageClick = (user) => {
-    // setNewMessageSeller(user);
-
     setRecipient(user);
     setIsNewMessageSearch(false);
     setMessages([]);
@@ -207,6 +205,7 @@ function ThreadsPage() {
               threads={threads}
               handleThreadClick={handleThreadClick}
               activeThreadId={activeThread?.id}
+              userId={user.id}
             />
           ) : (
             <p>Pas de conversations</p>
