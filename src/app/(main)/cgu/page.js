@@ -1,6 +1,6 @@
 export default function CGUPage() {
   return (
-    <div className="max-w-3xl mx-auto p-5">
+    <div className="container mx-auto px-4 py-8">
       {/* Header */}
       <h1 className="text-2xl font-bold mb-6">
         CONDITIONS GENERALES D’UTILISATION DE LA PLATEFORME HORSETED
