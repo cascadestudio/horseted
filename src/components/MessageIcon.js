@@ -25,7 +25,14 @@ export default function MessageIcon() {
   }
 
   async function getThreads() {
-    const threads = await fetchHorseted("/threads", accessToken);
+    const threads = await fetchHorseted(
+      "/threads",
+      accessToken,
+      "GET",
+      null,
+      true,
+      true
+    );
     return threads;
   }
 
