@@ -2,16 +2,16 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import React, { useEffect, useState } from "react";
 import ClientProductImage from "@/components/ClientProductImage";
 import DisplayMedia from "./DisplayMedia";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Message({
   message,
-  userId,
   // accessToken,
   product,
   order,
 }) {
   // console.log("order =>", order);
-
+  const { user } = useAuthContext();
   const { id, content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
@@ -113,7 +113,7 @@ export default function Message({
         </li>
       );
     case "message":
-      const isFromUser = userId === senderId;
+      const isFromUser = user.id === senderId;
       return (
         <li
           className={`message-container ${

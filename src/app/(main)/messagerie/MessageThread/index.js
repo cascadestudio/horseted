@@ -14,7 +14,6 @@ export default function MessageThread({
   orderTracking,
   seller,
   setSeller,
-  userId,
   accessToken,
   recipient,
 }) {
@@ -62,7 +61,6 @@ export default function MessageThread({
               <Message
                 message={message}
                 key={message.id}
-                userId={userId}
                 accessToken={accessToken}
                 product={product}
                 order={order}
