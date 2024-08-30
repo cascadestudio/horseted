@@ -14,9 +14,9 @@ export default function MessageThread({
   orderTracking,
   seller,
   setSeller,
-  userId,
   accessToken,
   recipient,
+  updateMessages,
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -60,9 +60,9 @@ export default function MessageThread({
           {reversedMessages.length > 0 &&
             reversedMessages.map((message) => (
               <Message
+                updateMessages={updateMessages}
                 message={message}
                 key={message.id}
-                userId={userId}
                 accessToken={accessToken}
                 product={product}
                 order={order}

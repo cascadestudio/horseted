@@ -1,21 +1,16 @@
-import profilePicture from "@/assets/images/profilePicture.jpg";
 import StarRating from "@/components/StarRating";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
-import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/Button";
+import AvatarDisplay from "@/components/AvatarDisplay";
 
 export default function SellerBlock({ sellerData, productId }) {
-  const { username, review, id } = sellerData;
+  const { username, review, id, avatar } = sellerData;
 
   return (
     <div className="flex justify-between w-full mt-3 mb-5">
       <div className="flex">
-        <Image
-          src={profilePicture}
-          alt="Photo de profil"
-          className="h-14 w-14 object-cover rounded-full"
-        />
+        <AvatarDisplay size="56" avatar={avatar} />
         <div className="flex flex-col justify-center min-w-0">
           <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate">
             {username}

@@ -41,7 +41,7 @@ function ThreadsPage() {
 
   useEffect(() => {
     if (activeThread === null) return;
-    getMessages(activeThread.id);
+    updateMessages();
     handleThreadOrderInfo();
     setRecipient(activeThread.authors[0]);
   }, [activeThread]);
@@ -165,6 +165,10 @@ function ThreadsPage() {
     setMessages(messages);
   }
 
+  async function updateMessages() {
+    await getMessages(activeThread.id);
+  }
+
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
     setProduct(product);
@@ -243,6 +247,8 @@ function ThreadsPage() {
                     setSeller={setSeller}
                     accessToken={accessToken}
                     recipient={recipient}
+                    updateMessages={updateMessages}
+                    activeThreadId={activeThread?.id}
                   />
                   <NewMessageForm
                     getThreads={getThreads}

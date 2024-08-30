@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuthContext } from "@/context/AuthContext";
 import { useState } from "react";
 import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
@@ -23,6 +24,7 @@ export default function ProductPageClient({
   params,
   className,
 }) {
+  const { user } = useAuthContext();
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
   const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
@@ -78,6 +80,8 @@ export default function ProductPageClient({
 
   const { username, review } = sellerData;
 
+  const isUserSeller = user?.id === sellerData?.id;
+
   return (
     <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
@@ -111,40 +115,45 @@ export default function ProductPageClient({
         {formatNumber(shippingPrice)} €{" "}
         <span className="font-sans">- Livraison à domicile</span>
       </p>
-      <Button
-        className="w-full mb-3 h-[52px] text-lg"
-        withAuth
-        href={`/checkout?productIds=${params.id}`}
-      >
-        Acheter
-      </Button>
-
-      <Button
-        onClick={handleOpenOfferModal}
-        price={price}
-        variant="transparent-green"
-        className={`w-full h-[52px] text-xl ${className}`}
-        withAuth
-      >
-        Faire une offre
-      </Button>
-      {userProducts?.items?.length > 0 && (
-        <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
-          <div>
-            <h4 className="font-mcqueen font-bold text-lg leading-5">
-              Acheter un lot
-            </h4>
-            <p className="text-sm">Économisez sur les frais de livraison</p>
-          </div>
+      {!isUserSeller && (
+        <>
           <Button
-            onClick={handleOpenCreateBundleModal}
-            className="text-sm h-8 ml-5"
+            className="w-full mb-3 h-[52px] text-lg"
+            withAuth
+            href={`/checkout?productIds=${params.id}`}
+          >
+            Acheter
+          </Button>
+
+          <Button
+            onClick={handleOpenOfferModal}
+            price={price}
+            variant="transparent-green"
+            className={`w-full h-[52px] text-xl ${className}`}
             withAuth
           >
-            Créer un lot
+            Faire une offre
           </Button>
-        </div>
+          {userProducts?.items?.length > 0 && (
+            <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
+              <div>
+                <h4 className="font-mcqueen font-bold text-lg leading-5">
+                  Acheter un lot
+                </h4>
+                <p className="text-sm">Économisez sur les frais de livraison</p>
+              </div>
+              <Button
+                onClick={handleOpenCreateBundleModal}
+                className="text-sm h-8 ml-5"
+                withAuth
+              >
+                Créer un lot
+              </Button>
+            </div>
+          )}
+        </>
       )}
+
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>
