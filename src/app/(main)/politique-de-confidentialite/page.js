@@ -134,15 +134,17 @@ const PrivacyPolicyPage = () => {
                 Processus d’inscription d’un Utilisateur non-professionnel
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Nom d’utilisateur, Adresse e-mail, Mot de
-                passe
+                <strong>Données obligatoires :</strong> Nom d’utilisateur,
+                Adresse e-mail, Mot de passe
                 <br />
-                Données facultatives : Données relatives à une carte bancaire,
-                Photo, Informations supplémentaires sur le Profil de
-                l’Utilisateur
+                <strong>Données facultatives :</strong> Données relatives à une
+                carte bancaire, Photo, Informations supplémentaires sur le
+                Profil de l’Utilisateur
               </td>
               <td className="border border-gray-300 p-2">
-                <h3>Données obligatoires :</h3>
+                <h3>
+                  <strong>Données obligatoires :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>Permettre l’Inscription gratuite à notre Plateforme</li>
                   <li>
@@ -154,7 +156,9 @@ const PrivacyPolicyPage = () => {
                     l’utilisation de nos Services
                   </li>
                 </ul>
-                <h3>Données facultatives :</h3>
+                <h3>
+                  <strong>Données facultatives :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>
                     Vous permettre d’effectuer des paiements aux fins de
@@ -174,17 +178,17 @@ const PrivacyPolicyPage = () => {
                 </ul>
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Obligation contractuelle
+                <strong>Données obligatoires :</strong> Obligation contractuelle
                 <br />
-                Données facultatives : Consentement (vous devez accepter ce
-                traitement avant que nous le mettions en œuvre)
+                <strong>Données facultatives :</strong> Consentement (vous devez
+                accepter ce traitement avant que nous le mettions en œuvre)
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Durée des relations contractuelles + 3
-                ans
+                <strong>Données obligatoires :</strong> Durée des relations
+                contractuelles + 3 ans
                 <br />
-                Données facultatives : Retrait des documents et informations du
-                Compte ou résiliation du Compte à tout moment
+                <strong>Données facultatives :</strong> Retrait des documents et
+                informations du Compte ou résiliation du Compte à tout moment
               </td>
             </tr>
             <tr>
@@ -192,17 +196,31 @@ const PrivacyPolicyPage = () => {
                 Processus d’inscription d’un Utilisateur professionnel
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Dénomination sociale, N° SIRET, Adresse
-                du siège social, Nom et prénom du représentant légal, Nom et
-                prénom de l’Administrateur responsable, Adresse e-mail, Numéro
-                de téléphone
-                <br />
-                Données facultatives : Données relatives à une carte bancaire,
-                Photo, Informations supplémentaires sur le Profil de
-                l’Utilisateur
+                <strong>Données obligatoires :</strong>
+                <h4>Utilisateur personne morale :</h4>
+                <ul className="list-disc pl-5">
+                  <li>Dénomination sociale</li>
+                  <li>N° SIRET</li>
+                  <li>Adresse du siège social</li>
+                  <li>Nom et prénom du représentant légal</li>
+                  <li>Nom et prénom de l’Administrateur responsable</li>
+                  <li>Adresse e-mail</li>
+                  <li>Numéro de téléphone</li>
+                </ul>
+                <h4>Utilisateur personne physique :</h4>
+                <ul className="list-disc pl-5">
+                  <li>N° SIRET</li>
+                  <li>Civilité</li>
+                  <li>Nom</li>
+                  <li>Prénom</li>
+                  <li>Adresse e-mail</li>
+                  <li>Numéro de téléphone</li>
+                </ul>
               </td>
               <td className="border border-gray-300 p-2">
-                <h3>Données obligatoires :</h3>
+                <h3>
+                  <strong>Données obligatoires :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>Permettre l’Inscription gratuite à notre Plateforme</li>
                   <li>
@@ -214,7 +232,9 @@ const PrivacyPolicyPage = () => {
                     de nos Services
                   </li>
                 </ul>
-                <h3>Données facultatives :</h3>
+                <h3>
+                  <strong>Données facultatives :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>
                     Vous permettre d’effectuer des paiements aux fins de
@@ -234,20 +254,24 @@ const PrivacyPolicyPage = () => {
                     Vous permettre de saisir des informations personnelles pour
                     agrémenter le profil de votre Compte
                   </li>
+                  <li>
+                    Permettre la saisie automatique des informations relatives à
+                    votre profil pour la complétude du formulaire de Commande.
+                  </li>
                 </ul>
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Obligation contractuelle
+                <strong>Données obligatoires :</strong> Obligation contractuelle
                 <br />
-                Données facultatives : Consentement (vous devez accepter ce
-                traitement avant que nous le mettions en œuvre)
+                <strong>Données facultatives :</strong> Consentement (vous devez
+                accepter ce traitement avant que nous le mettions en œuvre)
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Durée des relations contractuelles + 3
-                ans
+                <strong>Données obligatoires :</strong> Durée des relations
+                contractuelles + 3 ans
                 <br />
-                Données facultatives : Retrait des documents du compte ou
-                résiliation du Compte Utilisateur à tout moment
+                <strong>Données facultatives :</strong> Retrait des documents du
+                compte ou résiliation du Compte Utilisateur à tout moment
               </td>
             </tr>
             <tr>
@@ -400,12 +424,16 @@ const PrivacyPolicyPage = () => {
                 Connexion de l’Utilisateur à son Compte
               </td>
               <td className="border border-gray-300 p-2">
-                <h3>Données obligatoires :</h3>
+                <h3>
+                  <strong>Données obligatoires :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>Nom d’utilisateur</li>
                   <li>Mot de passe</li>
                 </ul>
-                <h3>Données facultatives :</h3>
+                <h3>
+                  <strong>Données facultatives :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>Adresse e-mail</li>
                   OU
@@ -413,13 +441,17 @@ const PrivacyPolicyPage = () => {
                 </ul>
               </td>
               <td className="border border-gray-300 p-2">
-                <h3>Données obligatoires :</h3>
+                <h3>
+                  <strong>Données obligatoires :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>
                     Vous permettre de vous connecter à votre Compte utilisateur
                   </li>
                 </ul>
-                <h3>Données facultatives :</h3>
+                <h3>
+                  <strong>Données facultatives :</strong>
+                </h3>
                 <ul className="list-disc pl-5">
                   <li>
                     Vous permettre de vous connecter autrement que par la saisie
@@ -428,17 +460,17 @@ const PrivacyPolicyPage = () => {
                 </ul>
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Obligation contractuelle
+                <strong>Données obligatoires :</strong> Obligation contractuelle
                 <br />
-                Données facultatives : Consentement (vous devez accepter ce
-                traitement avant que nous le mettions en œuvre)
+                <strong>Données facultatives :</strong> Consentement (vous devez
+                accepter ce traitement avant que nous le mettions en œuvre)
               </td>
               <td className="border border-gray-300 p-2">
-                Données obligatoires : Durée des relations contractuelles + 3
-                ans
+                <strong>Données obligatoires :</strong> Durée des relations
+                contractuelles + 3 ans
                 <br />
-                Données facultatives : Seule durée du traitement de la demande
-                de l’Utilisateur
+                <strong>Données facultatives :</strong> Seule durée du
+                traitement de la demande de l’Utilisateur
               </td>
             </tr>
             <tr>
@@ -478,13 +510,55 @@ const PrivacyPolicyPage = () => {
             </tr>
             <tr>
               <td className="border border-gray-300 p-2 font-bold">
+                Information et participation à nos jeux concours et les offres
+                promotionnelles de nos Partenaires
+              </td>
+              <td className="border border-gray-300 p-2">
+                <ul className="list-disc pl-5">
+                  <li>Nom</li>
+                  <li>Prénom</li>
+                  <li>Adresse e-mail</li>
+                  <li>Numéro de téléphone</li>
+                  <li>Données de connexion</li>
+                </ul>
+              </td>
+              <td className="border border-gray-300 p-2">
+                <ul className="list-disc pl-5">
+                  <li>
+                    Vous informer de l’organisation de nos jeux-concours et des
+                    offres promotionnelles
+                  </li>
+                  <li>Vous permettre d’y participer</li>
+                  <li>
+                    Vous adresser des notifications des prochains événements
+                  </li>
+                  <li>
+                    Vous envoyer un sms ou un mail pour vous annoncer le
+                    résultat des jeux concours auxquels vous avez participé
+                  </li>
+                </ul>
+              </td>
+              <td className="border border-gray-300 p-2">
+                Obligation contractuelle
+              </td>
+              <td className="border border-gray-300 p-2">
+                Durée des relations contractuelles augmentée de 3 ans
+              </td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 p-2 font-bold">
                 Ouverture d’un chat privé entre le Vendeur et l’Acheteur dans le
                 cadre de la Vente
               </td>
               <td className="border border-gray-300 p-2">
-                Nom d’utilisateur, Informations relatives à la Commande
-                (Produits commandés, prix des Produits et adresse de livraison),
-                Messages adressées dans le chat
+                <ul className="list-disc pl-5">
+                  <li>Nom d’utilisateur</li>
+                  <li>
+                    Informations relatives à la Commande (Produits commandés,
+                    prix des Produits et adresse de livraison)
+                  </li>
+                  <li>Messages adressées dans le chat</li>
+                </ul>
               </td>
               <td className="border border-gray-300 p-2">
                 <ul className="list-disc pl-5">
@@ -589,13 +663,17 @@ const PrivacyPolicyPage = () => {
           <li>
             <strong>Données concernées :</strong>
           </li>
-          <h4>Données obligatoires :</h4>
+          <h4>
+            <strong>Données obligatoires :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Nom d’utilisateur</li>
             <li>Adresse e-mail</li>
             <li>Mot de passe</li>
           </ul>
-          <h4>Données facultatives :</h4>
+          <h4>
+            <strong>Données facultatives :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Données relatives à une carte bancaire</li>
             <li>Photo</li>
@@ -604,7 +682,9 @@ const PrivacyPolicyPage = () => {
           <li>
             <strong>Finalités :</strong>
           </li>
-          <h4>Données obligatoires :</h4>
+          <h4>
+            <strong>Données obligatoires :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Permettre l’Inscription gratuite à notre Plateforme</li>
             <li>
@@ -616,7 +696,9 @@ const PrivacyPolicyPage = () => {
               l’utilisation de nos Services
             </li>
           </ul>
-          <h4>Données facultatives :</h4>
+          <h4>
+            <strong>Données facultatives :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>
               Vous permettre d’effectuer des paiements aux fins de réaliser une
@@ -631,15 +713,21 @@ const PrivacyPolicyPage = () => {
               Vous permettre de saisir des informations personnelles pour
               agrémenter le profil de votre Compte
             </li>
+            <li>
+              Permettre la saisie automatique des informations relatives à votre
+              profil pour la complétude du formulaire de Commande.
+            </li>
           </ul>
           <li>
             <strong>Base légale :</strong>
           </li>
           <ul className="list-disc pl-5">
-            <li>Données obligatoires : Obligation contractuelle</li>
             <li>
-              Données facultatives : Consentement (vous devez accepter ce
-              traitement avant que nous le mettions en œuvre)
+              <strong>Données obligatoires :</strong> Obligation contractuelle
+            </li>
+            <li>
+              <strong>Données facultatives :</strong> Consentement (vous devez
+              accepter ce traitement avant que nous le mettions en œuvre)
             </li>
           </ul>
           <li>
@@ -647,11 +735,12 @@ const PrivacyPolicyPage = () => {
           </li>
           <ul className="list-disc pl-5">
             <li>
-              Données obligatoires : Durée des relations contractuelles + 3 ans
+              <strong>Données obligatoires :</strong> Durée des relations
+              contractuelles + 3 ans
             </li>
             <li>
-              Données facultatives : Retrait des documents et informations du
-              Compte ou résiliation du Compte à tout moment
+              <strong>Données facultatives :</strong> Retrait des documents et
+              informations du Compte ou résiliation du Compte à tout moment
             </li>
           </ul>
         </ul>
@@ -664,8 +753,12 @@ const PrivacyPolicyPage = () => {
           <li>
             <strong>Données concernées :</strong>
           </li>
-          <h4>Données obligatoires :</h4>
-          <ul className="list-disc pl-5">
+          <strong className="text-lg font-semibold mt-4">
+            Données obligatoires :
+          </strong>
+
+          <h5>Utilisateur personne morale :</h5>
+          <ul className="list-disc list-inside pl-5 mb-4">
             <li>Dénomination sociale</li>
             <li>N° SIRET</li>
             <li>Adresse du siège social</li>
@@ -674,16 +767,37 @@ const PrivacyPolicyPage = () => {
             <li>Adresse e-mail</li>
             <li>Numéro de téléphone</li>
           </ul>
-          <h4>Données facultatives :</h4>
-          <ul className="list-disc pl-5">
-            <li>Données relatives à une carte bancaire</li>
+
+          <h5>Utilisateur personne physique :</h5>
+          <ul className="list-disc list-inside pl-5 mb-4">
+            <li>N° SIRET</li>
+            <li>Civilité</li>
+            <li>Nom</li>
+            <li>Prénom</li>
+            <li>Adresse e-mail</li>
+            <li>Numéro de téléphone</li>
+          </ul>
+
+          <strong className="text-lg font-semibold mt-4">
+            Données facultatives :
+          </strong>
+          <ul className="list-disc list-inside pl-5 mb-4">
+            <li>
+              Données relatives à une carte bancaire (nom et prénom du
+              titulaire, le numéro de la carte bancaire, date d’expiration)
+            </li>
             <li>Photo</li>
-            <li>Informations supplémentaires sur le Profil de l’Utilisateur</li>
+            <li>
+              Informations supplémentaires sur le Profil de l’Utilisateur (nom,
+              prénom, adresse de livraison)
+            </li>
           </ul>
           <li>
             <strong>Finalités :</strong>
           </li>
-          <h4>Données obligatoires :</h4>
+          <h4>
+            <strong>Données obligatoires :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Permettre l’Inscription gratuite à notre Plateforme</li>
             <li>
@@ -695,7 +809,9 @@ const PrivacyPolicyPage = () => {
               nos Services
             </li>
           </ul>
-          <h4>Données facultatives :</h4>
+          <h4>
+            <strong>Données facultatives :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>
               Vous permettre d’effectuer des paiements aux fins de réaliser une
@@ -711,15 +827,21 @@ const PrivacyPolicyPage = () => {
               Vous permettre de saisir des informations personnelles pour
               agrémenter le profil de votre Compte
             </li>
+            <li>
+              Permettre la saisie automatique des informations relatives à votre
+              profil pour la complétude du formulaire de Commande.
+            </li>
           </ul>
           <li>
             <strong>Base légale :</strong>
           </li>
           <ul className="list-disc pl-5">
-            <li>Données obligatoires : Obligation contractuelle</li>
             <li>
-              Données facultatives : Consentement (vous devez accepter ce
-              traitement avant que nous le mettions en œuvre)
+              <strong>Données obligatoires :</strong> Obligation contractuelle
+            </li>
+            <li>
+              <strong>Données facultatives :</strong> Consentement (vous devez
+              accepter ce traitement avant que nous le mettions en œuvre)
             </li>
           </ul>
           <li>
@@ -727,11 +849,12 @@ const PrivacyPolicyPage = () => {
           </li>
           <ul className="list-disc pl-5">
             <li>
-              Données obligatoires : Durée des relations contractuelles + 3 ans
+              <strong>Données obligatoires :</strong> Durée des relations
+              contractuelles + 3 ans
             </li>
             <li>
-              Données facultatives : Retrait des documents du compte ou
-              résiliation du Compte Utilisateur à tout moment
+              <strong>Données facultatives :</strong> Retrait des documents du
+              compte ou résiliation du Compte Utilisateur à tout moment
             </li>
           </ul>
         </ul>
@@ -894,24 +1017,33 @@ const PrivacyPolicyPage = () => {
           Connexion de l’Utilisateur à son Compte :
         </h3>
         <ul className="list-disc list-inside pl-5 mb-4">
-          <h4>Données obligatoires :</h4>
+          <h4>
+            <strong>Données obligatoires :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Nom d’utilisateur</li>
             <li>Mot de passe</li>
           </ul>
-          <h4>Données facultatives :</h4>
+          <h4>
+            <strong>Données facultatives :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Adresse e-mail</li>
+            OU
             <li>Numéro de téléphone</li>
           </ul>
           <li>
             <strong>Finalités :</strong>
           </li>
-          <h4>Données obligatoires :</h4>
+          <h4>
+            <strong>Données obligatoires :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>Vous permettre de vous connecter à votre Compte utilisateur</li>
           </ul>
-          <h4>Données facultatives :</h4>
+          <h4>
+            <strong>Données facultatives :</strong>
+          </h4>
           <ul className="list-disc pl-5">
             <li>
               Vous permettre de vous connecter autrement que par la saisie de
@@ -922,10 +1054,12 @@ const PrivacyPolicyPage = () => {
             <strong>Base légale :</strong>
           </li>
           <ul className="list-disc pl-5">
-            <li>Données obligatoires : Obligation contractuelle</li>
             <li>
-              Données facultatives : Consentement (vous devez accepter ce
-              traitement avant que nous le mettions en œuvre)
+              <strong>Données obligatoires :</strong> Obligation contractuelle
+            </li>
+            <li>
+              <strong>Données facultatives :</strong> Consentement (vous devez
+              accepter ce traitement avant que nous le mettions en œuvre)
             </li>
           </ul>
           <li>
@@ -933,11 +1067,12 @@ const PrivacyPolicyPage = () => {
           </li>
           <ul className="list-disc pl-5">
             <li>
-              Données obligatoires : Durée des relations contractuelles + 3 ans
+              <strong>Données obligatoires :</strong> Durée des relations
+              contractuelles + 3 ans
             </li>
             <li>
-              Données facultatives : Seule durée du traitement de la demande de
-              l’Utilisateur
+              <strong>Données facultatives :</strong> Seule durée du traitement
+              de la demande de l’Utilisateur
             </li>
           </ul>
         </ul>
@@ -1025,9 +1160,15 @@ const PrivacyPolicyPage = () => {
         </h3>
         <ul className="list-disc list-inside pl-5 mb-4">
           <li>
-            <strong>Données concernées :</strong> Nom d’utilisateur,
-            Informations relatives à la Commande (Produits commandés, prix des
-            Produits et adresse de livraison), Messages adressées dans le chat
+            <strong>Données concernées :</strong>
+            <ul className="list-disc pl-5">
+              <li>Nom d’utilisateur</li>
+              <li>
+                Informations relatives à la Commande (Produits commandés, prix
+                des Produits et adresse de livraison)
+              </li>
+              <li>Messages adressées dans le chat</li>
+            </ul>
           </li>
           <li>
             <strong>Finalités :</strong>
@@ -1043,13 +1184,6 @@ const PrivacyPolicyPage = () => {
             </li>
             <li>Permettre la mise en œuvre de la Protection de l’Acheteur</li>
           </ul>
-          <li>
-            <strong>Base légale :</strong> Obligation contractuelle
-          </li>
-          <li>
-            <strong>Durée de conservation :</strong> Durée des relations
-            contractuelles + 3 ans
-          </li>
         </ul>
       </div>
       <p className="mb-4">
