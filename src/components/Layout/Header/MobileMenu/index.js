@@ -5,18 +5,18 @@ import Link from "next/link";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import Button from "@/components/Button";
-import SearchBar from "./SearchBar";
-import AccountHandler from "./AccountHandler";
-import BurgerIcon from "./BurgerIcon";
+import SearchBar from "../SearchBar";
+import AccountHandler from "../AccountHandler";
+import BurgerIcon from "../BurgerIcon";
 import capitalizeText from "@/utils/capitalizeText";
 import CloseButton from "@/assets/icons/CloseButton";
-import MessageIcon from "@/components/MessageIcon";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
 import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
+import MobileMessageButton from "./MobileMessageButton";
 
 export default function MobileMenu({ categories }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -43,11 +43,7 @@ export default function MobileMenu({ categories }) {
             className="w-[210px] h-[45px] mx-auto"
           />
         </Link>
-        {!isNavOpen && (
-          <Link href="/messagerie">
-            <MessageIcon />
-          </Link>
-        )}
+        {!isNavOpen && <MobileMessageButton />}
       </div>
       {!isNavOpen && <SearchBar className="mx-5 mb-3" />}
       {isNavOpen && (
