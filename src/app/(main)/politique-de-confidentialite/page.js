@@ -8,30 +8,28 @@ export default function PrivacyPolicyPage() {
         site web, notamment votre adresse IP, le type de navigateur que vous
         utilisez, les pages que vous visitez et les liens que vous cliquez.
       </p>
-      <p className="mb-5">
-        <table className="w-full">
-          <thead>
-            <tr>
-              <th className="text-left">Type d'information</th>
-              <th className="text-left">But</th>
-              <th className="text-left">Durée de conservation</th>
-              <th className="text-left">Partage</th>
-              <th className="text-left">Droits</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Adresse IP</td>
-              <td>Amélioration de l'expérience utilisateur</td>
-              <td>1 an</td>
-              <td>Oui, avec nos partenaires</td>
-              <td>
-                Accès, rectification, opposition, portabilité et suppression
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </p>
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="text-left">Type d'information</th>
+            <th className="text-left">But</th>
+            <th className="text-left">Durée de conservation</th>
+            <th className="text-left">Partage</th>
+            <th className="text-left">Droits</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Adresse IP</td>
+            <td>Amélioration de l'expérience utilisateur</td>
+            <td>1 an</td>
+            <td>Oui, avec nos partenaires</td>
+            <td>
+              Accès, rectification, opposition, portabilité et suppression
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
