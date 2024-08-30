@@ -3,15 +3,12 @@ import React, { useEffect, useState } from "react";
 import ClientProductImage from "@/components/ClientProductImage";
 import DisplayMedia from "./DisplayMedia";
 import { useAuthContext } from "@/context/AuthContext";
+import Button from "@/components/Button";
 
-export default function Message({
-  message,
-  // accessToken,
-  product,
-  order,
-}) {
+export default function Message({ message, product, order, updateMessages }) {
   // console.log("order =>", order);
-  const { user } = useAuthContext();
+
+  const { user, accessToken } = useAuthContext();
   const { id, content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
@@ -44,6 +41,24 @@ export default function Message({
   //   const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
   //   console.log("offer =>", offer);
   // };
+
+  const isFromUser = user.id === senderId;
+
+  const handleOfferSellerResponse = async (status) => {
+    const body = {
+      status: status,
+    };
+    const response = await fetchHorseted(
+      `/offers/${offerId}`,
+      accessToken,
+      "PATCH",
+      body,
+      true,
+      true
+    );
+    console.log("response =>", response);
+    updateMessages();
+  };
 
   switch (type) {
     case "orderSent":
@@ -89,31 +104,49 @@ export default function Message({
     case "newOffer":
       if (products.length === 0) break;
       return (
-        <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
-          {products.map((product) => (
-            <div key={product.id} className="flex items-center">
-              <ClientProductImage
-                key={product.id}
-                product={product}
-                size="small"
-                className="w-24 h-14"
-              />
-              <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
-                {product.title}
+        <>
+          <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
+            {products.map((product) => (
+              <div key={product.id} className="flex items-center">
+                <ClientProductImage
+                  key={product.id}
+                  product={product}
+                  size="small"
+                  className="w-24 h-14"
+                />
+                <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+                  {product.title}
+                </div>
               </div>
+            ))}
+            <p className="font-poppins font-medium text-sm whitespace-nowrap">
+              <span className="line-through">{totalPrice}€</span>
+              {" > "}
+              <span className="font-bold text-light-green">
+                {order.offers[0].price}€
+              </span>
+            </p>
+          </li>
+          {!isFromUser && (
+            <div className="flex">
+              <Button
+                variant={"red"}
+                className="self-start p-3 mr-3"
+                onClick={() => handleOfferSellerResponse("declined")}
+              >
+                Décliner l'offre
+              </Button>
+              <Button
+                className="self-start p-3"
+                onClick={() => handleOfferSellerResponse("approved")}
+              >
+                Accepter l'offre
+              </Button>
             </div>
-          ))}
-          <p className="font-poppins font-medium text-sm whitespace-nowrap">
-            <span className="line-through">{totalPrice}€</span>
-            {" > "}
-            <span className="font-bold text-light-green">
-              {order.offers[0].price}€
-            </span>
-          </p>
-        </li>
+          )}
+        </>
       );
     case "message":
-      const isFromUser = user.id === senderId;
       return (
         <li
           className={`message-container ${

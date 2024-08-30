@@ -16,6 +16,7 @@ export default function MessageThread({
   setSeller,
   accessToken,
   recipient,
+  updateMessages,
 }) {
   const [loading, setLoading] = useState(false);
 
@@ -59,6 +60,7 @@ export default function MessageThread({
           {reversedMessages.length > 0 &&
             reversedMessages.map((message) => (
               <Message
+                updateMessages={updateMessages}
                 message={message}
                 key={message.id}
                 accessToken={accessToken}
