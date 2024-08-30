@@ -5,13 +5,18 @@ export default function ThreadList({
   threads,
   handleThreadClick,
   activeThreadId,
+  userId,
 }) {
+  // console.log("threads =>", threads);
   return (
     <ul className="overflow-y-scroll">
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
         const isActive = id === activeThreadId;
         const avatar = thread.authors[0].avatar;
+        const threadTitle = authors.find(
+          (authors) => authors.id !== userId
+        ).username;
         return (
           <li key={id}>
             <button
@@ -23,7 +28,7 @@ export default function ThreadList({
               <AvatarDisplay avatar={avatar} size={54} className="flex-none" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center">
-                  <h2 className="font-bold mr-2">{authors[0].username}</h2>
+                  <h2 className="font-bold mr-2">{threadTitle}</h2>
                   {!lastMessage.seen && (
                     <div className="w-[10px] h-[10px] bg-red rounded-full"></div>
                   )}
