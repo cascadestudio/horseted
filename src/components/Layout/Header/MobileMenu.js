@@ -10,7 +10,7 @@ import AccountHandler from "./AccountHandler";
 import BurgerIcon from "./BurgerIcon";
 import capitalizeText from "@/utils/capitalizeText";
 import CloseButton from "@/assets/icons/CloseButton";
-import MessageIcon from "@/assets/icons/MessageIcon";
+import MessageIcon from "@/components/MessageIcon";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
