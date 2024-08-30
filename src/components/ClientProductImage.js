@@ -48,20 +48,22 @@ export default function ClientProductImage({ product, className, size }) {
     fetchImage();
   }, [product, size]);
 
-  if (isLoading) return <Spinner />;
-
-  return isPlaceholder ? (
-    <Image
-      className={`aspect-[280/340] object-cover rounded-md ${className}`}
-      src={placeholderImage}
-      alt="Image du produit"
-      priority
-    />
-  ) : (
-    <img
-      className={`aspect-[280/340] object-cover rounded-md ${className}`}
-      src={imageSrc}
-      alt="Image du produit"
-    />
-  );
+  if (isLoading || isPlaceholder) {
+    return (
+      <Image
+        className={`aspect-[280/340] object-cover rounded-md ${className}`}
+        src={placeholderImage}
+        alt="Image du produit"
+        priority
+      />
+    );
+  } else {
+    return (
+      <img
+        className={`aspect-[280/340] object-cover rounded-md ${className}`}
+        src={imageSrc}
+        alt="Image du produit"
+      />
+    );
+  }
 }
