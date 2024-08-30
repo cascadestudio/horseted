@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("order =>", order);
+  // console.log("messages =>", messages);
 
   useEffect(() => {
     getThreads();
@@ -222,7 +222,7 @@ function ThreadsPage() {
                 setIsInfo={setIsInfo}
                 isInfo={isInfo}
               />
-              {isInfo && seller && product ? (
+              {isInfo && seller ? (
                 <ThreadInfo
                   seller={seller}
                   product={product}

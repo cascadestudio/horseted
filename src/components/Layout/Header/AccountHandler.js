@@ -1,9 +1,10 @@
 "use client";
+
 import { useAuthContext } from "@/context/AuthContext";
 import MyAccountDropDown from "./MyAccountDropDown";
 import Link from "next/link";
 import HeartIcon from "@/assets/icons/HeartIcon";
-import MessageIcon from "@/assets/icons/MessageIcon";
+import MessageIcon from "@/components/MessageIcon";
 import Button from "@/components/Button";
 
 export default function AccountHandler({ className, setNavIsOpen }) {
