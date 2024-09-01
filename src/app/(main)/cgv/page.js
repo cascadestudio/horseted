@@ -75,10 +75,6 @@ export default function CGVPage() {
         la Plateforme.
       </p>
 
-      {/* Paraph */}
-      <p className="mt-4 italic">Paraphe:</p>
-      <p className="mt-2">1/12</p>
-
       {/* Article 3 - Documents Contractuels */}
       <h2 className="text-xl font-semibold mt-6">
         ARTICLE 3 – DOCUMENTS CONTRACTUELS
@@ -540,6 +536,60 @@ export default function CGVPage() {
         du Produit mis en conformité ou remplacé. Tout Produit mis en conformité
         dans le cadre de la garantie légale de conformité bénéficie d’une
         extension de cette garantie de six mois.
+      </p>
+      <p className="mt-2">
+        En cas de remplacement du Produit non conforme lorsque, malgré le choix
+        de l’Acheteur la mise en conformité n'a pas été effectuée par le
+        Vendeur, le remplacement fait courir, au profit de l’Acheteur, un
+        nouveau délai de garantie légale de conformité, à compter de la
+        délivrance du Produit remplacé.
+      </p>
+      <p className="mt-2">
+        Si la mise en conformité sollicitée est impossible ou entraîne des coûts
+        disproportionnés dans les conditions prévues à l’article L. 217-12 du
+        Code de la consommation, le Vendeur peut refuser celle-ci.
+      </p>
+      <p className="mt-2">
+        Si les conditions prévues à l’article L. 217-12 du Code de la
+        consommation ne sont pas remplies, l’Acheteur peut, après mise en
+        demeure, poursuivre l’exécution forcée en nature de la solution
+        initialement sollicitée, conformément aux articles 1221 et suivants du
+        Code civil.
+      </p>
+      <p className="mt-2">
+        L’Acheteur peut enfin exiger une réduction de prix ou la résolution de
+        la vente dans les cas prévus à l’article L. 217-14 du Code de la
+        consommation.
+      </p>
+
+      <p className="mt-2">
+        Lorsque le défaut de conformité est si grave qu'il justifie que la
+        réduction du prix ou la résolution immédiate de la vente, l’Acheteur
+        n'est alors pas tenu de demander au préalable la réparation ou le
+        remplacement du Produit non conforme.
+      </p>
+      <p className="mt-2">
+        La réduction du prix est proportionnelle à la différence entre la valeur
+        du Produit délivré et la valeur de ce bien en l'absence du défaut de
+        conformité.
+      </p>
+      <p className="mt-2">
+        En cas de résolution de la vente, l’Acheteur est remboursé du prix payé
+        contre restitution des Produits non conformes au Vendeur, aux frais de
+        ce dernier.
+      </p>
+      <p className="mt-2">
+        Le remboursement est effectué dès réception du Produit non conforme ou
+        de la preuve de son renvoi par l’Acheteur et au plus tard dans les
+        quatorze jours suivants, avec le même moyen de paiement que celui
+        utilisé par l’Acheteur lors du paiement, sauf accord exprès de ce
+        dernier et en tout état de cause sans frais supplémentaire.
+      </p>
+      <p className="mt-2">
+        La présente garantie peut être mise en œuvre par l’Acheteur
+        non-professionnel sans préjudice du droit d’agir en responsabilité à
+        l’égard du Vendeur à raison du préjudice subi par ce dernier du fait du
+        défaut de conformité.
       </p>
 
       {/* Subsection 13.2 - Garantie contre les vices cachés */}
