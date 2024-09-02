@@ -74,8 +74,8 @@ export default function ProductImagesCarousel({ medias }) {
   }, []);
 
   const settings = {
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: medias.length > 1 ? <SampleNextArrow /> : null,
+    prevArrow: medias.length > 1 ? <SamplePrevArrow /> : null,
     beforeChange: (current, next) => setActiveSlide(next),
   };
 
@@ -88,12 +88,12 @@ export default function ProductImagesCarousel({ medias }) {
             arrows={false}
             ref={(slider) => (sliderRef2 = slider)}
             initialSlide={0}
-            slidesToShow={4}
+            slidesToShow={medias.length}
             swipeToSlide={true}
             focusOnSelect={true}
             vertical={true}
             // verticalSwiping={true}
-            infinite={true}
+            infinite={medias.length > 3}
             className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >
             {medias.map((media, index) => (
@@ -124,7 +124,7 @@ export default function ProductImagesCarousel({ medias }) {
           >
             {medias.map((media, index) => (
               <div
-                className="h-full w-full [&_img]:aspect-[590/590] [&>*]:w-full  [&>*]:h-full"
+                className="h-full w-full [&_img]:aspect-[590/590] [&_img]:object-cover [&>*]:w-full  [&>*]:h-full"
                 key={index}
               >
                 <img
