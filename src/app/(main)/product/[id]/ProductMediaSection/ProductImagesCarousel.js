@@ -81,7 +81,7 @@ export default function ProductImagesCarousel({ medias }) {
 
   return (
     <>
-      <div className="flex max-w-full h-full lg:max-h-[calc(100vh_-_var(--header-height)-100px)]">
+      <div className="flex max-w-full h-[calc(100vh_-_var(--header-height)-100px)] lg:max-h-[600px]">
         <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-3 pb-0">
           <Slider
             asNavFor={nav1}
