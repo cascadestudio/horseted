@@ -1,12 +1,13 @@
 "use client";
 
-// import { useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import withAuth from "@/hoc/withAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Spinner from "@/components/Spinner";
+
 // Local Components
 import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
@@ -17,8 +18,8 @@ import ThreadInfo from "./ThreadInfo";
 
 function ThreadsPage() {
   const { user, accessToken } = useAuthContext();
-  // const searchParams = useSearchParams();
-  // const productIdParam = searchParams.get("productId");
+  const searchParams = useSearchParams();
+  const productIdParam = searchParams.get("productId");
 
   const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
@@ -33,7 +34,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("messages =>", messages);
+  // console.log("recipient =>", recipient);
 
   useEffect(() => {
     getThreads();
@@ -47,17 +48,16 @@ function ThreadsPage() {
   }, [activeThread]);
 
   useEffect(() => {
-    // if (productIdParam) {
-    //   if (threads.length > 0) {
-    //     findIfThreadAlreadyExist(productIdParam);
-    //   } else {
-    //     initNewThread(productIdParam);
-    //   }
-    // } else {
-    initWithLastThread();
-    // }
-    // }, [threads, productIdParam]);
-  }, [threads]);
+    if (productIdParam) {
+      if (threads.length > 0) {
+        findIfThreadAlreadyExist(productIdParam);
+      } else {
+        initNewThread(productIdParam);
+      }
+    } else {
+      initWithLastThread();
+    }
+  }, [threads, productIdParam]);
 
   const handleThreadOrderInfo = () => {
     if (activeThread && activeThread.orderId !== null) {
@@ -79,10 +79,11 @@ function ThreadsPage() {
     }
   };
 
-  const initNewThread = (productIdParam) => {
+  const initNewThread = async (productIdParam) => {
     setActiveThread(null);
     setMessages([]);
-    getProduct(productIdParam);
+    const product = await getProduct(productIdParam);
+    setRecipient({ id: product.userId });
   };
 
   const initWithLastThread = () => {
@@ -170,6 +171,7 @@ function ThreadsPage() {
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
     setProduct(product);
+    return product;
   }
 
   async function onDeleteThread() {
