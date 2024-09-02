@@ -49,7 +49,7 @@ const CheckOutPage = () => {
     setLoading(true);
     const orderId = await postOrders();
     const paymentResponse = await ordersPayment(orderId);
-    handlePaymentResponse(paymentResponse);
+    await handlePaymentResponse(paymentResponse);
     setLoading(false);
   }
 
@@ -103,7 +103,7 @@ const CheckOutPage = () => {
     return paymentResponse;
   }
 
-  function handlePaymentResponse(paymentResponse) {
+  async function handlePaymentResponse(paymentResponse) {
     // console.log("Payment response:", paymentResponse);
     if (paymentResponse.status === "succeeded") {
       console.log("Payment successful");
