@@ -18,7 +18,7 @@ export default function DeliveryMethods({
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
 
-  // console.log("activeAddress =>", activeAddress);
+  // console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
     if (activeAddress && productIds) {

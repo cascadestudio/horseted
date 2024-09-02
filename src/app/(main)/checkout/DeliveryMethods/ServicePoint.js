@@ -1,5 +1,4 @@
-import { useState } from "react";
-import ServicePointsModal from "./ServicePointsModal";
+import { useState, useEffect } from "react";
 import capitalizeText from "@/utils/capitalizeText";
 
 export default function ServicePoint({
@@ -7,11 +6,51 @@ export default function ServicePoint({
   setActiveServicePoint,
   activeServicePoint,
 }) {
-  const [isServicePointsModal, setIsServicePointsModal] = useState(false);
+  const { name, street, code, city, carrier, id } = activeServicePoint;
 
-  const { name, street, code, city, carrier } = activeServicePoint;
+  useEffect(() => {
+    const loadSendCloudScript = () => {
+      const script = document.createElement("script");
+      script.src = "https://embed.sendcloud.sc/spp/1.0.0/api.min.js";
+      script.async = true;
+      script.onload = () => {
+        console.log("SendCloud script loaded successfully.");
+      };
+      document.body.appendChild(script);
+    };
 
-  // console.log("carrier =>", carrier);
+    if (!window.sendcloud) {
+      loadSendCloudScript();
+    }
+  }, []);
+
+  const handleOpenPicker = () => {
+    if (window.sendcloud) {
+      const options = {
+        apiKey: "7e7b27f0-58d5-45da-8d71-9e765920d498",
+        country: "fr",
+        language: "fr-fr",
+        servicePointId: parseInt(id),
+      };
+
+      window.sendcloud.servicePoints.open(
+        options,
+        successCallback,
+        failureCallback
+      );
+    } else {
+      console.error("SendCloud SDK not available");
+    }
+  };
+
+  const successCallback = (servicePoint) => {
+    setActiveServicePoint(servicePoint);
+    console.log("servicePoint =>", servicePoint);
+  };
+
+  const failureCallback = (errors) => {
+    console.error("[Failure callback]", errors.join(", "));
+  };
 
   return (
     <>
@@ -19,7 +58,7 @@ export default function ServicePoint({
         <h2 className="font-mcqueen font-bold text-xl mt-10 mb-2">
           Point relai :
         </h2>
-        <div className="flex justify-between ">
+        <div className="flex justify-between">
           <div>
             <div className="flex gap-x-2">
               <img
@@ -36,19 +75,12 @@ export default function ServicePoint({
           </div>
           <button
             className="text-dark-green underline"
-            onClick={() => setIsServicePointsModal(true)}
+            onClick={handleOpenPicker}
           >
             Changer le point relai
           </button>
         </div>
       </div>
-      {isServicePointsModal && (
-        <ServicePointsModal
-          servicePoints={servicePoints}
-          setActiveServicePoint={setActiveServicePoint}
-          setIsServicePointsModal={setIsServicePointsModal}
-        />
-      )}
     </>
   );
 }
