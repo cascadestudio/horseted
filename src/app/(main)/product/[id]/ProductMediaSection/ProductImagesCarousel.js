@@ -118,6 +118,7 @@ export default function ProductImagesCarousel({ medias }) {
         <div className="w-full lg:w-2/3 main-slider [&>*]:h-full">
           <Slider
             {...settings}
+            arrows={medias.length > 1 ? true : false}
             asNavFor={nav2}
             ref={(slider) => (sliderRef1 = slider)}
             className="relative h-full [&>*]:h-full"
