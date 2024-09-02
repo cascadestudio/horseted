@@ -2,6 +2,7 @@ import Modal from "@/components/Modal";
 import Button from "@/components/Button";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function BundleSummaryModal({
   bundle,
@@ -29,7 +30,7 @@ export default function BundleSummaryModal({
       </div>
       <div className="flex justify-between mb-2">
         <span>Commande</span>
-        <span>{formatNumber(bundlePrice)} €</span>
+        <span>{formatNumber(centsToEuros(bundlePrice))} €</span>
       </div>
       <div className="flex justify-between mb-2">
         <span>Frais de port</span>
@@ -37,7 +38,7 @@ export default function BundleSummaryModal({
       </div>
       <div className="flex justify-between font-bold mb-6">
         <span>Total</span>
-        <span>{formatNumber(bundlePrice + shippingPrice)} €</span>
+        <span>{formatNumber(centsToEuros(bundlePrice) + shippingPrice)} €</span>
       </div>
       <Button
         href={`/checkout?productIds=${bundleIdsQuery}`}

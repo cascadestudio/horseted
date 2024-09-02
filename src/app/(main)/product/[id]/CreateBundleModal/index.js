@@ -11,6 +11,7 @@ import { formatNumber } from "@/utils/formatNumber";
 import BundleSummaryModal from "./BundleSummaryModal";
 import OfferModal from "../ProductInfoSection/OfferModal";
 import StarRating from "@/components/StarRating";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function CreateBundleModal({
   username,
@@ -127,7 +128,7 @@ export default function CreateBundleModal({
           <div className="flex justify-between items-center container mx-auto px-5 py-2 h-28 lg:py-6">
             <div className="flex flex-col">
               <span className="font-poppins font-semibold text-[28px] leading-10">
-                {formatNumber(bundlePrice)} €
+                {formatNumber(centsToEuros(bundlePrice))} €
               </span>
               <div>
                 <span className="font-poppins font-medium text-sm">

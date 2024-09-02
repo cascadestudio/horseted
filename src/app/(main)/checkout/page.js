@@ -15,6 +15,7 @@ import Button from "@/components/Button";
 import StripeProvider from "@/components/StripeProvider";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 const CheckOutPage = () => {
   const router = useRouter();
@@ -55,7 +56,8 @@ const CheckOutPage = () => {
 
   const productsPriceSum = () => {
     return products.reduce((total, product) => {
-      return total + product.price;
+      const sum = total + product.price;
+      return centsToEuros(sum);
     }, 0);
   };
 

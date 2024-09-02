@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import Spinner from "@/components/Spinner";
 import FavoriteButton from "@/components/FavoriteButton";
 import { shippingSizeTranslations } from "@/utils/translations";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function ProductCard({
   productId,
@@ -46,7 +47,7 @@ export default function ProductCard({
 
       <div className="flex w-full p-5 justify-between self-start">
         <Link href={`/product/${id}`} className="max-w-[82%]">
-          <p className="font-poppins font-bold">{price} €</p>
+          <p className="font-poppins font-bold">{centsToEuros(price)} €</p>
           <h4 className="text-lg font-extrabold text-light-green truncate">
             {title}
           </h4>
