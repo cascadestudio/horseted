@@ -66,6 +66,7 @@ export default function HeroCarousel() {
         <div className="relative">
           <Image
             src={heroImage1}
+            quality={90}
             alt="hero image 1"
             priority
             sizes="100vh"
