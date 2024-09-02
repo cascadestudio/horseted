@@ -4,7 +4,12 @@ import CardCarousel from "@/components/CardCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
-export default async function ProductsSection({ title, orderBy, categoryId }) {
+export default async function ProductsSection({
+  title,
+  orderBy,
+  categoryId,
+  categoryName,
+}) {
   let query = "/products";
   if (orderBy) query += `?orderBy=${orderBy}`;
   if (categoryId) query += `?category=${categoryId}`;
@@ -19,7 +24,7 @@ export default async function ProductsSection({ title, orderBy, categoryId }) {
             {title}
           </h3>
           <Button
-            href="/products"
+            href={`/articles${categoryId && categoryName ? `?categoryId=${categoryId}&categoryName=${categoryName}` : ""}`}
             variant="transparent-green"
             className="border-none px-0 font-bold pr-0 lg:border-solid lg:px-5"
           >
