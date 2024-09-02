@@ -20,6 +20,8 @@ export default function MessageThread({
 }) {
   const [loading, setLoading] = useState(false);
 
+  // console.log("recipient =>", recipient);
+
   useEffect(() => {
     setSeller(null);
     fetchSeller();
@@ -29,7 +31,6 @@ export default function MessageThread({
     if (!recipient) return;
     setLoading(true);
     const sellerData = await fetchHorseted(`/users/${recipient.id}`);
-    // console.log("sellerData =>", sellerData);
     setSeller(sellerData);
     setLoading(false);
   };

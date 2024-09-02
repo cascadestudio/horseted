@@ -3,6 +3,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
 import ServicePoint from "./ServicePoint";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function DeliveryMethods({
   activeAddress,
@@ -81,7 +82,7 @@ export default function DeliveryMethods({
               onChange={handleDeliveryMethod}
             >
               <p className="font-bold">{name}</p>
-              <p>À partir de {price}€</p>
+              <p>À partir de {centsToEuros(price)} €</p>
             </OptionBlock>
           );
         })}

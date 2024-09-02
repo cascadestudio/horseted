@@ -16,6 +16,7 @@ import {
   stateTranslations,
   shippingSizeTranslations,
 } from "@/utils/translations";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function ProductPageClient({
   product,
@@ -109,7 +110,7 @@ export default function ProductPageClient({
       </h1>
       <p className="text-sm leading-5 lg:text-base mb-6">{description}</p>
       <p className="font-poppins font-semibold text-2xl lg:text-[28px] leading-[42px]">
-        {price} €
+        {centsToEuros(price)} €
       </p>
       <p className="font-poppins text-light-green text-sm mb-2">
         {formatNumber(shippingPrice)} €{" "}

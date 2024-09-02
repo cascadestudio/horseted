@@ -4,6 +4,7 @@ import ClientProductImage from "@/components/ClientProductImage";
 import DisplayMedia from "./DisplayMedia";
 import { useAuthContext } from "@/context/AuthContext";
 import Button from "@/components/Button";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function Message({ message, product, order, updateMessages }) {
   // console.log("order =>", order);
@@ -32,7 +33,6 @@ export default function Message({ message, product, order, updateMessages }) {
       (sum, product) => sum + product.price,
       0
     );
-
     setTotalPrice(totalPrice);
     setProducts(products);
   };
@@ -120,10 +120,10 @@ export default function Message({ message, product, order, updateMessages }) {
               </div>
             ))}
             <p className="font-poppins font-medium text-sm whitespace-nowrap">
-              <span className="line-through">{totalPrice}€</span>
+              <span className="line-through">{centsToEuros(totalPrice)} €</span>
               {" > "}
               <span className="font-bold text-light-green">
-                {order.offers[0].price}€
+                {centsToEuros(order.offers[0].price)} €
               </span>
             </p>
           </li>

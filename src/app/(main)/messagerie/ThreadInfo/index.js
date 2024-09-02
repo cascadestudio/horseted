@@ -9,6 +9,7 @@ import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
 import { useIsClickOutsideElement } from "@/utils/hooks";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function ThreadInfo({
   seller,
@@ -105,7 +106,9 @@ export default function ThreadInfo({
               <h3 className="text-lg font-mcqueen font-bold capitalize">
                 {product.title}
               </h3>
-              <p className="text-sm font-poppins">{product.price}€</p>
+              <p className="text-sm font-poppins">
+                {centsToEuros(product.price)} €
+              </p>
             </div>
           </div>
         )}

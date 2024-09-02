@@ -67,9 +67,21 @@ export default async function Home() {
       </div>
       <ProductsSection title="Récemment ajouté" orderBy="new" />
       <CategoriesSection />
-      <ProductsSection title="Pour la cavalière" categoryId="531" />
-      <ProductsSection title="Pour le cavalier" categoryId="543" />
-      <ProductsSection title="Selles et Accessoires" categoryId="577" />
+      <ProductsSection
+        title="Pour la cavalière"
+        categoryId="531"
+        categoryName="Cavalière"
+      />
+      <ProductsSection
+        title="Pour le cavalier"
+        categoryId="543"
+        categoryName="Cavalier"
+      />
+      <ProductsSection
+        title="Selles et Accessoires"
+        categoryId="577"
+        categoryName="Selles et Accessoires"
+      />
       <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">
         <div className="lg:pt-20">
           <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
