@@ -145,13 +145,13 @@ export default function Footer() {
               <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
               <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
-                  <a href="#">Mentions légales</a>
+                  <a href="/politique-de-confidentialite">Mentions légales</a>
                 </li>
                 <li>
-                  <a href="#">Conditions générales des ventes</a>
+                  <a href="/cgv">Conditions générales des ventes</a>
                 </li>
                 <li>
-                  <a href="#">Conditions d’utilisation</a>
+                  <a href="/cgu">Conditions d’utilisation</a>
                 </li>
                 <li>
                   <a href="#">Charte vendeur</a>

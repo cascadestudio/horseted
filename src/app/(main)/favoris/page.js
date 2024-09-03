@@ -33,12 +33,16 @@ function FavoritesPage() {
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Favoris" }];
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-5">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center">
         <h1 className="text-4xl font-mcqueen font-bold">Articles favoris</h1>
         {favorites.length > 0 && (
-          <Button href="/articles" variant="transparent-green">
+          <Button
+            href="/articles"
+            className="w-fit mt-4 lg:mt-0"
+            variant="transparent-green"
+          >
             Parcourir les articles
             <RightArrow className={"ml-2"} />
           </Button>
