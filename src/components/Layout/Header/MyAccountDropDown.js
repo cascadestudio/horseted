@@ -55,7 +55,7 @@ export default function MyAccountDropDown({ className, setNavIsOpen }) {
             </li>
             <li>
               <Link
-                href="/orders"
+                href="/commandes/achats"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
                 onClick={() => setNavIsOpen(false)}
               >
