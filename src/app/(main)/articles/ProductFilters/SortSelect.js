@@ -11,7 +11,7 @@ export default function SortSelect({ onOrderChange, activeOrder }) {
 
   return (
     <Dropdown title="Trier par" isActive={activeOrder !== null}>
-      <div className="flex flex-col gap-y-4">
+      <div className="flex flex-col px-2 py-4 gap-y-4">
         {orders.map((order, index) => {
           const { label, param } = order;
           return (
