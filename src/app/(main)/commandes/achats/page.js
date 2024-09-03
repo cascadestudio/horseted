@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 
 export default function Achats() {
   const { user, accessToken } = useAuthContext();
-  const [products, setProducts] = useState([]);
+  const [purchases, setPurchases] = useState([]);
+
+  console.log("purchases =>", purchases);
 
   useEffect(() => {
     getOrders();
@@ -15,30 +17,43 @@ export default function Achats() {
   async function getOrders() {
     const orders = await fetchHorseted("/orders?statuses=paid", accessToken);
 
-    const purchases = orders.filter((order) => order.userId !== user.id);
+    const purchasedOrders = orders.filter((order) => order.userId !== user.id);
 
-    const products = await Promise.all(
-      purchases.flatMap((purchase) =>
-        purchase.items.map(async (item) => {
-          return await fetchHorseted(
-            `/products/${item.productId}`,
-            accessToken
-          );
-        })
-      )
+    const purchases = await Promise.all(
+      purchasedOrders.flatMap(async (purchasedOrder) => {
+        const user = await fetchHorseted(
+          `/users/${purchasedOrder.userId}`,
+          accessToken
+        );
+        console.log("user =>", user);
+
+        // Return an array of promises for fetching product details
+        return Promise.all(
+          purchasedOrder.items.map(async (item) => {
+            const product = await fetchHorseted(
+              `/products/${item.productId}`,
+              accessToken
+            );
+            console.log("product =>", product);
+            return { ...user, ...product }; // Combine user and product data
+          })
+        );
+      })
     );
 
-    setProducts(products);
-    console.log("products =>", products);
+    // You can use setProducts(purchases) if you're setting state
+    setPurchases(purchases.flat());
   }
 
   return (
     <div>
-      {products.map((product) => {
-        const { id, title } = product;
+      {purchases.map((purchase) => {
+        const { id, title, price, username } = purchase;
         return (
           <div key={id}>
             <p>{title}</p>
+            <p>{username}</p>
+            <p>{price}€</p>
           </div>
         );
       })}
