@@ -8,11 +8,13 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 const pages = [
   {
     title: "Historique des achats",
-    path: "achats" /* icon: SettingsProfileIcon */,
+    path: "achats",
+    icon: "/icons/purchases.svg",
   },
   {
     title: "Historique des ventes",
-    path: "ventes" /* icon: SettingsProfileIcon */,
+    path: "ventes",
+    icon: "/icons/sales.svg",
   },
 ];
 
@@ -52,7 +54,7 @@ function CommandesLayout({ children }) {
                 key={index}
                 href={`/commandes/${page.path}`}
               >
-                {/* <Icon className="w-4 h-4 text-light-green mr-4" /> */}
+                <img src={page.icon} alt="" className="w-6 h-6 mr-4" />
                 <span className="font-semibold">{page.title}</span>
               </a>
             );
