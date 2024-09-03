@@ -3,8 +3,6 @@
 import { useEffect, useRef } from "react";
 import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
-import profilePicture from "@/assets/images/profilePicture.jpg";
-import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import ClientProductImage from "@/components/ClientProductImage";
 import { formatNumber } from "@/utils/formatNumber";
@@ -12,10 +10,12 @@ import BundleSummaryModal from "./BundleSummaryModal";
 import OfferModal from "../ProductInfoSection/OfferModal";
 import StarRating from "@/components/StarRating";
 import { centsToEuros } from "@/utils/centsToEuros";
+import AvatarDisplay from "@/components/AvatarDisplay";
 
 export default function CreateBundleModal({
   username,
   review,
+  avatar,
   userProducts,
   bundle,
   setBundle,
@@ -81,11 +81,7 @@ export default function CreateBundleModal({
               </span>
             </div>
             <div className="flex items-center">
-              <Image
-                src={profilePicture}
-                alt="Profile Picture"
-                className="h-14 w-14 rounded-full"
-              />
+              <AvatarDisplay avatar={avatar} size={54} />
               <div className="ml-4">
                 <h4 className="font-bold">{username}</h4>
                 <StarRating review={review} />

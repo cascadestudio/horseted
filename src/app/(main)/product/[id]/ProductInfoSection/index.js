@@ -79,7 +79,7 @@ export default function ProductPageClient({
 
   const formattedDate = ISOtoDate(createdAt);
 
-  const { username, review } = sellerData;
+  const { username, review, avatar } = sellerData;
 
   const isUserSeller = user?.id === sellerData?.id;
 
@@ -201,6 +201,7 @@ export default function ProductPageClient({
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal
+          avatar={avatar}
           username={username}
           review={review}
           userProducts={userProducts}
