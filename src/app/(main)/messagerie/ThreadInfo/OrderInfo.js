@@ -20,44 +20,63 @@ export default function OrderInfo({
 
   return (
     <>
-      <p>Commande validée !</p>
-      <p>
-        La commande est validée et en attente de livraison
-        {userType === "seller" && " de votre part"}.
-      </p>
-      <div className="p-5 border-dark-green border rounded-xl">
-        {orderTracking.statuses.map((status, index) => {
-          if (status.status === "readyToSend") {
-            return (
-              <div key={index}>
-                <Button onClick={handleIsReceived}>
-                  Confirmer la réception (test)
-                </Button>
-                {/* Pas à cette étape mais pour tester */}
-              </div>
-            );
-          }
-          if (status.status === "delivered") {
-            return (
-              <div>
-                <Button onClick={handleIsReceived}>
-                  Confirmer la réception
-                </Button>
-                <p>Commande Livrée !</p>;
-              </div>
-            );
-          }
-          if (status.status === "shipping") {
-            return <p>Commande en cour de livraison !</p>;
-          }
-          if (status.status === "availableAtServicePoint") {
-            return <p>Disponible en point relais !</p>;
-          }
-          if (status.status === "late") {
-            return <p>Commande en retard !</p>;
-          }
-        })}
+      {orderTracking.statuses.map((status, index) => {
+        // status.status = "readyToSend";
+        // // status.status = "delivered";
+        // // status.status = "shipping";
+        // // status.status = "availableAtServicePoint";
+        // // status.status = "late"; // Simulate "late"
+        if (status.status === "readyToSend") {
+          return (
+            <div key={index}>
+              <p className="font-mcqueen text-lg font-bold text-light-green mb-1">
+                Commande validée !
+              </p>
+              <p className="text-sm font-poppins font-medium mb-3">
+                La commande est validée et en attente de livraison
+                {userType === "seller" && " de votre part"}.
+              </p>
+              <Button onClick={handleIsReceived}>
+                Confirmer la réception (test)
+              </Button>
+              {/* Pas à cette étape mais pour tester */}
+            </div>
+          );
+        }
+        if (status.status === "delivered") {
+          return (
+            <div>
+              <p className="font-mcqueen text-lg font-bold text-light-green">
+                Commande Livrée !
+              </p>
+              <Button onClick={handleIsReceived}>Confirmer la réception</Button>
+            </div>
+          );
+        }
+        if (status.status === "shipping") {
+          return (
+            <p className="text-sm font-poppins font-medium mb-3">
+              Commande en cour de livraison
+            </p>
+          );
+        }
+        if (status.status === "availableAtServicePoint") {
+          return (
+            <p className="text-sm font-poppins font-medium mb-3">
+              Disponible en point relais
+            </p>
+          );
+        }
+        if (status.status === "late") {
+          return (
+            <p className="text-sm font-poppins font-medium mb-3">
+              Commande en retard
+            </p>
+          );
+        }
+      })}
 
+      <div className="p-5 mt-3 border-dark-green border rounded-xl">
         <div className="flex items-center mb-3">
           <img src="/icons/delivery-check.svg" alt="" />
           <div className="ml-5">
