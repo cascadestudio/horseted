@@ -11,7 +11,7 @@ export default function ProductSummary({ postResponse }) {
     if (medias?.length) {
       medias.forEach(async (media) => {
         setIsImageLoading(true);
-        await getMedia(media.files.thumbnail200);
+        await getMedia(media.files.thumbnail1000);
         setIsImageLoading(false);
       });
     }
