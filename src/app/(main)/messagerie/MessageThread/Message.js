@@ -7,12 +7,12 @@ import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function Message({ message, product, order, updateMessages }) {
-  // console.log("order =>", order);
-
   const { user, accessToken } = useAuthContext();
   const { id, content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
+
+  // console.log("product =>", product);
 
   useEffect(() => {
     if (order) {
@@ -62,7 +62,7 @@ export default function Message({ message, product, order, updateMessages }) {
 
   switch (type) {
     case "orderSent":
-      if (!products) break;
+      if (products.length === 0) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">
@@ -82,7 +82,7 @@ export default function Message({ message, product, order, updateMessages }) {
         </li>
       );
     case "orderDelivered":
-      if (!products) break;
+      if (products.length === 0) break;
       return (
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           <div className="flex items-center">

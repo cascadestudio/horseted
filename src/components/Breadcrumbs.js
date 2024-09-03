@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const Breadcrumbs = ({ breadcrumbs }) => {
+const Breadcrumbs = ({ breadcrumbs, white }) => {
   return (
     <nav className="flex pt-10 pb-2" aria-label="Breadcrumb">
       <ol className="inline-flex items-center">
@@ -10,14 +10,22 @@ const Breadcrumbs = ({ breadcrumbs }) => {
               <>
                 <Link
                   href={breadcrumb.href}
-                  className="text-light-green underline underline-offset-2"
+                  className={
+                    white
+                      ? "text-white underline underline-offset-2"
+                      : "text-light-green underline underline-offset-2"
+                  }
                 >
                   {breadcrumb.label}
                 </Link>
-                &nbsp;{">"}&nbsp;
+                <span className={white ? "text-white" : "text-black"}>
+                  &nbsp;{">"}&nbsp;
+                </span>
               </>
             ) : (
-              <span>{breadcrumb.label}</span>
+              <span className={white ? "text-white" : "text-black"}>
+                {breadcrumb.label}
+              </span>
             )}
           </li>
         ))}

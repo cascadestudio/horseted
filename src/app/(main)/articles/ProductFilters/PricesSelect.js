@@ -20,7 +20,7 @@ export default function PricesSelect({ onPricesChange, activePrices }) {
   return (
     <Dropdown title="Prix" isActive={(minPrice || maxPrice) !== ""}>
       <div className="flex flex-col">
-        <div className="flex gap-x-4">
+        <div className="flex px-2 py-4 gap-x-4">
           <label className="flex flex-col">
             De
             <input
