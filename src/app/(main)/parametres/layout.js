@@ -9,6 +9,7 @@ import CashIcon from "@/assets/icons/CashIcon";
 import AddressesIcon from "@/assets/icons/AddressesIcon";
 import NotificationsIcon from "@/assets/icons/NotificationsIcon";
 import VacationModeIcon from "@/assets/icons/VacationModeIcon";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const pages = [
   { title: "Paramètres du profil", path: "", icon: SettingsProfileIcon },
@@ -38,9 +39,40 @@ function SettingsLayout({ children }) {
     }
   }, [pathname]);
 
+  const breadcrumbs = () => {
+    const base = [
+      {
+        label: "Accueil",
+        href: "/",
+      },
+    ];
+    if (activePath === "") {
+      return [
+        ...base,
+        {
+          label: "Paramètres",
+        },
+      ];
+    } else {
+      return [
+        ...base,
+        {
+          label: "Paramètres",
+          href: "parametres",
+        },
+        {
+          label: pages.find((page) => page.path === activePath)?.title,
+        },
+      ];
+    }
+  };
+
+  const crumbs = breadcrumbs();
+
   return (
     <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pt-11 pb-16">
       <div className="col-span-3 lg:col-span-1">
+        <Breadcrumbs breadcrumbs={crumbs} />
         <h1 className="font-mcqueen font-bold text-4xl mb-5">
           {pages.find((page) => page.path === activePath)?.title}
         </h1>

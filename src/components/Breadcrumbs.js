@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const Breadcrumbs = ({ breadcrumbs }) => {
+  console.log(breadcrumbs);
   return (
     <nav className="flex pt-10 pb-2" aria-label="Breadcrumb">
       <ol className="inline-flex items-center">
