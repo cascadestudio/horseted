@@ -34,7 +34,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("recipient =>", recipient);
+  // console.log("activeThread =>", activeThread);
 
   useEffect(() => {
     getThreads();
@@ -60,7 +60,7 @@ function ThreadsPage() {
   }, [threads, productIdParam]);
 
   const handleThreadOrderInfo = () => {
-    if (activeThread && activeThread.orderId !== null) {
+    if (activeThread?.orderId !== null) {
       getOrderTracking(activeThread.orderId);
       setOrderId(activeThread.orderId);
     } else {
@@ -127,7 +127,7 @@ function ThreadsPage() {
     { label: "Messagerie" },
   ];
 
-  async function getOrder(orderId) {
+  async function getOrderTracking(orderId) {
     const order = await fetchHorseted(
       `/orders/${orderId}/tracking`,
       accessToken,
@@ -136,10 +136,10 @@ function ThreadsPage() {
       false,
       false
     );
-    setOrder(order);
+    setOrderTracking(order);
   }
 
-  async function getOrderTracking(orderId) {
+  async function getOrder(orderId) {
     const order = await fetchHorseted(
       `/orders/${orderId}`,
       accessToken,

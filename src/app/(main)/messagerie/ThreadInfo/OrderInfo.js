@@ -2,8 +2,13 @@ import Button from "@/components/Button";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { ISOtoShortDate } from "@/utils/formatDate";
 
-export default function OrderInfo({ order, userType, accessToken, orderId }) {
-  console.log("order =>", order);
+export default function OrderInfo({
+  orderTracking,
+  userType,
+  accessToken,
+  orderId,
+}) {
+  // console.log("orderTracking =>", orderTracking);
 
   const handleIsReceived = async () => {
     const query = `/orders/${orderId}`;
@@ -15,7 +20,7 @@ export default function OrderInfo({ order, userType, accessToken, orderId }) {
 
   return (
     <div className="p-5 border-dark-green border rounded-xl">
-      {order.statuses.map((status, index) => {
+      {orderTracking.statuses.map((status, index) => {
         if (status.status === "readyToSend") {
           return (
             <div key={index}>
@@ -55,12 +60,14 @@ export default function OrderInfo({ order, userType, accessToken, orderId }) {
         <div className="ml-5">
           <p className="font-medium">Numéro de suivi colissimo créé</p>
           <a
-            href={order.url}
+            href={orderTracking.url}
             target="_blank"
             rel="noreferrer"
             className="relative"
           >
-            <span className="font-bold font-poppins">{order.number}</span>
+            <span className="font-bold font-poppins">
+              {orderTracking.number}
+            </span>
             <img
               className="relative top-[-6px] ml-[2px] inline-block"
               src="/icons/external-link.svg"
@@ -68,11 +75,11 @@ export default function OrderInfo({ order, userType, accessToken, orderId }) {
             />
           </a>
           <p className="text-sm font-poppins text-grey">
-            {ISOtoShortDate(order.createdAt)}
+            {ISOtoShortDate(orderTracking.createdAt)}
           </p>
         </div>
       </div>
-      {order.statuses.map((status, index) => {
+      {orderTracking.statuses.map((status, index) => {
         if (status.status === "readyToSend") {
           return (
             <div key={index} className="flex items-center">
@@ -80,7 +87,7 @@ export default function OrderInfo({ order, userType, accessToken, orderId }) {
               <div className="ml-5">
                 <p className="font-medium">Prêt à être livré</p>
                 <p className="text-sm font-poppins text-grey">
-                  {ISOtoShortDate(order.statuses[0].updatedAt)}
+                  {ISOtoShortDate(orderTracking.statuses[0].updatedAt)}
                 </p>
               </div>
             </div>

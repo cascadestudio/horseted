@@ -26,7 +26,7 @@ export default function ThreadInfo({
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
 
-  // console.log("order =>", order);
+  // console.log("orderTracking =>", orderTracking);
 
   useEffect(() => {
     if (isClickOutside) {
