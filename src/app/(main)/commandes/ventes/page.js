@@ -1,5 +1,5 @@
-import React from "react";
+import OrderList from "../OrderList";
 
-export default function Achat() {
-  return <div>Ventes</div>;
+export default function Ventes() {
+  return <OrderList orderType="sale" />;
 }
