@@ -3,6 +3,7 @@
 import withAuth from "@/hoc/withAuth";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 const pages = [
   {
@@ -12,6 +13,16 @@ const pages = [
   {
     title: "Historique des ventes",
     path: "ventes" /* icon: SettingsProfileIcon */,
+  },
+];
+
+const breadcrumbs = [
+  {
+    label: "Accueil",
+    href: "/",
+  },
+  {
+    label: "Commandes",
   },
 ];
 
@@ -27,6 +38,7 @@ function CommandesLayout({ children }) {
   return (
     <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pt-11 pb-16">
       <div className="col-span-3 lg:col-span-1">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
         <h1 className="font-mcqueen font-bold text-4xl mb-5">Commandes</h1>
         <aside className="bg-light-grey flex flex-col border border-lighter-grey">
           {pages.map((page, index) => {
