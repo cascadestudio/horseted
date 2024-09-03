@@ -22,10 +22,10 @@ export default function OrderInfo({
     <>
       {orderTracking.statuses.map((status, index) => {
         // status.status = "readyToSend";
-        // // status.status = "delivered";
-        // // status.status = "shipping";
-        // // status.status = "availableAtServicePoint";
-        // // status.status = "late"; // Simulate "late"
+        // status.status = "delivered";
+        // status.status = "shipping";
+        // status.status = "availableAtServicePoint";
+        // status.status = "late";
         if (status.status === "readyToSend") {
           return (
             <div key={index}>
