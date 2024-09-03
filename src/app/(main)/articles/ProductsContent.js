@@ -16,6 +16,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import TotalProduct from "./TotalProduct";
 import Spinner from "@/components/Spinner";
 import Pagination from "./Pagination";
+import CloseButton from "@/assets/icons/CloseButton";
+import Button from "@/components/Button";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -26,6 +28,19 @@ export default function ProductsPage() {
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   // Filters states
   const [activeOrder, setActiveOrder] = useState("createdAt;desc"); //TODO quand Jojo l'a fait useState("visitCount;desc")
@@ -146,15 +161,72 @@ export default function ProductsPage() {
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Catalogue" }];
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-5">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <h1 className="text-4xl font-bold font-mcqueen mb-7">
         Tous les articles
       </h1>
-      <legend className="font-semibold text-ms uppercase tracking-widest mb-4">
+      <div className="w-full flex justify-end mb-5">
+        <Button
+          className="block lg:hidden"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Filtres
+        </Button>
+      </div>
+
+      {/* Modal for filters */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white w-screen h-screen p-4 overflow-hidden">
+            <button
+              className="mb-4 bg-red-500 text-white px-3 py-1 rounded"
+              onClick={() => setIsModalOpen(false)}
+            >
+              <CloseButton className="w-6 h-6" />
+            </button>
+            <div className="flex flex-col gap-y-4">
+              <SortSelect
+                onOrderChange={handleOrderChange}
+                activeOrder={activeOrder}
+              />
+              <StateSelect
+                activeState={activeState}
+                onStateChange={handleStateChange}
+              />
+              <CategorySelect
+                onClickProductCategory={handleCategoryChange}
+                activeCategory={
+                  activeCategory !== null ? activeCategory.id : null
+                }
+              />
+              <BrandsSelect
+                activeBrands={activeBrands}
+                onBrandsChange={handleBrandsChange}
+              />
+              <PricesSelect
+                activePrices={activePrices}
+                onPricesChange={handlePricesChange}
+              />
+              <MaterialsSelect
+                activeMaterials={activeMaterials}
+                onMaterialsChange={handleMaterialsChange}
+              />
+              {activeCategory !== null && (
+                <SizesSelect
+                  activeSizes={activeSizes}
+                  setActiveSizes={setActiveSizes}
+                  categoryId={activeCategory.id}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      <legend className="hidden lg:block font-semibold text-ms uppercase tracking-widest mb-4">
         Filtres :
       </legend>
-      <div className="flex gap-x-2">
+      <div className="hidden lg:flex gap-x-2">
         <SortSelect
           onOrderChange={handleOrderChange}
           activeOrder={activeOrder}

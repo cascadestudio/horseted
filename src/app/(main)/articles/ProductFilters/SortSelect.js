@@ -17,11 +17,11 @@ export default function SortSelect({ onOrderChange, activeOrder }) {
           return (
             <label
               key={index}
-              className="flex justify-between items-center cursor-pointer font-semibold"
+              className="flex lg:justify-between items-center cursor-pointer font-semibold w-full"
             >
               {label}
               <Radio
-                className="ml-10"
+                className="ml-2 lg:ml-10"
                 value={param}
                 checked={activeOrder === param}
                 onChange={onOrderChange}
