@@ -27,7 +27,6 @@ export default function Achats() {
         );
         console.log("user =>", user);
 
-        // Return an array of promises for fetching product details
         return Promise.all(
           purchasedOrder.items.map(async (item) => {
             const product = await fetchHorseted(
@@ -35,13 +34,12 @@ export default function Achats() {
               accessToken
             );
             console.log("product =>", product);
-            return { ...user, ...product }; // Combine user and product data
+            return { ...user, ...product };
           })
         );
       })
     );
 
-    // You can use setProducts(purchases) if you're setting state
     setPurchases(purchases.flat());
   }
 
