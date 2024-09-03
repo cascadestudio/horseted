@@ -21,11 +21,6 @@ export default function OrderInfo({
   return (
     <>
       {orderTracking.statuses.map((status, index) => {
-        // status.status = "readyToSend";
-        // status.status = "delivered";
-        // status.status = "shipping";
-        // status.status = "availableAtServicePoint";
-        // status.status = "late";
         if (status.status === "readyToSend") {
           return (
             <div key={index}>
@@ -104,12 +99,63 @@ export default function OrderInfo({
         {orderTracking.statuses.map((status, index) => {
           if (status.status === "readyToSend") {
             return (
-              <div key={index} className="flex items-center">
+              <div key={index} className="flex items-center mb-3">
                 <img src="/icons/delivery-check.svg" alt="" />
                 <div className="ml-5">
                   <p className="font-medium">Prêt à être livré</p>
                   <p className="text-sm font-poppins text-grey">
-                    {ISOtoShortDate(orderTracking.statuses[0].updatedAt)}
+                    {ISOtoShortDate(status.updatedAt)}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+          if (status.status === "delivered") {
+            return (
+              <div className="flex items-center bg-dark-green rounded-lg p-5 mx-[-20px] mb-[-20px] ">
+                <img src="/icons/delivery-check.svg" alt="" />
+                <div className="ml-5">
+                  <p className="font-medium text-white">Commande livrée</p>
+                  <p className="text-sm font-poppins text-pale-grey">
+                    {ISOtoShortDate(status.updatedAt)}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+          if (status.status === "shipping") {
+            return (
+              <div className="flex items-center mb-3">
+                <img src="/icons/delivery-check.svg" alt="" />
+                <div className="ml-5">
+                  <p className="font-medium">En cours de livraison</p>
+                  <p className="text-sm font-poppins text-grey">
+                    {ISOtoShortDate(status.updatedAt)}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+          if (status.status === "availableAtServicePoint") {
+            return (
+              <div className="flex items-center mb-3">
+                <img src="/icons/delivery-check.svg" alt="" />
+                <div className="ml-5">
+                  <p className="font-medium">Disponible en point relais</p>
+                  <p className="text-sm font-poppins text-grey">
+                    {ISOtoShortDate(status.updatedAt)}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+          if (status.status === "late") {
+            return (
+              <div className="flex items-center mb-3">
+                <div className="ml-10">
+                  <p className="font-medium text-red-500">Commande en retard</p>
+                  <p className="text-sm font-poppins text-grey">
+                    {ISOtoShortDate(status.updatedAt)}
                   </p>
                 </div>
               </div>
