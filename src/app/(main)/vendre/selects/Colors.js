@@ -28,13 +28,13 @@ export default function Colors({ product, setProduct }) {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
+    <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <h3 className="font-mcqueen font-semibold w-[200px] my-auto mb-3 lg:mb-0">
         Couleurs :
       </h3>
       <Dropdown
         title="Sélectionner une ou plusieurs couleurs"
-        className="w-full max-w-[700px]"
+        className="w-full max-w-full lg:max-w-[700px]"
         isBlack
       >
         <div className="flex flex-col gap-y-4 py-4 max-h-96 overflow-y-scroll pe-3">

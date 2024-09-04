@@ -56,7 +56,7 @@ export default function PostProductForm({
       className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7"
     >
       <ProductMedia accessToken={accessToken} setProduct={setProduct} />
-      <div className="w-full flex justify-center">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">
           Titre de l'article* :
         </h3>
@@ -65,12 +65,12 @@ export default function PostProductForm({
           name="title"
           value={product.title}
           required
-          className="max-w-[700px]"
+          className="max-w-[700px] mx-0 lg:mx-2"
           hideLabel
           placeholder="Ex : Couverture de poney"
         />
       </div>
-      <div className="w-full flex justify-center">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">
           Description de l'article :
         </h3>
@@ -79,13 +79,13 @@ export default function PostProductForm({
           name="description"
           value={product.description}
           required
-          className="max-w-[700px]"
+          className="max-w-[700px] mx-0 lg:mx-2"
           hideLabel
           type="textarea"
           placeholder="Ex : Acheté le 10/12/2024, porté quelques fois mais ne me convient pas. Très bon état...poney"
         />
       </div>
-      <div className="w-full flex justify-center">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">Prix* :</h3>
         <label
           className="font-mcqueen font-semibold w-full max-w-[700px] "

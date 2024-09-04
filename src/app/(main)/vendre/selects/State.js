@@ -6,8 +6,10 @@ export default function Category({ product, setProduct }) {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <h3 className="font-mcqueen font-semibold w-[200px] my-auto">État* :</h3>
+    <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <h3 className="font-mcqueen font-semibold w-[200px] my-auto mb-3 lg:mb-0">
+        État* :
+      </h3>
       <StateSelect
         onStateChange={handleChange}
         activeState={product.state}

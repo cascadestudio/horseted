@@ -31,7 +31,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
   }
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex flex-col lg:flex-row lg:justify-center">
       <h3 className="font-mcqueen font-semibold w-[200px]">Photos* :</h3>
 
       <label className="text-light-green flex flex-col items-center justify-center max-w-[700px] w-full border border-light-green border-dashed rounded-xl bg-white py-5 cursor-pointer min-h-[122px]">
