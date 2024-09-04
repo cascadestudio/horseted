@@ -10,7 +10,7 @@ export default function NewMessageForm() {
     activeThread,
     getMessages,
     accessToken,
-    seller,
+    recipient,
     product,
   } = useThreadsContext();
 
@@ -31,22 +31,25 @@ export default function NewMessageForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!activeThread.id) {
-      await postThread(message);
+    if (!activeThread) {
+      await postThread();
       await getThreads();
-      // router.replace("/messagerie", undefined, { shallow: true });
     } else {
-      await postMessage(message);
-      getMessages(activeThread.id);
+      await postMessage();
+      await getMessages(activeThread.id);
     }
-    setMessage({ medias: [], content: "" });
-    setImageSrcs([]);
+    resetMessage();
   }
 
-  async function postThread(message) {
+  const resetMessage = () => {
+    setMessage({ medias: [], content: "" });
+    setImageSrcs([]);
+  };
+
+  async function postThread() {
     const body = {
-      userId: seller.id,
-      productId: product.id ? product.id : null,
+      userId: recipient.id,
+      productId: product ? product.id : null,
       content: message.content,
       medias: message.medias,
     };
@@ -60,7 +63,7 @@ export default function NewMessageForm() {
     setActiveThread(newThread);
   }
 
-  async function postMessage(message) {
+  async function postMessage() {
     const body = {
       content: message.content,
       medias: message.medias,

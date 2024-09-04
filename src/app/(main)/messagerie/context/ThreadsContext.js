@@ -22,7 +22,6 @@ export const ThreadsProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
-  const [seller, setSeller] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
 
   // console.log("threads =>", threads);
@@ -159,8 +158,6 @@ export const ThreadsProvider = ({ children }) => {
         isNewMessageSearch,
         setIsNewMessageSearch,
         user,
-        seller,
-        setSeller,
         recipient,
         setRecipient,
         accessToken,
