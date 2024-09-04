@@ -232,10 +232,12 @@ function ThreadsPage() {
                 <ThreadInfo
                   seller={seller}
                   product={product}
-                  orderId={orderId}
+                  getOrder={getOrder}
+                  order={order}
                   orderTracking={orderTracking}
                   activeThreadId={activeThread?.id}
                   onDeleteThread={onDeleteThread}
+                  recipient={recipient}
                 />
               ) : (
                 <>

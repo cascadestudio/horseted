@@ -1,7 +1,6 @@
 import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { useState } from "react";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
   if (type === "newOffer") {

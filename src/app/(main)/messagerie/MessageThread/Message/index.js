@@ -11,7 +11,7 @@ export default function Message({ message, product, order, updateMessages }) {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
 
-  console.log("message =>", message);
+  // console.log("message =>", message);
 
   useEffect(() => {
     if (order) {
@@ -28,14 +28,10 @@ export default function Message({ message, product, order, updateMessages }) {
         async (item) => await fetchHorseted(`/products/${item.productId}`)
       )
     );
-
-    console.log("products =>", products);
-
     const totalPrice = products.reduce(
       (sum, product) => sum + product.price,
       0
     );
-
     setTotalPrice(totalPrice);
     setProducts(products);
   };
