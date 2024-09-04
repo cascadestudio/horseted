@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import CloseButton from "@/assets/icons/CloseButton";
-
+import Link from "next/link";
 import Spinner from "@/components/Spinner";
 
 import ProductSummary from "./ProductSummary";
@@ -41,11 +41,13 @@ const SellPage = () => {
   if (isLoading) return <Spinner isFullScreen />;
 
   return (
-    <div className="min-h-screen flex flex-col bg-light-grey">
+    <div className="min-h-screen flex flex-col bg-light-grey pt-5 lg:pt-0">
       <div className="bg-white">
         <div className="flex justify-between container mx-auto px-5 py-2">
           <div className="flex items-center">
-            <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
+            <Link href="/">
+              <CloseButton className="cursor-pointer h-7 w-7 lg:h-10 lg:w-10" />
+            </Link>
             <span className="font-mcqueen font-bold lg:text-[24px] lg:leading-[48px] ml-4 lg:ml-10">
               Vendre un article
             </span>
