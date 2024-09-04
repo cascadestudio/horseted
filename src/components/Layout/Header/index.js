@@ -12,26 +12,26 @@ export default async function Header() {
   const categories = await fetchHorseted("/categories");
 
   return (
-    <header className="lg:border-b border-b-light-green h-[var(--header-height)]">
+    <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
       <div className="container mx-auto">
-        <div className="flex justify-between items-center lg:gap-x-7 py-5">
+        <div className="flex justify-between items-center xl:gap-x-7 py-5">
           <MobileMenu categories={categories} />
           <Link href="/">
             <Image
               src={HorsetedLogoBlackHorizontal}
               alt="Horseted Logo"
               priority
-              className="hidden lg:block w-[210px] h-[45px]"
+              className="hidden xl:block w-[210px] h-[45px]"
             />
           </Link>
-          <SearchBar className="hidden lg:block" />
-          <Button href="/vendre" className="hidden lg:flex">
+          <SearchBar className="hidden xl:block" />
+          <Button href="/vendre" className="hidden xl:flex">
             Vendre
           </Button>
-          <AccountHandler className="hidden lg:block" />
+          <AccountHandler className="hidden xl:block" />
         </div>
       </div>
-      <NavBar categories={categories} className="hidden lg:flex" />
+      <NavBar categories={categories} className="hidden xl:flex" />
     </header>
   );
 }

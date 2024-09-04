@@ -26,7 +26,7 @@ export default function MobileMenu({ categories }) {
   };
 
   return (
-    <div className="lg:hidden bg-white z-10 w-screen">
+    <div className="xl:hidden bg-white z-10 w-screen">
       <div
         className={`grid grid-cols-[30px,1fr,30px] w-full items-center px-5 pb-5 ${
           isNavOpen ? "border-b" : ""

@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --header-height: 115px;
+    --header-height: 141px;
   }
 
   input[type="number"]::-webkit-inner-spin-button,
@@ -37,7 +37,7 @@
     color: "#ADA89F";
   }
 
-  @screen lg {
+  @screen xl {
     :root {
       --header-height: 130px;
     }
