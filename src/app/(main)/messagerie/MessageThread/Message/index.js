@@ -11,7 +11,7 @@ export default function Message({ message, product, order, updateMessages }) {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
 
-  // console.log("message =>", message);
+  console.log("message =>", message);
 
   useEffect(() => {
     if (order) {
@@ -75,7 +75,13 @@ export default function Message({ message, product, order, updateMessages }) {
       return <OrderInfoMessage products={products} type={type} />;
     case "newOffer":
       if (products.length === 0) break;
-      return <OrderInfoMessage products={products} type={type} />;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          totalPrice={totalPrice}
+        />
+      );
     case "message":
       return (
         <li
