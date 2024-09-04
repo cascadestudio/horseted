@@ -6,15 +6,15 @@ import MessageThread from "./MessageThread";
 import ThreadList from "./ThreadList";
 import NewMessageSearch from "./NewMessageSearch";
 import NewMessageForm from "./NewMessageForm";
-import MessageHeader from "./MessageHeader";
 import ThreadInfo from "./ThreadInfo";
+import MessageThreadHeader from "./MessageThreadHeader";
 
 export default function ThreadsContainer() {
   const {
     threads,
     setActiveThread,
     loading,
-    seller,
+    recipient,
     setIsNewMessageSearch,
     isNewMessageSearch,
     isInfo,
@@ -51,8 +51,8 @@ export default function ThreadsContainer() {
           <NewMessageSearch />
         ) : (
           <>
-            <MessageHeader />
-            {isInfo && seller ? (
+            <MessageThreadHeader />
+            {isInfo && recipient ? (
               <ThreadInfo />
             ) : (
               <>

@@ -16,7 +16,6 @@ export default function ThreadInfo() {
   const {
     user,
     accessToken,
-    seller,
     product,
     orderTracking,
     onDeleteThread,
@@ -46,7 +45,7 @@ export default function ThreadInfo() {
     setIsClickOutside(false);
   }
 
-  const userType = user.id === seller.id ? "seller" : "buyer";
+  const userType = user.id === recipient.id ? "seller" : "buyer";
 
   return (
     <>
@@ -54,16 +53,16 @@ export default function ThreadInfo() {
         <div className="flex items-center justify-between relative">
           <div className="flex items-center py-2 border-b w-full">
             <Link
-              // href={`/vendeur/${seller.id}`}
-              href={`/vendeur`}
+              href={`/vendeur/${recipient.id}`}
+              // href={`/vendeur`}
               className="flex items-center w-full"
             >
               <AvatarDisplay
-                avatar={seller.avatar}
+                avatar={recipient.avatar}
                 size={54}
                 className="flex-none mr-4"
               />
-              {seller.username}
+              {recipient.username}
               <NextArrow className="ml-auto mr-10" />
             </Link>
             <button className="p-2" onClick={handleClick}>
@@ -133,7 +132,7 @@ export default function ThreadInfo() {
         <SignalementModal
           accessToken={accessToken}
           setIsSignalementModal={setIsSignalementModal}
-          sellerId={seller.id}
+          sellerId={recipient.id}
           productId={product.id || null}
         />
       )}
@@ -142,7 +141,7 @@ export default function ThreadInfo() {
           accessToken={accessToken}
           setIsUserBlockModal={setIsUserBlockModal}
           userId={user.id}
-          seller={seller}
+          seller={recipient}
         />
       )}
     </>
