@@ -53,7 +53,7 @@ export default function PostProductForm({
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7"
+      className="container mx-auto px-5 pt-5 bg-white rounded-3xl flex flex-col items-center gap-7"
     >
       <ProductMedia accessToken={accessToken} setProduct={setProduct} />
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
