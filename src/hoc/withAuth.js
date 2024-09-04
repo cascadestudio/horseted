@@ -16,9 +16,9 @@ const withAuth = (WrappedComponent) => {
 
     if (loading)
       return (
-        <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
-          <Spinner />;
-        </div>
+        // <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
+        <Spinner isFullScreen />
+        // </div>
       );
 
     if (!user) {

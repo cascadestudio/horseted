@@ -127,11 +127,7 @@ const CheckOutPage = () => {
   }
 
   if (loading) {
-    return (
-      <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
-        <Spinner />
-      </div>
-    );
+    return <Spinner isFullScreen />;
   }
 
   return (
