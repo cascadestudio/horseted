@@ -16,7 +16,9 @@ export default function ThreadInfo({
   product,
   orderTracking,
   onDeleteThread,
-  orderId,
+  order,
+  getOrder,
+  recipient,
 }) {
   const { user, accessToken } = useAuthContext();
   const [isDropdown, setIsDropdown] = useState(false);
@@ -117,7 +119,9 @@ export default function ThreadInfo({
             userType={userType}
             orderTracking={orderTracking}
             accessToken={accessToken}
-            orderId={orderId}
+            order={order}
+            getOrder={getOrder}
+            recipient={recipient}
           />
         )}
       </div>
