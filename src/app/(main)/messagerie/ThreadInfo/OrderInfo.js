@@ -50,24 +50,39 @@ export default function OrderInfo({
         if (status.status === "delivered") {
           return (
             <div key={status.status}>
-              <p className="font-mcqueen text-lg font-bold text-light-green">
-                {order.received
-                  ? "Livraison confirmé !"
-                  : "Confirmation de livraison requise !"}
-              </p>
-              {userType === "buyer" && !order.received && (
-                <div className="flex items-center justify-between">
-                  <Button onClick={handleIsOrderReceived}>
-                    Confirmer la réception
-                  </Button>
-                  <Link
-                    className="text-dark-green text-xs underline"
-                    href="/contact"
-                  >
-                    Ouvrir un litige
-                  </Link>
-                </div>
-              )}
+              {userType === "seller" &&
+                (order.received ? (
+                  <p className="font-mcqueen text-lg font-bold text-light-green">
+                    Livraison confirmée par l'acheteur
+                  </p>
+                ) : (
+                  <p className="font-mcqueen text-lg font-bold text-light-green">
+                    Confirmation de livraison requise par l'acheteur !
+                  </p>
+                ))}
+              {userType === "buyer" &&
+                (order.received ? (
+                  <p className="font-mcqueen text-lg font-bold text-light-green">
+                    Évaluation ajoutée
+                  </p>
+                ) : (
+                  <>
+                    <p className="font-mcqueen text-lg font-bold text-light-green">
+                      Confirmation de livraison requise !
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <Button onClick={handleIsOrderReceived}>
+                        Confirmer la réception
+                      </Button>
+                      <Link
+                        className="text-dark-green text-xs underline"
+                        href="/contact"
+                      >
+                        Ouvrir un litige
+                      </Link>
+                    </div>
+                  </>
+                ))}
             </div>
           );
         }

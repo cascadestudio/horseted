@@ -30,6 +30,7 @@ export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
       true
     );
     console.log("response =>", response);
+    setIsReviewModal(false);
   }
 
   const handleStarClick = (index) => {
