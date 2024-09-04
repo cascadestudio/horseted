@@ -160,18 +160,18 @@ export default function Footer() {
             </div>
             <div className="flex justify-center lg:justify-start">
               <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2 [&>a>svg]:h-6">
-                <a href="#">
+                <a href="https://www.instagram.com/horseted.fr/">
                   <InstagramIcon />
                 </a>
-                <a href="#">
+                {/* <a href="#">
                   <YoutubeIcon />
-                </a>
-                <a href="#">
+                </a> */}
+                <a href="https://www.facebook.com/horseted/">
                   <FacebookIcon />
                 </a>
-                <a href="#">
+                {/* <a href="#">
                   <LinkedInIcon />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -181,7 +181,11 @@ export default function Footer() {
             <p>SAS HORSETED copyright {currentYear}</p>
             <p className="hidden lg:block">
               Site créé par{" "}
-              <a href="https://citronnoir.com/" className="underline">
+              <a
+                href="https://citronnoir.com/"
+                className="underline"
+                target="_blank"
+              >
                 Citron Noir
               </a>
             </p>
