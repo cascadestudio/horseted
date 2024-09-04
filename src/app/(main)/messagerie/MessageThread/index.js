@@ -20,7 +20,7 @@ export default function MessageThread({
 }) {
   const [loading, setLoading] = useState(false);
 
-  // console.log("recipient =>", recipient);
+  // console.log("order =>", order);
 
   useEffect(() => {
     setSeller(null);

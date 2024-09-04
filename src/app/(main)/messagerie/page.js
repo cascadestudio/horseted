@@ -34,7 +34,7 @@ function ThreadsPage() {
   const [loading, setLoading] = useState(false);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("activeThread =>", activeThread);
+  // console.log("order =>", order);
 
   useEffect(() => {
     getThreads();
@@ -95,6 +95,7 @@ function ThreadsPage() {
         getProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
+        getOrder(threads[0].orderId);
         getOrderTracking(threads[0].orderId);
       }
     }
