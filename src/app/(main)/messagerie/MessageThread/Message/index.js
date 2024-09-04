@@ -5,9 +5,9 @@ import { useAuthContext } from "@/context/AuthContext";
 
 import OrderInfoMessage from "./OrderInfoMessage";
 
-export default function Message({ message, product, order, updateMessages }) {
+export default function Message({ message, order, updateMessages }) {
   const { user, accessToken } = useAuthContext();
-  const { id, content, senderId, type, offerId, medias } = message;
+  const { content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
 
@@ -28,14 +28,10 @@ export default function Message({ message, product, order, updateMessages }) {
         async (item) => await fetchHorseted(`/products/${item.productId}`)
       )
     );
-
-    console.log("products =>", products);
-
     const totalPrice = products.reduce(
       (sum, product) => sum + product.price,
       0
     );
-
     setTotalPrice(totalPrice);
     setProducts(products);
   };
@@ -75,7 +71,13 @@ export default function Message({ message, product, order, updateMessages }) {
       return <OrderInfoMessage products={products} type={type} />;
     case "newOffer":
       if (products.length === 0) break;
-      return <OrderInfoMessage products={products} type={type} />;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          totalPrice={totalPrice}
+        />
+      );
     case "message":
       return (
         <li

@@ -2,7 +2,7 @@ import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
 
-export default function OrderInfoMessage({ products, type }) {
+export default function OrderInfoMessage({ products, type, totalPrice }) {
   if (type === "newOffer") {
     return (
       <>
@@ -68,9 +68,11 @@ export default function OrderInfoMessage({ products, type }) {
         <p className="font-poppins font-medium text-sm whitespace-nowrap">
           {type === "orderDeliveredConfirmationRequired"
             ? "Colis en attente de livraison par le vendeur"
-            : "orderSent"
+            : type === "orderSent"
               ? "Colis envoyé !"
-              : "Colis livré !"}
+              : type === "orderDelivered"
+                ? "Colis livré !"
+                : ""}
         </p>
       </li>
     );
