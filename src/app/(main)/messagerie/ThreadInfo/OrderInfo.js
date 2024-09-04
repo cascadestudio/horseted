@@ -15,16 +15,20 @@ export default function OrderInfo({
 }) {
   // console.log("order =>", order);
 
-  const [isReviewModal, setIsReviewModal] = useState(true);
+  const [isReviewModal, setIsReviewModal] = useState(false);
 
   const handleIsOrderReceived = async () => {
-    const query = `/orders/${order.id}`;
-    const body = {
-      received: true,
-    };
-    await fetchHorseted(query, accessToken, "PATCH", body, true, true);
+    await patchOrder();
     await getOrder(order.id);
     setIsReviewModal(true);
+  };
+
+  const patchOrder = async () => {
+    const query = `/orders/${order.id}`;
+    const body = {
+      delivered: true,
+    };
+    await fetchHorseted(query, accessToken, "PATCH", body, true, true);
   };
 
   return (

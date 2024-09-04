@@ -3,14 +3,17 @@ import { TextInput } from "@/components/input";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import AddReviewStarIcon from "@/assets/icons/AddReviewStarIcon";
 
 export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
   const { accessToken } = useAuthContext();
   const [review, setReview] = useState({
     comment: "",
-    rating: 4,
+    rating: 0,
     orderId: orderId,
   });
+
+  //   console.log("review =>", review);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +32,10 @@ export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
     console.log("response =>", response);
   }
 
+  const handleStarClick = (index) => {
+    setReview((prev) => ({ ...prev, rating: index + 1 }));
+  };
+
   return (
     <Modal
       onSubmit={postReview}
@@ -38,7 +45,21 @@ export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
       title="Laisser une évaluation"
       buttonText="Valider"
     >
+      <div className="flex items-center justify-center mx-auto mb-4">
+        {Array.from({ length: 5 }, (_, index) => {
+          return (
+            <AddReviewStarIcon
+              onClick={() => handleStarClick(index)}
+              key={index}
+              className={`cursor-pointer ${
+                review.rating > index ? "fill-yellow" : "fill-lighter-grey"
+              }`}
+            />
+          );
+        })}
+      </div>
       <TextInput
+        label="Ajouter un message"
         type="textarea"
         value={review.comment}
         onChange={handleChange}
