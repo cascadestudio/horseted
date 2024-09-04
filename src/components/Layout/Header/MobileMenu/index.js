@@ -150,18 +150,18 @@ export default function MobileMenu({ categories }) {
           </div>
           <div className="flex justify-center mb-9">
             <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full [&>a>svg]:h-6">
-              <a href="#" onClick={() => setIsNavOpen(false)}>
+              <a href="https://www.instagram.com/horseted.fr/">
                 <InstagramIcon />
               </a>
-              <a href="#" onClick={() => setIsNavOpen(false)}>
-                <YoutubeIcon />
-              </a>
-              <a href="#" onClick={() => setIsNavOpen(false)}>
+              {/* <a href="#">
+                  <YoutubeIcon />
+                </a> */}
+              <a href="https://www.facebook.com/horseted/">
                 <FacebookIcon />
               </a>
-              <a href="#" onClick={() => setIsNavOpen(false)}>
-                <LinkedInIcon />
-              </a>
+              {/* <a href="#">
+                  <LinkedInIcon />
+                </a> */}
             </div>
           </div>
         </div>
