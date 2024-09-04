@@ -31,6 +31,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
   }
 
   return (
+    // TODO redo responsive and fix h3 on the left when images loaded
     <>
       <div className="hidden w-full lg:flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">Photos* :</h3>
