@@ -17,9 +17,12 @@ import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
 import LinkedInIcon from "@/assets/icons/LinkedInIcon";
 import MobileMessageButton from "./MobileMessageButton";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function MobileMenu({ categories }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (isNavOpen) {
@@ -63,9 +66,11 @@ export default function MobileMenu({ categories }) {
         <div className="">
           <div className="flex flex-col items-center mt-4 mb-9 pb-3 border-b">
             <div className="w-full mb-2 px-5">
-              <Button onClick={() => setIsNavOpen(false)} href="/vendre">
-                Vendre
-              </Button>
+              {user && (
+                <Button onClick={() => setIsNavOpen(false)} href="/vendre">
+                  Vendre
+                </Button>
+              )}
             </div>
             <AccountHandler
               setIsNavOpen={setIsNavOpen}
@@ -80,7 +85,7 @@ export default function MobileMenu({ categories }) {
                 <Link
                   href={`/articles?categoryId=${id}&categoryName=${name}`}
                   key={category.id}
-                  className="w-full px-11 py-2"
+                  className="w-full px-11 py-2 font-semibold"
                   onClick={() => setIsNavOpen(false)}
                 >
                   {capitalizeText(category.name)}
@@ -91,21 +96,21 @@ export default function MobileMenu({ categories }) {
               Découvrir
             </h3>
             <Link
-              className="w-full px-11 py-2"
+              className="w-full px-11 py-2 font-semibold"
               href="/aide"
               onClick={() => setIsNavOpen(false)}
             >
               Aide
             </Link>
             <Link
-              className="w-full px-11 py-2"
+              className="w-full px-11 py-2 font-semibold"
               href="/a-propos"
               onClick={() => setIsNavOpen(false)}
             >
               À propos
             </Link>
             <Link
-              className="w-full px-11 py-2"
+              className="w-full px-11 py-2 font-semibold"
               href="/actualites"
               onClick={() => setIsNavOpen(false)}
             >
