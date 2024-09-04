@@ -59,6 +59,7 @@ const SellPage = () => {
           <PostProductForm
             accessToken={accessToken}
             setPostResponse={setPostResponse}
+            setIsLoading={setIsLoading}
           />
         )
       ) : (

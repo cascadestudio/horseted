@@ -9,8 +9,13 @@ import Shipping from "./selects/Shipping";
 import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
 import { useState } from "react";
+import fetchHorseted from "@/utils/fetchHorseted";
 
-export default function PostProductForm({ accessToken, setPostResponse }) {
+export default function PostProductForm({
+  accessToken,
+  setPostResponse,
+  setIsLoading,
+}) {
   const [product, setProduct] = useState({
     title: "",
     price: "",
