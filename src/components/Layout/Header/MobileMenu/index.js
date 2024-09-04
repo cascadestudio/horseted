@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
@@ -21,12 +21,25 @@ import MobileMessageButton from "./MobileMessageButton";
 export default function MobileMenu({ categories }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
+  useEffect(() => {
+    if (isNavOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isNavOpen]);
+
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
   };
 
   return (
-    <div className="xl:hidden bg-white z-10 w-screen">
+    <div
+      className={`xl:hidden bg-white z-10 w-screen ${isNavOpen ? "fixed top-5 bottom-0 right-0 left-0 overflow-y-auto" : ""}`}
+    >
       <div
         className={`grid grid-cols-[30px,1fr,30px] w-full items-center px-5 pb-5 ${
           isNavOpen ? "border-b" : ""
@@ -47,7 +60,7 @@ export default function MobileMenu({ categories }) {
       </div>
       {!isNavOpen && <SearchBar className="mx-5 mb-3" />}
       {isNavOpen && (
-        <div>
+        <div className="">
           <div className="flex flex-col items-center mt-4 mb-9 pb-3 border-b">
             <div className="w-full mb-2 px-5">
               <Button onClick={() => setIsNavOpen(false)} href="/vendre">
