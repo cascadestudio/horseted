@@ -10,7 +10,6 @@ import Spinner from "@/components/Spinner";
 
 export default function MessageThread() {
   const {
-    product,
     messages,
     order,
     orderTracking,
@@ -62,11 +61,10 @@ export default function MessageThread() {
           {reversedMessages.length > 0 &&
             reversedMessages.map((message) => (
               <Message
+                key={message.id}
                 updateMessages={updateMessages}
                 message={message}
-                key={message.id}
                 accessToken={accessToken}
-                product={product}
                 order={order}
               />
             ))}
