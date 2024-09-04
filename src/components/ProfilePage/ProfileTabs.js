@@ -9,7 +9,7 @@ export default function ProfileTabs({ profile, accessToken }) {
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState([]);
 
-  console.log("products =>", products);
+  console.log("reviews =>", reviews);
 
   useEffect(() => {
     if (profile) {

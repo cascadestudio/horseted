@@ -1,26 +1,29 @@
+import { useIsClickOutsideElement } from "@/utils/hooks";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
+import { useEffect, useRef, useState } from "react";
+import { centsToEuros } from "@/utils/centsToEuros";
+
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
-import React, { useEffect, useRef, useState } from "react";
 import SignalementModal from "../Modals/SignalementModal";
-import { useAuthContext } from "@/context/AuthContext";
 import UserBlockModal from "../Modals/UserBlockModal";
 import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
-import { useIsClickOutsideElement } from "@/utils/hooks";
-import { centsToEuros } from "@/utils/centsToEuros";
 
-export default function ThreadInfo({
-  seller,
-  product,
-  orderTracking,
-  onDeleteThread,
-  order,
-  getOrder,
-  recipient,
-}) {
-  const { user, accessToken } = useAuthContext();
+export default function ThreadInfo() {
+  const {
+    user,
+    accessToken,
+    product,
+    orderTracking,
+    onDeleteThread,
+    order,
+    getOrder,
+    recipient,
+  } = useThreadsContext();
+
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);
@@ -42,7 +45,7 @@ export default function ThreadInfo({
     setIsClickOutside(false);
   }
 
-  const userType = user.id === seller.id ? "seller" : "buyer";
+  const userType = user.id === recipient.id ? "seller" : "buyer";
 
   return (
     <>
@@ -50,16 +53,16 @@ export default function ThreadInfo({
         <div className="flex items-center justify-between relative">
           <div className="flex items-center py-2 border-b w-full">
             <Link
-              // href={`/vendeur/${seller.id}`}
-              href={`/vendeur`}
+              href={`/vendeur/${recipient.id}`}
+              // href={`/vendeur`}
               className="flex items-center w-full"
             >
               <AvatarDisplay
-                avatar={seller.avatar}
+                avatar={recipient.avatar}
                 size={54}
                 className="flex-none mr-4"
               />
-              {seller.username}
+              {recipient.username}
               <NextArrow className="ml-auto mr-10" />
             </Link>
             <button className="p-2" onClick={handleClick}>
@@ -129,7 +132,7 @@ export default function ThreadInfo({
         <SignalementModal
           accessToken={accessToken}
           setIsSignalementModal={setIsSignalementModal}
-          sellerId={seller.id}
+          sellerId={recipient.id}
           productId={product.id || null}
         />
       )}
@@ -138,7 +141,7 @@ export default function ThreadInfo({
           accessToken={accessToken}
           setIsUserBlockModal={setIsUserBlockModal}
           userId={user.id}
-          seller={seller}
+          seller={recipient}
         />
       )}
     </>

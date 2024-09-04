@@ -1,10 +1,18 @@
-"use client";
+import { useThreadsContext } from "./context/ThreadsContext";
 import NextArrow from "@/assets/icons/NextArrow";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 
-export default function NewMessageSearch({ threads, handleClick }) {
+export default function NewMessageSearch() {
+  const {
+    threads,
+    setProduct,
+    setMessages,
+    setRecipient,
+    setIsNewMessageSearch,
+  } = useThreadsContext();
+
   const [users, setUsers] = useState([]);
 
   const handleSearchChange = (e) => {
@@ -18,6 +26,13 @@ export default function NewMessageSearch({ threads, handleClick }) {
     );
     setUsers(usersWithoutThreads);
   }
+
+  const handleClick = (user) => {
+    setRecipient(user);
+    setIsNewMessageSearch(false);
+    setMessages([]);
+    setProduct(null);
+  };
 
   return (
     <div className="p-7 flex flex-col">
