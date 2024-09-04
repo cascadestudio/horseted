@@ -11,6 +11,7 @@ export default function ThreadList() {
     getMessages,
     getProduct,
     user,
+    setIsInfo,
   } = useThreadsContext();
 
   // console.log("threads =>", threads);
@@ -19,6 +20,7 @@ export default function ThreadList() {
     setActiveThread(threads.find((thread) => thread.id === id));
     getMessages(id);
     setProduct(null);
+    setIsInfo(false);
     if (productId) {
       getProduct(productId);
     }
