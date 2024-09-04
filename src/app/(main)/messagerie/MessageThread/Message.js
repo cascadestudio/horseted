@@ -1,7 +1,7 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 import React, { useEffect, useState } from "react";
 import ClientProductImage from "@/components/ClientProductImage";
-import DisplayMedia from "./DisplayMedia";
+import DisplayMedia from "@/components/DisplayMedia";
 import { useAuthContext } from "@/context/AuthContext";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
