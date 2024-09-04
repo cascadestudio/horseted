@@ -30,7 +30,6 @@ export default function MessageIcon() {
       accessToken,
       "GET",
       null,
-      true,
       true
     );
     return threads;
