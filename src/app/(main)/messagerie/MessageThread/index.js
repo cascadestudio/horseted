@@ -1,23 +1,26 @@
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import "@/app/styles/globals.css";
+import fetchHorseted from "@/utils/fetchHorseted";
 import Message from "./Message";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
 import capitalizeText from "@/utils/capitalizeText";
 import Spinner from "@/components/Spinner";
 
-export default function MessageThread({
-  product,
-  messages,
-  order,
-  orderTracking,
-  seller,
-  setSeller,
-  accessToken,
-  recipient,
-  updateMessages,
-}) {
+export default function MessageThread() {
+  const {
+    product,
+    messages,
+    order,
+    orderTracking,
+    seller,
+    setSeller,
+    accessToken,
+    recipient,
+    updateMessages,
+  } = useThreadsContext();
+
   const [loading, setLoading] = useState(false);
 
   // console.log("order =>", order);

@@ -1,6 +1,9 @@
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import CloseButton from "@/assets/icons/CloseButton";
 
-export default function MessageHeader({ product, seller, setIsInfo, isInfo }) {
+export default function MessageHeader() {
+  const { product, seller, isInfo, setIsInfo } = useThreadsContext();
+
   return (
     <div className="flex justify-between items-center p-6 border-b border-pale-grey">
       {product ? (

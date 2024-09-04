@@ -1,16 +1,19 @@
-import fetchHorseted from "@/utils/fetchHorseted";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import { useState } from "react";
+import fetchHorseted from "@/utils/fetchHorseted";
 import MediaInput from "./MediaInput";
 
-export default function NewMessageForm({
-  getThreads,
-  setActiveThread,
-  activeThreadId,
-  getMessages,
-  accessToken,
-  sellerId,
-  productId,
-}) {
+export default function NewMessageForm() {
+  const {
+    getThreads,
+    setActiveThread,
+    activeThread,
+    getMessages,
+    accessToken,
+    seller,
+    product,
+  } = useThreadsContext();
+
   const [message, setMessage] = useState({
     content: "",
     medias: [],
@@ -28,13 +31,13 @@ export default function NewMessageForm({
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!activeThreadId) {
+    if (!activeThread.id) {
       await postThread(message);
       await getThreads();
       // router.replace("/messagerie", undefined, { shallow: true });
     } else {
       await postMessage(message);
-      getMessages(activeThreadId);
+      getMessages(activeThread.id);
     }
     setMessage({ medias: [], content: "" });
     setImageSrcs([]);
@@ -42,8 +45,8 @@ export default function NewMessageForm({
 
   async function postThread(message) {
     const body = {
-      userId: sellerId,
-      productId: productId ? productId : null,
+      userId: seller.id,
+      productId: product.id ? product.id : null,
       content: message.content,
       medias: message.medias,
     };
@@ -52,7 +55,6 @@ export default function NewMessageForm({
       accessToken,
       "POST",
       body,
-      true,
       true
     );
     setActiveThread(newThread);
@@ -64,7 +66,7 @@ export default function NewMessageForm({
       medias: message.medias,
     };
     await fetchHorseted(
-      `/threads/${activeThreadId}/messages`,
+      `/threads/${activeThread.id}/messages`,
       accessToken,
       "POST",
       body,

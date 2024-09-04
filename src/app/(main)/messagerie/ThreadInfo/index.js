@@ -1,26 +1,30 @@
+import { useIsClickOutsideElement } from "@/utils/hooks";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
+import { useEffect, useRef, useState } from "react";
+import { centsToEuros } from "@/utils/centsToEuros";
+
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
 import ClientProductImage from "@/components/ClientProductImage";
-import React, { useEffect, useRef, useState } from "react";
 import SignalementModal from "../Modals/SignalementModal";
-import { useAuthContext } from "@/context/AuthContext";
 import UserBlockModal from "../Modals/UserBlockModal";
 import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
-import { useIsClickOutsideElement } from "@/utils/hooks";
-import { centsToEuros } from "@/utils/centsToEuros";
 
-export default function ThreadInfo({
-  seller,
-  product,
-  orderTracking,
-  onDeleteThread,
-  order,
-  getOrder,
-  recipient,
-}) {
-  const { user, accessToken } = useAuthContext();
+export default function ThreadInfo() {
+  const {
+    user,
+    accessToken,
+    seller,
+    product,
+    orderTracking,
+    onDeleteThread,
+    order,
+    getOrder,
+    recipient,
+  } = useThreadsContext();
+
   const [isDropdown, setIsDropdown] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);

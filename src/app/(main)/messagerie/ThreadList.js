@@ -1,21 +1,37 @@
 import AvatarDisplay from "@/components/AvatarDisplay";
 import { ISOtoDate } from "@/utils/formatDate";
+import { useThreadsContext } from "./context/ThreadsContext";
 
-export default function ThreadList({
-  threads,
-  handleThreadClick,
-  activeThreadId,
-  userId,
-}) {
+export default function ThreadList() {
+  const {
+    threads,
+    activeThread,
+    setActiveThread,
+    setProduct,
+    getMessages,
+    getProduct,
+    user,
+  } = useThreadsContext();
+
   // console.log("threads =>", threads);
+
+  function handleThreadClick(id, productId) {
+    setActiveThread(threads.find((thread) => thread.id === id));
+    getMessages(id);
+    setProduct(null);
+    if (productId) {
+      getProduct(productId);
+    }
+  }
+
   return (
     <ul className="overflow-y-scroll">
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
-        const isActive = id === activeThreadId;
+        const isActive = id === activeThread?.id;
         const avatar = thread.authors[0].avatar;
         const threadTitle = authors.find(
-          (authors) => authors.id !== userId
+          (authors) => authors.id !== user.id
         ).username;
         return (
           <li key={id}>
