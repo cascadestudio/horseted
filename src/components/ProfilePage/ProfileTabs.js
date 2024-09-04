@@ -64,9 +64,11 @@ export default function ProfileTabs({ profile, accessToken }) {
       </div>
       <div className="mt-4">
         {activeTab === "products" && (
-          <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
+          <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-full gap-14 py-12">
             {products.map((product, index) => (
-              <ProductCard key={index} product={product} />
+              <div key={index}>
+                <ProductCard product={product} />
+              </div>
             ))}
           </section>
         )}
