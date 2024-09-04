@@ -5,9 +5,9 @@ import { useAuthContext } from "@/context/AuthContext";
 
 import OrderInfoMessage from "./OrderInfoMessage";
 
-export default function Message({ message, product, order, updateMessages }) {
+export default function Message({ message, order, updateMessages }) {
   const { user, accessToken } = useAuthContext();
-  const { id, content, senderId, type, offerId, medias } = message;
+  const { content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
 

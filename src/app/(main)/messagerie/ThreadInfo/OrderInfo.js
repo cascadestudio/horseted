@@ -16,6 +16,7 @@ export default function OrderInfo({
   // console.log("order =>", order);
 
   const [isReviewModal, setIsReviewModal] = useState(false);
+  // const [isReviewModal, setIsReviewModal] = useState(true);
 
   const handleIsOrderReceived = async () => {
     await patchOrder();
