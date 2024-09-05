@@ -16,6 +16,8 @@ export default function PostProductForm({
   setPostResponse,
   setIsLoading,
 }) {
+  const [formTouched, setFormTouched] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
     title: "",
@@ -32,11 +34,14 @@ export default function PostProductForm({
   });
 
   useEffect(() => {
-    validateForm();
-  }, [product]);
+    if (formTouched) {
+      validateForm();
+    }
+  }, [product, formTouched]);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
+    setFormTouched(true);
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
