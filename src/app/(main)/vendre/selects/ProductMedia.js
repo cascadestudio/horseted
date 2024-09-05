@@ -72,9 +72,11 @@ export default function ProductMedia({ accessToken, setProduct }) {
               <Spinner />
             ) : (
               <>
-                <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-                  +
-                </span>
+                {imageSrcs.length < 10 && (
+                  <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+                    +
+                  </span>
+                )}
                 {!imageSrcs.length > 0 && (
                   <>
                     <p className="font-bold font-mcqueen text-center">
@@ -134,9 +136,11 @@ export default function ProductMedia({ accessToken, setProduct }) {
               <Spinner />
             ) : (
               <>
-                <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-                  +
-                </span>
+                {imageSrcs.length < 10 && (
+                  <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+                    +
+                  </span>
+                )}
                 {!imageSrcs.length > 0 && (
                   <>
                     <p className="font-bold font-mcqueen text-center">

@@ -44,7 +44,7 @@ const SellPage = () => {
     <div className="min-h-screen flex flex-col lg:pb-10 lg:pt-0">
       <div className="container mx-auto px-5">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <h1 className="font-mcqueen font-bold text-[24px] lg:text-[38px] lg:leading-[48px]">
+        <h1 className="font-mcqueen font-bold text-[24px] mb-4 lg:text-[38px] lg:leading-[48px]">
           Vendre un article
         </h1>
       </div>
