@@ -2,6 +2,7 @@ import AddressModal from "./AddressModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import ModifyIcon from "@/assets/icons/ModifyIcon";
 
 export default function Address({
   activeAddress,
@@ -33,13 +34,20 @@ export default function Address({
   return (
     <>
       <div className="g-block flex justify-between">
-        <h2 className="font-mcqueen font-bold text-xl mb-5">Addresse</h2>
-        {activeAddress ? (
-          <p>{`${activeAddress.fullName}, ${activeAddress.street}, ${activeAddress.postalCode}, ${activeAddress.city} `}</p>
-        ) : (
-          <p>Aucune adresse</p>
-        )}
-        <button onClick={() => setIsModal(true)}>Ajouter une adresse</button>
+        <div className="border-b border-black pb-2">
+          <h2 className="font-mcqueen font-bold text-xl mb-1">Adresse</h2>
+          {activeAddress ? (
+            <p>
+              {`${activeAddress.fullName}, ${activeAddress.street},`} <br />
+              {`${activeAddress.postalCode} ${activeAddress.city} `}
+            </p>
+          ) : (
+            <p>Aucune adresse</p>
+          )}
+        </div>
+        <button onClick={() => setIsModal(true)}>
+          <ModifyIcon />
+        </button>
       </div>
       {isModal && (
         <AddressModal
