@@ -16,6 +16,7 @@ export default function PostProductForm({
   setPostResponse,
   setIsLoading,
 }) {
+  const [errors, setErrors] = useState({});
   const [product, setProduct] = useState({
     title: "",
     price: "",
@@ -35,11 +36,40 @@ export default function PostProductForm({
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async () => {
+  const validateForm = () => {
+    let formErrors = {};
+    if (!product.title) formErrors.title = "Le titre est obligatoire.";
+    if (!product.price || product.price <= 0)
+      formErrors.price = "Le prix doit être un nombre positif.";
+    if (!product.description)
+      formErrors.description = "La description est obligatoire.";
+    if (!product.categoryId)
+      formErrors.categoryId = "La catégorie est obligatoire.";
+    if (!product.sizeId) formErrors.sizeId = "La taille est obligatoire.";
+    if (!product.state) formErrors.state = "L'état est obligatoire.";
+    if (!product.shipping)
+      formErrors.shipping = "Le mode d'expédition est obligatoire.";
+    if (!product.materials || product.materials.length === 0)
+      formErrors.materials = "Les matériaux sont obligatoires.";
+    if (!product.colors || product.colors.length === 0)
+      formErrors.colors = "Les couleurs sont obligatoires.";
+    if (!product.medias.length)
+      formErrors.medias = "Veuillez ajouter au moins 1 photo";
+
+    setErrors(formErrors);
+    return Object.keys(formErrors).length === 0;
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    // Validate form before submitting
+    if (!validateForm()) return;
+
     setIsLoading(true);
     const formattedProduct = {
       ...product,
-      price: product.price * 100,
+      price: product.price * 100, // Convert price to cents
     };
     const response = await fetchHorseted(
       "/products",
@@ -58,20 +88,31 @@ export default function PostProductForm({
       onSubmit={handleFormSubmit}
       className="container mx-auto p-16 bg-white rounded-3xl flex flex-col items-center gap-7"
     >
-      <ProductMedia accessToken={accessToken} setProduct={setProduct} />
-      <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <div className="relative">
+        <ProductMedia accessToken={accessToken} setProduct={setProduct} />
+        {errors.medias && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.medias}
+          </p>
+        )}
+      </div>
+      <div className="w-full flex flex-col lg:flex-row lg:justify-center relative">
         <h3 className="font-mcqueen font-semibold w-[200px]">
-          Titre de l'article :
+          Titre de l'article* :
         </h3>
         <TextInput
           onChange={handleFormChange}
           name="title"
           value={product.title}
-          required
-          className="max-w-[700px] mx-0 lg:mx-2"
+          className="mx-0 lg:mx-2"
           hideLabel
           placeholder="Ex : Couverture de poney"
         />
+        {errors.title && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.title}
+          </p>
+        )}
       </div>
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">
@@ -81,42 +122,63 @@ export default function PostProductForm({
           onChange={handleFormChange}
           name="description"
           value={product.description}
-          required
-          className="max-w-[700px] mx-0 lg:mx-2"
+          className="mx-0 lg:mx-2"
           hideLabel
           type="textarea"
           placeholder="Ex : Acheté le 10/12/2024, porté quelques fois mais ne me convient pas. Très bon état...poney"
         />
       </div>
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
-        <h3 className="font-mcqueen font-semibold w-[200px]">Prix :</h3>
-        <label
-          className="font-mcqueen font-semibold w-full max-w-[700px] "
-          htmlFor="price"
-        >
-          <div className="flex items-center border-b border-black">
+        <h3 className="font-mcqueen font-semibold w-[200px]">Prix* :</h3>
+        <label className="font-mcqueen font-semibold w-full" htmlFor="price">
+          <div className="flex items-center border-b border-black relative">
             <input
               onChange={handleFormChange}
               name="price"
               value={product.price}
-              required
               type="number"
               step="0.01"
               placeholder="Ex : 20"
               className="focus:outline-none border-none bg-transparent w-full placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap"
             />
             <span className="text-xl font-mcqueen font-semibold mr-2">€</span>
+            {errors.price && (
+              <p className="text-red text-xs font-sans font-normal absolute right-0 bottom-[-20px]">
+                {errors.price}
+              </p>
+            )}
           </div>
         </label>
       </div>
-      <Category product={product} setProduct={setProduct} />
-      <State product={product} setProduct={setProduct} />
+      <div className="relative">
+        <Category product={product} setProduct={setProduct} />
+        {errors.categoryId && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.categoryId}
+          </p>
+        )}
+      </div>
+      <div className="relative">
+        <State product={product} setProduct={setProduct} />
+        {errors.state && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.state}
+          </p>
+        )}
+      </div>
       <Size product={product} setProduct={setProduct} />
       <Colors product={product} setProduct={setProduct} />
       <Brand product={product} setProduct={setProduct} />
       <Materials product={product} setProduct={setProduct} />
-      <Shipping product={product} setProduct={setProduct} />
-      <Button onClick={handleFormSubmit} className="w-full max-w-[900px] mb-5">
+      <div className="relative">
+        <Shipping product={product} setProduct={setProduct} />
+        {errors.shipping && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.shipping}
+          </p>
+        )}
+      </div>
+      <Button type="submit" className="w-full max-w-[900px] mb-5">
         Publier l'article
       </Button>
     </form>

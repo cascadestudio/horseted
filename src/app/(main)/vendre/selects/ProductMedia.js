@@ -95,7 +95,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                   accept="image/png, image/jpeg"
                   multiple
                   max={10}
-                  required
+                  // required={imageSrcs.length === 0}
                 />
               </>
             )}
@@ -159,7 +159,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                   accept="image/png, image/jpeg"
                   multiple
                   max={10}
-                  required
+                  // required={imageSrcs.length === 0}
                 />
               </>
             )}
