@@ -1,14 +1,45 @@
 import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
+import fetchHorseted from "@/utils/fetchHorseted";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
 export default function OrderInfoMessage({
   products,
   type,
   totalPrice,
-  order,
   isMessageFromRecipient,
 }) {
+  // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
+
+  const { order, accessToken, updateMessages } = useThreadsContext();
+
+  const handleOfferSellerResponse = async (status) => {
+    // await getOffer(order.offers[0].id);
+    await patchOffer(status, order.offers[0].id);
+    updateMessages();
+  };
+
+  const patchOffer = async (status, offerId) => {
+    const body = {
+      status: status,
+    };
+    const response = await fetchHorseted(
+      `/offers/${offerId}`,
+      accessToken,
+      "PATCH",
+      body,
+      true,
+      true
+    );
+    console.log("response =>", response);
+  };
+
+  const getOffer = async (offerId) => {
+    const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
+    console.log("offer =>", offer);
+  };
+
   if (type === "newOffer") {
     return (
       <>

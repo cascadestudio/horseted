@@ -1,22 +1,29 @@
 import fetchHorseted from "@/utils/fetchHorseted";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DisplayMedia from "@/components/DisplayMedia";
 import { useAuthContext } from "@/context/AuthContext";
 
 import OrderInfoMessage from "./OrderInfoMessage";
 
-export default function Message({ message, order, updateMessages }) {
-  const { user, accessToken } = useAuthContext();
+export default function Message({ message, order }) {
+  const { user } = useAuthContext();
   const { content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
+  const [isMessageFromRecipient, setIsMessageFromRecipient] = useState(false);
+
+  // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
+  // console.log(senderId, user.id);
+
+  useEffect(() => {
+    if (user && message) {
+      setIsMessageFromRecipient(senderId === user.id);
+    }
+  }, [message, user]);
 
   useEffect(() => {
     if (order) {
       getProducts();
-      // if (order.offers[0].id) {
-      //   getOffer(order.offers[0].id);
-      // }
     }
   }, [order]);
 
@@ -35,29 +42,6 @@ export default function Message({ message, order, updateMessages }) {
     setProducts(products);
   };
 
-  // const getOffer = async (offerId) => {
-  //   const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
-  //   console.log("offer =>", offer);
-  // };
-
-  const isMessageFromRecipient = senderId === null;
-
-  const handleOfferSellerResponse = async (status) => {
-    const body = {
-      status: status,
-    };
-    const response = await fetchHorseted(
-      `/offers/${offerId}`,
-      accessToken,
-      "PATCH",
-      body,
-      true,
-      true
-    );
-    console.log("response =>", response);
-    updateMessages();
-  };
-
   switch (type) {
     case "orderDeliveredConfirmationRequired":
       if (!products.length) break;
@@ -65,7 +49,6 @@ export default function Message({ message, order, updateMessages }) {
         <OrderInfoMessage
           products={products}
           type={type}
-          order={order}
           isMessageFromRecipient={isMessageFromRecipient}
         />
       );
@@ -75,7 +58,6 @@ export default function Message({ message, order, updateMessages }) {
         <OrderInfoMessage
           products={products}
           type={type}
-          order={order}
           isMessageFromRecipient={isMessageFromRecipient}
         />
       );
@@ -85,7 +67,6 @@ export default function Message({ message, order, updateMessages }) {
         <OrderInfoMessage
           products={products}
           type={type}
-          order={order}
           isMessageFromRecipient={isMessageFromRecipient}
         />
       );
@@ -96,7 +77,6 @@ export default function Message({ message, order, updateMessages }) {
           products={products}
           type={type}
           totalPrice={totalPrice}
-          order={order}
           isMessageFromRecipient={isMessageFromRecipient}
         />
       );

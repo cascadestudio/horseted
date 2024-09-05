@@ -167,6 +167,7 @@ export const ThreadsProvider = ({ children }) => {
         accessToken,
         isInfo,
         setIsInfo,
+        updateMessages,
       }}
     >
       {children}
