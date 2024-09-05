@@ -10,16 +10,10 @@ export default function Message({ message, order }) {
   const { content, senderId, type, offerId, medias } = message;
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
-  const [isMessageFromRecipient, setIsMessageFromRecipient] = useState(false);
 
-  // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
-  // console.log(senderId, user.id);
+  // console.log("message =>", message);
 
-  useEffect(() => {
-    if (user && message) {
-      setIsMessageFromRecipient(senderId === user.id);
-    }
-  }, [message, user]);
+  const isMessageFromRecipient = user.id === message.senderId;
 
   useEffect(() => {
     if (order) {

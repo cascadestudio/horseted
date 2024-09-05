@@ -4,15 +4,12 @@ import { centsToEuros } from "@/utils/centsToEuros";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
-export default function OrderInfoMessage({
-  products,
-  type,
-  totalPrice,
-  isMessageFromRecipient,
-}) {
+export default function OrderInfoMessage({ products, type, totalPrice }) {
   // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
 
-  const { order, accessToken, updateMessages } = useThreadsContext();
+  const { order, accessToken, updateMessages, user } = useThreadsContext();
+
+  const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
     // await getOffer(order.offers[0].id);
