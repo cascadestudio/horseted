@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
+import Link from "next/link";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
   // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
@@ -42,7 +43,11 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
       <>
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
           {products.map((product) => (
-            <div key={product.id} className="flex items-center">
+            <Link
+              key={product.id}
+              href={`/product/${product.id}`}
+              className="flex items-center"
+            >
               <ClientProductImage
                 key={product.id}
                 product={product}
@@ -52,7 +57,12 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
               <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
                 {product.title}
               </div>
-            </div>
+              <img
+                src="/icons/external-link.svg"
+                alt="Chevron"
+                className="w-3 h-3 ml-1 mb-3"
+              />
+            </Link>
           ))}
           <p className="font-poppins font-medium text-sm whitespace-nowrap">
             <span className="line-through">{centsToEuros(totalPrice)} €</span>
