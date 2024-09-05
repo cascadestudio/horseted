@@ -82,22 +82,22 @@ export default function Addresses() {
           />
           Identique à l’adresse de livraison
         </label>
-        {!isDeliverySimilar && (
-          <div className="w-full">
-            {shippingAddresses.length > 0 &&
-              shippingAddresses.map((address) => {
-                return (
-                  <AddressCard
-                    address={address}
-                    key={address.id}
-                    getAddresses={getAddresses}
-                    accessToken={accessToken}
-                  />
-                );
-              })}
-          </div>
-        )}
       </div>
+      {!isDeliverySimilar && (
+        <div className="w-full lg:col-start-2 lg:row-start-3 lg:mt-[-40px]">
+          {shippingAddresses.length > 0 &&
+            shippingAddresses.map((address) => {
+              return (
+                <AddressCard
+                  address={address}
+                  key={address.id}
+                  getAddresses={getAddresses}
+                  accessToken={accessToken}
+                />
+              );
+            })}
+        </div>
+      )}
       {!isDeliverySimilar && (
         <div className="lg:col-start-2">
           <AddAddressButton
