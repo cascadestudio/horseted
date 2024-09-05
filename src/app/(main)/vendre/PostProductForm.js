@@ -10,6 +10,7 @@ import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
 import { useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function PostProductForm({
   accessToken,
@@ -37,11 +38,15 @@ export default function PostProductForm({
 
   const handleFormSubmit = async () => {
     setIsLoading(true);
+    const formattedProduct = {
+      ...product,
+      price: product.price * 100,
+    };
     const response = await fetchHorseted(
       "/products",
       accessToken,
       "POST",
-      product,
+      formattedProduct,
       true,
       true
     );
