@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
 import ServicePoint from "./ServicePoint";
 import { centsToEuros } from "@/utils/centsToEuros";
+import { shippingSizeTranslations } from "@/utils/translations";
 
 export default function DeliveryMethods({
   activeAddress,
@@ -70,7 +71,10 @@ export default function DeliveryMethods({
           <h2 className="font-mcqueen font-bold text-xl mb-2">
             Options de livraison
           </h2>
-          <p>{productSize}</p>
+          <p className="font-poppins font-medium text-sm">
+            Taille du colis :{" "}
+            {shippingSizeTranslations[productSize] || productSize}
+          </p>
         </div>
         {shippingMethods.map((shippingMethod) => {
           const { id, name, price } = shippingMethod;
