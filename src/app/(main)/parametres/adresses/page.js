@@ -11,7 +11,7 @@ import AddressCard from "./AddressCard";
 export default function Addresses() {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
-  const [isDeliverySimilar, setIsDeliverySimilar] = useState(false);
+  const [isDeliverySimilar, setIsDeliverySimilar] = useState(true);
   const [modal, setModal] = useState({
     isOpen: false,
     type: "",

@@ -16,7 +16,7 @@ export default function AddressModal({
     postalCode: "",
     city: "",
     country: "FR",
-    additionalInfos: "1er étage",
+    additionalInfos: "",
     type: type,
     isDefault: false,
   });
