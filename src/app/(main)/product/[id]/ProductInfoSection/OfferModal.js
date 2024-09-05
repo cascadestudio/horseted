@@ -3,6 +3,8 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { centsToEuros } from "@/utils/centsToEuros";
+
 export default function OfferModal({ price, onClose, products }) {
   const router = useRouter();
   const { accessToken } = useAuthContext();
@@ -11,11 +13,13 @@ export default function OfferModal({ price, onClose, products }) {
 
   console.log("products =>", products);
 
+  const displayPrice = centsToEuros(price);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const productIds = handleProductsIds();
     console.log("productIds =>", productIds);
-    const offer = parseFloat(e.target.offer.value);
+    const offer = parseFloat(e.target.offer.value) * 100;
     if (offer > price) {
       setShowAlert(true);
     } else {
@@ -71,7 +75,7 @@ export default function OfferModal({ price, onClose, products }) {
               step="0.01"
               name="offer"
               id="offer"
-              placeholder={price}
+              placeholder={displayPrice}
               className="border-none font-poppins text-[24px] leading-[48px] pb-0"
             />
             <span className="text-[24px] leading-[48px] font-semibold mr-2">
