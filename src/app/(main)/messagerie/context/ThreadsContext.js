@@ -26,7 +26,7 @@ export const ThreadsProvider = ({ children }) => {
   const [isInfo, setIsInfo] = useState(false);
   const [totalPrice, setTotalPrice] = useState(null);
 
-  // console.log("order =>", order);
+  // console.log("product =>", product);
 
   // Effects
   useEffect(() => {
@@ -37,12 +37,15 @@ export const ThreadsProvider = ({ children }) => {
     if (activeThread === null) return;
     updateMessages();
     handleThreadOrderInfo();
-    getRecipient(activeThread);
+    const recipientId = activeThread.authors.find(
+      (authors) => authors.id !== user.id
+    ).id;
+    getRecipient(recipientId);
   }, [activeThread]);
 
   useEffect(() => {
     if (productIdParam) {
-      if (threads.length > 0) {
+      if (threads.length) {
         findIfThreadAlreadyExist(productIdParam);
       } else {
         initNewThread(productIdParam);
@@ -83,7 +86,7 @@ export const ThreadsProvider = ({ children }) => {
     setActiveThread(null);
     setMessages([]);
     const product = await getProduct(productIdParam);
-    setRecipient({ id: product.userId });
+    getRecipient(product.userId);
   };
 
   const initWithLastThread = async () => {
@@ -110,10 +113,7 @@ export const ThreadsProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const getRecipient = async (activeThread) => {
-    const recipientId = activeThread.authors.find(
-      (authors) => authors.id !== user.id
-    ).id;
+  const getRecipient = async (recipientId) => {
     setLoading(true);
     const response = await fetchHorseted(`/users/${recipientId}`);
     setRecipient(response);

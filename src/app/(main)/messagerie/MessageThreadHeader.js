@@ -2,19 +2,22 @@ import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContex
 import CloseButtonIcon from "@/assets/icons/CloseButton";
 
 export default function MessageThreadHeader() {
-  const { products, recipient, isInfo, setIsInfo } = useThreadsContext();
+  const { product, products, recipient, isInfo, setIsInfo } =
+    useThreadsContext();
 
   // console.log("products =>", products);
 
   return (
     <div className="flex justify-between items-center p-6 border-b border-pale-grey">
-      {products ? (
-        <h2 className="text-xl font-mcqueen font-bold capitalize">
-          {products.map((product) => product.title).join(", ")}
-        </h2>
-      ) : recipient ? (
-        <h2>Nouvelle discussion</h2>
-      ) : null}
+      <h2 className="text-xl font-mcqueen font-bold capitalize">
+        {products.length
+          ? products.map((product) => product.title).join(", ")
+          : product
+            ? product.title
+            : recipient
+              ? "Nouvelle discussion"
+              : null}
+      </h2>
       <button onClick={() => setIsInfo(!isInfo)}>
         {isInfo ? (
           <CloseButtonIcon />
