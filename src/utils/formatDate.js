@@ -1,10 +1,39 @@
 export function ISOtoDate(ISO) {
+  const date = new Date(ISO);
+  const now = new Date();
+
+  const isToday =
+    date.getDate() === now.getDate() &&
+    date.getMonth() === now.getMonth() &&
+    date.getFullYear() === now.getFullYear();
+
+  if (isToday) {
+    return date.toLocaleTimeString("fr-FR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  const diffInTime = now.getTime() - date.getTime();
+  const diffInDays = Math.floor(diffInTime / (1000 * 60 * 60 * 24));
+
+  if (diffInDays === 0 || diffInDays === 1) {
+    return "Hier";
+  }
+
+  if (diffInDays > 1 && diffInDays < 7) {
+    return `il y a ${diffInDays} jour${diffInDays > 1 ? "s" : ""}`;
+  }
+
+  if (diffInDays > 0 && diffInDays < 7) {
+    return `il y a ${diffInDays} jour${diffInDays > 1 ? "s" : ""}`;
+  }
+
   const options = {
-    year: "numeric",
-    month: "long",
     day: "numeric",
+    month: "short",
   };
-  return new Intl.DateTimeFormat("fr-FR", options).format(new Date(ISO));
+  return new Intl.DateTimeFormat("fr-FR", options).format(date);
 }
 
 export function ISOtoShortDate(ISODate) {
