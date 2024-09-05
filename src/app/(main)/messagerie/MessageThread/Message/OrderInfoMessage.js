@@ -2,7 +2,13 @@ import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
 
-export default function OrderInfoMessage({ products, type, totalPrice }) {
+export default function OrderInfoMessage({
+  products,
+  type,
+  totalPrice,
+  order,
+  isMessageFromRecipient,
+}) {
   if (type === "newOffer") {
     return (
       <>
@@ -28,7 +34,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
             </span>
           </p>
         </li>
-        {!isFromUser && (
+        {!isMessageFromRecipient && (
           <div className="flex">
             <Button
               variant={"red"}

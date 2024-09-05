@@ -11,8 +11,6 @@ export default function Message({ message, order, updateMessages }) {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(null);
 
-  // console.log("message =>", message);
-
   useEffect(() => {
     if (order) {
       getProducts();
@@ -20,7 +18,7 @@ export default function Message({ message, order, updateMessages }) {
       //   getOffer(order.offers[0].id);
       // }
     }
-  }, []);
+  }, [order]);
 
   const getProducts = async () => {
     const products = await Promise.all(
@@ -28,6 +26,7 @@ export default function Message({ message, order, updateMessages }) {
         async (item) => await fetchHorseted(`/products/${item.productId}`)
       )
     );
+
     const totalPrice = products.reduce(
       (sum, product) => sum + product.price,
       0
@@ -41,7 +40,7 @@ export default function Message({ message, order, updateMessages }) {
   //   console.log("offer =>", offer);
   // };
 
-  const isFromUser = user.id === senderId;
+  const isMessageFromRecipient = senderId === null;
 
   const handleOfferSellerResponse = async (status) => {
     const body = {
@@ -61,28 +60,51 @@ export default function Message({ message, order, updateMessages }) {
 
   switch (type) {
     case "orderDeliveredConfirmationRequired":
-      if (products.length === 0) break;
-      return <OrderInfoMessage products={products} type={type} />;
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          order={order}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "orderSent":
-      if (products.length === 0) break;
-      return <OrderInfoMessage products={products} type={type} />;
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          order={order}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "orderDelivered":
-      if (products.length === 0) break;
-      return <OrderInfoMessage products={products} type={type} />;
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          order={order}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "newOffer":
-      if (products.length === 0) break;
+      if (!products.length) break;
       return (
         <OrderInfoMessage
           products={products}
           type={type}
           totalPrice={totalPrice}
+          order={order}
+          isMessageFromRecipient={isMessageFromRecipient}
         />
       );
     case "message":
       return (
         <li
           className={`message-container ${
-            isFromUser ? "self-end" : "self-start"
+            isMessageFromRecipient ? "self-end" : "self-start"
           }`}
         >
           <p>{content}</p>

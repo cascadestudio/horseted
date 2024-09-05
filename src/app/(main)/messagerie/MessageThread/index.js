@@ -21,7 +21,7 @@ export default function MessageThread() {
 
   const [loading, setLoading] = useState(false);
 
-  // console.log("order =>", order);
+  // console.log("messages =>", messages);
 
   useEffect(() => {
     if (!recipient) return;
