@@ -10,7 +10,6 @@ import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
 import { useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function PostProductForm({
   accessToken,
@@ -47,7 +46,6 @@ export default function PostProductForm({
       accessToken,
       "POST",
       formattedProduct,
-      true,
       true
     );
     console.log("response =>", response);
@@ -58,12 +56,12 @@ export default function PostProductForm({
   return (
     <form
       onSubmit={handleFormSubmit}
-      className="container mx-auto px-5 pt-5 bg-white rounded-3xl flex flex-col items-center gap-7"
+      className="container mx-auto p-16 bg-white rounded-3xl flex flex-col items-center gap-7"
     >
       <ProductMedia accessToken={accessToken} setProduct={setProduct} />
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">
-          Titre de l'article* :
+          Titre de l'article :
         </h3>
         <TextInput
           onChange={handleFormChange}
@@ -91,7 +89,7 @@ export default function PostProductForm({
         />
       </div>
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
-        <h3 className="font-mcqueen font-semibold w-[200px]">Prix* :</h3>
+        <h3 className="font-mcqueen font-semibold w-[200px]">Prix :</h3>
         <label
           className="font-mcqueen font-semibold w-full max-w-[700px] "
           htmlFor="price"
