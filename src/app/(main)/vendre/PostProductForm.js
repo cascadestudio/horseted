@@ -8,7 +8,7 @@ import Materials from "./selects/Materials";
 import Shipping from "./selects/Shipping";
 import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function PostProductForm({
@@ -30,6 +30,10 @@ export default function PostProductForm({
     colors: [],
     medias: [],
   });
+
+  useEffect(() => {
+    validateForm();
+  }, [product]);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +59,7 @@ export default function PostProductForm({
       formErrors.colors = "Les couleurs sont obligatoires.";
     if (!product.medias.length)
       formErrors.medias = "Veuillez ajouter au moins 1 photo";
+    if (!product.brand) formErrors.brand = "Veuillez ajouter au moins 1 photo";
 
     setErrors(formErrors);
     return Object.keys(formErrors).length === 0;
@@ -63,13 +68,12 @@ export default function PostProductForm({
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate form before submitting
     if (!validateForm()) return;
 
     setIsLoading(true);
     const formattedProduct = {
       ...product,
-      price: product.price * 100, // Convert price to cents
+      price: product.price * 100,
     };
     const response = await fetchHorseted(
       "/products",
@@ -114,9 +118,9 @@ export default function PostProductForm({
           </p>
         )}
       </div>
-      <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <div className="w-full flex flex-col lg:flex-row lg:justify-center relative">
         <h3 className="font-mcqueen font-semibold w-[200px]">
-          Description de l'article :
+          Description de l'article* :
         </h3>
         <TextInput
           onChange={handleFormChange}
@@ -127,6 +131,11 @@ export default function PostProductForm({
           type="textarea"
           placeholder="Ex : Acheté le 10/12/2024, porté quelques fois mais ne me convient pas. Très bon état...poney"
         />
+        {errors.description && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.description}
+          </p>
+        )}
       </div>
       <div className="w-full flex flex-col lg:flex-row lg:justify-center">
         <h3 className="font-mcqueen font-semibold w-[200px]">Prix* :</h3>
@@ -166,10 +175,38 @@ export default function PostProductForm({
           </p>
         )}
       </div>
-      <Size product={product} setProduct={setProduct} />
-      <Colors product={product} setProduct={setProduct} />
-      <Brand product={product} setProduct={setProduct} />
-      <Materials product={product} setProduct={setProduct} />
+      <div className="relative">
+        <Size product={product} setProduct={setProduct} />
+        {errors.size && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.size}
+          </p>
+        )}
+      </div>
+      <div className="relative">
+        <Colors product={product} setProduct={setProduct} />
+        {errors.colors && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.colors}
+          </p>
+        )}
+      </div>
+      <div className="relative">
+        <Brand product={product} setProduct={setProduct} />
+        {errors.brand && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.brand}
+          </p>
+        )}
+      </div>
+      <div className="relative">
+        <Materials product={product} setProduct={setProduct} />
+        {errors.materials && (
+          <p className="text-red text-xs absolute right-0 bottom-[-20px]">
+            {errors.materials}
+          </p>
+        )}
+      </div>
       <div className="relative">
         <Shipping product={product} setProduct={setProduct} />
         {errors.shipping && (
