@@ -18,6 +18,8 @@ export default function ThreadsContainer() {
     setIsNewMessageSearch,
     isNewMessageSearch,
     isInfo,
+    setProducts,
+    setProduct,
   } = useThreadsContext();
 
   // console.log("order =>", order);
@@ -25,6 +27,8 @@ export default function ThreadsContainer() {
   const handleNewMessageSearchClick = () => {
     setIsNewMessageSearch(!isNewMessageSearch);
     setActiveThread(null);
+    setProduct([]);
+    setProducts([]);
   };
 
   return (

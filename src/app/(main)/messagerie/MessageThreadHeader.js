@@ -14,9 +14,7 @@ export default function MessageThreadHeader() {
           ? products.map((product) => product.title).join(", ")
           : product
             ? product.title
-            : recipient
-              ? "Nouvelle discussion"
-              : null}
+            : "Nouvelle discussion"}
       </h2>
       <button onClick={() => setIsInfo(!isInfo)}>
         {isInfo ? (
