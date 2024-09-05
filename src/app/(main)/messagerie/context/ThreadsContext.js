@@ -52,8 +52,10 @@ export const ThreadsProvider = ({ children }) => {
   // Helper Functions
   const handleThreadOrderInfo = async () => {
     if (activeThread?.orderId) {
-      await getOrder(activeThread.orderId);
-      await getOrderTracking(activeThread.orderId);
+      const order = await getOrder(activeThread.orderId);
+      if (order.status !== "negotiating") {
+        await getOrderTracking(activeThread.orderId);
+      }
     } else {
       setOrderTracking(null);
     }
@@ -77,17 +79,19 @@ export const ThreadsProvider = ({ children }) => {
     setRecipient({ id: product.userId });
   };
 
-  const initWithLastThread = () => {
+  const initWithLastThread = async () => {
     if (threads.length > 0) {
       setActiveThread(threads[0]);
-      getMessages(threads[0].id);
       setRecipient(threads[0].authors[0]);
+      await getMessages(threads[0].id);
       if (threads[0].productId) {
         getProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
-        getOrder(threads[0].orderId);
-        getOrderTracking(threads[0].orderId);
+        const order = await getOrder(threads[0].orderId);
+        if (order.status !== "negotiating") {
+          getOrderTracking(threads[0].orderId);
+        }
       }
     }
   };
@@ -163,6 +167,7 @@ export const ThreadsProvider = ({ children }) => {
         accessToken,
         isInfo,
         setIsInfo,
+        updateMessages,
       }}
     >
       {children}
