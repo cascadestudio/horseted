@@ -65,7 +65,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
             className={`${
               imageSrcs.length > 0
                 ? "p-0 ml-6 border-none"
-                : "max-w-[700px] w-full border border-light-green border-dashed py-5"
+                : "w-full border border-light-green border-dashed py-5"
             } text-light-green flex flex-col items-center justify-center rounded-xl bg-white cursor-pointer min-h-[122px]`}
           >
             {isImageLoading ? (
@@ -95,7 +95,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                   accept="image/png, image/jpeg"
                   multiple
                   max={10}
-                  required
+                  // required={imageSrcs.length === 0}
                 />
               </>
             )}
@@ -159,7 +159,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                   accept="image/png, image/jpeg"
                   multiple
                   max={10}
-                  required
+                  // required={imageSrcs.length === 0}
                 />
               </>
             )}

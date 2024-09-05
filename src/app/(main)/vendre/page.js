@@ -42,7 +42,7 @@ const SellPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col lg:pb-10 lg:pt-0">
-      <div className="container mx-auto px-5">
+      <div className="container mx-auto px-5 max-w-[1050px]">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         <h1 className="font-mcqueen font-bold text-[24px] mb-4 lg:text-[38px] lg:leading-[48px]">
           Vendre un article
