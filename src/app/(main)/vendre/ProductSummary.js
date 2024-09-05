@@ -29,7 +29,7 @@ export default function ProductSummary({ postResponse }) {
           <Button
             className="mt-5 w-full max-w-[890px]"
             variant="transparent-green"
-            href="/vendre"
+            onClick={() => window.location.reload()}
           >
             Ajouter un autre article
           </Button>
