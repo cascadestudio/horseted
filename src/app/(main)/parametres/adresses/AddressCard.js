@@ -15,7 +15,7 @@ export default function AddressCard({ address, getAddresses, accessToken }) {
 
   return (
     <div
-      className={`bg-white rounded-xl p-5 border  lg:col-start-1 flex justify-between items-center ${
+      className={`bg-white rounded-xl p-5 border  lg:col-start-1 flex justify-between items-center h-[90px] min-w-[335px] w-full ${
         isDefault ? "border-light-green" : "border-lighter-grey"
       }`}
       key={id}
