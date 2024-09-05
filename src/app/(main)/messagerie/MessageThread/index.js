@@ -21,7 +21,7 @@ export default function MessageThread() {
 
   const [loading, setLoading] = useState(false);
 
-  // console.log("messages =>", messages);
+  // console.log("activeThread =>", activeThread);
 
   useEffect(() => {
     if (!recipient) return;

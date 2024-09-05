@@ -35,6 +35,7 @@ export const ThreadsProvider = ({ children }) => {
     if (activeThread === null) return;
     updateMessages();
     handleThreadOrderInfo();
+    getRecipient(activeThread);
   }, [activeThread]);
 
   useEffect(() => {
@@ -97,6 +98,16 @@ export const ThreadsProvider = ({ children }) => {
     setLoading(true);
     const threads = await fetchHorseted("/threads", accessToken);
     setThreads(threads);
+    setLoading(false);
+  };
+
+  const getRecipient = async (activeThread) => {
+    const recipientId = activeThread.authors.find(
+      (authors) => authors.id !== user.id
+    ).id;
+    setLoading(true);
+    const response = await fetchHorseted(`/users/${recipientId}`);
+    setRecipient(response);
     setLoading(false);
   };
 
