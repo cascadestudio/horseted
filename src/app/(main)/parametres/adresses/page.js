@@ -57,12 +57,13 @@ export default function Addresses() {
       {deliveryAddresses.length > 0 &&
         deliveryAddresses.map((address) => {
           return (
-            <AddressCard
-              address={address}
-              key={address.id}
-              getAddresses={getAddresses}
-              accessToken={accessToken}
-            />
+            <div className="self-end" key={address.id}>
+              <AddressCard
+                address={address}
+                getAddresses={getAddresses}
+                accessToken={accessToken}
+              />
+            </div>
           );
         })}
       <AddAddressButton
@@ -72,7 +73,7 @@ export default function Addresses() {
         Adresse de facturation
       </h3>
       <div className="flex gap-2 items-start lg:col-start-2 lg:row-start-2 flex-col">
-        <label className="font-semibold leading-5 flex">
+        <label className="font-semibold leading-5 flex ">
           <Checkbox
             className="mr-2"
             value={isDeliverySimilar}
@@ -82,7 +83,7 @@ export default function Addresses() {
           Identique à l’adresse de livraison
         </label>
         {!isDeliverySimilar && (
-          <div>
+          <div className="w-full">
             {shippingAddresses.length > 0 &&
               shippingAddresses.map((address) => {
                 return (
@@ -94,12 +95,16 @@ export default function Addresses() {
                   />
                 );
               })}
-            <AddAddressButton
-              onClick={() => setModal({ isOpen: true, type: "shipping" })}
-            />
           </div>
         )}
       </div>
+      {!isDeliverySimilar && (
+        <div className="lg:col-start-2">
+          <AddAddressButton
+            onClick={() => setModal({ isOpen: true, type: "shipping" })}
+          />
+        </div>
+      )}
       {modal.isOpen && (
         <AddressModal
           isDeliverySimilar={isDeliverySimilar}
