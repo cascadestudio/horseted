@@ -28,12 +28,12 @@ export default function Addresses() {
     setAddresses(adresses);
   }
 
-  const deliveryAddresses = addresses.filter(
-    (address) => address.type === "delivery"
-  );
-  const shippingAddresses = addresses.filter(
-    (address) => address.type === "shipping"
-  );
+  const deliveryAddresses = addresses
+    .filter((address) => address.type === "delivery")
+    .sort((a, b) => b.isDefault - a.isDefault);
+  const shippingAddresses = addresses
+    .filter((address) => address.type === "shipping")
+    .sort((a, b) => b.isDefault - a.isDefault);
 
   const handleIsDeliverySimilar = async () => {
     setIsDeliverySimilar(!isDeliverySimilar);
