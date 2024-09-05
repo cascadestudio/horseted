@@ -16,13 +16,15 @@ export const ThreadsProvider = ({ children }) => {
   const [threads, setThreads] = useState([]);
   const [activeThread, setActiveThread] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
   const [order, setOrder] = useState(null);
   const [orderTracking, setOrderTracking] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(null);
 
   // console.log("order =>", order);
 
@@ -49,6 +51,12 @@ export const ThreadsProvider = ({ children }) => {
       initWithLastThread();
     }
   }, [threads, productIdParam]);
+
+  useEffect(() => {
+    if (order) {
+      getProducts();
+    }
+  }, [order]);
 
   // Helper Functions
   const handleThreadOrderInfo = async () => {
@@ -84,10 +92,11 @@ export const ThreadsProvider = ({ children }) => {
       setRecipient(threads[0].authors[0]);
       await getMessages(threads[0].id);
       if (threads[0].productId) {
+        // console.log("productId =>", threads[0].productId);
         getProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
-        const order = await getOrder(threads[0].orderId);
+        await getOrder(threads[0].orderId);
         await getOrderTracking(threads[0].orderId);
       }
     }
@@ -145,6 +154,21 @@ export const ThreadsProvider = ({ children }) => {
     return product;
   };
 
+  const getProducts = async () => {
+    const products = await Promise.all(
+      order.items.map(
+        async (item) => await fetchHorseted(`/products/${item.productId}`)
+      )
+    );
+
+    const totalPrice = products.reduce(
+      (sum, product) => sum + product.price,
+      0
+    );
+    setTotalPrice(totalPrice);
+    setProducts(products);
+  };
+
   const onDeleteThread = async () => {
     await fetchHorseted(`/threads/${activeThread?.id}`, accessToken, "DELETE");
     await getThreads();
@@ -177,6 +201,10 @@ export const ThreadsProvider = ({ children }) => {
         isInfo,
         setIsInfo,
         updateMessages,
+        totalPrice,
+        setTotalPrice,
+        products,
+        setProducts,
       }}
     >
       {children}
