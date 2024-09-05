@@ -1,5 +1,5 @@
 import AvatarDisplay from "@/components/AvatarDisplay";
-import { ISOtoDate } from "@/utils/formatDate";
+import { ISOtoLastMessageDate } from "@/utils/formatDate";
 import { useThreadsContext } from "./context/ThreadsContext";
 
 export default function ThreadList() {
@@ -56,7 +56,7 @@ export default function ThreadList() {
                 </p>
               </div>
               <p className="font-poppins font-medium self-start flex text-sm">
-                {ISOtoDate(lastMessage.createdAt)}
+                {ISOtoLastMessageDate(lastMessage.createdAt)}
                 {/* TODO date in hours if less than one day ago and in nb of days if less than one week */}
               </p>
             </button>

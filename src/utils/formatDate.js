@@ -1,4 +1,4 @@
-export function ISOtoDate(ISO) {
+export function ISOtoLastMessageDate(ISO) {
   const date = new Date(ISO);
   const now = new Date();
 
@@ -34,6 +34,15 @@ export function ISOtoDate(ISO) {
     month: "short",
   };
   return new Intl.DateTimeFormat("fr-FR", options).format(date);
+}
+
+export function ISOtoDate(ISO) {
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("fr-FR", options).format(new Date(ISO));
 }
 
 export function ISOtoShortDate(ISODate) {
