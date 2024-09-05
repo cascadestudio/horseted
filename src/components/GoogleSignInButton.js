@@ -14,7 +14,7 @@ export default function GoogleSignInButton() {
       const result = await signInWithPopup(auth, googleProvider);
       console.log("User signed in:", result.user);
       const accessToken = result.user.accessToken;
-      const user = await getUser(accessToken);
+      const user = await fetchHorseted(`/users/me`, accessToken);
       if (!user) {
         await postUser({
           firebaseToken: accessToken,

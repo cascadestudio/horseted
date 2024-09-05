@@ -3,7 +3,7 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
-import { getUser } from "@/utils/getUser";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 const auth = getAuth(firebase_app);
 export const AuthContext = createContext({});
@@ -20,7 +20,8 @@ export const AuthContextProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          const apiUser = await getUser(firebaseUser.accessToken);
+          const accessToken = firebaseUser.accessToken;
+          const apiUser = await fetchHorseted(`/users/me`, accessToken);
           setUser({ auth: firebaseUser, ...apiUser });
           setAccessToken(firebaseUser.accessToken);
         } catch (error) {
