@@ -166,19 +166,20 @@ export default function ProductsPage() {
       <h1 className="text-4xl font-bold font-mcqueen mb-7">
         Tous les articles
       </h1>
-      <div className="w-full flex justify-end mb-5">
+      <div className="w-full flex justify-start">
         <Button
           className="block lg:hidden"
           onClick={() => setIsModalOpen(true)}
         >
+          <img src="/icons/filters.svg" alt="filter" className="mr-2" />
           Filtres
         </Button>
       </div>
 
-      {/* Modal for filters */}
+      {/* Modal for filters on small screens */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white w-screen h-screen p-4 overflow-hidden">
+          <div className="bg-light-grey w-screen h-screen p-4 overflow-hidden">
             <button
               className="mb-4 bg-red-500 text-white px-3 py-1 rounded"
               onClick={() => setIsModalOpen(false)}

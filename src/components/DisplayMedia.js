@@ -2,7 +2,7 @@ import getImage from "@/utils/getImage";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function DisplayMedia({ medias }) {
+export default function DisplayMedia({ medias, productSummary }) {
   const [imageSrcs, setImageSrcs] = useState([]);
 
   useEffect(() => {
@@ -18,18 +18,41 @@ export default function DisplayMedia({ medias }) {
     setImageSrcs(srcs);
   }
 
+  const maxImagesToShow = 3;
+  const displayImages = productSummary
+    ? imageSrcs.slice(0, maxImagesToShow)
+    : imageSrcs;
+  const remainingImagesCount = productSummary
+    ? imageSrcs.length - maxImagesToShow
+    : 0;
+
   return (
-    <div className="flex gap-2 mt-3">
-      {imageSrcs.map((imageSrc, index) => (
-        <Image
+    <div
+      className={`flex flex-col lg:flex-row ${productSummary ? "gap-5" : "gap-2 mt-3"}`}
+    >
+      {displayImages.map((imageSrc, index) => (
+        <div
           key={index}
-          src={imageSrc}
-          className={`object-cover rounded`}
-          width={100}
-          height={100}
-          alt="Avatar"
-        />
+          className="relative"
+          style={{
+            width: productSummary ? "250px" : "100px",
+            height: productSummary ? "290px" : "125px",
+          }}
+        >
+          <Image
+            src={imageSrc}
+            className="object-cover rounded"
+            layout="fill"
+            alt="Avatar"
+          />
+        </div>
       ))}
+
+      {productSummary && remainingImagesCount > 0 && (
+        <div className="flex items-center justify-center font-mcqueen font-semibold text-[28px] ml-3">
+          +{remainingImagesCount}
+        </div>
+      )}
     </div>
   );
 }

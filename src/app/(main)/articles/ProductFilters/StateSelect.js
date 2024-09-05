@@ -22,19 +22,19 @@ export default function StateSelect({
         "Article neuf, jamais porté/utilisé, sans étiquette ou emballage d'origine.",
     },
     {
-      label: "Très bon etat",
+      label: "Très bon état",
       param: "perfect",
       description:
         "Un article très peu porté/utilisé qui peut avoir de légères imperfections, mais qui reste en très bon état. Précisez les imperfections dans la description du produit. ",
     },
     {
-      label: "Bon etat",
+      label: "Bon état",
       param: "very_good",
       description:
         "Un article porté/utilisé quelques fois, montre des imperfections et des signes d'usure. Précisez les imperfections dans la description du produit. ",
     },
     {
-      label: "Mauvais etat",
+      label: "Mauvais état",
       param: "bad",
       description:
         "Un article porté/utilisé plusieurs fois, montre des imperfections et des signes d'usure. Précisez les imperfections dans la description du produit.",

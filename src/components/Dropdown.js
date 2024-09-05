@@ -42,7 +42,7 @@ export default function Dropdown({
   };
 
   return (
-    <div className={className} ref={panelRef}>
+    <div className={`relative lg:static ${className}`} ref={panelRef}>
       <button
         type="button"
         onClick={handleClick}
@@ -55,8 +55,8 @@ export default function Dropdown({
             isBlack
               ? "stroke-black"
               : isActive
-              ? " stroke-light-green"
-              : "stroke-medium-grey"
+                ? " stroke-light-green"
+                : "stroke-medium-grey"
           }`}
           width="10"
           height="7"

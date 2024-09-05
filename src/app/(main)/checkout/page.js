@@ -16,6 +16,7 @@ import StripeProvider from "@/components/StripeProvider";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
+import Alert from "@/components/Alert";
 
 const CheckOutPage = () => {
   const router = useRouter();
@@ -29,7 +30,10 @@ const CheckOutPage = () => {
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-
+  const [alert, setAlert] = useState({
+    type: "",
+    message: "",
+  });
   // console.log("isAddressSaved =>", isAddressSaved);
 
   useEffect(() => {
@@ -106,16 +110,59 @@ const CheckOutPage = () => {
   }
 
   async function handlePaymentResponse(paymentResponse) {
-    // console.log("Payment response:", paymentResponse);
-    if (paymentResponse.status === "succeeded") {
-      console.log("Payment successful");
-      router.push(`/messagerie`);
-    }
-    if (paymentResponse.status === "requires_action") {
-      const paymentIntenturl = paymentResponse.nextAction.url;
-      window.open(paymentIntenturl, "_blank");
-      const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
-      handleSocketPayment(paymentIntentId);
+    //  processing, requiresAction, requiresCapture, requiresConfirmation, requiresPaymentMethod, succeded
+    switch (paymentResponse.status) {
+      case "canceled":
+        setAlert({
+          type: "error",
+          message:
+            "Votre paiement a échoué, veuillez réessayer pour confirmer votre commande",
+        });
+        break;
+      case "succeeded":
+        setAlert({
+          type: "success",
+          message: "Paiement validé",
+        });
+        router.push(`/messagerie`);
+        break;
+      case "requires_action":
+        const paymentIntenturl = paymentResponse.nextAction.url;
+        window.open(paymentIntenturl, "_blank");
+        const paymentIntentId = getPaymentIntentIdFromUrl(paymentIntenturl);
+        handleSocketPayment(paymentIntentId);
+        setAlert({
+          type: "info",
+          message: "Veuillez confirmer votre paiement",
+        });
+        break;
+      case "processing":
+        setAlert("Payment canceled");
+        setAlert({
+          type: "error",
+          message: "Le paiement a été annulé",
+        });
+        break;
+      case "requiresCapture":
+        setAlert({
+          type: "info",
+          message: "Le paiement requires capture",
+        });
+        break;
+      case "requiresConfirmation":
+        setAlert({
+          type: "info",
+          message: "Le paiement requires confirmation",
+        });
+        break;
+      case "requiresPaymentMethod":
+        setAlert({
+          type: "info",
+          message: "Veuiller renseigner une carte de paiement",
+        });
+        break;
+      default:
+        break;
     }
   }
 
@@ -159,7 +206,6 @@ const CheckOutPage = () => {
               </div>
               <p className="font-bold text-lg">{productsPriceSum()} €</p>
             </div>
-            <UserForm user={user} />
             <Address
               activeAddress={activeAddress}
               setActiveAddress={setActiveAddress}
@@ -217,6 +263,7 @@ const CheckOutPage = () => {
           </div>
         </div>
       </div>
+      {alert.message !== "" && <Alert type={alert.type}>{alert.message}</Alert>}
     </StripeProvider>
   );
 };

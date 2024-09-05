@@ -10,8 +10,8 @@ export default function Category({ product, setProduct }) {
   };
 
   return (
-    <div className="w-full flex justify-center">
-      <h3 className="font-mcqueen font-semibold w-[200px] my-auto">
+    <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <h3 className="font-mcqueen font-semibold w-[200px] my-auto mb-3 lg:mb-0">
         Catégorie* :
       </h3>
       <CategorySelect

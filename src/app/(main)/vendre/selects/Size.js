@@ -9,8 +9,10 @@ export default function Size({ product, setProduct }) {
 
   if (product.categoryId === "") return;
   return (
-    <div className="w-full flex justify-center">
-      <h3 className="font-mcqueen font-semibold w-[200px] my-auto">Taille :</h3>
+    <div className="w-full flex flex-col lg:flex-row lg:justify-center">
+      <h3 className="font-mcqueen font-semibold w-[200px] my-auto mb-3 lg:mb-0">
+        Taille :
+      </h3>
       <SizesSelect
         activeSizes={product.sizeId}
         onSizeChange={onSizeChange}
