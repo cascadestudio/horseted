@@ -11,6 +11,7 @@ import OfferModal from "../ProductInfoSection/OfferModal";
 import StarRating from "@/components/StarRating";
 import { centsToEuros } from "@/utils/centsToEuros";
 import AvatarDisplay from "@/components/AvatarDisplay";
+import BundleShippingInfo from "./BundleShippingInfo";
 
 export default function CreateBundleModal({
   username,
@@ -57,7 +58,7 @@ export default function CreateBundleModal({
         return prev.shippingSize > current.shippingSize ? prev : current;
       }, product);
 
-      setShippingPrice(5.99); // TODO: Calculate shipping price
+      // setShippingPrice();
 
       return newBundle;
     });
@@ -126,12 +127,7 @@ export default function CreateBundleModal({
               <span className="font-poppins font-semibold text-[28px] leading-10">
                 {formatNumber(centsToEuros(bundlePrice))} €
               </span>
-              <div>
-                <span className="font-poppins font-medium text-sm">
-                  {formatNumber(shippingPrice)} €
-                </span>
-                <span className="text-sm"> - Livraison à domicile</span>
-              </div>
+              <BundleShippingInfo products={bundle} />
             </div>
             <div className="flex items-center mt-4">
               {bundle.map((product) => (
