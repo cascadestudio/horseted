@@ -1,5 +1,5 @@
 "use client";
-import sendPasswordResetEmail from "@/libs/firebase/auth/sendPasswordResetEmail";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import LeftArrow from "@/assets/icons/LeftArrow";
 import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage3 from "@/assets/images/heroImage3.jpg";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -18,13 +19,16 @@ export default function forgotPasswordPage() {
   const handleForm = async (event) => {
     event.preventDefault();
 
-    const { result, error } = await sendPasswordResetEmail(email);
+    const response = await fetchHorseted(
+      `/forgotten_password`,
+      null,
+      "POST",
+      { email: email },
+      true
+    );
 
-    if (error) {
-      return console.log(error);
-    }
+    console.log("response =>", response);
 
-    // else successful
     return router.push(`/signin?passwordResetSent=true`);
   };
 

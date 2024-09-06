@@ -4,12 +4,14 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { useRouter } from "next/navigation";
 
 const auth = getAuth(firebase_app);
 export const AuthContext = createContext({});
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
+  const router = useRouter();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,9 @@ export const AuthContextProvider = ({ children }) => {
           setUser({ auth: firebaseUser, ...apiUser });
           setAccessToken(firebaseUser.accessToken);
         } catch (error) {
-          console.error("Failed to fetch additional user data:", error);
+          setLoading(false);
+          console.error(error);
+          // return router.push("/signin");
         }
       } else {
         setUser(null);

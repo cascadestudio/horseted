@@ -27,19 +27,27 @@ export default function signupPage() {
   const handleForm = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+
     const { result, error } = await signUp(email, password);
+
     if (error) {
-      alert(error);
-      console.log(error);
-      return;
-    } else {
-      const firebaseToken = result.user.accessToken;
+      setIsLoading(false);
+      return alert(error);
+    }
+
+    const firebaseToken = result.user.accessToken;
+
+    try {
       await postUser({
         firebaseToken: firebaseToken,
         username: username,
         newsletter: newsletter,
       });
+    } catch (error) {
+      setIsLoading(false);
+      return alert(error);
     }
+
     setIsLoading(false);
     return router.push("/");
   };
@@ -48,7 +56,7 @@ export default function signupPage() {
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
       <div className="lg:w-1/2">
         {isLoading ? (
-          <Spinner />
+          <Spinner isFullScreen />
         ) : (
           <>
             <div className="border-b border-black lg:border-none">

@@ -3,10 +3,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import signIn from "@/libs/firebase/auth/signin";
 import Button from "@/components/Button";
 import Link from "next/link";
+import Spinner from "@/components/Spinner";
 
 export default function SigninForm({ className }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -21,15 +24,20 @@ export default function SigninForm({ className }) {
 
   const handleForm = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
 
     const { result, error } = await signIn(email, password);
 
     if (error) {
-      return console.log(error);
+      setIsLoading(false);
+      return alert(error);
     }
 
+    setIsLoading(false);
     return router.push("/");
   };
+
+  if (isLoading) return <Spinner isFullScreen />;
 
   return (
     <form
