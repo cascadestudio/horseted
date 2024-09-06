@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
+import { formatNumber } from "@/utils/formatNumber";
 
 const CheckOutPage = () => {
   const router = useRouter();
@@ -241,7 +242,11 @@ const CheckOutPage = () => {
                     </p>
                     <p className="font-extrabold">Total</p>
                     <p className="font-extrabold justify-self-end">
-                      {productsPriceSum() + shippingMethods[0]?.price} €
+                      {formatNumber(
+                        parseFloat(productsPriceSum().replace(",", ".")) +
+                          parseFloat(shippingMethods[0]?.price || 0)
+                      )}{" "}
+                      €
                     </p>
                   </>
                 )}
