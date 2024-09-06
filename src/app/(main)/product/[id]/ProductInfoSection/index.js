@@ -9,7 +9,6 @@ import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import { ISOtoDate } from "@/utils/formatDate";
 import CreateBundleModal from "../CreateBundleModal";
 import OfferModal from "./OfferModal";
-import { formatNumber } from "@/utils/formatNumber";
 import FavoriteButton from "@/components/FavoriteButton";
 import SellerBlock from "./SellerBlock";
 import {
@@ -17,6 +16,7 @@ import {
   shippingSizeTranslations,
 } from "@/utils/translations";
 import { centsToEuros } from "@/utils/centsToEuros";
+import ShippingInfo from "./ShippingInfo";
 
 export default function ProductPageClient({
   product,
@@ -34,7 +34,7 @@ export default function ProductPageClient({
 
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
-  const [shippingPrice, setShippingPrice] = useState(5.9);
+  const [shippingPrice, setShippingPrice] = useState(0);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
@@ -112,10 +112,7 @@ export default function ProductPageClient({
       <p className="font-poppins font-semibold text-2xl lg:text-[28px] leading-[42px]">
         {centsToEuros(price)} €
       </p>
-      <p className="font-poppins text-light-green text-sm mb-2">
-        {formatNumber(shippingPrice)} €{" "}
-        <span className="font-sans">- Livraison à domicile</span>
-      </p>
+      <ShippingInfo product={product} />
       {!isUserSeller && (
         <>
           <Button
