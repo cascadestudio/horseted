@@ -5,6 +5,7 @@ import Image from "next/image";
 import { postUser } from "@/utils/postUser";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/getUser";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function GoogleSignInButton() {
   const router = useRouter();
@@ -12,20 +13,26 @@ export default function GoogleSignInButton() {
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("User signed in:", result.user);
+      console.log("User signed in with Google", result.user);
       const accessToken = result.user.accessToken;
-      const user = await fetchHorseted(`/users/me`, accessToken);
+      const user = await getUser(accessToken);
+      console.log("user =>", user);
       if (!user) {
-        await postUser({
-          firebaseToken: accessToken,
-          username: result.user.displayName,
-          newsletter: true,
-        });
+        try {
+          await postUser({
+            firebaseToken: accessToken,
+            username: result.user.displayName,
+            newsletter: true,
+          });
+        } catch (error) {
+          console.error("Error during post user:", error);
+          // await fetchHorseted(`/users/me`, accessToken, "DELETE");
+        }
       }
-      return router.push("/");
     } catch (error) {
       console.error("Error during sign-in:", error);
     }
+    return router.push("/");
   };
 
   return (
