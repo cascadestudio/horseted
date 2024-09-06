@@ -9,6 +9,7 @@ import BurstIcon from "@/assets/icons/BurstIcon";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
+import FooterLink from "./FooterLink";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -118,9 +119,11 @@ export default function Footer() {
             </h4>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
-                <a href="/articles?categoryId=531&categoryName=Cavalière">
-                  Vêtements pour la cavalière
-                </a>
+                <FooterLink
+                  id={531}
+                  name={"Cavalière"}
+                  title={"Vêtements pour la cavalière"}
+                />
               </li>
               <li>
                 <a href="/articles?categoryId=585&categoryName=Boots%20cuir">
