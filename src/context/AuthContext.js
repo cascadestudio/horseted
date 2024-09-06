@@ -14,34 +14,30 @@ export const AuthContextProvider = ({ children }) => {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // console.log("user =>", user);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         try {
-          const accessToken = firebaseUser.accessToken;
-          const apiUser = await fetchHorseted(`/users/me`, accessToken);
+          const token = await firebaseUser.getIdToken();
+          const apiUser = await fetchHorseted(`/users/me`, token);
           setUser({ auth: firebaseUser, ...apiUser });
-          setAccessToken(firebaseUser.accessToken);
+          setAccessToken(token);
         } catch (error) {
-          setLoading(false);
-          console.error(error);
-          // return router.push("/signin");
+          console.error("Error fetching user data: ", error);
+          // router.push("/signin");
         }
       } else {
         setUser(null);
+        setAccessToken(null);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [router]);
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, loading }}>
+    <AuthContext.Provider value={{ user, accessToken }}>
       {children}
     </AuthContext.Provider>
   );
