@@ -118,13 +118,19 @@ export default function Footer() {
             </h4>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
-                <a href="#">Vêtements pour la cavalière</a>
+                <a href="/articles?categoryId=531&categoryName=Cavalière">
+                  Vêtements pour la cavalière
+                </a>
               </li>
               <li>
-                <a href="#">Boots en cuir pour la cavalière</a>
+                <a href="/articles?categoryId=585&categoryName=Boots%20cuir">
+                  Boots en cuir pour la cavalière
+                </a>
               </li>
               <li>
-                <a href="#">Casques</a>
+                <a href="/articles?categoryId=614&categoryName=Casques">
+                  Casques
+                </a>
               </li>
               <li>
                 <a href="#">Sangles et accessoires</a>
@@ -133,7 +139,9 @@ export default function Footer() {
                 <a href="#">Enrênements</a>
               </li>
               <li>
-                <a href="#">Selles et accessoires</a>
+                <a href="/articles?categoryId=577&categoryName=Selles et Accessoires">
+                  Selles et accessoires
+                </a>
               </li>
               <li>
                 <a href="#">Brosses</a>
@@ -160,13 +168,16 @@ export default function Footer() {
             </div>
             <div className="flex justify-center lg:justify-start">
               <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2 [&>a>svg]:h-6">
-                <a href="https://www.instagram.com/horseted.fr/">
+                <a
+                  href="https://www.instagram.com/horseted.fr/"
+                  target="_blank"
+                >
                   <InstagramIcon />
                 </a>
                 {/* <a href="#">
                   <YoutubeIcon />
                 </a> */}
-                <a href="https://www.facebook.com/horseted/">
+                <a href="https://www.facebook.com/horseted/" target="_blank">
                   <FacebookIcon />
                 </a>
                 {/* <a href="#">
