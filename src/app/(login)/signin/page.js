@@ -34,9 +34,9 @@ export default function signinPage() {
               Se connecter
             </h1>
             <GoogleSignInButton />
-            {/* <Suspense fallback={<div>Loading...</div>}> */}
-            <SigninForm />
-            {/* </Suspense> */}
+            <Suspense fallback={<div>Loading...</div>}>
+              <SigninForm />
+            </Suspense>
           </div>
           <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
             Inscription
