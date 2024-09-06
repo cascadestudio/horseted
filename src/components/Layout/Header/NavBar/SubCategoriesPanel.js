@@ -31,6 +31,8 @@ export default function SubCategoriesPanel({ parentId, panelRef, setIsOpen }) {
     }
   }, [subCategories]);
 
+  console.log(subCategories);
+
   if (isSubCategories) {
     return (
       <div

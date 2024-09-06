@@ -79,7 +79,7 @@ export default async function Home() {
       />
       <ProductsSection
         title="Selles et Accessoires"
-        categoryId="577"
+        categoryId="729"
         categoryName="Selles et Accessoires"
       />
       <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">

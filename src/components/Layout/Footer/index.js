@@ -126,28 +126,39 @@ export default function Footer() {
                 />
               </li>
               <li>
-                <a href="/articles?categoryId=585&categoryName=Boots%20cuir">
-                  Boots en cuir pour la cavalière
-                </a>
+                <FooterLink
+                  id={585}
+                  name={"Boots cuir"}
+                  title={"Boots en cuir pour la cavalière"}
+                />
+              </li>
+
+              <li>
+                <FooterLink id={614} name={"Casques"} title={"Casques"} />
               </li>
               <li>
-                <a href="/articles?categoryId=614&categoryName=Casques">
-                  Casques
-                </a>
+                <FooterLink
+                  id={651}
+                  name={"Sangles et Accessoires"}
+                  title={"Sangles et accessoires"}
+                />
               </li>
               <li>
-                <a href="#">Sangles et accessoires</a>
+                <FooterLink
+                  id={712}
+                  name={"Enrênements"}
+                  title={"Enrênements"}
+                />
               </li>
               <li>
-                <a href="#">Enrênements</a>
+                <FooterLink
+                  id={729}
+                  name={"Selles et Accessoires"}
+                  title={"Selles et accessoires"}
+                />
               </li>
               <li>
-                <a href="/articles?categoryId=577&categoryName=Selles et Accessoires">
-                  Selles et accessoires
-                </a>
-              </li>
-              <li>
-                <a href="#">Brosses</a>
+                <FooterLink id={825} name={"Brosse"} title={"Brosse"} />
               </li>
             </ul>
           </div>
