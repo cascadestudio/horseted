@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import Button from "@/components/Button";

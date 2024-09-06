@@ -4,14 +4,14 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const auth = getAuth(firebase_app);
 export const AuthContext = createContext({});
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
 
@@ -24,8 +24,7 @@ export const AuthContextProvider = ({ children }) => {
           setUser({ auth: firebaseUser, ...apiUser });
           setAccessToken(token);
         } catch (error) {
-          console.error("Error fetching user data: ", error);
-          // router.push("/signin");
+          console.error("Error fetching API user data: ", error);
         }
       } else {
         setUser(null);
@@ -34,7 +33,7 @@ export const AuthContextProvider = ({ children }) => {
     });
 
     return () => unsubscribe();
-  }, [router]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, accessToken }}>

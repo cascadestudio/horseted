@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${mcqueen.variable} ${raleway.variable} ${poppins.variable} font-sans`}
       >
-        <AuthContextProvider>{children}</AuthContextProvider>
+        {children}
       </body>
     </html>
   );

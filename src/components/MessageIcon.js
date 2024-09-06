@@ -7,8 +7,8 @@ export default function MessageIcon() {
   const [unseenMessagesNb, setUnseenMessagesNb] = useState(0);
 
   useEffect(() => {
-    handleUnseenMessagesNb();
-  }, []);
+    if (accessToken) handleUnseenMessagesNb();
+  }, [accessToken]);
 
   async function handleUnseenMessagesNb() {
     const threads = await getThreads();
