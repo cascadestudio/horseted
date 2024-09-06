@@ -41,9 +41,7 @@ export default function ProductCard({
       ${className} flex flex-col items-center border-b border-grey focus:outline-none"
     `}
     >
-      <Link href={`/product/${id}`}>
-        <ClientProductImage product={product} className="w-[280px] h-[340px]" />
-      </Link>
+      <ClientProductImage product={product} className="w-[280px] h-[340px]" />
 
       <div className="flex w-full p-5 justify-between self-start">
         <Link href={`/product/${id}`} className="max-w-[82%]">
