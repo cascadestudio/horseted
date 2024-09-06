@@ -5,7 +5,6 @@ import Image from "next/image";
 import { postUser } from "@/utils/postUser";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/getUser";
-import fetchHorseted from "@/utils/fetchHorseted";
 
 export default function GoogleSignInButton() {
   const router = useRouter();
@@ -26,7 +25,6 @@ export default function GoogleSignInButton() {
           });
         } catch (error) {
           console.error("Error during post user:", error);
-          // await fetchHorseted(`/users/me`, accessToken, "DELETE");
         }
       }
     } catch (error) {
