@@ -5,21 +5,16 @@ import Spinner from "@/components/Spinner";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
-    const { user, loading } = useAuthContext();
+    const { user, isLoading } = useAuthContext();
     const router = useRouter();
 
     useEffect(() => {
-      if (!loading && !user) {
+      if (!isLoading && !user) {
         router.replace("/");
       }
-    }, [user, loading, router]);
+    }, [user, isLoading, router]);
 
-    if (loading)
-      return (
-        // <div className="h-[calc(100vh_-_var(--header-height)-120px)]">
-        <Spinner isFullScreen />
-        // </div>
-      );
+    if (isLoading) return <Spinner isFullScreen />;
 
     if (!user) {
       return null;
