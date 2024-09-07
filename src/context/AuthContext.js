@@ -4,44 +4,42 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 import firebase_app from "@/libs/firebase/config";
 import { createContext, useContext, useState, useEffect } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useRouter } from "next/navigation";
 
 const auth = getAuth(firebase_app);
 export const AuthContext = createContext({});
 export const useAuthContext = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
-  const router = useRouter();
   const [user, setUser] = useState(null);
   const [accessToken, setAccessToken] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // console.log("user =>", user);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setIsLoading(true);
       if (firebaseUser) {
         try {
-          const accessToken = firebaseUser.accessToken;
-          const apiUser = await fetchHorseted(`/users/me`, accessToken);
+          const token = await firebaseUser.getIdToken();
+          const apiUser = await fetchHorseted(`/users/me`, token);
           setUser({ auth: firebaseUser, ...apiUser });
-          setAccessToken(firebaseUser.accessToken);
+          setAccessToken(token);
         } catch (error) {
-          setLoading(false);
-          console.error(error);
-          // return router.push("/signin");
+          console.error("Error fetching API user data: ", error);
+        } finally {
+          setIsLoading(false);
         }
       } else {
         setUser(null);
+        setAccessToken(null);
+        setIsLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, accessToken, loading }}>
+    <AuthContext.Provider value={{ user, accessToken, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
