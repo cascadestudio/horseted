@@ -155,13 +155,21 @@ export default function MobileMenu({ categories }) {
           </div>
           <div className="flex justify-center mb-9">
             <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full [&>a>svg]:h-6">
-              <a href="https://www.instagram.com/horseted.fr/">
+              <a
+                href="https://www.instagram.com/horseted.fr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <InstagramIcon />
               </a>
               {/* <a href="#">
                   <YoutubeIcon />
                 </a> */}
-              <a href="https://www.facebook.com/horseted/">
+              <a
+                href="https://www.facebook.com/horseted/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FacebookIcon />
               </a>
               {/* <a href="#">

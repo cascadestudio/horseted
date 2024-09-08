@@ -166,13 +166,18 @@ export default function Footer() {
                 <a
                   href="https://www.instagram.com/horseted.fr/"
                   target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <InstagramIcon />
                 </a>
                 {/* <a href="#">
                   <YoutubeIcon />
                 </a> */}
-                <a href="https://www.facebook.com/horseted/" target="_blank">
+                <a
+                  href="https://www.facebook.com/horseted/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FacebookIcon />
                 </a>
                 {/* <a href="#">
