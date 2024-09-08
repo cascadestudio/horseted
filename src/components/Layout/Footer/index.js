@@ -91,25 +91,25 @@ export default function Footer() {
             <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
-                <a href="#">À propos</a>
+                <a href="/a-propos">À propos</a>
               </li>
               <li>
-                <a href="#">Aide</a>
+                <a href="/aide">Aide</a>
               </li>
               <li>
                 <a href="/vendre">Vendre</a>
               </li>
               <li>
-                <a href="#">Acheter</a>
+                <a href="/articles">Acheter</a>
               </li>
               <li>
-                <a href="#">Livraisons & retours</a>
+                <a href="/aide">Livraisons & retours</a>
               </li>
               <li>
-                <a href="#">Articles</a>
+                <a href="/articles">Articles</a>
               </li>
               <li>
-                <a href="#">Écurie</a>
+                <a href="/mon-compte">Écurie</a>
               </li>
             </ul>
           </div>
@@ -118,48 +118,29 @@ export default function Footer() {
               Notre sélection
             </h4>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
-              <li>
-                <FooterLink
-                  id={531}
-                  name={"Cavalière"}
-                  title={"Vêtements pour la cavalière"}
-                />
-              </li>
-              <li>
-                <FooterLink
-                  id={585}
-                  name={"Boots cuir"}
-                  title={"Boots en cuir pour la cavalière"}
-                />
-              </li>
-
-              <li>
-                <FooterLink id={614} name={"Casques"} title={"Casques"} />
-              </li>
-              <li>
-                <FooterLink
-                  id={651}
-                  name={"Sangles et Accessoires"}
-                  title={"Sangles et accessoires"}
-                />
-              </li>
-              <li>
-                <FooterLink
-                  id={712}
-                  name={"Enrênements"}
-                  title={"Enrênements"}
-                />
-              </li>
-              <li>
-                <FooterLink
-                  id={729}
-                  name={"Selles et Accessoires"}
-                  title={"Selles et accessoires"}
-                />
-              </li>
-              <li>
-                <FooterLink id={825} name={"Brosse"} title={"Brosse"} />
-              </li>
+              <FooterLink
+                id={531}
+                name={"Cavalière"}
+                title={"Vêtements pour la cavalière"}
+              />
+              <FooterLink
+                id={585}
+                name={"Boots cuir"}
+                title={"Boots en cuir pour la cavalière"}
+              />
+              <FooterLink id={614} name={"Casques"} title={"Casques"} />
+              <FooterLink
+                id={651}
+                name={"Sangles et Accessoires"}
+                title={"Sangles et accessoires"}
+              />
+              <FooterLink id={712} name={"Enrênements"} title={"Enrênements"} />
+              <FooterLink
+                id={729}
+                name={"Selles et Accessoires"}
+                title={"Selles et accessoires"}
+              />
+              <FooterLink id={825} name={"Brosse"} title={"Brosse"} />
             </ul>
           </div>
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
@@ -176,7 +157,7 @@ export default function Footer() {
                   <a href="/cgu">Conditions d’utilisation</a>
                 </li>
                 <li>
-                  <a href="#">Charte vendeur</a>
+                  <a href="/charte-vendeur">Charte vendeur</a>
                 </li>
               </ul>
             </div>
@@ -210,6 +191,7 @@ export default function Footer() {
                 href="https://citronnoir.com/"
                 className="underline"
                 target="_blank"
+                rel="noopener noreferrer nofollow"
               >
                 Citron Noir
               </a>
