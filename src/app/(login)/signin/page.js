@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { Suspense } from "react";
 import Button from "@/components/Button";
@@ -9,7 +10,7 @@ import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
 import SigninForm from "./SigninForm";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
 
 export default function signinPage() {
   return (
@@ -32,7 +33,7 @@ export default function signinPage() {
             <h1 className="text-center font-mcqueen font-bold text-[22px] leading-[48px] lg:text-[36px] lg:mb-3">
               Se connecter
             </h1>
-            <GoogleSignInButton />
+            <GoogleLoginButton type="signin" />
             <Suspense fallback={<div>Loading...</div>}>
               <SigninForm />
             </Suspense>

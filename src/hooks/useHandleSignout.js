@@ -4,14 +4,13 @@ import { useRouter } from "next/navigation";
 export default function useHandleSignout() {
   const router = useRouter();
   const auth = getAuth();
-
   const handleSignout = () => {
     signOut(auth)
       .then(() => {
-        router.push("/"); // Redirect to the home page on successful sign-out
+        router.push("/");
       })
       .catch((error) => {
-        console.error("Error signing out:", error); // Log the error if sign-out fails
+        console.error("Error signing out:", error);
       });
   };
 

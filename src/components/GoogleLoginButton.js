@@ -6,25 +6,38 @@ import { postUser } from "@/utils/postUser";
 import { useRouter } from "next/navigation";
 import { getUser } from "@/utils/getUser";
 
-export default function GoogleSignInButton() {
+export default function GoogleLoginButton({ type }) {
   const router = useRouter();
 
   const handleGoogleSignIn = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log("User signed in:", result.user);
-      const accessToken = result.user.accessToken;
-      const user = await fetchHorseted(`/users/me`, accessToken);
+      console.log("User signed in with Google", result.user);
+      const accessToken = await result.user.getIdToken();
+      const user = await getUser(accessToken);
+
       if (!user) {
-        await postUser({
-          firebaseToken: accessToken,
-          username: result.user.displayName,
-          newsletter: true,
-        });
+        if (type === "signin") {
+          console.log("User not found, redirecting to signup...");
+          return router.push("/signup");
+        }
+        if (type === "signup") {
+          console.log("User not found, creating an account...");
+          await postUser({
+            firebaseToken: accessToken,
+            username: result.user.displayName,
+            newsletter: true,
+          });
+          console.log("User created successfully, redirecting to home...");
+          return router.push("/");
+        }
+      } else {
+        console.log("User already exists, redirecting to home...", user);
+        return router.push("/");
       }
-      return router.push("/");
     } catch (error) {
-      console.error("Error during sign-in:", error);
+      console.error("Error during Google sign-in:", error);
+      alert("Sign-in failed. Please try again.");
     }
   };
 

@@ -1,4 +1,5 @@
 "use client";
+
 import signUp from "@/libs/firebase/auth/signup";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,7 +15,7 @@ import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GoogleLoginButton from "@/components/GoogleLoginButton";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -167,7 +168,7 @@ export default function signupPage() {
                   Créer un compte
                 </Button>
               </form>
-              <GoogleSignInButton />
+              <GoogleLoginButton type="signup" />
               <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
                 Se connecter
               </h2>

@@ -27,7 +27,7 @@ const LoginIcon = () => (
     viewBox="0 0 18 18"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-black" // Tailwind class example
+    className="text-black"
   >
     <path
       d="M11 1C16.5 1 17 2 17 9C17 16 16.5 17 11 17"
