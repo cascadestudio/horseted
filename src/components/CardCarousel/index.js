@@ -126,7 +126,11 @@ export default function CardCarousel({ children, cardType }) {
 
   return (
     <div className="flex flex-col">
-      <Slider ref={sliderRef} {...settings}>
+      <Slider
+        ref={sliderRef}
+        {...settings}
+        className={cardType === "article" ? "article" : ""}
+      >
         {children.length > 1
           ? children
               .slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)

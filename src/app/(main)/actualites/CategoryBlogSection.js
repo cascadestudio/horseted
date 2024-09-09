@@ -63,7 +63,7 @@ export default async function CategoryBlogSection({
         )}
       </div>
       <div className="block lg:hidden">
-        <CardCarousel cardType="article">
+        <CardCarousel className="blog-carousel" cardType="article">
           {categoryArticles.map((article) => {
             const { title, image, body, slug } = article;
             return (
