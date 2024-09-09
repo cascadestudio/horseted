@@ -19,9 +19,9 @@ export default function Footer() {
         <div className="hidden lg:block lg:bg-[#E8E5DB] lg:border-t lg:border-light-green">
           <div className=" lg:container lg:mx-auto lg:flex lg:py-11 lg:justify-between lg:items-center lg:px-5">
             <div>
-              <h3 className="font-mcqueen font-bold text-2xl text-center lg:text-4xl">
+              <p className="font-mcqueen font-bold text-2xl text-center lg:text-4xl">
                 Vendez votre matériel dès maintenant
-              </h3>
+              </p>
               <p>
                 Vendez gratuitement votre matériel d’équitation et gagnez de
                 l’argent dès maintenant !
@@ -88,7 +88,7 @@ export default function Footer() {
             </Button>
           </div>
           <div className="pb-7">
-            <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
+            <p className="uppercase font-extrabold pb-2 text-lg">Horseted</p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
                 <a href="/a-propos">À propos</a>
@@ -114,9 +114,9 @@ export default function Footer() {
             </ul>
           </div>
           <div className="pb-7">
-            <h4 className="uppercase font-extrabold pb-2 text-lg">
+            <p className="uppercase font-extrabold pb-2 text-lg">
               Notre sélection
-            </h4>
+            </p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <FooterLink
                 id={531}
@@ -145,7 +145,7 @@ export default function Footer() {
           </div>
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
             <div>
-              <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
+              <p className="uppercase font-extrabold pb-2 text-lg">Légal</p>
               <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
                   <a href="/politique-de-confidentialite">Mentions légales</a>
