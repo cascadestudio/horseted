@@ -88,7 +88,7 @@ export default function ProductPageClient({
       <div className="flex items-center justify-between mb-2">
         <Link
           key={category.id}
-          href="#"
+          href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
           className="text-[13px] leading-4 border border-black rounded-3xl py-1 px-3"
         >
           {category.name}
@@ -132,7 +132,7 @@ export default function ProductPageClient({
           >
             Faire une offre
           </Button>
-          {userProducts?.items?.length > 0 && (
+          {userProducts?.items?.length > 1 && (
             <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
               <div>
                 <h4 className="font-mcqueen font-bold text-lg leading-5">
@@ -156,7 +156,15 @@ export default function ProductPageClient({
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>
             <td>Catégorie</td>
-            <td>{category && <Link href="#">{category.name}</Link>}</td>
+            <td>
+              {category && (
+                <Link
+                  href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
+                >
+                  {category.name}
+                </Link>
+              )}
+            </td>
           </tr>
           <tr>
             <td>État</td>
