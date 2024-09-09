@@ -82,7 +82,7 @@ export default function ProductImagesCarousel({ medias }) {
   return (
     <>
       <div className="flex max-w-full h-[calc(100vh_-_var(--header-height)-100px)] lg:max-h-[600px]">
-        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px] lg:flex justify-center overflow-hidden px-3 pb-0">
+        <div className="nav-slider hidden w-fit bg-white lg:rounded-tl-[25px] lg:rounded-bl-[25px]  lg:flex justify-center overflow-hidden px-3 pb-0">
           <Slider
             asNavFor={nav1}
             arrows={false}
@@ -121,7 +121,7 @@ export default function ProductImagesCarousel({ medias }) {
           >
             {medias.map((media, index) => (
               <div
-                className="h-full w-full [&_img]:aspect-[590/590] [&_img]:object-cover [&>*]:w-full  [&>*]:h-full"
+                className="h-full w-full [&_img]:aspect-[590/590] [&_img]:object-cover [&>*]:w-full [&>*]:h-full"
                 key={index}
               >
                 <img
