@@ -22,9 +22,9 @@ export default function BlogCard({ title, image, body, link, className }) {
         />
       </div>
       <div className="p-6 flex flex-col gap-3 justify-between">
-        <h3 className="font-mcqueen font-semibold text-xl line-clamp-2 overflow-hidden text-ellipsis">
+        <p className="font-mcqueen font-semibold text-xl line-clamp-2 overflow-hidden text-ellipsis">
           {title}
-        </h3>
+        </p>
         <div className="prose line-clamp-3 lg:prose-lg">
           <PortableText value={body} />
         </div>
