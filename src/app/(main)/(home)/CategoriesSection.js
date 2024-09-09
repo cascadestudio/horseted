@@ -47,7 +47,7 @@ export default async function CategoriesSection() {
             return (
               <Link
                 key={category.id}
-                href="#"
+                href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
                 className="border border-black rounded-3xl py-2 px-3 mt-2 mr-2 font-semibold"
               >
                 {capitalizeText(category.name)}
