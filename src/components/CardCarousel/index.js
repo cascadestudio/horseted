@@ -34,22 +34,19 @@ export default function CardCarousel({ children, cardType }) {
   let sliderRef = useRef(null);
 
   const handleMouseDown = (event) => {
-    console.log("handleMouseDown");
     event.preventDefault();
     setIsSwiping(false);
   };
 
   const handleMouseUp = () => {
-    console.log("handleMouseUp");
     if (sliderRef.current && sliderRef.current.innerSlider) {
       setIsSwiping(sliderRef.current.innerSlider.state.swiping);
     }
   };
 
   const handleClick = (event) => {
-    console.log("handleClick");
     if (isSwiping) {
-      event.preventDefault(); // Prevent click if swiping occurred
+      event.preventDefault();
     }
   };
 
@@ -136,8 +133,8 @@ export default function CardCarousel({ children, cardType }) {
               .map((child, index) => (
                 <div
                   key={index}
-                  onMouseDown={handleMouseDown} // Attach handleMouseDown to each child
-                  onMouseUp={handleMouseUp} // Attach handleMouseUp to each child
+                  onMouseDown={handleMouseDown}
+                  onMouseUp={handleMouseUp}
                   onClickCapture={handleClick}
                 >
                   {child}
