@@ -67,7 +67,7 @@ export default async function Home() {
         </div> */}
         <div className="bg-light-grey pb-12 lg:pb-20"></div>
       </div>
-      <ProductsSection title="Récemment ajouté" orderBy="new" />
+      <ProductsSection title="Récemment ajouté" orderBy="createdAt;desc" />
       <CategoriesSection />
       <ProductsSection
         title="Pour la cavalière"
