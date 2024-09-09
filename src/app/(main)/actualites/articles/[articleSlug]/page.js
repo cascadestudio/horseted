@@ -55,7 +55,7 @@ export default async function ArticlePage({ params }) {
             {title}
           </h1>
           <div className="grid grid-cols-2 lg:grid-cols-[1fr,auto,1fr] items-center gap-7">
-            <BurstIcon className="transform scale-x-[-1] h-10 w-10 lg:mt-9 lg:self-start  lg:place-self-end " />
+            <BurstIcon className="transform scale-x-[-1] h-10 w-10 lg:mt-9 col-start-1 row-start-1 lg:self-start  lg:place-self-end " />
             <div className="relative col-span-3 lg:col-span-1">
               {image && (
                 <Image
@@ -70,7 +70,7 @@ export default async function ArticlePage({ params }) {
                 {category.title}
               </span>
             </div>
-            <div className="row-start-1 row-span-1 col-start-2 lg:col-start-3 lg:pb-16 ">
+            <div className="row-start-1 row-span-1 col-start-1 col-span-2 place-self-center lg:col-start-3 lg:pb-16 ">
               <span className="font-extrabold">Partager :</span>
               <div className="flex items-center space-x-3 mt-2">
                 <FacebookIconNoBorder className="h-4" />
