@@ -22,7 +22,7 @@ export default async function Home() {
     <main>
       <div className="relative">
         <HeroCarousel />
-        <div className="text-white absolute top-1/2 px-8 lg:left-32">
+        <div className="text-white absolute top-1/3 px-8 lg:left-32">
           <h1 className="font-mcqueen font-bold mb-2 text-3xl text-center lg:text-left lg:text-5xl">
             Articles d’équitation <br /> de seconde main
           </h1>
