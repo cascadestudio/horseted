@@ -48,9 +48,9 @@ export default function ProductCard({
       <div className="flex w-full p-5 justify-between self-start">
         <Link href={`/product/${id}`} className="max-w-[82%]">
           <p className="font-poppins font-bold">{centsToEuros(price)} €</p>
-          <h4 className="text-lg font-extrabold text-light-green truncate">
+          <p className="text-lg font-extrabold text-light-green truncate">
             {title}
-          </h4>
+          </p>
           <p className="text-grey">{shippingSizeFrench}</p>
         </Link>
         <div className="flex items-start">
