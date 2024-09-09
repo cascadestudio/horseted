@@ -1,4 +1,3 @@
-import fetchHorseted from "@/utils/fetchHorseted";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
 import Button from "@/components/Button";
@@ -7,9 +6,35 @@ import NavBar from "./NavBar";
 import Link from "next/link";
 import AccountHandler from "./AccountHandler";
 import MobileMenu from "./MobileMenu";
+import { getCategories } from "@/fetch/getCategories";
 
 export default async function Header() {
-  const categories = await fetchHorseted("/categories");
+  const parentCategories = await getCategories();
+
+  const categories = await Promise.all(
+    parentCategories.map(async (category) => {
+      const subCategories = await getCategories(category.id);
+
+      if (subCategories && subCategories.length > 0) {
+        const updatedSubCategories = await Promise.all(
+          subCategories.map(async (subCategory) => {
+            const productCategories = await getCategories(subCategory.id);
+            return {
+              ...subCategory,
+              productCategories: productCategories || [],
+            };
+          })
+        );
+
+        return {
+          ...category,
+          subCategories: updatedSubCategories,
+        };
+      }
+
+      return category;
+    })
+  );
 
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
