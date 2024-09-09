@@ -10,7 +10,7 @@ export default function BlogCard({ title, image, body, link, className }) {
   const fullConfig = resolveConfig(tailwindConfig);
   return (
     <div
-      className={`border border-light-green rounded-md h-[450px] max-w-[350px] ${className}`}
+      className={`border border-light-green rounded-md h-[450px] max-w-[350px] lg:w-[350px] ${className}`}
     >
       <div className="flex items-center justify-center w-full p-1">
         <Image
