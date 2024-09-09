@@ -22,9 +22,9 @@ import Button from "@/components/Button";
 export default function ProductsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("search");
-  const categoryIdQuery = searchParams.get("categoryId");
-  const categoryNameQuery = searchParams.get("categoryName");
+  const searchParam = searchParams.get("search");
+  const categoryIdParam = searchParams.get("categoryId");
+  const categoryNameParam = searchParams.get("categoryName");
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -63,7 +63,7 @@ export default function ProductsPage() {
   }
 
   useEffect(() => {
-    if (categoryIdQuery !== null && categoryNameQuery !== null) {
+    if (categoryIdParam !== null && categoryNameParam !== null) {
       setActiveCategory({
         id: categoryIdQuery,
         name: categoryNameQuery,
@@ -92,8 +92,8 @@ export default function ProductsPage() {
       const activeSizeIds = activeSizes.map((size) => size.id);
       query += `&sizes=${activeSizeIds.join(";")}`;
     }
-    if (searchQuery !== null) {
-      query += `&terms=${searchQuery}`;
+    if (searchParam !== null) {
+      query += `&terms=${searchParam}`;
     }
     if (fromId !== null) {
       query += `&fromId=${fromId}`;
@@ -107,7 +107,7 @@ export default function ProductsPage() {
     activeMaterials,
     activePrices,
     activeSizes,
-    searchQuery,
+    searchParam,
     fromId,
   ]);
 
