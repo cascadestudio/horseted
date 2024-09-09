@@ -1,7 +1,12 @@
-.nav-slider .slick-track {
+.nav-slider .slick-slider {
   position: relative;
   top: 11px;
 }
+
+/* .nav-slider .slick-track {
+  position: relative;
+  top: 11px;
+} */
 
 .slick-track {
   height: 100%;
