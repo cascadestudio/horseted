@@ -27,6 +27,7 @@ export default function SigninForm({ className }) {
   const handleForm = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setIsAlert(false);
 
     const { result, error } = await signIn(email, password);
 
@@ -37,7 +38,7 @@ export default function SigninForm({ className }) {
     }
 
     setIsLoading(false);
-    return router.push("/");
+    return router.push("/articles");
   };
 
   if (isLoading) return <Spinner isFullScreen />;
