@@ -22,10 +22,11 @@ export default function AvatarDisplay({
     const avatarSrc = await getImage(file, "client");
     setAvatarSrc(avatarSrc);
   }
+  const stringSize = size.toString() + "px";
 
   return (
     <div
-      style={{ width: size, height: size }}
+      style={{ width: stringSize, height: stringSize }}
       className={`flex-shrink-0 ${className}`}
     >
       {isLoading ? (
@@ -33,7 +34,7 @@ export default function AvatarDisplay({
       ) : (
         <Image
           src={avatarSrc || placeholderImage}
-          style={{ width: size, height: size }}
+          style={{ width: stringSize, height: stringSize }}
           className={`object-cover rounded-full`}
           width={size}
           height={size}
