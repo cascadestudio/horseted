@@ -75,6 +75,7 @@ export default function MobileMenu({ categories }) {
             <AccountHandler
               setIsNavOpen={setIsNavOpen}
               className="w-full px-5"
+              isInMobileMenu
             />
             <h3 className="uppercase font-semibold text-sm text-center mt-5 mb-1 border-t w-full pt-5">
               Parcourir
