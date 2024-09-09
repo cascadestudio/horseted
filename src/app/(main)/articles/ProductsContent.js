@@ -321,7 +321,7 @@ export default function ProductsPage() {
           })}
       </div>
       {isLoading ? (
-        <Spinner />
+        <Spinner isFullScreen />
       ) : (
         <>
           <ProductsList products={products} />

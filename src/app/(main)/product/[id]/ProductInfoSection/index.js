@@ -132,7 +132,7 @@ export default function ProductPageClient({
           >
             Faire une offre
           </Button>
-          {userProducts?.items?.length > 0 && (
+          {userProducts?.items?.length > 1 && (
             <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
               <div>
                 <h4 className="font-mcqueen font-bold text-lg leading-5">
