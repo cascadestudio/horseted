@@ -62,9 +62,13 @@ export default function signupPage() {
           <>
             <div className="border-b border-black lg:border-none">
               <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
-                <Link href="/" className="justify-self-start">
+                <button
+                  onClick={() => router.back()}
+                  className="justify-self-start"
+                  aria-label="Retour"
+                >
                   <LeftArrow className="w-[18px] lg:w-7" />
-                </Link>
+                </button>
                 <Image
                   src={HorsetedLogoBlackHorizontal}
                   alt="Logo Horseted"
@@ -203,6 +207,7 @@ export default function signupPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Google Play"
           >
             <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
@@ -219,6 +224,7 @@ export default function signupPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="App Store"
           >
             <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>

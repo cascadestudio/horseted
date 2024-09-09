@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Suspense } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
@@ -13,14 +14,19 @@ import SigninForm from "./SigninForm";
 import GoogleLoginButton from "@/components/GoogleLoginButton";
 
 export default function signinPage() {
+  const router = useRouter();
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
       <div className="lg:w-1/2">
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
-            <Link href="/" className="justify-self-start">
+            <button
+              onClick={() => router.back()}
+              className="justify-self-start"
+              aria-label="Retour"
+            >
               <LeftArrow className="w-[18px] lg:w-7" />
-            </Link>
+            </button>
             <Image
               src={HorsetedLogoBlackHorizontal}
               alt="Logo Horseted"
@@ -70,6 +76,7 @@ export default function signinPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Google Play"
           >
             <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
@@ -86,6 +93,7 @@ export default function signinPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="App Store"
           >
             <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>
