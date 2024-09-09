@@ -32,7 +32,7 @@ export default async function Home() {
             matériel sur Horseted
           </p>
           <div className="mt-5 flex flex-col items-center w-full px-9 lg:px-0 lg:mt-10 lg:flex-row gap-2">
-            <Button href="/vendre" className="w-full lg:w-auto">
+            <Button withAuth href="/vendre" className="w-full lg:w-auto">
               Vendre un article
             </Button>
             <Button
