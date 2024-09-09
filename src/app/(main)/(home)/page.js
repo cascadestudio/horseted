@@ -103,6 +103,7 @@ export default async function Home() {
           <Button
             variant="transparent-black"
             className="w-full mb-7 lg:w-auto lg:mb-24"
+            href="/a-propos"
           >
             En savoir plus
           </Button>
