@@ -43,7 +43,7 @@ export default function ProductsPage() {
   }, [isModalOpen]);
 
   // Filters states
-  const [activeOrder, setActiveOrder] = useState("createdAt;desc"); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeOrder, setActiveOrder] = useState("visitCount;desc");
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
@@ -72,43 +72,33 @@ export default function ProductsPage() {
   }, [categoryNameQuery, categoryIdQuery]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let query = `/products?orderBy=${activeOrder}`;
-        if (activeCategory !== null) {
-          query += `&category=${activeCategory.id}`;
-        }
-        if (activeState !== "") {
-          query += `&states=${activeState}`;
-        }
-        if (activeBrands.length > 0) {
-          query += `&brands=${activeBrands.join(";")}`;
-        }
-        if (activeMaterials.length > 0) {
-          query += `&materials=${activeMaterials.join(";")}`;
-        }
-        if (activePrices !== "") {
-          query += `&price=${activePrices}`;
-        }
-        if (activeSizes.length > 0) {
-          const activeSizeIds = activeSizes.map((size) => size.id);
-          query += `&sizes=${activeSizeIds.join(";")}`;
-        }
-        if (searchQuery !== null) {
-          query += `&terms=${searchQuery}`;
-        }
-        if (fromId !== null) {
-          query += `&fromId=${fromId}`;
-        }
-        const data = await fetchHorseted(query);
-        setProducts(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
+    let query = `/products?orderBy=${activeOrder}`;
+    if (activeCategory !== null) {
+      query += `&category=${activeCategory.id}`;
+    }
+    if (activeState !== "") {
+      query += `&states=${activeState}`;
+    }
+    if (activeBrands.length > 0) {
+      query += `&brands=${activeBrands.join(";")}`;
+    }
+    if (activeMaterials.length > 0) {
+      query += `&materials=${activeMaterials.join(";")}`;
+    }
+    if (activePrices !== "") {
+      query += `&price=${activePrices}`;
+    }
+    if (activeSizes.length > 0) {
+      const activeSizeIds = activeSizes.map((size) => size.id);
+      query += `&sizes=${activeSizeIds.join(";")}`;
+    }
+    if (searchQuery !== null) {
+      query += `&terms=${searchQuery}`;
+    }
+    if (fromId !== null) {
+      query += `&fromId=${fromId}`;
+    }
+    fetchProducts(query);
   }, [
     activeOrder,
     activeCategory,
@@ -120,6 +110,18 @@ export default function ProductsPage() {
     searchQuery,
     fromId,
   ]);
+
+  const fetchProducts = async (query) => {
+    try {
+      setIsLoading(true);
+      const data = await fetchHorseted(query);
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   function handleOrderChange(e) {
     setActiveOrder(e.target.value);
@@ -137,7 +139,13 @@ export default function ProductsPage() {
     setActiveMaterials(value);
   }
   function handlePricesChange(minPrice, maxPrice) {
-    setActivePrices(`${minPrice}-${maxPrice}`);
+    if (maxPrice === "") {
+      setActivePrices(`${minPrice * 100}-100000000000`);
+    } else if (minPrice === "") {
+      setActivePrices(`0-${maxPrice * 100}`);
+    } else {
+      setActivePrices(`${minPrice * 100}-${maxPrice * 100}`);
+    }
   }
   function removeCategoryFilter() {
     setActiveCategory(null);
