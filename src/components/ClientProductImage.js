@@ -53,7 +53,7 @@ export default function ClientProductImage({ product, className, size }) {
       <Image
         className={`aspect-[280/340] object-cover rounded-md ${className}`}
         src={placeholderImage}
-        alt="Image du produit"
+        alt={product.title}
         priority
       />
     );
@@ -62,7 +62,8 @@ export default function ClientProductImage({ product, className, size }) {
       <img
         className={`aspect-[280/340] object-cover rounded-md ${className}`}
         src={imageSrc}
-        alt="Image du produit"
+        alt={product.title}
+        title="Voir le produit"
       />
     );
   }

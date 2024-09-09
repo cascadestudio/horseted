@@ -19,7 +19,7 @@ export default async function Header() {
           <Link href="/">
             <Image
               src={HorsetedLogoBlackHorizontal}
-              alt="Horseted Logo"
+              alt="Logo Horseted"
               priority
               className="hidden xl:block w-[210px] h-[45px]"
             />

@@ -108,7 +108,7 @@ export default async function Home() {
           </Button>
           <Image
             src={missionImage2}
-            alt="Mission Image 2"
+            alt="Photo de cheval"
             sizes="(min-width: 1024px) 590px, 100vw"
             className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-auto"
           />
@@ -117,7 +117,7 @@ export default async function Home() {
           <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44">
             <Image
               src={missionImage1}
-              alt="Mission Image 1"
+              alt="Selles et accessoires"
               fill
               sizes="(min-width: 1024px) 590px, 100vw"
               className="object-cover rounded-lg"
@@ -156,7 +156,7 @@ export default async function Home() {
             <div className="flex-1 relative w-full">
               <Image
                 src={appReviewImage1}
-                alt="appReviewImage1"
+                alt="Saut d'obstacle"
                 sizes="(min-width: 1024px) 410px, 100vw"
                 className="rounded-[32px]"
               />
@@ -177,7 +177,7 @@ export default async function Home() {
             <div className="flex-1 w-full bg-dark-grey text-white text-end rounded-[32px] mt-6 lg:mt-0">
               <Image
                 src={appReviewImage2}
-                alt="appReviewImage2"
+                alt="Brossage de cheval"
                 className="w-full rounded-[32px] h-[185px] object-cover"
                 sizes="(min-width: 1024px) 410px, 100vw"
               />

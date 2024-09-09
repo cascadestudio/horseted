@@ -42,7 +42,7 @@ export default function forgotPasswordPage() {
             </Link>
             <Image
               src={HorsetedLogoBlackHorizontal}
-              alt="HorsetedLogoBlackHorizontal"
+              alt="Logo Horseted"
               className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
             />
           </div>
@@ -90,7 +90,7 @@ export default function forgotPasswordPage() {
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
           src={heroImage3}
-          alt="Hero Image"
+          alt="Promenade à cheval dans les dunes"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
           sizes="(min-width: 1024px) 50vw, 0vw"
@@ -104,6 +104,7 @@ export default function forgotPasswordPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Google Play"
           >
             <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
@@ -120,6 +121,7 @@ export default function forgotPasswordPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Apple Store"
           >
             <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>

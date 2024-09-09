@@ -23,7 +23,7 @@ export default function signinPage() {
             </Link>
             <Image
               src={HorsetedLogoBlackHorizontal}
-              alt="HorsetedLogoBlackHorizontal"
+              alt="Logo Horseted"
               className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
             />
           </div>
@@ -56,7 +56,7 @@ export default function signinPage() {
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
           src={heroImage1}
-          alt="Hero Image"
+          alt="Promenade à cheval dans un champ"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
           sizes="(min-width: 1024px) 50vw, 0vw"

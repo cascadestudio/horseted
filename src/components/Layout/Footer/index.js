@@ -80,7 +80,7 @@ export default function Footer() {
           <div className="flex items-center flex-col mb-8">
             <Image
               src={HorsetedLogoBlackIcon}
-              alt="Horseted Logo"
+              alt="Logo Horseted"
               className="h-24 w-24 self-center mb-3 lg:h-40 lg:w-40 lg:mb-7"
             />
             <Button href="/vendre" className="px-16 w-full lg:w-auto">
@@ -167,6 +167,7 @@ export default function Footer() {
                   href="https://www.instagram.com/horseted.fr/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Suivez-nous sur Instagram"
                 >
                   <InstagramIcon />
                 </a>
@@ -177,6 +178,7 @@ export default function Footer() {
                   href="https://www.facebook.com/horseted/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Suivez-nous sur Facebook"
                 >
                   <FacebookIcon />
                 </a>

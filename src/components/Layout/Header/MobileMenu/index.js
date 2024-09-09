@@ -54,7 +54,7 @@ export default function MobileMenu({ categories }) {
         <Link href="/">
           <Image
             src={HorsetedLogoBlackHorizontal}
-            alt="Horseted Logo"
+            alt="Logo Horseted"
             priority
             className="w-[210px] h-[45px] mx-auto"
           />
