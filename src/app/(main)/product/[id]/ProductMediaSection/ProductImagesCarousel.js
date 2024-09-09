@@ -96,22 +96,18 @@ export default function ProductImagesCarousel({ medias }) {
             infinite={medias.length > 3}
             className="lg:max-h-[172px] lg:max-w-[172px] lg:flex lg:items-center lg:justify-center"
           >
-            {medias.map((media, index) => (
-              <div
-                key={index}
-                className={`cursor-pointer [&_img]:aspect-[172/172] [&_img]:rounded-lg ${
-                  index === activeSlide
-                    ? "[&_img]:border-4 [&_img]:border-light-green"
-                    : ""
-                }`}
-              >
-                <img
-                  className="aspect-[280/340] object-cover h-full w-full"
-                  src={`data:image/png;base64, ${media.base64}`}
-                  alt="Image du produit"
-                />
-              </div>
-            ))}
+            {medias.map((media, index) => {
+              const isActive = index === activeSlide;
+              return (
+                <div key={index}>
+                  <img
+                    className={`cursor-pointer aspect-[172/172] object-cover h-full w-full rounded-xl mb-1 transition-opacity ${isActive ? "border-2 border-light-green opacity-100" : " opacity-60"}`}
+                    src={`data:image/png;base64, ${media.base64}`}
+                    alt="Image du produit"
+                  />
+                </div>
+              );
+            })}
           </Slider>
         </div>
 
