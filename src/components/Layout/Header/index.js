@@ -50,7 +50,7 @@ export default async function Header() {
             />
           </Link>
           <SearchBar className="hidden xl:block" />
-          <Button href="/vendre" className="hidden xl:flex">
+          <Button withAuth href="/vendre" className="hidden xl:flex">
             Vendre
           </Button>
           <AccountHandler className="hidden xl:block" />

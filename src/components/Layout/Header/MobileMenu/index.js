@@ -67,7 +67,11 @@ export default function MobileMenu({ categories }) {
           <div className="flex flex-col items-center mt-4 mb-9 pb-3 border-b">
             <div className="w-full mb-2 px-5">
               {user && (
-                <Button onClick={() => setIsNavOpen(false)} href="/vendre">
+                <Button
+                  withAuth
+                  onClick={() => setIsNavOpen(false)}
+                  href="/vendre"
+                >
                   Vendre
                 </Button>
               )}

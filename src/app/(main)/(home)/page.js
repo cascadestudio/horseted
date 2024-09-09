@@ -32,7 +32,7 @@ export default async function Home() {
             matériel sur Horseted
           </p>
           <div className="mt-5 flex flex-col items-center w-full px-9 lg:px-0 lg:mt-10 lg:flex-row gap-2">
-            <Button href="/vendre" className="w-full lg:w-auto">
+            <Button withAuth href="/vendre" className="w-full lg:w-auto">
               Vendre un article
             </Button>
             <Button
@@ -46,7 +46,8 @@ export default async function Home() {
         </div>
       </div>
       <div className="bg-dark-green">
-        <div className="container mx-auto px-5 py-10 text-white lg:flex lg:items-center lg:justify-between">
+        {/* V2 ? */}
+        {/* <div className="container mx-auto px-5 py-10 text-white lg:flex lg:items-center lg:justify-between">
           <div>
             <h3 className="font-mcqueen font-bold text-2xl mb-3 lg:text-4xl lg:mb-1">
               Personnalisez votre Horseted
@@ -59,10 +60,11 @@ export default async function Home() {
           <Button
             variant="transparent-green"
             className=" text-white border-white"
+            href="/parametres"
           >
             Personnaliser <RightArrow color="white" className="ml-2" />
           </Button>
-        </div>
+        </div> */}
         <div className="bg-light-grey pb-12 lg:pb-20"></div>
       </div>
       <ProductsSection title="Récemment ajouté" orderBy="new" />
