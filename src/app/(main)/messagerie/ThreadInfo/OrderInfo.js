@@ -13,23 +13,22 @@ export default function OrderInfo({
   getOrder,
   recipient,
 }) {
-  // console.log("order =>", order);
+  // console.log("orderTracking =>", orderTracking);
 
   const [isReviewModal, setIsReviewModal] = useState(false);
-  // const [isReviewModal, setIsReviewModal] = useState(true);
 
   const handleIsOrderReceived = async () => {
-    await patchOrder();
+    await patchOrderIsReceived();
     await getOrder(order.id);
     setIsReviewModal(true);
   };
 
-  const patchOrder = async () => {
+  const patchOrderIsReceived = async () => {
     const query = `/orders/${order.id}`;
     const body = {
-      delivered: true,
+      received: true,
     };
-    await fetchHorseted(query, accessToken, "PATCH", body, true, true);
+    await fetchHorseted(query, accessToken, "PATCH", body, true);
   };
 
   return (
@@ -43,6 +42,7 @@ export default function OrderInfo({
               </p>
               <p className="text-sm font-poppins font-medium mb-3">
                 La commande est validée et en attente de livraison
+                {userType === "buyer" && " par l'acheteur"}
                 {userType === "seller" && " de votre part"}.
               </p>
             </div>

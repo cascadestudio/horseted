@@ -57,7 +57,6 @@ export default function ThreadList() {
               </div>
               <p className="font-poppins font-medium self-start flex text-sm">
                 {ISOtoLastMessageDate(lastMessage.createdAt)}
-                {/* TODO date in hours if less than one day ago and in nb of days if less than one week */}
               </p>
             </button>
           </li>

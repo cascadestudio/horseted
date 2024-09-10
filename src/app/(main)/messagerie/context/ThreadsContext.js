@@ -26,7 +26,7 @@ export const ThreadsProvider = ({ children }) => {
   const [isInfo, setIsInfo] = useState(false);
   const [totalPrice, setTotalPrice] = useState(null);
 
-  // console.log("product =>", product);
+  // console.log("order =>", order);
 
   // Effects
   useEffect(() => {
@@ -64,8 +64,8 @@ export const ThreadsProvider = ({ children }) => {
   // Helper Functions
   const handleThreadOrderInfo = async () => {
     if (activeThread?.orderId) {
-      await getOrder(activeThread.orderId);
-      await getOrderTracking(activeThread.orderId);
+      const order = await getOrder(activeThread.orderId);
+      await getOrderTracking(order);
     } else {
       setOrderTracking(null);
     }
@@ -98,8 +98,8 @@ export const ThreadsProvider = ({ children }) => {
         getProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
-        await getOrder(threads[0].orderId);
-        await getOrderTracking(threads[0].orderId);
+        const order = await getOrder(threads[0].orderId);
+        await getOrderTracking(order);
       }
     }
   };
@@ -134,16 +134,17 @@ export const ThreadsProvider = ({ children }) => {
   const getOrder = async (orderId) => {
     const order = await fetchHorseted(`/orders/${orderId}`, accessToken, "GET");
     setOrder(order);
+    return order;
   };
 
-  const getOrderTracking = async (orderId) => {
-    if (order?.status === "paid") {
-      const order = await fetchHorseted(
-        `/orders/${orderId}/tracking`,
+  const getOrderTracking = async (order) => {
+    if (order.status === "paid") {
+      const orderTracking = await fetchHorseted(
+        `/orders/${order.id}/tracking`,
         accessToken,
         "GET"
       );
-      setOrderTracking(order);
+      setOrderTracking(orderTracking);
     }
   };
 
@@ -204,6 +205,7 @@ export const ThreadsProvider = ({ children }) => {
         setTotalPrice,
         products,
         setProducts,
+        getOrder,
       }}
     >
       {children}

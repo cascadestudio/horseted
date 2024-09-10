@@ -31,7 +31,7 @@ export default function ThreadInfo() {
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
 
-  // console.log("orderTracking =>", orderTracking);
+  // console.log("order =>", order);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -45,7 +45,7 @@ export default function ThreadInfo() {
     setIsClickOutside(false);
   }
 
-  const userType = user.id === recipient.id ? "seller" : "buyer";
+  const userType = user.id === order.userId ? "buyer" : "seller";
 
   return (
     <>
