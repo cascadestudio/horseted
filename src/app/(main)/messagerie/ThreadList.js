@@ -14,8 +14,6 @@ export default function ThreadList() {
     setIsInfo,
   } = useThreadsContext();
 
-  // console.log("threads =>", threads);
-
   function handleThreadClick(id, productId) {
     setActiveThread(threads.find((thread) => thread.id === id));
     getMessages(id);
@@ -31,10 +29,8 @@ export default function ThreadList() {
       {threads.map((thread) => {
         const { id, productId, authors, lastMessage } = thread;
         const isActive = id === activeThread?.id;
-        const avatar = thread.authors[0].avatar;
-        const threadTitle = authors.find(
-          (authors) => authors.id !== user.id
-        ).username;
+        const recipient = authors.find((authors) => authors.id !== user.id);
+
         return (
           <li key={id}>
             <button
@@ -43,10 +39,14 @@ export default function ThreadList() {
                 isActive && "bg-white"
               }`}
             >
-              <AvatarDisplay avatar={avatar} size={54} className="flex-none" />
+              <AvatarDisplay
+                avatar={recipient.avatar}
+                size={54}
+                className="flex-none"
+              />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center">
-                  <h2 className="font-bold mr-2">{threadTitle}</h2>
+                  <h2 className="font-bold mr-2">{recipient.username}</h2>
                   {!lastMessage.seen && (
                     <div className="w-[10px] h-[10px] bg-red rounded-full"></div>
                   )}
@@ -57,7 +57,6 @@ export default function ThreadList() {
               </div>
               <p className="font-poppins font-medium self-start flex text-sm">
                 {ISOtoLastMessageDate(lastMessage.createdAt)}
-                {/* TODO date in hours if less than one day ago and in nb of days if less than one week */}
               </p>
             </button>
           </li>

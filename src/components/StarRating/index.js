@@ -2,7 +2,12 @@
 
 import StarIcon from "@/assets/icons/StarIcon";
 
-export default function StarRating({ className, review, showCount = true }) {
+export default function StarRating({
+  className,
+  review,
+  showCount = true,
+  size,
+}) {
   if (!review) return null;
 
   const { count, rating } = review;
@@ -23,7 +28,7 @@ export default function StarRating({ className, review, showCount = true }) {
             key={index}
             className={`h-4 w-auto lg:h-6 ${
               fillPercentage > 0 ? "text-yellow" : "text-white"
-            }`}
+            } ${size == "sm" && "lg:h-4"}`}
             fillPercentage={fillPercentage}
           />
         );

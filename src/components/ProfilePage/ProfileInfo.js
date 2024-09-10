@@ -52,9 +52,9 @@ export default function ProfileInfo({ profile, accessToken }) {
   };
 
   return (
-    <>
+    <div className="flex items-center">
       <AvatarDisplay avatar={profile.avatar} size={130} />
-      <div className="flex flex-col items-center lg:items-start lg:pt-12">
+      <div className="flex flex-col items-center lg:items-start ms-7">
         <StarRating rating="4.5" count="6" />
         <p className="text-[22px] font-mcqueen font-semibold">
           {profile.username}
@@ -69,6 +69,6 @@ export default function ProfileInfo({ profile, accessToken }) {
         )}
         <p className="text-sm leading-6">{profile.description}</p>
       </div>
-    </>
+    </div>
   );
 }
