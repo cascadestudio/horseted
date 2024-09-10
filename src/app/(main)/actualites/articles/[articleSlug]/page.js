@@ -58,7 +58,8 @@ export default async function ArticlePage({ params }) {
                   src={urlForImage(image)}
                   alt={title}
                   width={610}
-                  height={320}
+                  height={340}
+                  sizes="(max-width: 1024px) 340px, 610px"
                   className="object-cover lg:h-[320px] lg:w-[610px] rounded-[32px] border border-white"
                 />
               )}
