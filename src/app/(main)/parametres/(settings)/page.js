@@ -93,7 +93,7 @@ export default function Settings() {
             <span className="text-lg text-grey">{user.username}*</span>
           </div>
         </div>
-        <div className="flex flex-col col-span-2 lg:col-span-1">
+        <div className="flex flex-col items-end col-span-2 lg:col-span-1">
           <CitySelect />
 
           {/* TODO : Intégrer CitySelect comme dessous */}
