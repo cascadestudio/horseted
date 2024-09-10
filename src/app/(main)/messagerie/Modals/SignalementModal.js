@@ -2,13 +2,15 @@ import Modal from "@/components/Modal";
 import OptionBlock from "@/components/input/OptionBlock";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function SignalementModal({
   setIsSignalementModal,
-  accessToken,
   sellerId,
   productId,
 }) {
+  const { accessToken } = useAuthContext();
+
   const signalementTypes = [
     "spam",
     "Arnaque",
@@ -31,7 +33,7 @@ export default function SignalementModal({
     const body = {
       type: selectedType,
       message: message,
-      userId: sellerId,
+      userId: sellerId || null,
       productId: productId || null,
     };
     fetchHorseted("/signalements", accessToken, "POST", body, true, true);

@@ -54,7 +54,6 @@ export default function ThreadInfo() {
           <div className="flex items-center py-2 border-b w-full">
             <Link
               href={`/vendeur/${recipient.id}`}
-              // href={`/vendeur`}
               className="flex items-center w-full"
             >
               <AvatarDisplay
