@@ -47,7 +47,7 @@ export default function ThreadsContainer() {
         ) : threads.length ? (
           <ThreadList />
         ) : (
-          <p>Pas de conversations</p>
+          <p className="p-6 m-auto">Pas de conversation</p>
         )}
       </div>
       <div className="h-full max-h-[520px] sm:max-h-none sm:w-2/3 bg-white flex flex-col flex-1">
