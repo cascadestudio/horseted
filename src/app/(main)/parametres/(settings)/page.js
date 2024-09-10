@@ -166,17 +166,17 @@ export default function Settings() {
             Dissocier un compte Google
           </span>
         </a>
-        <a
+        {/* <a
           href="#"
           className="flex items-center border border-black w-full lg:w-fit rounded-[50px] p-1 h-14"
         >
           <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <AppleIcon className="h-5 w-5 lg:h-6 lg:w-6" />
+            <AppleIcon className="h-6 w-6" />
           </div>
           <span className="font-semibold pl-3 pr-10 lg:pl-6">
             Associer un compte Apple
           </span>
-        </a>
+        </a> */}
       </div>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
         <DeleteAccountButton accessToken={accessToken} />
