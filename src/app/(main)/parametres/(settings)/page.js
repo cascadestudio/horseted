@@ -9,7 +9,6 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
-import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
@@ -161,11 +160,7 @@ export default function Settings() {
           className="flex items-center border border-black lg:w-fit rounded-[50px] p-1 h-14 w-full"
         >
           <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <Image
-              src={GoogleIcon}
-              alt="Google Icon"
-              className="h-5 w-5 lg:h-6 lg:w-6"
-            />
+            <img src="/icons/google-logo.svg" alt="Logo Google" />
           </div>
           <span className="font-semibold pl-3 pr-10 lg:pl-6">
             Dissocier un compte Google
