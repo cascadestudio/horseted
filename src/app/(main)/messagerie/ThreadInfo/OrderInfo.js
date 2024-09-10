@@ -53,9 +53,14 @@ export default function OrderInfo({
             <div key={status.status}>
               {userType === "seller" &&
                 (order.received ? (
-                  <p className="font-mcqueen text-lg font-bold text-light-green">
-                    Livraison confirmée par l'acheteur
-                  </p>
+                  <>
+                    <p className="font-mcqueen text-lg font-bold text-light-green">
+                      Livraison confirmée par l'acheteur
+                    </p>
+                    <Button onClick={() => setIsReviewModal(true)}>
+                      Laisser un avis
+                    </Button>
+                  </>
                 ) : (
                   <p className="font-mcqueen text-lg font-bold text-light-green">
                     Confirmation de livraison requise par l'acheteur !
