@@ -50,7 +50,7 @@ export default async function ArticlePage({ params }) {
           <h1 className="font-mcqueen font-bold text-3xl text-center mb-5 lg:text-4xl max-w-[610px]">
             {title}
           </h1>
-          <div className="grid grid-cols-2 lg:grid-cols-[1fr,auto,1fr] items-center gap-7">
+          <div className="grid grid-cols-2 gap-x-0 lg:grid-cols-[1fr,auto,1fr] items-center gap-7 lg:gap-x-7">
             <BurstIcon className="transform scale-x-[-1] h-10 w-10 lg:mt-9 col-start-1 row-start-1 lg:self-start  lg:place-self-end " />
             <div className="relative col-span-3 lg:col-span-1">
               {image && (
