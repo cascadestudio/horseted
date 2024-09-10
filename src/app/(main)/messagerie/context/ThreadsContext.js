@@ -86,7 +86,7 @@ export const ThreadsProvider = ({ children }) => {
     setActiveThread(null);
     setMessages([]);
     const product = await getProduct(productIdParam);
-    getRecipient(product.userId);
+    await getRecipient(product.userId);
   };
 
   const initWithLastThread = async () => {
