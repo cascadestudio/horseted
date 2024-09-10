@@ -170,31 +170,51 @@ export default function ProductPageClient({
             <td>État</td>
             <td>
               {state && (
-                <Link href="#">{stateTranslations[state] || state}</Link>
+                <Link href={`/articles?state=${state}`}>
+                  {stateTranslations[state] || state}
+                </Link>
               )}
             </td>
           </tr>
           <tr>
             <td>Couleurs</td>
-            <td>{color && <Link href="#">{color.name}</Link>}</td>
+            <td>
+              {color && (
+                <Link href={`/articles?color=${color}`}>{color.name}</Link>
+              )}
+            </td>
           </tr>
           <tr>
             <td>Marque</td>
-            <td>{brand && <Link href="#">{brand}</Link>}</td>
+            <td>
+              {brand && <Link href={`/articles?brand=${brand}`}>{brand}</Link>}
+            </td>
           </tr>
           <tr>
             <td>Matières</td>
-            <td>{material && <Link href="#">{material}</Link>}</td>
+            <td>
+              {material && (
+                <Link href={`/articles?material=${material}`}>{material}</Link>
+              )}
+            </td>
           </tr>
           <tr>
             <td>Taille</td>
-            <td>{size && <Link href="#">{size.value}</Link>}</td>
+            <td>
+              {size && (
+                <Link
+                  href={`/articles?sizeId=${size.id}&sizeName=${size.value}`}
+                >
+                  {size.value}
+                </Link>
+              )}
+            </td>
           </tr>
           <tr>
             <td>Taille du colis</td>
             <td>
               {shipping && (
-                <Link href="#">
+                <Link href={`/articles?shipping=${shipping}`}>
                   {shippingSizeTranslations[shipping] || shipping}
                 </Link>
               )}
