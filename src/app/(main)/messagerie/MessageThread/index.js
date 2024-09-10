@@ -1,6 +1,6 @@
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import "@/app/styles/globals.css";
-import Message from "./Message";
+import Message from "./MessageBlock";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
 import capitalizeText from "@/utils/capitalizeText";
@@ -33,12 +33,14 @@ export default function MessageThread() {
                   {recipient.username}
                 </p>
                 <StarRating review={recipient.review} />
-                <div className="text-grey flex items-center gap-2 mt-3">
-                  <CityIcon className="h-3 stroke-current fill-none" />
-                  <span className="text-xs font-medium">
-                    {recipient.city ? capitalizeText(recipient.city) : ""}
-                  </span>
-                </div>
+                {recipient.city && (
+                  <div className="text-grey flex items-center gap-1 mt-3">
+                    <CityIcon className="h-3 stroke-current fill-none" />
+                    <span className="text-xs font-medium">
+                      {capitalizeText(recipient.city)}
+                    </span>
+                  </div>
+                )}
               </li>
             )}
             {reversedMessages.length > 0 &&
