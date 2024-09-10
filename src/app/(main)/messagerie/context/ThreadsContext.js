@@ -64,7 +64,7 @@ export const ThreadsProvider = ({ children }) => {
   // Helper Functions
   const handleThreadOrderInfo = async () => {
     if (activeThread?.orderId) {
-      const order = await getOrder(activeThread.orderId);
+      await getOrder(activeThread.orderId);
       await getOrderTracking(activeThread.orderId);
     } else {
       setOrderTracking(null);
@@ -95,7 +95,6 @@ export const ThreadsProvider = ({ children }) => {
       setRecipient(threads[0].authors[0]);
       await getMessages(threads[0].id);
       if (threads[0].productId) {
-        // console.log("productId =>", threads[0].productId);
         getProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
@@ -138,7 +137,7 @@ export const ThreadsProvider = ({ children }) => {
   };
 
   const getOrderTracking = async (orderId) => {
-    if (order.status === "paid") {
+    if (order?.status === "paid") {
       const order = await fetchHorseted(
         `/orders/${orderId}/tracking`,
         accessToken,

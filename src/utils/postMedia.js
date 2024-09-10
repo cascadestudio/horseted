@@ -9,8 +9,7 @@ export async function postMedia(file, accessToken) {
     accessToken,
     "POST",
     formdata,
-    false,
-    true
+    false
   );
   return media;
 }
