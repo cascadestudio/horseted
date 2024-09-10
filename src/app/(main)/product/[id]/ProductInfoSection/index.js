@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthContext } from "@/context/AuthContext";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
@@ -17,6 +17,8 @@ import {
 } from "@/utils/translations";
 import { centsToEuros } from "@/utils/centsToEuros";
 import ShippingInfo from "./ShippingInfo";
+import { useIsClickOutsideElement } from "@/utils/hooks";
+import ThreeDotsProductDropDown from "./ThreeDotsProductDropDown";
 
 export default function ProductPageClient({
   product,
@@ -26,15 +28,19 @@ export default function ProductPageClient({
   className,
 }) {
   const { user } = useAuthContext();
+  const dropdownRef = useRef();
+
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);
   const [isBundleSummaryModalOpen, setIsBundleSummaryModalOpen] =
     useState(false);
   const [isBundleOfferModalOpen, setIsBundleOfferModalOpen] = useState(false);
-
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
+  const [isDropdown, setIsDropdown] = useState(false);
+  const [isClickOutside, setIsClickOutside] =
+    useIsClickOutsideElement(dropdownRef);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => setIsOfferModalOpen(false);
@@ -59,6 +65,11 @@ export default function ProductPageClient({
   };
   const handleCloseBundleOfferModal = () => {
     setIsBundleOfferModalOpen(false);
+  };
+
+  const handleThreeDotsClick = () => {
+    setIsClickOutside(false);
+    setIsDropdown(!isDropdown);
   };
 
   const {
@@ -93,16 +104,24 @@ export default function ProductPageClient({
         >
           {category.name}
         </Link>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 relative">
           <div className="flex items-center gap-1">
             <FavoriteButton favoriteCount={favoritCount} productId={id} />
           </div>
           <Link href="#">
             <ShareIcon />
           </Link>
-          <Link href="#">
+          <button onClick={handleThreeDotsClick} className="p-2">
             <ThreeDotsIcon />
-          </Link>
+          </button>
+          {isDropdown && !isClickOutside && (
+            <div className="absolute right-0 top-10" ref={dropdownRef}>
+              <ThreeDotsProductDropDown
+                isUserSeller={isUserSeller}
+                product={product}
+              />
+            </div>
+          )}
         </div>
       </div>
       <h1 className="font-mcqueen font-bold text-2xl lg:text-4xl mb-2">
