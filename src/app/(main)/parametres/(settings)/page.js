@@ -154,7 +154,7 @@ export default function Settings() {
           className="col-span-2 resize-none overflow-hidden break-words whitespace-pre-wrap"
         />
       </form>
-      <div className="flex flex-col lg:flex-row mb-16 gap-4">
+      <div className="flex flex-col lg:flex-row mb-5 gap-4">
         <a
           href="#"
           className="flex items-center border border-black lg:w-fit rounded-[50px] p-1 h-14 w-full"
@@ -178,6 +178,7 @@ export default function Settings() {
           </span>
         </a> */}
       </div>
+      <Button className="w-full mb-16">Enregistrer</Button>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
         <DeleteAccountButton accessToken={accessToken} />
         <p className="font-mcqueen text-[12px]">
