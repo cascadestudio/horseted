@@ -10,9 +10,14 @@ export default function BlogCard({ title, image, body, link, className }) {
   const fullConfig = resolveConfig(tailwindConfig);
   return (
     <div
-      className={`border border-light-green rounded-md h-[450px] max-w-[350px] lg:w-[350px] ${className}`}
+      className={`relative border border-light-green rounded-md h-[450px] max-w-[350px] lg:w-[350px] ${className}`}
     >
-      <div className="flex items-center justify-center w-full p-1">
+      <Link
+        href={`/actualites/articles/${link}`}
+        className="absolute inset-0 z-10"
+      />
+
+      <div className="flex items-center justify-center w-full p-1 z-0">
         <Image
           className="w-full h-auto object-cover rounded-md"
           src={urlForImage(image)}
@@ -21,23 +26,20 @@ export default function BlogCard({ title, image, body, link, className }) {
           width={350}
         />
       </div>
-      <div className="p-6 flex flex-col gap-3 justify-between">
+      <div className="p-6 flex flex-col gap-3 justify-between z-0">
         <p className="font-mcqueen font-semibold text-xl line-clamp-2 overflow-hidden text-ellipsis">
           {title}
         </p>
         <div className="prose line-clamp-3 lg:prose-lg">
           <PortableText value={body} />
         </div>
-        <Link
-          className="flex items-center text-light-green justify-self-end"
-          href={`/actualites/articles/${link}`}
-        >
+        <p className="flex items-center text-light-green justify-self-end">
           Lire l'article
           <RightArrow
             color={fullConfig.theme.colors["light-green"]}
             className="ml-2"
           />
-        </Link>
+        </p>
       </div>
     </div>
   );
