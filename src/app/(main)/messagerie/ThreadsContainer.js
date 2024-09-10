@@ -43,7 +43,7 @@ export default function ThreadsContainer() {
           </button>
         </div>
         {loading ? (
-          <Spinner />
+          <Spinner isFullScreen />
         ) : threads.length ? (
           <ThreadList />
         ) : (

@@ -5,7 +5,7 @@ import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContex
 
 import OrderInfoMessage from "./OrderInfoMessage";
 
-export default function Message({ message, order }) {
+export default function MessageBlock({ message }) {
   const { products, user, totalPrice } = useThreadsContext();
   const { content, senderId, type, offerId, medias } = message;
 

@@ -80,7 +80,7 @@ export default function NewMessageForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0"
+      className="flex gap-4 p-4 border-t border-darker-grey bg-white sticky bottom-0 items-center"
     >
       <MediaInput
         accessToken={accessToken}

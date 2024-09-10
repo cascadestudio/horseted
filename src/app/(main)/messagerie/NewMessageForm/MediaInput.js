@@ -15,13 +15,11 @@ export default function MediaInput({
   const handleMediaChange = async (e) => {
     const files = Array.from(e.target.files);
     const isFileLimit = imageSrcs.length + files.length > 10;
-    console.log("isFileLimit =>", isFileLimit);
     if (isFileLimit) return alert("Vous avez dépassé la limite de 10 photos");
     if (files) {
       files.forEach(async (file) => {
         setIsImageLoading(true);
         const media = await postMedia(file, accessToken);
-        console.log("media =>", media);
         setMessage((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
         const src = await getImage(media.files.thumbnail200, "client");
         setImageSrcs((prev) => [...prev, src]);
@@ -31,7 +29,7 @@ export default function MediaInput({
   };
 
   return (
-    <label>
+    <label className="flex justify-center items-center">
       {isImageLoading ? (
         <Spinner />
       ) : (
@@ -45,7 +43,7 @@ export default function MediaInput({
             multiple
             max={10}
           />
-          <img src="/icons/media-message.svg" alt="" />
+          <img className="mr-2" src="/icons/media-message.svg" alt="" />
           {imageSrcs.length > 0 &&
             imageSrcs.map((imageSrc, index) => (
               <Image

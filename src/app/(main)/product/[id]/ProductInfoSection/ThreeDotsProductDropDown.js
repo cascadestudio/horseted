@@ -10,7 +10,7 @@ export default function ThreeDotsProductDropDown({ isUserSeller, product }) {
 
   return (
     <>
-      <div className="flex flex-col items-start bg-white border border-dark-grey rounded-lg p-4 font-semibold gap-3 box-content w-full">
+      <div className="flex flex-col items-start bg-white border border-dark-grey rounded-lg p-4 font-semibold gap-3 w-full">
         {isUserSeller ? (
           <button
             onClick={handleDeleteProduct}

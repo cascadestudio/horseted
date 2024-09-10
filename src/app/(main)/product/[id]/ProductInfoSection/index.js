@@ -19,6 +19,7 @@ import { centsToEuros } from "@/utils/centsToEuros";
 import ShippingInfo from "./ShippingInfo";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import ThreeDotsProductDropDown from "./ThreeDotsProductDropDown";
+import ShareDropDown from "./ShareDropDown";
 
 export default function ProductPageClient({
   product,
@@ -38,7 +39,8 @@ export default function ProductPageClient({
   const [bundle, setBundle] = useState([]);
   const [bundlePrice, setBundlePrice] = useState(0);
   const [shippingPrice, setShippingPrice] = useState(0);
-  const [isDropdown, setIsDropdown] = useState(false);
+  const [isThreeDotsDropdown, setIsThreeDotsDropdown] = useState(false);
+  const [isShareDropdown, setIsShareDropdown] = useState(false);
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
 
@@ -69,7 +71,14 @@ export default function ProductPageClient({
 
   const handleThreeDotsClick = () => {
     setIsClickOutside(false);
-    setIsDropdown(!isDropdown);
+    setIsShareDropdown(false);
+    setIsThreeDotsDropdown(!isThreeDotsDropdown);
+  };
+
+  const handleShareClick = () => {
+    setIsClickOutside(false);
+    setIsThreeDotsDropdown(false);
+    setIsShareDropdown(!isShareDropdown);
   };
 
   const {
@@ -108,13 +117,18 @@ export default function ProductPageClient({
           <div className="flex items-center gap-1">
             <FavoriteButton favoriteCount={favoritCount} productId={id} />
           </div>
-          <Link href="#">
+          <button onClick={handleShareClick}>
             <ShareIcon />
-          </Link>
+          </button>
+          {isShareDropdown && !isClickOutside && (
+            <div className="absolute right-10 top-10" ref={dropdownRef}>
+              <ShareDropDown />
+            </div>
+          )}
           <button onClick={handleThreeDotsClick} className="p-2">
             <ThreeDotsIcon />
           </button>
-          {isDropdown && !isClickOutside && (
+          {isThreeDotsDropdown && !isClickOutside && (
             <div className="absolute right-0 top-10" ref={dropdownRef}>
               <ThreeDotsProductDropDown
                 isUserSeller={isUserSeller}
