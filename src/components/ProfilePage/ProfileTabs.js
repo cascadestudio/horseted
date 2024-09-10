@@ -9,7 +9,7 @@ export default function ProfileTabs({ profile, accessToken }) {
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState({});
 
-  // console.log("reviews =>", reviews);
+  console.log("reviews =>", reviews);
 
   useEffect(() => {
     if (profile) {
@@ -49,7 +49,7 @@ export default function ProfileTabs({ profile, accessToken }) {
             Sellerie
           </button>
         )}
-        {reviews?.reviews?.length && (
+        {reviews?.reviews?.length > 0 && (
           <button
             className={`px-4 py-2 text-lg font-medium font-mcqueen ${
               activeTab === "reviews"
