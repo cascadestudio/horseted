@@ -4,12 +4,8 @@ import { urlForImage } from "../../../../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/PortableTextComponents";
 import BurstIcon from "@/assets/icons/BurstIcon";
-import FacebookIconNoBorder from "@/assets/icons/FacebookIconNoBorder";
-import LinkedInIconNoBorder from "@/assets/icons/LinkedInIconNoBorder";
-import XIcon from "@/assets/icons/XIcon";
-import WhatsAppIcon from "@/assets/icons/WhatsAppIcon";
-import MailIcon from "@/assets/icons/MailIcon";
 import CategoryBlogSection from "../../CategoryBlogSection";
+import ShareSection from "./ShareSection";
 
 async function getArticleData(slug) {
   const articles = await client.fetch(
@@ -70,16 +66,7 @@ export default async function ArticlePage({ params }) {
                 {category.title}
               </span>
             </div>
-            <div className="row-start-1 row-span-1 col-start-1 col-span-2 place-self-center lg:col-start-3 lg:pb-16 ">
-              <span className="font-extrabold">Partager :</span>
-              <div className="flex items-center space-x-3 mt-2">
-                <FacebookIconNoBorder className="h-4" />
-                <LinkedInIconNoBorder className="h-4" />
-                <XIcon className="h-4" />
-                <WhatsAppIcon className="h-4" />
-                <MailIcon className="h-4" />
-              </div>
-            </div>
+            <ShareSection />
           </div>
         </div>
       </div>

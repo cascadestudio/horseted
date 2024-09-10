@@ -27,7 +27,7 @@ export default function Footer() {
                 l’argent dès maintenant !
               </p>
             </div>
-            <Button href="/vendre" variant="transparent-black">
+            <Button withAuth href="/vendre" variant="transparent-black">
               Vendre un équipement{" "}
               <RightArrow color="black" className="lg:ml-3" />
             </Button>
@@ -83,7 +83,7 @@ export default function Footer() {
               alt="Logo Horseted"
               className="h-24 w-24 self-center mb-3 lg:h-40 lg:w-40 lg:mb-7"
             />
-            <Button href="/vendre" className="px-16 w-full lg:w-auto">
+            <Button withAuth href="/vendre" className="px-16 w-full lg:w-auto">
               Vendre maintenant
             </Button>
           </div>
@@ -97,7 +97,9 @@ export default function Footer() {
                 <a href="/aide">Aide</a>
               </li>
               <li>
-                <a href="/vendre">Vendre</a>
+                <Button noStyle withAuth href="/vendre">
+                  Vendre
+                </Button>
               </li>
               <li>
                 <a href="/articles">Acheter</a>

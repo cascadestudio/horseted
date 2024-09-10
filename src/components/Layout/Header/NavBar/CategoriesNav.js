@@ -2,7 +2,7 @@
 
 import capitalizeText from "@/utils/capitalizeText";
 import SubCategoriesPanel from "./SubCategoriesPanel";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 
 export default function CategoriesNav({ categories }) {
@@ -15,17 +15,17 @@ export default function CategoriesNav({ categories }) {
     buttonRef
   );
 
-  useEffect(() => {
+  function handleClick(id) {
     if (isClickOutside) {
-      setIsOpen(false);
       setIsClickOutside(false);
     }
-  }, [isClickOutside, setIsClickOutside]);
-
-  function handleClick(id) {
-    setSelectedSubCategories(id);
-    setIsOpen(!isOpen);
-    setIsClickOutside(false);
+    if (id === selectedSubCategories) {
+      console.log("id === selectedSubCategories");
+      setIsOpen(!isOpen);
+    } else {
+      setSelectedSubCategories(id);
+      setIsOpen(true);
+    }
   }
 
   return (
@@ -33,6 +33,9 @@ export default function CategoriesNav({ categories }) {
       {categories.map((category) => {
         const { name, id } = category;
         const isActive = selectedSubCategories === id;
+        const activeCategory = categories.find(
+          (category) => category.id === id
+        );
         return (
           <li key={name} className="relative">
             <button
@@ -47,12 +50,14 @@ export default function CategoriesNav({ categories }) {
                 <span className="absolute bottom-1 left-0 right-0 h-0.5 bg-light-green"></span>
               )}
             </button>
-            {isOpen && isActive && (
+
+            {!isClickOutside && isOpen && isActive && (
               <SubCategoriesPanel
                 panelRef={panelRef}
                 parentId={id}
                 buttonRef={buttonRef}
                 setIsOpen={setIsOpen}
+                subCategories={activeCategory.subCategories || []}
               />
             )}
           </li>

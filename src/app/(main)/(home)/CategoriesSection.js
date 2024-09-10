@@ -4,9 +4,11 @@ import GreenThreeStripesIcon from "@/assets/icons/GreenThreeStripesIcon";
 import categoryImage from "@/assets/images/categoryImage.jpg";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/RightArrow";
+import capitalizeText from "@/utils/capitalizeText";
+
 export default async function CategoriesSection() {
   const categories = await fetchHorseted("/categories");
-  // console.log("categories =>", categories);
+
   return (
     <section className=" bg-light-grey">
       <div className="container mx-auto px-5 pb-8 lg:pb-24">
@@ -20,7 +22,7 @@ export default async function CategoriesSection() {
           {categories.splice(0, 4).map((category, index) => {
             return (
               <Link
-                href="#"
+                href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
                 key={category.name}
                 className={`relative border border-light-green ${
                   index === 0 ? "lg:col-span-2 lg:row-span-2" : ""
@@ -46,10 +48,10 @@ export default async function CategoriesSection() {
             return (
               <Link
                 key={category.id}
-                href="#"
-                className="border border-black rounded-3xl py-2 px-3 mt-2 mr-2"
+                href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
+                className="border border-black rounded-3xl py-2 px-3 mt-2 mr-2 font-semibold"
               >
-                {category.name}
+                {capitalizeText(category.name)}
               </Link>
             );
           })}

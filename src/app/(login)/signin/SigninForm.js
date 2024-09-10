@@ -4,11 +4,13 @@ import signIn from "@/libs/firebase/auth/signin";
 import Button from "@/components/Button";
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
+import Alert from "@/components/Alert";
 
 export default function SigninForm({ className }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isAlert, setIsAlert] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,16 +27,18 @@ export default function SigninForm({ className }) {
   const handleForm = async (event) => {
     event.preventDefault();
     setIsLoading(true);
+    setIsAlert(false);
 
     const { result, error } = await signIn(email, password);
 
     if (error) {
       setIsLoading(false);
-      return alert(error);
+      setIsAlert(true);
+      return;
     }
 
     setIsLoading(false);
-    return router.push("/");
+    return router.push("/articles");
   };
 
   if (isLoading) return <Spinner isFullScreen />;
@@ -83,6 +87,7 @@ export default function SigninForm({ className }) {
           Un e-mail vous a été envoyé pour réinitialiser votre mot de passe
         </div>
       )}
+      {isAlert && <Alert type="error">Email ou mot de passe incorrect</Alert>}
     </form>
   );
 }

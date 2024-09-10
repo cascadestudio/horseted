@@ -16,40 +16,37 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import TotalProduct from "./TotalProduct";
 import Spinner from "@/components/Spinner";
 import Pagination from "./Pagination";
-import CloseButton from "@/assets/icons/CloseButton";
 import Button from "@/components/Button";
+import FiltersModal from "./FiltersModal";
+import { shippingSizeTranslations } from "@/utils/translations";
 
 export default function ProductsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("search");
-  const categoryIdQuery = searchParams.get("categoryId");
-  const categoryNameQuery = searchParams.get("categoryName");
+  const searchParam = searchParams.get("search");
+  const categoryIdParam = searchParams.get("categoryId");
+  const categoryNameParam = searchParams.get("categoryName");
+  const stateParam = searchParams.get("state");
+  const colorParam = searchParams.get("color");
+  const brandParam = searchParams.get("brand");
+  const materialIdParam = searchParams.get("materialId");
+  const sizeIdParam = searchParams.get("sizeId");
+  const sizeNameParam = searchParams.get("sizeName");
+  const shippingParam = searchParams.get("shipping");
 
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isModalOpen]);
-
   // Filters states
-  const [activeOrder, setActiveOrder] = useState("createdAt;desc"); //TODO quand Jojo l'a fait useState("visitCount;desc")
+  const [activeOrder, setActiveOrder] = useState("visitCount;desc");
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeState, setActiveState] = useState("");
   const [activeBrands, setActiveBrands] = useState([]);
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [activePrices, setActivePrices] = useState("");
+  const [activeShipping, setActiveShipping] = useState("");
   const [fromId, setFromId] = useState(null);
 
   function resetFilters() {
@@ -60,55 +57,77 @@ export default function ProductsPage() {
     setActiveMaterials([]);
     setActiveSizes([]);
     setActivePrices("");
+    setActiveShipping("");
   }
 
   useEffect(() => {
-    if (categoryIdQuery !== null && categoryNameQuery !== null) {
+    if (categoryIdParam && categoryNameParam) {
       setActiveCategory({
-        id: categoryIdQuery,
-        name: categoryNameQuery,
+        id: categoryIdParam,
+        name: categoryNameParam,
       });
     }
-  }, [categoryNameQuery, categoryIdQuery]);
+    if (stateParam) {
+      setActiveState(stateParam);
+    }
+    if (colorParam) {
+      setActiveBrands([colorParam]);
+    }
+    if (brandParam) {
+      setActiveBrands([brandParam]);
+    }
+    if (materialIdParam) {
+      setActiveMaterials([materialIdParam]);
+    }
+    if (sizeNameParam && sizeIdParam) {
+      setActiveSizes([{ id: sizeIdParam, value: sizeNameParam }]);
+    }
+    if (shippingParam) {
+      setActiveShipping(shippingParam);
+    }
+  }, [
+    categoryNameParam,
+    categoryIdParam,
+    stateParam,
+    colorParam,
+    brandParam,
+    materialIdParam,
+    sizeNameParam,
+    sizeIdParam,
+    shippingParam,
+  ]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        let query = `/products?orderBy=${activeOrder}`;
-        if (activeCategory !== null) {
-          query += `&category=${activeCategory.id}`;
-        }
-        if (activeState !== "") {
-          query += `&states=${activeState}`;
-        }
-        if (activeBrands.length > 0) {
-          query += `&brands=${activeBrands.join(";")}`;
-        }
-        if (activeMaterials.length > 0) {
-          query += `&materials=${activeMaterials.join(";")}`;
-        }
-        if (activePrices !== "") {
-          query += `&price=${activePrices}`;
-        }
-        if (activeSizes.length > 0) {
-          const activeSizeIds = activeSizes.map((size) => size.id);
-          query += `&sizes=${activeSizeIds.join(";")}`;
-        }
-        if (searchQuery !== null) {
-          query += `&terms=${searchQuery}`;
-        }
-        if (fromId !== null) {
-          query += `&fromId=${fromId}`;
-        }
-        const data = await fetchHorseted(query);
-        setProducts(data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      }
-    };
-
-    fetchProducts();
+    let query = `/products?orderBy=${activeOrder}`;
+    if (activeCategory !== null) {
+      query += `&category=${activeCategory.id}`;
+    }
+    if (activeState !== "") {
+      query += `&states=${activeState}`;
+    }
+    if (activeBrands.length > 0) {
+      query += `&brands=${activeBrands.join(";")}`;
+    }
+    if (activeMaterials.length > 0) {
+      query += `&materials=${activeMaterials.join(";")}`;
+    }
+    if (activePrices !== "") {
+      query += `&price=${activePrices}`;
+    }
+    if (activeSizes.length > 0) {
+      const activeSizeIds = activeSizes.map((size) => size.id);
+      query += `&sizes=${activeSizeIds.join(";")}`;
+    }
+    if (searchParam !== null) {
+      query += `&terms=${searchParam}`;
+    }
+    if (fromId !== null) {
+      query += `&fromId=${fromId}`;
+    }
+    if (activeShipping) {
+      query += `&shippings=${activeShipping}`;
+    }
+    fetchProducts(query);
   }, [
     activeOrder,
     activeCategory,
@@ -117,9 +136,22 @@ export default function ProductsPage() {
     activeMaterials,
     activePrices,
     activeSizes,
-    searchQuery,
+    searchParam,
     fromId,
+    activeShipping,
   ]);
+
+  const fetchProducts = async (query) => {
+    try {
+      setIsLoading(true);
+      const data = await fetchHorseted(query);
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   function handleOrderChange(e) {
     setActiveOrder(e.target.value);
@@ -137,13 +169,22 @@ export default function ProductsPage() {
     setActiveMaterials(value);
   }
   function handlePricesChange(minPrice, maxPrice) {
-    setActivePrices(`${minPrice}-${maxPrice}`);
+    if (maxPrice === "") {
+      setActivePrices(`${minPrice * 100}-100000000000`);
+    } else if (minPrice === "") {
+      setActivePrices(`0-${maxPrice * 100}`);
+    } else {
+      setActivePrices(`${minPrice * 100}-${maxPrice * 100}`);
+    }
   }
   function removeCategoryFilter() {
     setActiveCategory(null);
   }
   function removeStateFilter() {
     setActiveState("");
+  }
+  function removeShippingFilter() {
+    setActiveShipping("");
   }
   function removeSearchTermFilter() {
     router.push("/articles");
@@ -178,52 +219,25 @@ export default function ProductsPage() {
 
       {/* Modal for filters on small screens */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-light-grey w-screen h-screen p-4 overflow-hidden">
-            <button
-              className="mb-4 bg-red-500 text-white px-3 py-1 rounded"
-              onClick={() => setIsModalOpen(false)}
-            >
-              <CloseButton className="w-6 h-6" />
-            </button>
-            <div className="flex flex-col gap-y-4">
-              <SortSelect
-                onOrderChange={handleOrderChange}
-                activeOrder={activeOrder}
-              />
-              <StateSelect
-                activeState={activeState}
-                onStateChange={handleStateChange}
-              />
-              <CategorySelect
-                onClickProductCategory={handleCategoryChange}
-                activeCategory={
-                  activeCategory !== null ? activeCategory.id : null
-                }
-              />
-              <BrandsSelect
-                activeBrands={activeBrands}
-                onBrandsChange={handleBrandsChange}
-              />
-              <PricesSelect
-                activePrices={activePrices}
-                onPricesChange={handlePricesChange}
-              />
-              <MaterialsSelect
-                activeMaterials={activeMaterials}
-                onMaterialsChange={handleMaterialsChange}
-              />
-              {activeCategory !== null && (
-                <SizesSelect
-                  activeSizes={activeSizes}
-                  setActiveSizes={setActiveSizes}
-                  categoryId={activeCategory.id}
-                />
-              )}
-            </div>
-          </div>
-        </div>
+        <FiltersModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          activeCategory={activeCategory}
+          activeState={activeState}
+          activeBrands={activeBrands}
+          activeMaterials={activeMaterials}
+          activePrices={activePrices}
+          activeSizes={activeSizes}
+          handleCategoryChange={handleCategoryChange}
+          handleStateChange={handleStateChange}
+          handleBrandsChange={handleBrandsChange}
+          handleMaterialsChange={handleMaterialsChange}
+          handlePricesChange={handlePricesChange}
+          setActiveSizes={setActiveSizes}
+          handleOrderChange={handleOrderChange}
+        />
       )}
+
       <legend className="hidden lg:block font-semibold text-ms uppercase tracking-widest mb-4">
         Filtres :
       </legend>
@@ -283,9 +297,17 @@ export default function ProductsPage() {
             onRemoveFilter={removeStateFilter}
           />
         )}
-        {searchQuery !== null && (
+        {activeShipping !== "" && (
           <ActiveFilterBtn
-            filterName={searchQuery}
+            filterName={
+              shippingSizeTranslations[activeShipping] || activeShipping
+            }
+            onRemoveFilter={removeShippingFilter}
+          />
+        )}
+        {searchParam !== null && (
+          <ActiveFilterBtn
+            filterName={searchParam}
             onRemoveFilter={removeSearchTermFilter}
           />
         )}
@@ -321,7 +343,7 @@ export default function ProductsPage() {
           })}
       </div>
       {isLoading ? (
-        <Spinner />
+        <Spinner isFullScreen />
       ) : (
         <>
           <ProductsList products={products} />
