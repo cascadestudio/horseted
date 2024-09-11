@@ -14,7 +14,7 @@ const breadcrumbs = [
 function ThreadsPage() {
   return (
     <ThreadsProvider>
-      <div className="container mx-auto px-5 pb-10">
+      <div className="container mx-auto px-5 lg:pb-10">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         <ThreadsContainer />
       </div>
