@@ -77,7 +77,7 @@ export default function Settings() {
 
   return (
     <section>
-      <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
+      <form className="form-container gap-5 grid grid-cols-1 lg:grid-cols-2 lg:gap-12 mb-5">
         <Button
           variant="transparent-red"
           onClick={handleSignout}

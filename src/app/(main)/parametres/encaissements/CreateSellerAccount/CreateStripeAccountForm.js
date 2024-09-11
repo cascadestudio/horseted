@@ -34,6 +34,7 @@ export default function CreateStripeAccount({
         name="first_name"
         value={stripeAccountForm.individual.first_name}
         required
+        className="mb-4 lg:mb-0"
       />
       <TextInput
         onChange={handleChange}
@@ -42,6 +43,7 @@ export default function CreateStripeAccount({
         name="last_name"
         value={stripeAccountForm.individual.last_name}
         required
+        className="mb-4 lg:mb-0"
       />
       <TextInput
         type="date"
@@ -51,6 +53,7 @@ export default function CreateStripeAccount({
         name="dateOfBirth"
         value={dateOfBirth}
         required
+        className="mb-4 lg:mb-0"
       />
       <TextInput
         onChange={(e) =>
