@@ -8,6 +8,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductSummary from "./ProductSummary";
 import withAuth from "@/hoc/withAuth";
 import PostProductForm from "./PostProductForm";
+import Button from "@/components/Button";
 
 const SellPage = () => {
   const { accessToken } = useAuthContext();
@@ -59,10 +60,18 @@ const SellPage = () => {
           />
         )
       ) : (
-        <div className="container mx-auto px-5 pt-5 flex flex-col items-center gap-7">
+        <div className="container mx-auto p-16 bg-white rounded-3xl flex flex-col items-center justify-center text-center gap-7 max-w-[1050px]">
+          <img src="/images/baby-horse.svg" alt="Illustration bébé cheval" />
           <h1 className="font-mcqueen font-bold text-3xl mb-5">
-            Vous n'avez pas de compte vendeur. Créez-en un !
+            Vous n'avez pas de compte vendeur.
+            <br />
+            Créez-en un !
           </h1>
+          <p className="max-w-[475px] mb-6">
+            Pour vendre des produits, vous devez nous envoyer une pièce
+            d’identité et ajouter votre RIB
+          </p>
+          <Button href="/parametres/encaissements">Devenir vendeur</Button>
         </div>
       )}
     </div>

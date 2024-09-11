@@ -1,8 +1,5 @@
 import Dropdown from "@/components/Dropdown";
-import Checkbox from "@/components/input/Checkbox";
 import Radio from "@/components/input/Radio";
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
 
 export default function Shipping({ product, setProduct }) {
   const shippings = [
@@ -46,6 +43,7 @@ export default function Shipping({ product, setProduct }) {
         title="Sélectionner une taille de colis"
         className="w-full max-w-[700px]"
         isBlack
+        isActive={product.shipping !== ""}
       >
         <div className="flex flex-col gap-y-4 py-4 max-h-96 overflow-y-scroll pe-3">
           {shippings.map((shipping, index) => {

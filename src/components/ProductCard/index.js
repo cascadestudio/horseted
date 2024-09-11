@@ -13,6 +13,7 @@ export default function ProductCard({
   productId,
   product: initialProduct,
   className,
+  refreshFavoritPage,
 }) {
   const [product, setProduct] = useState(initialProduct);
 
@@ -54,7 +55,11 @@ export default function ProductCard({
           <p className="text-grey">{shippingSizeFrench}</p>
         </Link>
         <div className="flex items-start">
-          <FavoriteButton favoriteCount={favoritCount} productId={id} />
+          <FavoriteButton
+            refreshFavoritPage={refreshFavoritPage}
+            favoriteCount={favoritCount}
+            productId={id}
+          />
         </div>
       </div>
     </div>
