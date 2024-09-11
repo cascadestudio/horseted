@@ -6,6 +6,7 @@ import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { TextInput } from "@/components/input";
 
 export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
   const [email, setEmail] = useState("");
@@ -52,33 +53,33 @@ export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
         onSubmit={handleForm}
         className={`mt-4 border-b border-black mb-11 lg:border-b-0 lg:mb-[82px]`}
       >
-        <label htmlFor="email">
-          <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            type="email"
-            name="email"
-            id="email"
-            placeholder="exemple@mail.com"
-          />
-        </label>
-        <label htmlFor="password">
-          <p className="mt-[18px] font-mcqueen font-semibold">Mot de passe :</p>
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Mot de passe"
-          />
-        </label>
-        <div className="flex items-center justify-between mt-8">
-          <Button className="grow" type="button" variant="red">
+        <TextInput
+          label="Email"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          type="email"
+          placeholder="exemple@mail.com"
+          className="mb-[18px] lg:mb-0"
+        />
+        <TextInput
+          label="Mot de passe"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          type="password"
+          placeholder="Mot de passe"
+        />
+        <div className="flex flex-col gap-5 lg:flex-row items-center justify-between mt-8">
+          <Button className="grow w-full lg:w-auto" type="button" variant="red">
             Annuler
           </Button>
-          <button className="text-red font-semibold px-6" type="submit">
+          <button
+            className="text-red font-semibold w-full mb-3 lg:mb-0 lg:px-6"
+            type="submit"
+          >
             Je souhaite supprimer mon compte
           </button>
         </div>
