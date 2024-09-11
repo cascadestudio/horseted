@@ -98,7 +98,7 @@ export default function PostProductForm({
     <div className="px-5">
       <form
         onSubmit={handleFormSubmit}
-        className="container mx-auto p-16 bg-white rounded-3xl flex flex-col items-center gap-7 max-w-[1050px]"
+        className="container mx-auto p-5 lg:p-16 bg-white rounded-3xl flex flex-col items-center gap-7 max-w-[1050px]"
       >
         <div className="relative">
           <ProductMedia accessToken={accessToken} setProduct={setProduct} />
