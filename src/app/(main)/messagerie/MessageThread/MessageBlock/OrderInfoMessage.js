@@ -1,42 +1,32 @@
 import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Link from "next/link";
+import { patchOffer } from "@/fetch/offers";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
-  const { order, accessToken, updateMessages, user } = useThreadsContext();
+  const { order, updateMessages, user } = useThreadsContext();
 
   const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
-    // await getOffer(order.offers[0].id);
     await patchOffer(status, order.offers[0].id);
     updateMessages();
   };
 
-  const patchOffer = async (status, offerId) => {
-    const body = {
-      status: status,
-    };
-    const response = await fetchHorseted(
-      `/offers/${offerId}`,
-      accessToken,
-      "PATCH",
-      body,
-      true,
-      true
-    );
-    console.log("response =>", response);
-  };
-
-  const getOffer = async (offerId) => {
-    const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
-    console.log("offer =>", offer);
+  const orderMessageText = {
+    newOrder: "Nouvelle commande",
+    orderSent: "Colis envoyé !",
+    orderDelivered: "Colis livré !",
+    orderDeliveredConfirmationRequired:
+      "Colis en attente de livraison par le vendeur",
+    offerAccepted: "Offre acceptée !",
+    offerRejected: "Offre refusée",
   };
 
   if (type === "newOffer") {
+    if (!totalPrice || !order?.offers[0]?.price) return;
     return (
       <>
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
@@ -66,7 +56,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
             <span className="line-through">{centsToEuros(totalPrice)} €</span>
             {" > "}
             <span className="font-bold text-light-green">
-              {centsToEuros(order.offers[0].price)} €
+              {centsToEuros(order?.offers[0]?.price)} €
             </span>
           </p>
         </li>
@@ -108,13 +98,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
           ))}
         </div>
         <p className="font-poppins font-medium text-sm whitespace-nowrap">
-          {type === "orderDeliveredConfirmationRequired"
-            ? "Colis en attente de livraison par le vendeur"
-            : type === "orderSent"
-              ? "Colis envoyé !"
-              : type === "orderDelivered"
-                ? "Colis livré !"
-                : ""}
+          {orderMessageText[type]}
         </p>
       </li>
     );

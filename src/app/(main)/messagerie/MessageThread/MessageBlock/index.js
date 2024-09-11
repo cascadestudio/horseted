@@ -1,5 +1,3 @@
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
 import DisplayMedia from "@/components/DisplayMedia";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
@@ -7,13 +5,22 @@ import OrderInfoMessage from "./OrderInfoMessage";
 
 export default function MessageBlock({ message }) {
   const { products, user, totalPrice } = useThreadsContext();
-  const { content, senderId, type, offerId, medias } = message;
-
-  // console.log("message =>", message);
+  const { content, type, medias } = message;
 
   const isMessageFromRecipient = user.id === message.senderId;
 
+  // console.log("type =>", type);
+
   switch (type) {
+    case "newOrder":
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "orderDeliveredConfirmationRequired":
       if (!products.length) break;
       return (
@@ -42,6 +49,16 @@ export default function MessageBlock({ message }) {
         />
       );
     case "newOffer":
+      if (!products.length || !totalPrice) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          totalPrice={totalPrice}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
+    case "offerAccepted":
       if (!products.length) break;
       return (
         <OrderInfoMessage
