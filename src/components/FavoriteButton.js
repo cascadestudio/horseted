@@ -15,6 +15,8 @@ export default function FavoriteButton({
   const [userFavorites, setUserFavorites] = useState([]);
   const [favoriteId, setfavoriteId] = useState(null);
   const [favoriteCountState, setFavoriteCountState] = useState(favoriteCount);
+  const [isGetFavoritLoading, setIsGetFavoritLoading] = useState(true);
+  const [isClickLoading, setIsClickLoading] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -41,6 +43,8 @@ export default function FavoriteButton({
   }
 
   async function handleFavoriteClick() {
+    if (isClickLoading) return;
+    setIsClickLoading(true);
     setIsFavorite(!isFavorite);
     if (isFavorite) {
       setFavoriteCountState(favoriteCountState - 1);
@@ -49,11 +53,14 @@ export default function FavoriteButton({
       setFavoriteCountState(favoriteCountState + 1);
       await postFavorite();
     }
+    await getUserFavorites();
+    setIsClickLoading(false);
   }
 
   async function getUserFavorites() {
     const favorites = await fetchHorseted("/users/me/favorits", accessToken);
     setUserFavorites(favorites);
+    setIsGetFavoritLoading(false);
   }
 
   async function postFavorite() {
@@ -70,8 +77,11 @@ export default function FavoriteButton({
     }
   }
 
+  if (isGetFavoritLoading) return null;
+
   return (
     <button
+      disabled={isClickLoading}
       onClick={handleFavoriteClick}
       className="flex items-center flex-grow"
     >
