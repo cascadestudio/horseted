@@ -35,7 +35,7 @@ export default function forgotPasswordPage() {
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
-      <div className="pb-20 lg:pb-0 lg:w-1/2">
+      <div className="pb-16 lg:pb-0 lg:w-1/2">
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
             <button
