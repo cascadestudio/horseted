@@ -1,6 +1,6 @@
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import "@/app/styles/globals.css";
-import Message from "./MessageBlock";
+import MessageBlock from "./MessageBlock";
 import StarRating from "@/components/StarRating";
 import CityIcon from "@/assets/icons/CityIcon";
 import capitalizeText from "@/utils/capitalizeText";
@@ -45,7 +45,7 @@ export default function MessageThread() {
             )}
             {reversedMessages.length > 0 &&
               reversedMessages.map((message) => (
-                <Message
+                <MessageBlock
                   key={message.id}
                   updateMessages={updateMessages}
                   message={message}

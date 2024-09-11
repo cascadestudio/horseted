@@ -11,7 +11,6 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
   const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
-    // await getOffer(order.offers[0].id);
     await patchOffer(status, order.offers[0].id);
     updateMessages();
   };
@@ -25,15 +24,18 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
       accessToken,
       "PATCH",
       body,
-      true,
       true
     );
     console.log("response =>", response);
   };
 
-  const getOffer = async (offerId) => {
-    const offer = await fetchHorseted(`/offers/${offerId}`, accessToken);
-    console.log("offer =>", offer);
+  const orderMessageText = {
+    orderSent: "Colis envoyé !",
+    orderDelivered: "Colis livré !",
+    orderDeliveredConfirmationRequired:
+      "Colis en attente de livraison par le vendeur",
+    offerAccepted: "Offre acceptée !",
+    offerRejected: "Offre refusée",
   };
 
   if (type === "newOffer") {
@@ -108,13 +110,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
           ))}
         </div>
         <p className="font-poppins font-medium text-sm whitespace-nowrap">
-          {type === "orderDeliveredConfirmationRequired"
-            ? "Colis en attente de livraison par le vendeur"
-            : type === "orderSent"
-              ? "Colis envoyé !"
-              : type === "orderDelivered"
-                ? "Colis livré !"
-                : ""}
+          {orderMessageText[type]}
         </p>
       </li>
     );
