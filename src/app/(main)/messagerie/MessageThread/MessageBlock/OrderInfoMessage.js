@@ -1,32 +1,18 @@
 import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Link from "next/link";
+import { patchOffer } from "@/fetch/offers";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
-  const { order, accessToken, updateMessages, user } = useThreadsContext();
+  const { order, updateMessages, user } = useThreadsContext();
 
   const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
     await patchOffer(status, order.offers[0].id);
     updateMessages();
-  };
-
-  const patchOffer = async (status, offerId) => {
-    const body = {
-      status: status,
-    };
-    const response = await fetchHorseted(
-      `/offers/${offerId}`,
-      accessToken,
-      "PATCH",
-      body,
-      true
-    );
-    console.log("response =>", response);
   };
 
   const orderMessageText = {
@@ -39,7 +25,8 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
     offerRejected: "Offre refusée",
   };
 
-  if (type === "newOffer" && totalPrice && order?.offers[0]?.price) {
+  if (type === "newOffer") {
+    if (!totalPrice || !order?.offers[0]?.price) return;
     return (
       <>
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">

@@ -4,12 +4,12 @@ import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContex
 import OrderInfoMessage from "./OrderInfoMessage";
 
 export default function MessageBlock({ message }) {
-  const { products, user, totalPrice, order } = useThreadsContext();
-  const { content, senderId, type, offerId, medias } = message;
+  const { products, user, totalPrice } = useThreadsContext();
+  const { content, type, medias } = message;
 
   const isMessageFromRecipient = user.id === message.senderId;
 
-  console.log("type =>", type);
+  // console.log("type =>", type);
 
   switch (type) {
     case "newOrder":
