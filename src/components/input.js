@@ -25,7 +25,7 @@ export const TextInput = ({
         required={required}
         disabled={disabled}
         rows="4"
-        className={`input focus:outline-none bg-transparent border-b border-black rounded-none appearance-none w-full text-[14px] placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap ${
+        className={`focus:outline-none bg-transparent border-b border-black rounded-none appearance-none w-full text-[14px] placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap ${
           disabled && "cursor-not-allowed"
         }`}
       />
@@ -40,7 +40,7 @@ export const TextInput = ({
         id={name}
         required={required}
         disabled={disabled}
-        className={`input bg-transparent border-b border-black rounded-none appearance-none w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2 ${
+        className={`${className} bg-transparent border-b border-black rounded-none appearance-none w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2 ${
           disabled && "cursor-not-allowed"
         }`}
       />
