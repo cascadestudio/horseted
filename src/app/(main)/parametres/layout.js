@@ -58,7 +58,7 @@ function SettingsLayout({ children }) {
         ...base,
         {
           label: "Paramètres",
-          href: "parametres",
+          href: "/parametres",
         },
         {
           label: pages.find((page) => page.path === activePath)?.title,
@@ -67,12 +67,10 @@ function SettingsLayout({ children }) {
     }
   };
 
-  const crumbs = breadcrumbs();
-
   return (
     <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pt-11 pb-16">
       <div className="col-span-3 lg:col-span-1">
-        <Breadcrumbs breadcrumbs={crumbs} />
+        <Breadcrumbs breadcrumbs={breadcrumbs()} />
         <h1 className="font-mcqueen font-bold text-4xl mb-5">
           {pages.find((page) => page.path === activePath)?.title}
         </h1>
