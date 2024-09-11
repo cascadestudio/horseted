@@ -19,7 +19,7 @@ function FavoritesPage() {
     if (accessToken) {
       getUserFavorites();
     }
-  }, [accessToken]);
+  }, []);
 
   async function getUserFavorites() {
     const data = await fetchHorseted("/users/me/favorits", accessToken);
@@ -27,7 +27,7 @@ function FavoritesPage() {
   }
 
   if (favorites === null) {
-    return <Spinner />;
+    return <Spinner isFullScreen />;
   }
 
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Favoris" }];
@@ -51,7 +51,11 @@ function FavoritesPage() {
       {favorites.length > 0 ? (
         <section className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-14 py-12">
           {favorites.map((favorite, index) => (
-            <ProductCard key={index} productId={favorite.productId} />
+            <ProductCard
+              refreshFavoritPage={getUserFavorites}
+              key={index}
+              productId={favorite.productId}
+            />
           ))}
         </section>
       ) : (

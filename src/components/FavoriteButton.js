@@ -5,7 +5,11 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import HeartIcon from "@/assets/icons/HeartIcon";
 
-export default function FavoriteButton({ favoriteCount, productId }) {
+export default function FavoriteButton({
+  favoriteCount,
+  productId,
+  refreshFavoritPage,
+}) {
   const { user, accessToken } = useAuthContext();
   const [isFavorite, setIsFavorite] = useState(false);
   const [userFavorites, setUserFavorites] = useState([]);
@@ -37,14 +41,14 @@ export default function FavoriteButton({ favoriteCount, productId }) {
   }
 
   async function handleFavoriteClick() {
-    if (isFavorite) {
-      deleteFavorite();
-      setFavoriteCountState(favoriteCountState - 1);
-    } else {
-      postFavorite();
-      setFavoriteCountState(favoriteCountState + 1);
-    }
     setIsFavorite(!isFavorite);
+    if (isFavorite) {
+      setFavoriteCountState(favoriteCountState - 1);
+      await deleteFavorite();
+    } else {
+      setFavoriteCountState(favoriteCountState + 1);
+      await postFavorite();
+    }
   }
 
   async function getUserFavorites() {
@@ -61,6 +65,9 @@ export default function FavoriteButton({ favoriteCount, productId }) {
   async function deleteFavorite() {
     const query = `/users/me/favorits/${favoriteId}`;
     await fetchHorseted(query, accessToken, "DELETE");
+    if (typeof refreshFavoritPage === "function") {
+      refreshFavoritPage();
+    }
   }
 
   return (
