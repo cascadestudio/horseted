@@ -12,7 +12,7 @@ export default function DisplayMedia({ medias, productSummary }) {
   async function fetchImages() {
     const srcs = await Promise.all(
       medias.map(async (media) => {
-        return await getImage(media.files.thumbnail200, "client");
+        return await getImage(media.files.thumbnail1000, "client");
       })
     );
     setImageSrcs(srcs);
