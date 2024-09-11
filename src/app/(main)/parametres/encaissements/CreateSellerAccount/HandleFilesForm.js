@@ -60,19 +60,19 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
         Vérification de l’identité
       </h2>
       <h3 className="font-mcqueen font-semibold mb-2">Document d’identité :</h3>
-      <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
+      {/* <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
         <UploadIcon />
         <p className="text-sm font-semibold uppercase text-center">Passeport</p>
-        {/* <input
+        <input
           onChange={handleFileChange}
           type="file"
           name="frontDocument"
           className="hidden"
-        /> */}
-      </label>
-      <p className="text-center uppercase text-xl">ou</p>
+        />
+      </label> */}
+      {/* <p className="text-center uppercase text-xl">ou</p> */}
       <p className="text-center uppercase text-light-green mb-2">
-        Carte d'identité
+        Passeport ou Carte d'identité
       </p>
       <div className="flex gap-8">
         <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">

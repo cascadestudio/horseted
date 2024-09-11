@@ -13,6 +13,7 @@ export default function ProductCard({
   productId,
   product: initialProduct,
   className,
+  refreshFavoritPage,
 }) {
   const [product, setProduct] = useState(initialProduct);
 

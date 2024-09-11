@@ -158,7 +158,7 @@ export default function PostProductForm({
               type="number"
               step="0.01"
               placeholder="Ex : 20"
-              className="focus:outline-none border-none bg-transparent w-full placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap "
+              className="focus:outline-none border-none bg-transparent w-full placeholder:text-grey pt-1 pb-2 resize-none overflow-hidden break-words whitespace-pre-wrap text-base"
             />
             <span className="text-xl font-mcqueen font-semibold mr-2">€</span>
             {errors.price && (
