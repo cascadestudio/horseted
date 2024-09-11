@@ -9,10 +9,18 @@ export default function MessageBlock({ message }) {
 
   const isMessageFromRecipient = user.id === message.senderId;
 
-  // console.log("order =>", order);
   console.log("type =>", type);
 
   switch (type) {
+    case "newOrder":
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "orderDeliveredConfirmationRequired":
       if (!products.length) break;
       return (
@@ -51,7 +59,7 @@ export default function MessageBlock({ message }) {
         />
       );
     case "offerAccepted":
-      if (!products.length || !totalPrice) break;
+      if (!products.length) break;
       return (
         <OrderInfoMessage
           products={products}

@@ -7,15 +7,7 @@ import capitalizeText from "@/utils/capitalizeText";
 import Spinner from "@/components/Spinner";
 
 export default function MessageThread() {
-  const {
-    messages,
-    order,
-    orderTracking,
-    accessToken,
-    recipient,
-    updateMessages,
-    loading,
-  } = useThreadsContext();
+  const { messages, recipient, loading } = useThreadsContext();
 
   const reversedMessages = [...messages].reverse();
 
@@ -45,17 +37,11 @@ export default function MessageThread() {
             )}
             {reversedMessages.length > 0 &&
               reversedMessages.map((message) => (
-                <MessageBlock
-                  key={message.id}
-                  updateMessages={updateMessages}
-                  message={message}
-                  accessToken={accessToken}
-                  order={order}
-                />
+                <MessageBlock key={message.id} message={message} />
               ))}
-            {orderTracking && orderTracking.statuses[0] === "delivered" && (
+            {/* {orderTracking && orderTracking.statuses[0] === "delivered" && (
               <div>Terminé ! Merci pour votre commande sur Horseted</div>
-            )}
+            )} */}
           </ul>
         </div>
       )}

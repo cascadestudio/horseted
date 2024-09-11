@@ -30,6 +30,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
   };
 
   const orderMessageText = {
+    newOrder: "Nouvelle commande",
     orderSent: "Colis envoyé !",
     orderDelivered: "Colis livré !",
     orderDeliveredConfirmationRequired:
@@ -38,7 +39,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
     offerRejected: "Offre refusée",
   };
 
-  if (type === "newOffer") {
+  if (type === "newOffer" && totalPrice && order?.offers[0]?.price) {
     return (
       <>
         <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
@@ -68,7 +69,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
             <span className="line-through">{centsToEuros(totalPrice)} €</span>
             {" > "}
             <span className="font-bold text-light-green">
-              {centsToEuros(order.offers[0].price)} €
+              {centsToEuros(order?.offers[0]?.price)} €
             </span>
           </p>
         </li>
