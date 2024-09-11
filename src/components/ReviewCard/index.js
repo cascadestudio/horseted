@@ -20,7 +20,7 @@ export default function ReviewCard({ review }) {
 
   return (
     <div className="flex border border-lighter-grey rounded-lg p-5 gap-2 w-full max-w-[420px]">
-      <AvatarDisplay avatar={reviewer.avatar} className="h-10 w-10" />
+      <AvatarDisplay size={38} avatar={reviewer.avatar} className="h-10 w-10" />
       <div>
         <div className="flex items-center justify-between">
           <div>
@@ -32,7 +32,7 @@ export default function ReviewCard({ review }) {
               <span> jours</span>
             </p>
           </div>
-          <StarRating showCount={false} review={review} />
+          <StarRating showCount={false} review={review} size="sm" />
         </div>
         <p className="mt-2 text-xs">{comment}</p>
       </div>

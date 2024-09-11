@@ -6,8 +6,6 @@ import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContex
 import Link from "next/link";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
-  // console.log("isMessageFromRecipient =>", isMessageFromRecipient);
-
   const { order, accessToken, updateMessages, user } = useThreadsContext();
 
   const isMessageFromRecipient = user.id === order.userId;

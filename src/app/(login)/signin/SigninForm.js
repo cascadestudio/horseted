@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import Spinner from "@/components/Spinner";
 import Alert from "@/components/Alert";
+import { getUser } from "@/utils/getUser";
 
 export default function SigninForm({ className }) {
   const [email, setEmail] = useState("");
@@ -32,6 +33,14 @@ export default function SigninForm({ className }) {
     const { result, error } = await signIn(email, password);
 
     if (error) {
+      setIsLoading(false);
+      setIsAlert(true);
+      return;
+    }
+
+    const accessToken = await result.user.getIdToken();
+    const user = await getUser(accessToken);
+    if (!user) {
       setIsLoading(false);
       setIsAlert(true);
       return;
