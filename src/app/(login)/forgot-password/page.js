@@ -11,6 +11,7 @@ import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage3 from "@/assets/images/heroImage3.jpg";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { TextInput } from "@/components/input";
 
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -34,7 +35,7 @@ export default function forgotPasswordPage() {
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
-      <div className="lg:w-1/2">
+      <div className="pb-20 lg:pb-0 lg:w-1/2">
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
             <button
@@ -56,25 +57,24 @@ export default function forgotPasswordPage() {
             Mot de passe oublié
           </h1>
           <form onSubmit={handleForm} className="lg:pt-8">
-            <label htmlFor="email">
-              <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                type="email"
-                name="email"
-                id="email"
-                placeholder="exemple@mail.com"
-              />
-            </label>
+            <TextInput
+              label="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              type="email"
+              placeholder="exemple@mail.com"
+              className="mb-[18px] lg:mb-0"
+            />
             <Button
-              className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
+              className="mt-1 w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
               type="submit"
             >
               Régénérer le mot de passe
             </Button>
           </form>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-5">
             <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
               Se connecter
             </h2>
@@ -91,7 +91,7 @@ export default function forgotPasswordPage() {
           </div>
         </div>
       </div>
-      <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
+      <div className="bg-light-green mt-10 lg:mt-0 text-white flex flex-col items-center lg:w-1/2">
         <Image
           src={heroImage3}
           alt="Promenade à cheval dans les dunes"

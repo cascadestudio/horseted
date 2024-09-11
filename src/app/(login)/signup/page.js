@@ -16,6 +16,7 @@ import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
 import GoogleLoginButton from "@/components/GoogleLoginButton";
+import { TextInput } from "@/components/input";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -84,30 +85,25 @@ export default function signupPage() {
                 onSubmit={handleForm}
                 className=" border-b border-black mb-6 pb-6"
               >
-                <label htmlFor="email">
-                  <p className="mt-4 font-mcqueen font-semibold">Email :</p>
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="exemple@mail.com"
-                  />
-                </label>
-                <label htmlFor="password">
-                  <p className="mt-[18px] font-mcqueen font-semibold">
-                    Mot de passe :
-                  </p>
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Mot de passe"
-                  />
-                </label>
+                <TextInput
+                  label="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  type="email"
+                  placeholder="exemple@mail.com"
+                  className="mb-[18px] lg:mb-0"
+                />
+                <TextInput
+                  label="Mot de passe"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  type="password"
+                  placeholder="Mot de passe"
+                />
                 <label htmlFor="username">
                   <p className="mt-[18px] font-mcqueen font-semibold">
                     Nom d'utilisateur :
