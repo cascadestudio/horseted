@@ -1,4 +1,6 @@
-export const patchOffer = async (status, offerId) => {
+import fetchHorseted from "@/utils/fetchHorseted";
+
+export const patchOffer = async (status, offerId, accessToken) => {
   const body = {
     status: status,
   };

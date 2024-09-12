@@ -7,6 +7,7 @@ import AddressModal from "./SettingsAddresseModal";
 import Checkbox from "@/components/input/Checkbox";
 import AddAddressButton from "./AddAddressButton";
 import AddressCard from "./AddressCard";
+import { getAddresses } from "@/fetch/addresses";
 
 export default function Addresses() {
   const { accessToken } = useAuthContext();
@@ -20,11 +21,11 @@ export default function Addresses() {
   console.log("addresses =>", addresses);
 
   useEffect(() => {
-    getAddresses();
+    handleAddresses();
   }, []);
 
-  async function getAddresses() {
-    const adresses = await fetchHorseted(`/users/me/addresses`, accessToken);
+  async function handleAddresses() {
+    const adresses = await getAddresses(accessToken);
     setAddresses(adresses);
   }
 

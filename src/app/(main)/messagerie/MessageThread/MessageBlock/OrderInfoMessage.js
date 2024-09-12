@@ -6,12 +6,12 @@ import Link from "next/link";
 import { patchOffer } from "@/fetch/offers";
 
 export default function OrderInfoMessage({ products, type, totalPrice }) {
-  const { order, updateMessages, user } = useThreadsContext();
+  const { order, updateMessages, user, accessToken } = useThreadsContext();
 
   const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
-    await patchOffer(status, order.offers[0].id);
+    await patchOffer(status, order.offers[0].id, accessToken);
     updateMessages();
   };
 
