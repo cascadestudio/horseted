@@ -31,6 +31,7 @@ export default async function CategoriesSection() {
                 <Image
                   src={categoryImage}
                   alt={category.name}
+                  title="Voir la catégorie"
                   sizes="(min-width: 1024px) 640px, 100vw"
                   className="w-full object-cover h-full"
                 />

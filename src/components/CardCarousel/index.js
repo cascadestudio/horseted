@@ -17,6 +17,10 @@ export default function CardCarousel({ children, cardType }) {
   const lgBreakpoint = parseBreakpoint(fullConfig.theme.screens.lg);
   const smBreakpoint = parseBreakpoint(fullConfig.theme.screens.sm);
   const [isMdScreen, setIsMdScreen] = useState(false);
+
+  // --- Added state for swiping detection ---
+  const [isSwiping, setIsSwiping] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMdScreen(window.innerWidth < lgBreakpoint);
@@ -25,8 +29,26 @@ export default function CardCarousel({ children, cardType }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   const [slideIndex, setSlideIndex] = useState(0);
   let sliderRef = useRef(null);
+
+  const handleMouseDown = (event) => {
+    event.preventDefault();
+    setIsSwiping(false);
+  };
+
+  const handleMouseUp = () => {
+    if (sliderRef.current && sliderRef.current.innerSlider) {
+      setIsSwiping(sliderRef.current.innerSlider.state.swiping);
+    }
+  };
+
+  const handleClick = (event) => {
+    if (isSwiping) {
+      event.preventDefault();
+    }
+  };
 
   var settings = {
     arrows: false,
@@ -65,8 +87,8 @@ export default function CardCarousel({ children, cardType }) {
                 ? fullConfig.theme.colors["light-green"]
                 : "white"
               : i === Math.ceil(slideIndex / 4)
-              ? fullConfig.theme.colors["light-green"]
-              : "white",
+                ? fullConfig.theme.colors["light-green"]
+                : "white",
         }}
       />
     ),
@@ -105,13 +127,23 @@ export default function CardCarousel({ children, cardType }) {
   return (
     <div className="flex flex-col">
       <Slider
-        ref={(slider) => {
-          sliderRef = slider;
-        }}
+        ref={sliderRef}
         {...settings}
+        className={cardType === "article" ? "article" : ""}
       >
         {children.length > 1
-          ? children.slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)
+          ? children
+              .slice(0, isMdScreen ? 4 : cardType === "article" ? 6 : 16)
+              .map((child, index) => (
+                <div
+                  key={index}
+                  onMouseDown={handleMouseDown}
+                  onMouseUp={handleMouseUp}
+                  onClickCapture={handleClick}
+                >
+                  {child}
+                </div>
+              ))
           : children}
       </Slider>
     </div>

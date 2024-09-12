@@ -9,7 +9,6 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { TextInput } from "@/components/input";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
-import GoogleIcon from "@/assets/icons/GoogleIcon.svg";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
@@ -78,7 +77,7 @@ export default function Settings() {
 
   return (
     <section>
-      <form className="form-container grid grid-cols-1 lg:grid-cols-2 gap-12 mb-5">
+      <form className="form-container gap-5 grid grid-cols-1 lg:grid-cols-2 lg:gap-12 mb-5">
         <Button
           variant="transparent-red"
           onClick={handleSignout}
@@ -94,7 +93,7 @@ export default function Settings() {
             <span className="text-lg text-grey">{user.username}*</span>
           </div>
         </div>
-        <div className="flex flex-col col-span-2 lg:col-span-1">
+        <div className="flex flex-col items-end col-span-2 lg:col-span-1">
           <CitySelect />
 
           {/* TODO : Intégrer CitySelect comme dessous */}
@@ -155,34 +154,31 @@ export default function Settings() {
           className="col-span-2 resize-none overflow-hidden break-words whitespace-pre-wrap"
         />
       </form>
-      <div className="flex flex-col lg:flex-row mb-16 gap-4">
+      <div className="flex flex-col lg:flex-row mb-5 gap-4">
         <a
           href="#"
           className="flex items-center border border-black lg:w-fit rounded-[50px] p-1 h-14 w-full"
         >
           <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <Image
-              src={GoogleIcon}
-              alt="Google Icon"
-              className="h-5 w-5 lg:h-6 lg:w-6"
-            />
+            <img src="/icons/google-logo.svg" alt="Logo Google" />
           </div>
           <span className="font-semibold pl-3 pr-10 lg:pl-6">
             Dissocier un compte Google
           </span>
         </a>
-        <a
+        {/* <a
           href="#"
           className="flex items-center border border-black w-full lg:w-fit rounded-[50px] p-1 h-14"
         >
           <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <AppleIcon className="h-5 w-5 lg:h-6 lg:w-6" />
+            <AppleIcon className="h-6 w-6" />
           </div>
           <span className="font-semibold pl-3 pr-10 lg:pl-6">
             Associer un compte Apple
           </span>
-        </a>
+        </a> */}
       </div>
+      <Button className="w-full mb-16">Enregistrer</Button>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
         <DeleteAccountButton accessToken={accessToken} />
         <p className="font-mcqueen text-[12px]">

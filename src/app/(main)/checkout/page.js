@@ -180,7 +180,7 @@ const CheckOutPage = () => {
 
   return (
     <StripeProvider>
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto py-10 px-5">
         <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
           Votre commande
         </h1>

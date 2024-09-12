@@ -16,6 +16,7 @@ import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
 import GoogleLoginButton from "@/components/GoogleLoginButton";
+import { TextInput } from "@/components/input";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -62,12 +63,16 @@ export default function signupPage() {
           <>
             <div className="border-b border-black lg:border-none">
               <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
-                <Link href="/" className="justify-self-start">
+                <button
+                  onClick={() => router.back()}
+                  className="justify-self-start"
+                  aria-label="Retour"
+                >
                   <LeftArrow className="w-[18px] lg:w-7" />
-                </Link>
+                </button>
                 <Image
                   src={HorsetedLogoBlackHorizontal}
-                  alt="HorsetedLogoBlackHorizontal"
+                  alt="Logo Horseted"
                   className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
                 />{" "}
               </div>
@@ -80,30 +85,25 @@ export default function signupPage() {
                 onSubmit={handleForm}
                 className=" border-b border-black mb-6 pb-6"
               >
-                <label htmlFor="email">
-                  <p className="mt-4 font-mcqueen font-semibold">Email :</p>
-                  <input
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="exemple@mail.com"
-                  />
-                </label>
-                <label htmlFor="password">
-                  <p className="mt-[18px] font-mcqueen font-semibold">
-                    Mot de passe :
-                  </p>
-                  <input
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Mot de passe"
-                  />
-                </label>
+                <TextInput
+                  label="Email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  type="email"
+                  placeholder="exemple@mail.com"
+                  className="mb-[18px] lg:mb-0"
+                />
+                <TextInput
+                  label="Mot de passe"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  type="password"
+                  placeholder="Mot de passe"
+                />
                 <label htmlFor="username">
                   <p className="mt-[18px] font-mcqueen font-semibold">
                     Nom d'utilisateur :
@@ -189,7 +189,7 @@ export default function signupPage() {
       <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
         <Image
           src={heroImage2}
-          alt="Hero Image"
+          alt="Accessoires d'équitation"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
           sizes="50vw"
@@ -203,6 +203,7 @@ export default function signupPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Google Play"
           >
             <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
@@ -219,6 +220,7 @@ export default function signupPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="App Store"
           >
             <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>

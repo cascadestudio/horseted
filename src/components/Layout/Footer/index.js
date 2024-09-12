@@ -9,6 +9,7 @@ import BurstIcon from "@/assets/icons/BurstIcon";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
+import FooterLink from "./FooterLink";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -18,9 +19,9 @@ export default function Footer() {
         <div className="hidden lg:block lg:bg-[#E8E5DB] lg:border-t lg:border-light-green">
           <div className=" lg:container lg:mx-auto lg:flex lg:py-11 lg:justify-between lg:items-center lg:px-5">
             <div>
-              <h3 className="font-mcqueen font-bold text-2xl text-center lg:text-4xl">
+              <p className="font-mcqueen font-bold text-2xl text-center lg:text-4xl">
                 Vendez votre matériel dès maintenant
-              </h3>
+              </p>
               <p>
                 Vendez gratuitement votre matériel d’équitation et gagnez de
                 l’argent dès maintenant !
@@ -79,7 +80,7 @@ export default function Footer() {
           <div className="flex items-center flex-col mb-8">
             <Image
               src={HorsetedLogoBlackIcon}
-              alt="Horseted Logo"
+              alt="Logo Horseted"
               className="h-24 w-24 self-center mb-3 lg:h-40 lg:w-40 lg:mb-7"
             />
             <Button withAuth href="/vendre" className="px-16 w-full lg:w-auto">
@@ -87,13 +88,13 @@ export default function Footer() {
             </Button>
           </div>
           <div className="pb-7">
-            <h4 className="uppercase font-extrabold pb-2 text-lg">Horseted</h4>
+            <p className="uppercase font-extrabold pb-2 text-lg">Horseted</p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
-                <a href="#">À propos</a>
+                <a href="/a-propos">À propos</a>
               </li>
               <li>
-                <a href="#">Aide</a>
+                <a href="/aide">Aide</a>
               </li>
               <li>
                 <Button noStyle withAuth href="/vendre">
@@ -101,50 +102,52 @@ export default function Footer() {
                 </Button>
               </li>
               <li>
-                <a href="#">Acheter</a>
+                <a href="/articles">Acheter</a>
               </li>
               <li>
-                <a href="#">Livraisons & retours</a>
+                <a href="/aide">Livraisons & retours</a>
               </li>
               <li>
-                <a href="#">Articles</a>
+                <a href="/articles">Articles</a>
               </li>
               <li>
-                <a href="#">Écurie</a>
+                <a href="/mon-compte">Écurie</a>
               </li>
             </ul>
           </div>
           <div className="pb-7">
-            <h4 className="uppercase font-extrabold pb-2 text-lg">
+            <p className="uppercase font-extrabold pb-2 text-lg">
               Notre sélection
-            </h4>
+            </p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
-              <li>
-                <a href="#">Vêtements pour la cavalière</a>
-              </li>
-              <li>
-                <a href="#">Boots en cuir pour la cavalière</a>
-              </li>
-              <li>
-                <a href="#">Casques</a>
-              </li>
-              <li>
-                <a href="#">Sangles et accessoires</a>
-              </li>
-              <li>
-                <a href="#">Enrênements</a>
-              </li>
-              <li>
-                <a href="#">Selles et accessoires</a>
-              </li>
-              <li>
-                <a href="#">Brosses</a>
-              </li>
+              <FooterLink
+                id={531}
+                name={"Cavalière"}
+                title={"Vêtements pour la cavalière"}
+              />
+              <FooterLink
+                id={585}
+                name={"Boots cuir"}
+                title={"Boots en cuir pour la cavalière"}
+              />
+              <FooterLink id={614} name={"Casques"} title={"Casques"} />
+              <FooterLink
+                id={651}
+                name={"Sangles et Accessoires"}
+                title={"Sangles et accessoires"}
+              />
+              <FooterLink id={712} name={"Enrênements"} title={"Enrênements"} />
+              <FooterLink
+                id={729}
+                name={"Selles et Accessoires"}
+                title={"Selles et accessoires"}
+              />
+              <FooterLink id={825} name={"Brosse"} title={"Brosse"} />
             </ul>
           </div>
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
             <div>
-              <h4 className="uppercase font-extrabold pb-2 text-lg">Légal</h4>
+              <p className="uppercase font-extrabold pb-2 text-lg">Légal</p>
               <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
                   <a href="/politique-de-confidentialite">Mentions légales</a>
@@ -156,19 +159,29 @@ export default function Footer() {
                   <a href="/cgu">Conditions d’utilisation</a>
                 </li>
                 <li>
-                  <a href="#">Charte vendeur</a>
+                  <a href="/charte-vendeur">Charte vendeur</a>
                 </li>
               </ul>
             </div>
             <div className="flex justify-center lg:justify-start">
               <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2 [&>a>svg]:h-6">
-                <a href="https://www.instagram.com/horseted.fr/">
+                <a
+                  href="https://www.instagram.com/horseted.fr/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivez-nous sur Instagram"
+                >
                   <InstagramIcon />
                 </a>
                 {/* <a href="#">
                   <YoutubeIcon />
                 </a> */}
-                <a href="https://www.facebook.com/horseted/">
+                <a
+                  href="https://www.facebook.com/horseted/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Suivez-nous sur Facebook"
+                >
                   <FacebookIcon />
                 </a>
                 {/* <a href="#">
@@ -187,6 +200,7 @@ export default function Footer() {
                 href="https://citronnoir.com/"
                 className="underline"
                 target="_blank"
+                rel="noopener noreferrer nofollow"
               >
                 Citron Noir
               </a>

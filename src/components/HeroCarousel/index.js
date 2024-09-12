@@ -67,7 +67,7 @@ export default function HeroCarousel() {
           <Image
             src={heroImage1}
             quality={90}
-            alt="hero image 1"
+            alt="Promenade à cheval dans un champ"
             priority
             sizes="100vh"
             className="w-full h-[calc(100vh-var(--header-height))] object-cover"
@@ -78,7 +78,7 @@ export default function HeroCarousel() {
         <div className="relative">
           <Image
             src={heroImage2}
-            alt="hero image 2"
+            alt="Accessoires d'équitation"
             sizes="100vh"
             className="w-full h-[calc(100vh-var(--header-height))] object-cover"
           />
@@ -88,7 +88,7 @@ export default function HeroCarousel() {
         <div className="relative">
           <Image
             src={heroImage3}
-            alt="hero image 3"
+            alt="Promenade à cheval dans les dunes"
             sizes="100vh"
             className="w-full h-[calc(100vh-var(--header-height))] object-cover"
           />

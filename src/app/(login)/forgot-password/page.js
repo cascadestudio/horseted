@@ -11,6 +11,7 @@ import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage3 from "@/assets/images/heroImage3.jpg";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { TextInput } from "@/components/input";
 
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -34,15 +35,19 @@ export default function forgotPasswordPage() {
 
   return (
     <div className="bg-light-grey min-h-screen flex flex-col justify-between lg:flex lg:flex-row">
-      <div className="lg:w-1/2">
+      <div className="pb-16 lg:pb-0 lg:w-1/2">
         <div className="border-b border-black lg:border-none">
           <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
-            <Link href="/" className="justify-self-start">
+            <button
+              onClick={() => router.back()}
+              className="justify-self-start"
+              aria-label="Retour"
+            >
               <LeftArrow className="w-[18px] lg:w-7" />
-            </Link>
+            </button>
             <Image
               src={HorsetedLogoBlackHorizontal}
-              alt="HorsetedLogoBlackHorizontal"
+              alt="Logo Horseted"
               className="absolute left-1/2 -translate-x-1/2 w-[148px] lg:w-52"
             />
           </div>
@@ -52,25 +57,24 @@ export default function forgotPasswordPage() {
             Mot de passe oublié
           </h1>
           <form onSubmit={handleForm} className="lg:pt-8">
-            <label htmlFor="email">
-              <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                type="email"
-                name="email"
-                id="email"
-                placeholder="exemple@mail.com"
-              />
-            </label>
+            <TextInput
+              label="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              type="email"
+              placeholder="exemple@mail.com"
+              className="mb-[18px] lg:mb-0"
+            />
             <Button
-              className="mt-[30px] w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
+              className="mt-1 w-full h-[52px] flex justify-center font-mcqueen font-semibold text-xl lg:mt-6"
               type="submit"
             >
               Régénérer le mot de passe
             </Button>
           </form>
-          <div className="flex flex-col">
+          <div className="flex flex-col my-5">
             <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
               Se connecter
             </h2>
@@ -87,10 +91,10 @@ export default function forgotPasswordPage() {
           </div>
         </div>
       </div>
-      <div className="bg-light-green text-white flex flex-col items-center lg:w-1/2">
+      <div className="bg-light-green mt-10 lg:mt-0 text-white flex flex-col items-center lg:w-1/2">
         <Image
           src={heroImage3}
-          alt="Hero Image"
+          alt="Promenade à cheval dans les dunes"
           className="hidden lg:block w-full h-[71vh] object-cover"
           priority
           sizes="(min-width: 1024px) 50vw, 0vw"
@@ -104,6 +108,7 @@ export default function forgotPasswordPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Google Play"
           >
             <GooglePlayIconWhite className="w-8 h-8 mr-[14px]" />
             <div>
@@ -120,6 +125,7 @@ export default function forgotPasswordPage() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"
+            aria-label="Apple Store"
           >
             <AppleIconWhite className="w-auto h-8 mr-[14px]" />
             <div>

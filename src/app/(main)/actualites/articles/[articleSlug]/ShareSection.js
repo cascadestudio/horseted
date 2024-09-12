@@ -19,7 +19,7 @@ export default function ShareSection() {
   //   const threadsShareLink = `https://www.threads.net/share?text=${encodeURIComponent(currentURL)}`;
 
   return (
-    <div className="row-start-1 row-span-1 col-start-2 lg:col-start-3 lg:pb-16 ">
+    <div className="row-start-1 row-span-1 col-start-1 col-span-2 mx-auto lg:col-start-3 lg:pb-16 ">
       <span className="font-extrabold">Partager :</span>
       <div className="flex items-center space-x-3 mt-2">
         <FacebookShareButton url={currentURL}>
