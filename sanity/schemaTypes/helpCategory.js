@@ -1,6 +1,6 @@
-export const category = {
-  name: "category",
-  title: "Catégories du blog",
+export const helpCategory = {
+  name: "helpCategory",
+  title: "Catégories du centre d'aide",
   type: "document",
   fields: [
     {
