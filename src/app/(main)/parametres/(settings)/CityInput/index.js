@@ -5,25 +5,28 @@ import { useAuthContext } from "@/context/AuthContext";
 import { getAddresses } from "@/fetch/addresses";
 
 export default function index() {
-  const { user, accessToken } = useAuthContext();
-  const [addresses, setAddresses] = useState([]);
+  const { accessToken } = useAuthContext();
+  const [shippingAddress, setShippingAddress] = useState({});
 
-  console.log("addresses =>", addresses);
+  //   console.log("shippingAddressCity =>", shippingAddressCity);
 
   useEffect(() => {
     handleAddresses();
   }, []);
 
   async function handleAddresses() {
-    const adresses = await getAddresses(accessToken);
-    setAddresses(adresses);
+    const addresses = await getAddresses(accessToken);
+    const shippingAddress = addresses
+      .filter((address) => address.type === "shipping")
+      .sort((a, b) => b.isDefault - a.isDefault)[0];
+    setShippingAddress(shippingAddress);
   }
 
-  if (addresses.length === 0) return;
+  if (!shippingAddress) return;
 
   return (
     <>
-      <CitySelect />
+      <CitySelect shippingAddress={shippingAddress} />
       <DisplayCity accessToken={accessToken} />
     </>
   );

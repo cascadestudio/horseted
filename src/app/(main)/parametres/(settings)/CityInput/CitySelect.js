@@ -1,14 +1,21 @@
 import Dropdown from "@/components/Dropdown";
 import Radio from "@/components/input/Radio";
+import { patchAddress } from "@/fetch/addresses";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "@/context/AuthContext";
 
-export default function CitySelect() {
+export default function CitySelect({ shippingAddress }) {
+  const { accessToken } = useAuthContext();
   const [cities, setCities] = useState([]);
-  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedCity, setSelectedCity] = useState(shippingAddress.city);
   const [searchTerm, setSearchTerm] = useState("");
 
-  //   console.log("cities =>", cities);
-  //   console.log("searchTerm =>", searchTerm);
+  // console.log("shippingAddress.city =>", shippingAddress.city);
+  // console.log("selectedCity =>", selectedCity);
+
+  useEffect(() => {
+    setSelectedCity(shippingAddress.city);
+  }, [shippingAddress.city]);
 
   const handleFilterChange = (e) => {
     const term = e.target.value;
@@ -33,14 +40,26 @@ export default function CitySelect() {
     }
   };
 
-  const handleCheckboxChange = (e) => {
+  const handleCheckboxChange = async (e) => {
     const city = e.target.value;
     setSelectedCity(city);
+
+    const body = {
+      fullName: shippingAddress.fullName,
+      street: shippingAddress.street,
+      postalCode: shippingAddress.postalCode,
+      city: city,
+      // country: shippingAddress.country,
+      isDefault: true,
+      accountToken: accessToken,
+    };
+    console.log("body =>", body);
+    await patchAddress(accessToken, body, shippingAddress.id);
   };
 
   return (
     <Dropdown
-      title="Sélectionnez une ville"
+      title={selectedCity || "Sélectionnez une ville"}
       className="w-full lg:max-w-[300px]"
     >
       <div className="flex flex-col pt-4">
@@ -77,4 +96,16 @@ export default function CitySelect() {
       </div>
     </Dropdown>
   );
+}
+
+{
+  /* <div className="relative flex items-center border border-black rounded-md p-3">
+            <CityIcon className="w-5 h-5 stroke-current fill-none mr-3" />
+            <span className="flex-grow font-poppins font-medium">
+              {formData.city || "Sélectionnez une ville"}
+            </span>
+            <label className="flex items-center cursor-pointer">
+              <ModifyIcon className="w-9 h-9" />
+            </label>
+          </div> */
 }
