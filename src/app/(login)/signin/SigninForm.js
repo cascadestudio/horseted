@@ -6,6 +6,7 @@ import Link from "next/link";
 import Spinner from "@/components/Spinner";
 import Alert from "@/components/Alert";
 import { getUser } from "@/utils/getUser";
+import { TextInput } from "@/components/input";
 
 export default function SigninForm({ className }) {
   const [email, setEmail] = useState("");
@@ -57,28 +58,25 @@ export default function SigninForm({ className }) {
       onSubmit={handleForm}
       className={`mt-3 border-b border-black mb-11 lg:pt-8 lg:border-b-0 lg:mb-[82px] ${className}`}
     >
-      <label htmlFor="email">
-        <p className="mt-[18px] font-mcqueen font-semibold">Email :</p>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          type="email"
-          name="email"
-          id="email"
-          placeholder="exemple@mail.com"
-        />
-      </label>
-      <label htmlFor="password">
-        <p className="mt-[18px] font-mcqueen font-semibold">Mot de passe :</p>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Mot de passe"
-        />
-      </label>
+      <TextInput
+        label="Email"
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        type="email"
+        placeholder="exemple@mail.com"
+        className="mb-[18px] lg:mb-0"
+      />
+      <TextInput
+        label="Mot de passe"
+        name="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        type="password"
+        placeholder="Mot de passe"
+      />
       <Button
         className="mt-[30px] w-full h-[52px] text-xl lg:mt-6"
         type="submit"

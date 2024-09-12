@@ -39,7 +39,10 @@ export default function CitySelect() {
   };
 
   return (
-    <Dropdown title="Sélectionnez une ville">
+    <Dropdown
+      title="Sélectionnez une ville"
+      className="w-full lg:max-w-[300px]"
+    >
       <div className="flex flex-col pt-4">
         <div className="flex items-center border-black border-b">
           <img

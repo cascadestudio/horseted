@@ -39,14 +39,14 @@ export default async function Header() {
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
       <div className="container mx-auto">
-        <div className="flex justify-between items-center xl:gap-x-7 py-5">
+        <div className="flex justify-between items-center xl:gap-x-[0.6rem] py-5">
           <MobileMenu categories={categories} />
           <Link href="/">
             <Image
               src={HorsetedLogoBlackHorizontal}
-              alt="Horseted Logo"
+              alt="Logo Horseted"
               priority
-              className="hidden xl:block w-[210px] h-[45px]"
+              className="hidden xl:block w-[210px] h-[45px] xl:mr-1"
             />
           </Link>
           <SearchBar className="hidden xl:block" />

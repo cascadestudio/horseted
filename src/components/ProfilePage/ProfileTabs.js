@@ -9,7 +9,7 @@ export default function ProfileTabs({ profile, accessToken }) {
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState({});
 
-  // console.log("reviews =>", reviews);
+  //console.log("reviews =>", reviews);
 
   useEffect(() => {
     if (profile) {
@@ -30,6 +30,11 @@ export default function ProfileTabs({ profile, accessToken }) {
       accessToken
     );
     setReviews(response);
+  };
+
+  const globalReview = {
+    count: reviews?.reviews?.length,
+    rating: reviews?.rating,
   };
 
   if (!products.length && !reviews?.reviews?.length) return null;
@@ -81,7 +86,7 @@ export default function ProfileTabs({ profile, accessToken }) {
               <p className="font-mcqueen">
                 {reviews.reviews.length} évaluations
               </p>
-              <StarRating rating="4.5" count="6" />
+              <StarRating review={globalReview} size="sm" />
             </div>
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
               {reviews.reviews.map((review, index) => (

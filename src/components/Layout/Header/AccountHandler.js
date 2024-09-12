@@ -7,13 +7,16 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 import MessageIcon from "@/components/MessageIcon";
 import Button from "@/components/Button";
 
-export default function AccountHandler({ className }) {
+export default function AccountHandler({ className, isInMobileMenu = false }) {
   const { user } = useAuthContext();
 
   return (
     <div className={className}>
       {user === null ? (
-        <Button variant="transparent-green" href="/signin">
+        <Button
+          variant={isInMobileMenu ? "" : "transparent-green"}
+          href="/signin"
+        >
           Se connecter / S’inscrire
         </Button>
       ) : (

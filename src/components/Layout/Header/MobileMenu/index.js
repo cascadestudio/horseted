@@ -54,7 +54,7 @@ export default function MobileMenu({ categories }) {
         <Link href="/">
           <Image
             src={HorsetedLogoBlackHorizontal}
-            alt="Horseted Logo"
+            alt="Logo Horseted"
             priority
             className="w-[210px] h-[45px] mx-auto"
           />
@@ -79,6 +79,7 @@ export default function MobileMenu({ categories }) {
             <AccountHandler
               setIsNavOpen={setIsNavOpen}
               className="w-full px-5"
+              isInMobileMenu
             />
             <h3 className="uppercase font-semibold text-sm text-center mt-5 mb-1 border-t w-full pt-5">
               Parcourir
@@ -159,13 +160,21 @@ export default function MobileMenu({ categories }) {
           </div>
           <div className="flex justify-center mb-9">
             <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full [&>a>svg]:h-6">
-              <a href="https://www.instagram.com/horseted.fr/">
+              <a
+                href="https://www.instagram.com/horseted.fr/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <InstagramIcon />
               </a>
               {/* <a href="#">
                   <YoutubeIcon />
                 </a> */}
-              <a href="https://www.facebook.com/horseted/">
+              <a
+                href="https://www.facebook.com/horseted/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FacebookIcon />
               </a>
               {/* <a href="#">
