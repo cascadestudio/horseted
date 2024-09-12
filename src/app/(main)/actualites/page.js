@@ -12,6 +12,7 @@ export default async function BlogPage() {
     }`
   );
   const categories = await client.fetch(`*[_type == "category"]`);
+
   return (
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 py-12">
@@ -35,26 +36,44 @@ export default async function BlogPage() {
         </span>
         <div className="flex flex-wrap gap-3 g mb-8">
           {categories.length > 0 &&
-            categories.map((category) => (
-              <Link
-                key={category._id}
-                href={`/actualites/${category.slug.current}`}
-                passHref
-              >
-                <Button key={category._id} variant="transparent-grey">
-                  {category.title}
-                </Button>
-              </Link>
-            ))}
+            categories.map((category) => {
+              const categoryArticles = articles.filter(
+                (article) =>
+                  article.category && article.category._id === category._id
+              );
+              if (categoryArticles.length > 0) {
+                return (
+                  <Link
+                    key={category._id}
+                    href={`/actualites/${category.slug.current}`}
+                    passHref
+                  >
+                    <Button key={category._id} variant="transparent-grey">
+                      {category.title}
+                    </Button>
+                  </Link>
+                );
+              }
+              return null;
+            })}
         </div>
         {categories.length > 0 ? (
-          categories.map((category) => (
-            <CategoryBlogSection
-              key={category._id}
-              category={category}
-              articles={articles}
-            />
-          ))
+          categories.map((category) => {
+            const categoryArticles = articles.filter(
+              (article) =>
+                article.category && article.category._id === category._id
+            );
+            if (categoryArticles.length > 0) {
+              return (
+                <CategoryBlogSection
+                  key={category._id}
+                  category={category}
+                  articles={articles}
+                />
+              );
+            }
+            return null;
+          })
         ) : (
           <div className="p-4 text-red-500">Pas d'article trouvé</div>
         )}
