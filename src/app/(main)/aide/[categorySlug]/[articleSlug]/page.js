@@ -3,7 +3,6 @@ import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/PortableTextComponents";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
-// GROQ query to fetch article based on the helpArticle schema
 async function getHelpArticleData(slug) {
   const articles = await client.fetch(
     `*[_type == "helpArticle" && slug.current == $slug]{
@@ -44,7 +43,6 @@ export default async function HelpArticlePage({ params }) {
       </div>
       <div className="container mx-auto px-5">
         <div className="prose max-w-none mb-10 text-black">
-          {/* Render article content using PortableText */}
           <PortableText value={content} components={PortableTextComponents} />
         </div>
       </div>

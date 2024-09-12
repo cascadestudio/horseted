@@ -5,7 +5,6 @@ import { groq } from "next-sanity";
 import { client } from "../../../../sanity/lib/client";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
-// GROQ Query to fetch help categories and articles
 const helpCategoriesQuery = groq`
   *[_type == "helpCategory"]{
     title,
@@ -28,7 +27,6 @@ export default function HelpCenter() {
       const result = await client.fetch(helpCategoriesQuery);
       setCategories(result);
 
-      // Set the first category as the default if none is selected
       if (result.length > 0 && pathname === "/aide") {
         setActiveCategory(result[0]);
       }
@@ -79,7 +77,6 @@ export default function HelpCenter() {
         <aside className="bg-light-grey flex flex-col border border-lighter-grey">
           {categories.map((category, index) => (
             <div key={index} className="p-4">
-              {/* Make category title clickable */}
               <h2
                 className="font-semibold cursor-pointer text-blue-600 hover:underline"
                 onClick={() => handleCategoryClick(category)}
@@ -91,7 +88,6 @@ export default function HelpCenter() {
         </aside>
       </div>
 
-      {/* Second Column: Show articles of the clicked category */}
       <div className="col-span-3 lg:col-span-2">
         {activeCategory ? (
           <div>
