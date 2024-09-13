@@ -46,7 +46,7 @@ export default function Dropdown({
       <button
         type="button"
         onClick={handleClick}
-        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold ${handleStyle()}
+        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold capitalize ${handleStyle()}
         ${className}`}
       >
         {title}

@@ -12,12 +12,11 @@ import ModifyIcon from "@/assets/icons/ModifyIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
-import CitySelect from "./CitySelect";
-import DisplayCity from "./DisplayCity";
 import Avatar from "./Avatar";
 import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";
 import SignInModal from "@/components/SignInModal";
 import DeleteAccountButton from "./DeleteAccountButton";
+import CityInput from "./CityInput";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
@@ -35,9 +34,6 @@ export default function Settings() {
   });
   const [isMounted, setIsMounted] = useState(false);
 
-  // console.log("formData =>", formData);
-  // console.log("user =>", user);
-
   useEffect(() => {
     if (isMounted) {
       patchUser();
@@ -52,14 +48,6 @@ export default function Settings() {
   };
 
   async function patchUser() {
-    // if (formDataToSend.get("email") !== user?.auth.email) {
-    //   try {
-    //     await updateEmail(user.auth, formDataToSend.get("email"));
-    //     console.log("Email updated successfully.");
-    //   } catch (error) {
-    //     console.log(`Failed to update email: ${error.message}`);
-    //   }
-    // }
     const user = await fetchHorseted(
       `/users/me`,
       accessToken,
@@ -94,21 +82,7 @@ export default function Settings() {
           </div>
         </div>
         <div className="flex flex-col items-end col-span-2 lg:col-span-1">
-          <CitySelect />
-
-          {/* TODO : Intégrer CitySelect comme dessous */}
-
-          {/* <div className="relative flex items-center border border-black rounded-md p-3">
-            <CityIcon className="w-5 h-5 stroke-current fill-none mr-3" />
-            <span className="flex-grow font-poppins font-medium">
-              {formData.city || "Sélectionnez une ville"}
-            </span>
-            <label className="flex items-center cursor-pointer">
-              <ModifyIcon className="w-9 h-9" />
-            </label>
-          </div> */}
-
-          <DisplayCity accessToken={accessToken} />
+          <CityInput />
         </div>
         <TextInput
           label="Email"

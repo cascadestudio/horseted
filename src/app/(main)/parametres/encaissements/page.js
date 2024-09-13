@@ -5,6 +5,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import CreateSellerAccount from "./CreateSellerAccount";
 import DisplaySellerAccount from "./DisplaySellerAccount";
+import { getSeller } from "@/fetch/seller";
 
 export default function Transactions() {
   const { user, accessToken } = useAuthContext();
@@ -17,12 +18,8 @@ export default function Transactions() {
   }, []);
 
   const getSellerData = async () => {
-    const response = await fetchHorseted(
-      "/users/me/seller_account",
-      accessToken
-    );
-    console.log("getSellerData =>", response);
-    setSellerData(response);
+    const seller = await getSeller();
+    setSellerData(seller);
   };
 
   if (sellerData === null)
