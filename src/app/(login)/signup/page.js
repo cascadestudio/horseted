@@ -16,6 +16,7 @@ import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
 import GoogleLoginButton from "@/components/GoogleLoginButton";
+import AppleLoginButton from "@/components/AppleLoginButton";
 import { TextInput } from "@/components/input";
 
 export default function signupPage() {
@@ -169,6 +170,7 @@ export default function signupPage() {
                 </Button>
               </form>
               <GoogleLoginButton type="signup" />
+              <AppleLoginButton type="signup" />
               <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
                 Se connecter
               </h2>
