@@ -1,6 +1,6 @@
 export const article = {
   name: "article",
-  title: "Articles",
+  title: "Articles de blog",
   description: "📌 : sur la page d'accueil",
   type: "document",
   fields: [
