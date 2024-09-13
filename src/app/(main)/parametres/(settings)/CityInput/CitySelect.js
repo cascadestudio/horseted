@@ -45,23 +45,14 @@ export default function CitySelect({ shippingAddress }) {
     setSelectedCity(city);
 
     const body = {
-      fullName: shippingAddress.fullName,
-      street: shippingAddress.street,
-      postalCode: shippingAddress.postalCode,
       city: city,
-      // country: shippingAddress.country,
-      isDefault: true,
-      accountToken: accessToken,
     };
     console.log("body =>", body);
     await patchAddress(accessToken, body, shippingAddress.id);
   };
 
   return (
-    <Dropdown
-      title={selectedCity || "Sélectionnez une ville"}
-      className="w-full lg:max-w-[300px]"
-    >
+    <Dropdown title={selectedCity} className="w-full lg:max-w-[300px]">
       <div className="flex flex-col pt-4">
         <div className="flex items-center border-black border-b">
           <img
@@ -78,9 +69,9 @@ export default function CitySelect({ shippingAddress }) {
           />
         </div>
         <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll py-4 pe-3">
-          {cities.map((city) => (
+          {cities.map((city, index) => (
             <label
-              key={city}
+              key={index}
               className="flex justify-between items-center cursor-pointer font-semibold"
             >
               {city}

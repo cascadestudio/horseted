@@ -6,9 +6,7 @@ import { getAddresses } from "@/fetch/addresses";
 
 export default function index() {
   const { accessToken } = useAuthContext();
-  const [shippingAddress, setShippingAddress] = useState({});
-
-  //   console.log("shippingAddressCity =>", shippingAddressCity);
+  const [shippingAddress, setShippingAddress] = useState(null);
 
   useEffect(() => {
     handleAddresses();

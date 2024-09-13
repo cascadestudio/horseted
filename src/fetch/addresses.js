@@ -12,7 +12,6 @@ export async function patchAddress(accessToken, newAddress, addressId) {
     accessToken,
     "PATCH",
     newAddress,
-    true,
     true
   );
   console.log("adresses =>", adresses);
