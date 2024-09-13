@@ -1,7 +1,6 @@
 "use client";
 
 import signUp from "@/libs/firebase/auth/signup";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/components/Button";
@@ -15,8 +14,7 @@ import heroImage2 from "@/assets/images/heroImage2.jpg";
 import Checkbox from "@/components/input/Checkbox";
 import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
-import GoogleLoginButton from "@/components/GoogleLoginButton";
-import AppleLoginButton from "@/components/AppleLoginButton";
+import ExternalProviderLoginButton from "@/components/ExternalProviderLoginButton";
 import { TextInput } from "@/components/input";
 
 export default function signupPage() {
@@ -169,8 +167,11 @@ export default function signupPage() {
                   Créer un compte
                 </Button>
               </form>
-              <GoogleLoginButton type="signup" />
-              <AppleLoginButton type="signup" />
+              <ExternalProviderLoginButton
+                providerName="google"
+                type="signup"
+              />
+              <ExternalProviderLoginButton providerName="apple" type="signup" />
               <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center lg:text-[28px] lg:leading-[48px]">
                 Se connecter
               </h2>
