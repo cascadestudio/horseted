@@ -32,6 +32,12 @@ export const helpArticle = {
       to: [{ type: "helpCategory" }],
       validation: (Rule) => Rule.required(),
     },
+    {
+      name: "orderRank",
+      title: "Order Rank",
+      type: "string", // Required for orderable documents
+      hidden: true, // Hide it from the UI, it will be managed by the plugin
+    },
   ],
   preview: {
     select: {

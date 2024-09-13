@@ -4,7 +4,7 @@ import { client } from "../../../../sanity/lib/client";
 
 // Query to fetch all categories
 const helpCategoriesQuery = groq`
-  *[_type == "helpCategory"]{
+  *[_type == "helpCategory"] | order(orderRank asc) {
     slug
   }
 `;
@@ -15,7 +15,7 @@ export default async function HelpCenter() {
 
   // If no categories exist, return a 404 or error page (optional)
   if (!categories || categories.length === 0) {
-    return <div>No categories found</div>;
+    return <div>Aucune catégorie trouvée</div>;
   }
 
   // Get the first category's slug

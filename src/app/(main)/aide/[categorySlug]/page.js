@@ -7,7 +7,7 @@ const categoryQuery = groq`
   *[_type == "helpCategory" && slug.current == $categorySlug][0]{
     title,
     slug,
-    "articles": *[_type == "helpArticle" && references(^._id)]{
+    "articles": *[_type == "helpArticle" && references(^._id)] | order(orderRank asc) {
       title,
       slug
     }

@@ -8,7 +8,12 @@ const articleQuery = groq`
   *[_type == "helpArticle" && slug.current == $articleSlug][0]{
     title,
     content,
-    "category": helpCategory->{title, slug}
+    "category": helpCategory->{title, slug, 
+      "relatedArticles": *[_type == "helpArticle" && references(^._id)] | order(orderRank asc) {
+        title,
+        slug
+      }
+    }
   }
 `;
 

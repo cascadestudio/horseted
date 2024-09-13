@@ -8,7 +8,7 @@ import { client } from "../../../../sanity/lib/client";
 
 // Query to fetch categories
 const helpCategoriesQuery = groq`
-  *[_type == "helpCategory"]{
+  *[_type == "helpCategory"] | order(orderRank asc) {
     title,
     slug
   }
