@@ -106,7 +106,7 @@ function HelpLayout({ children }) {
           })}
         </aside>
       </div>
-      <div className="col-span-3 lg:col-span-2 pt-32">{children}</div>
+      <div className="col-span-3 lg:col-span-2 pt-5 lg:pt-32">{children}</div>
     </div>
   );
 }
