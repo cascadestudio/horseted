@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Suspense } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
@@ -11,7 +10,7 @@ import GooglePlayIconWhite from "@/assets/icons/GooglePlayIconWhite";
 import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage1 from "@/assets/images/heroImage1.jpg";
 import SigninForm from "./SigninForm";
-import GoogleLoginButton from "@/components/GoogleLoginButton";
+import ExternalProviderLoginButton from "@/components/ExternalProviderLoginButton";
 
 export default function signinPage() {
   const router = useRouter();
@@ -39,7 +38,8 @@ export default function signinPage() {
             <h1 className="text-center font-mcqueen font-bold text-[22px] leading-[48px] lg:text-[36px] lg:mb-3">
               Se connecter
             </h1>
-            <GoogleLoginButton type="signin" />
+            <ExternalProviderLoginButton providerName="google" type="signin" />
+            <ExternalProviderLoginButton providerName="apple" type="signin" />
             <Suspense fallback={<div>Loading...</div>}>
               <SigninForm />
             </Suspense>
