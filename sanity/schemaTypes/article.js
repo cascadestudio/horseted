@@ -50,6 +50,12 @@ export const article = {
         "Indique si l'article doit être mis en avant sur la page d'accueil dans la section 'Astuces, Conseils et Tendances Équestres'. Recommandation : toujours avoir 3 articles sur la page d'accueil.",
       initialValue: false,
     },
+    {
+      name: "orderRank",
+      title: "Order Rank",
+      type: "string", // Required for orderable documents
+      hidden: true, // Hide it from the UI, it will be managed by the plugin
+    },
   ],
 
   preview: {

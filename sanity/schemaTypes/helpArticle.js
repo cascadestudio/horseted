@@ -41,7 +41,15 @@ export const helpArticle = {
   ],
   preview: {
     select: {
-      title: "title",
+      title: "title", // Display the article title
+      categoryTitle: "helpCategory.title", // Display the category title
+    },
+    prepare(selection) {
+      const { title, categoryTitle } = selection;
+      return {
+        title: title,
+        subtitle: categoryTitle ? `${categoryTitle}` : "Pas de catégorie",
+      };
     },
   },
 };

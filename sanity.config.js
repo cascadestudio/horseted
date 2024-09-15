@@ -13,18 +13,31 @@ const deskStructure = (S, context) =>
   S.list()
     .title("Content")
     .items([
-      // Orderable list for Help Categories
+      // Orderable list for Articles
       orderableDocumentListDeskItem({
-        type: "helpCategory", // The document type
-        title: "Catégories du centre d'aide", // Title in the studio
+        type: "article", // The document type
+        title: "Articles du blog", // Title in the studio
         S, // Pass StructureBuilder
         context, // Pass context
       }),
-
+      // Orderable list for Categories
+      orderableDocumentListDeskItem({
+        type: "category", // The document type
+        title: "Catégories du blog", // Title in the studio
+        S, // Pass StructureBuilder
+        context, // Pass context
+      }),
       // Orderable list for Help Articles
       orderableDocumentListDeskItem({
         type: "helpArticle", // The document type
         title: "Articles du centre d'aide", // Title in the studio
+        S, // Pass StructureBuilder
+        context, // Pass context
+      }),
+      // Orderable list for Help Categories
+      orderableDocumentListDeskItem({
+        type: "helpCategory", // The document type
+        title: "Catégories du centre d'aide", // Title in the studio
         S, // Pass StructureBuilder
         context, // Pass context
       }),
