@@ -22,7 +22,7 @@ export default async function HelpArticlePage({ params }) {
   const article = await client.fetch(articleQuery, { articleSlug });
 
   if (!article) {
-    return <div>Article not found</div>;
+    return <div>Cet article n'existe plus.</div>;
   }
 
   const { title, content, category } = article;
