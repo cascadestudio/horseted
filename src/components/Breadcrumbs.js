@@ -12,8 +12,8 @@ const Breadcrumbs = ({ breadcrumbs, white }) => {
                   href={breadcrumb.href}
                   className={
                     white
-                      ? "text-white underline underline-offset-2"
-                      : "text-light-green underline underline-offset-2"
+                      ? "text-white underline underline-offset-2 whitespace-nowrap"
+                      : "text-light-green underline underline-offset-2 whitespace-nowrap"
                   }
                 >
                   {breadcrumb.label}
@@ -23,7 +23,13 @@ const Breadcrumbs = ({ breadcrumbs, white }) => {
                 </span>
               </>
             ) : (
-              <span className={white ? "text-white" : "text-black"}>
+              <span
+                className={
+                  white
+                    ? "text-white whitespace-nowrap"
+                    : "text-black whitespace-nowrap"
+                }
+              >
                 {breadcrumb.label}
               </span>
             )}

@@ -1,40 +1,41 @@
-import { groq } from "next-sanity";
+import CategoryList from "./CategoryList";
+import Breadcrumbs from "@/components/Breadcrumbs";
 import { client } from "../../../../../sanity/lib/client";
 import ChevronRight from "@/assets/icons/ChevronRight";
 
-// Query to fetch articles for the selected category
-const categoryQuery = groq`
-  *[_type == "helpCategory" && slug.current == $categorySlug][0]{
-    title,
-    slug,
-    "articles": *[_type == "helpArticle" && references(^._id)] | order(orderRank asc) {
-      title,
-      slug
-    }
-  }
-`;
-
-export default async function HelpCategoryPage({ params }) {
+export default async function CategoryPage({ params }) {
   const { categorySlug } = params;
 
-  // Fetch the category and its articles using the slug
-  const category = await client.fetch(categoryQuery, { categorySlug });
+  const articles = await client.fetch(
+    `*[_type == "helpArticle" && helpCategory->slug.current == $categorySlug] | order(orderRank asc) {
+      title,
+      slug
+    }`,
+    { categorySlug }
+  );
 
-  if (!category) {
-    return <div>Category not found</div>;
-  }
+  const breadcrumbs = [
+    { label: "Accueil", href: "/" },
+    { label: "Centre d'aide", href: "/aide" },
+    { label: categorySlug, href: `/aide/${categorySlug}` },
+  ];
 
   return (
-    <div>
-      {category.articles.length > 0 ? (
+    <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pb-16">
+      <div className="col-span-3 lg:col-span-1">
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        <h1 className="font-mcqueen font-bold text-4xl mb-5">Centre d'aide</h1>
+        <CategoryList activeSlug={categorySlug} />
+      </div>
+      <div className="col-span-3 lg:col-span-2 pt-5 lg:pt-[134px]">
         <ul>
-          {category.articles.map((article, index) => (
+          {articles.map((article) => (
             <li
-              key={index}
+              key={article.slug.current}
               className="font-medium border-b border-lighter-grey"
             >
               <a
-                href={`/aide/${category.slug.current}/${article.slug.current}`}
+                href={`/aide/${categorySlug}/${article.slug.current}`}
                 className="w-full py-4 px-6 flex items-center justify-between hover:bg-pale-grey"
               >
                 {article.title}
@@ -43,9 +44,7 @@ export default async function HelpCategoryPage({ params }) {
             </li>
           ))}
         </ul>
-      ) : (
-        <p>Pas d'article dans cette catégorie.</p>
-      )}
+      </div>
     </div>
   );
 }
