@@ -39,7 +39,7 @@ export default function signinPage() {
               Se connecter
             </h1>
             <ExternalProviderLoginButton providerName="google" type="signin" />
-            <ExternalProviderLoginButton providerName="apple" type="signin" />
+            {/* <ExternalProviderLoginButton providerName="apple" type="signin" /> */}
             <Suspense fallback={<div>Loading...</div>}>
               <SigninForm />
             </Suspense>
