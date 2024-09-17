@@ -9,7 +9,11 @@ export default async function CategoryPage({ params }) {
   const articles = await client.fetch(
     `*[_type == "helpArticle" && helpCategory->slug.current == $categorySlug] | order(orderRank asc) {
       title,
-      slug
+      slug,
+      helpCategory->{
+        title,
+        slug
+      }
     }`,
     { categorySlug }
   );
@@ -17,7 +21,7 @@ export default async function CategoryPage({ params }) {
   const breadcrumbs = [
     { label: "Accueil", href: "/" },
     { label: "Centre d'aide", href: "/aide" },
-    { label: categorySlug, href: `/aide/${categorySlug}` },
+    { label: articles[0]?.helpCategory.title, href: `/aide/${categorySlug}` },
   ];
 
   return (

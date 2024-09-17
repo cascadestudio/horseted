@@ -10,7 +10,10 @@ export default async function HelpArticlePage({ params }) {
   const article = await client.fetch(
     `*[_type == "helpArticle" && slug.current == $articleSlug && helpCategory->slug.current == $categorySlug][0] {
       title,
-      content
+      content,
+      helpCategory->{
+        title, slug
+      }
     }`,
     { categorySlug, articleSlug }
   );
@@ -18,7 +21,7 @@ export default async function HelpArticlePage({ params }) {
   const breadcrumbs = [
     { label: "Accueil", href: "/" },
     { label: "Centre d'aide", href: "/aide" },
-    { label: categorySlug, href: `/aide/${categorySlug}` },
+    { label: article.helpCategory.title, href: `/aide/${categorySlug}` },
     { label: article.title, href: `/aide/${categorySlug}/${articleSlug}` },
   ];
 
