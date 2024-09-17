@@ -52,7 +52,12 @@ export default function CitySelect({ shippingAddress }) {
   };
 
   return (
-    <Dropdown title={selectedCity} className="w-full lg:max-w-[300px]">
+    <Dropdown
+      title={selectedCity}
+      isCitySelect
+      isBlack
+      className="w-full lg:max-w-[300px]"
+    >
       <div className="flex flex-col pt-4">
         <div className="flex items-center border-black border-b">
           <img
@@ -91,7 +96,7 @@ export default function CitySelect({ shippingAddress }) {
 
 {
   /* <div className="relative flex items-center border border-black rounded-md p-3">
-            <CityIcon className="w-5 h-5 stroke-current fill-none mr-3" />
+            
             <span className="flex-grow font-poppins font-medium">
               {formData.city || "Sélectionnez une ville"}
             </span>
