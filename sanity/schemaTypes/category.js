@@ -1,3 +1,8 @@
+import {
+  orderRankField,
+  orderRankOrdering,
+} from "@sanity/orderable-document-list";
+
 export const category = {
   name: "category",
   title: "Catégories du blog",
@@ -19,11 +24,7 @@ export const category = {
       },
       validation: (Rule) => Rule.required(),
     },
-    {
-      name: "orderRank",
-      title: "Order Rank",
-      type: "string", // Required for orderable documents
-      hidden: true, // Hide it from the UI, it will be managed by the plugin
-    },
+    orderRankField({ type: "category", newItemPosition: "after" }),
   ],
+  orderings: [orderRankOrdering],
 };
