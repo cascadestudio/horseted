@@ -3,7 +3,7 @@ import { client } from "../../../../../sanity/lib/client";
 
 export default async function CategoryList({ activeSlug }) {
   const helpCategories = await client.fetch(
-    `*[_type == "helpCategory"] | order(orderRank asc) {
+    `*[_type == "helpCategory" && count(*[_type == "helpArticle" && references(^._id)]) > 0] | order(orderRank asc) {
       title,
       slug
     }`
