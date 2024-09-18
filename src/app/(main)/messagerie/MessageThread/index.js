@@ -12,7 +12,7 @@ export default function MessageThread() {
   const reversedMessages = [...messages].reverse();
 
   return (
-    <div className="flex flex-col min-h-[400px] flex-1">
+    <div className="flex flex-col min-h-[400px] pb-5 sm:pb-0 flex-1">
       {loading ? (
         <Spinner isFullScreen />
       ) : (

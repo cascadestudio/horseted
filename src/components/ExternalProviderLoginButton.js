@@ -61,16 +61,16 @@ const SignIn = ({ providerName, type }) => {
     <>
       <button
         onClick={handleExternalProvider}
-        className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto lg:mb-[55px]"
+        className="flex items-center border border-black w-[280px] lg:w-[350px] rounded-[50px] p-1 ml-auto mr-auto mb-5"
       >
-        <div className="relative bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
+        <div className="relative bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center lg:h-[50px] lg:w-[50px]">
           {providerName === "apple" ? (
             <img src="/icons/apple-logo.svg" alt="Logo Apple" />
           ) : (
             <img src="/icons/google-logo.svg" alt="Logo Google" />
           )}
         </div>
-        <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px]">
+        <span className="font-semibold pl-3 pr-7 lg:pr-[70px] lg:pl-[38px]">
           Continuer avec <span className="capitalize">{providerName}</span>
         </span>
       </button>
