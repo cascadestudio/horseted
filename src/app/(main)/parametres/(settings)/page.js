@@ -17,6 +17,7 @@ import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";
 import SignInModal from "@/components/SignInModal";
 import DeleteAccountButton from "./DeleteAccountButton";
 import CityInput from "./CityInput";
+import LinkAccount from "./LinkAccount";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
@@ -129,17 +130,7 @@ export default function Settings() {
         />
       </form>
       <div className="flex flex-col lg:flex-row mb-5 gap-4">
-        <a
-          href="#"
-          className="flex items-center border border-black lg:w-fit rounded-[50px] p-1 h-14 w-full"
-        >
-          <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <img src="/icons/google-logo.svg" alt="Logo Google" />
-          </div>
-          <span className="font-semibold pl-3 pr-10 lg:pl-6">
-            Dissocier un compte Google
-          </span>
-        </a>
+        <LinkAccount />
         {/* <a
           href="#"
           className="flex items-center border border-black w-full lg:w-fit rounded-[50px] p-1 h-14"
