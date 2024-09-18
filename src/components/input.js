@@ -10,6 +10,7 @@ export const TextInput = ({
   className,
   type = "text",
   hideLabel = false,
+  minlength,
 }) => (
   <label htmlFor={name} className={`w-full mx-2 ${className}`}>
     {!hideLabel && (
@@ -43,6 +44,7 @@ export const TextInput = ({
         className={`${className} bg-transparent border-b border-black rounded-none appearance-none w-full placeholder:font-normal placeholder:text-[14px] placeholder:text-grey pt-1 pb-2 ${
           disabled && "cursor-not-allowed"
         }`}
+        minlength={minlength}
       />
     )}
   </label>
