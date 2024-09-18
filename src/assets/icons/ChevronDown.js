@@ -10,6 +10,7 @@ export default function ChevronDown({ className }) {
     >
       <path
         d="M1 1.5L6.5 7.5L12 1.5"
+        className="group-hover:stroke-white"
         stroke="#4D7A4C"
         strokeWidth="1.5"
         strokeLinecap="round"

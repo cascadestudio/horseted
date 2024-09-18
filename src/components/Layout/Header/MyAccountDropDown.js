@@ -31,11 +31,11 @@ export default function MyAccountDropDown({ className }) {
     <div className={className} ref={dropdownRef}>
       <Button
         onClick={handleClick}
-        className="w-full lg:flex lg:items-center lg:gap-[10px]"
+        className="w-full lg:flex lg:items-center lg:gap-[10px] group hover:text-white"
         variant="white"
       >
         <p>Mon compte</p>
-        <ChevronDown className="hidden lg:block lg:w-3" />
+        <ChevronDown className="hidden lg:block lg:w-3 group-hover:stroke-white" />
       </Button>
       {isClickDropdown && !isClickOutside && (
         <div className="absolute top-[55px] bg-white border border-dark-green rounded-b-[20px] flex p-3 pb-2 z-10 w-[300px]">
