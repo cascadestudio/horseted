@@ -27,7 +27,7 @@ export default function ProductSummary({ postResponse }) {
             Terminer
           </Button>
           <Button
-            className="mt-5 w-full max-w-[890px]"
+            className="mt-5 w-full max-w-[890px] mb-5"
             variant="transparent-green"
             onClick={() => window.location.reload()}
           >
