@@ -29,30 +29,32 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
     if (!totalPrice || !order?.offers[0]?.price) return;
     return (
       <>
-        <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
-          {products.map((product) => (
-            <Link
-              key={product.id}
-              href={`/product/${product.id}`}
-              className="flex items-center"
-            >
-              <ClientProductImage
+        <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
+          <div className="flex flex-col gap-y-2">
+            {products.map((product) => (
+              <Link
                 key={product.id}
-                product={product}
-                size="small"
-                className="w-24 h-14"
-              />
-              <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
-                {product.title}
-              </div>
-              <img
-                src="/icons/external-link.svg"
-                alt="Chevron"
-                className="w-3 h-3 ml-1 mb-3"
-              />
-            </Link>
-          ))}
-          <p className="font-poppins font-medium text-sm whitespace-nowrap">
+                href={`/product/${product.id}`}
+                className="flex items-center"
+              >
+                <ClientProductImage
+                  key={product.id}
+                  product={product}
+                  size="small"
+                  className="w-24 h-14"
+                />
+                <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+                  {product.title}
+                </div>
+                <img
+                  src="/icons/external-link.svg"
+                  alt="Chevron"
+                  className="w-3 h-3 ml-1 mb-3"
+                />
+              </Link>
+            ))}
+          </div>
+          <p className="font-poppins font-medium mt-5 lg:mt-0 text-sm whitespace-nowrap">
             <span className="line-through">{centsToEuros(totalPrice)} €</span>
             {" > "}
             <span className="font-bold text-light-green">
@@ -82,9 +84,13 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
   } else {
     return (
       <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex flex-col items-center">
           {products.map((product) => (
-            <div key={product.id} className="flex items-center">
+            <Link
+              key={product.id}
+              href={`/product/${product.id}`}
+              className="flex items-center"
+            >
               <ClientProductImage
                 key={product.id}
                 product={product}
@@ -94,7 +100,12 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
               <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
                 {product.title}
               </div>
-            </div>
+              <img
+                src="/icons/external-link.svg"
+                alt="Chevron"
+                className="w-3 h-3 ml-1 mb-3"
+              />
+            </Link>
           ))}
         </div>
         <p className="font-poppins font-medium text-sm whitespace-nowrap">
