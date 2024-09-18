@@ -19,16 +19,18 @@ export default function Button({
 
   const variantStyles = {
     red: "bg-red text-white",
-    white: "bg-white text-light-green border border-light-green",
-    "transparent-black": "bg-transparent text-black border border-black",
+    white:
+      "bg-white text-light-green border border-light-green hover:bg-light-green hover:text-white hover:border-light-green transition-all duration-400",
+    "transparent-black":
+      "bg-transparent text-black border border-black hover:bg-black hover:text-white hover:border-white transition-all duration-400",
     "transparent-green":
-      "bg-transparent text-light-green border border-light-green",
+      "bg-transparent text-light-green border border-light-green hover:bg-light-green hover:text-white hover:border-light-green transition-all duration-400",
     "transparent-red": "bg-transparent text-red border border-red",
     "transparent-grey":
       "bg-transparent text-medium-grey border border-medium-grey hover:bg-lighter-green hover:text-light-green hover:border-light-green",
   };
 
-  const style = `${baseStyles} ${variantStyles[variant] || "bg-light-green text-white"}`;
+  const style = `${baseStyles} ${variantStyles[variant] || "bg-light-green text-white hover:bg-dark-green transition-all duration-400"}`;
 
   const [isSignInModal, setIsSignInModal] = useState(false);
   const { user } = useAuthContext();

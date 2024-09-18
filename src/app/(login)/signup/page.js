@@ -182,7 +182,7 @@ export default function signupPage() {
                 providerName="google"
                 type="signup"
               />
-              {/* <ExternalProviderLoginButton providerName="apple" type="signup" /> */}
+              <ExternalProviderLoginButton providerName="apple" type="signup" />
               <h2 className="font-mcqueen font-bold text-[22px] leading-[32px] text-center mt-5 lg:mt-0 lg:text-[28px] lg:leading-[48px]">
                 Se connecter
               </h2>
