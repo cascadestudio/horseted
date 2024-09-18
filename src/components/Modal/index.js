@@ -47,7 +47,7 @@ export default function Modal({
         className="bg-light-grey py-9 px-8 rounded-[20px] sm:w-[540px] mx-5"
       >
         <div className="grid grid-cols-[1fr_auto_1fr] border-b border-black pb-6 mb-11">
-          <h1 className="font-mcqueen col-start-2 font-bold text-[22px] lg:text-[28px] lg:leading-[48px]">
+          <h1 className="font-mcqueen text-black col-start-2 font-bold text-[22px] lg:text-[28px] lg:leading-[48px]">
             {title}
           </h1>
           <div
