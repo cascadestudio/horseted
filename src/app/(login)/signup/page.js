@@ -111,7 +111,7 @@ export default function signupPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   type="password"
                   placeholder="Mot de passe"
-                  minlength="6"
+                  minLength="6"
                   required
                 />
                 <label htmlFor="username">
