@@ -1,34 +1,43 @@
-import { useState } from "react";
-import getImage from "@/utils/getImage";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import Spinner from "@/components/Spinner";
-import { postMedia } from "@/utils/postMedia";
+import Alert from "@/components/Alert";
 
-export default function ProductMedia({ accessToken, setProduct }) {
-  const [isImageLoading, setIsImageLoading] = useState(false);
+export default function ProductMedia({ setImgFiles, handleFormChange }) {
   const [imageSrcs, setImageSrcs] = useState([]);
+  const [isAlert, setIsAlert] = useState(false);
+  const fileInputRef = useRef(null);
 
-  const handleMediaChange = async (e) => {
+  const handleMediaChange = (e) => {
+    handleFormChange(e);
     const files = Array.from(e.target.files);
+
     const isFileLimit = imageSrcs.length + files.length > 10;
-    console.log("isFileLimit =>", isFileLimit);
-    if (isFileLimit) return alert("Vous avez dépassé la limite de 10 photos");
+
+    if (isFileLimit) return setIsAlert(true);
+
     if (files) {
-      files.forEach(async (file) => {
-        setIsImageLoading(true);
-        const media = await postMedia(file, accessToken);
-        console.log("media =>", media);
-        setProduct((prev) => ({ ...prev, medias: [...prev.medias, media.id] }));
-        await getMedia(media.files.thumbnail200);
-        setIsImageLoading(false);
+      const fileReaders = [];
+
+      files.forEach((file) => {
+        setImgFiles((prev) => [...prev, file]);
+
+        const reader = new FileReader();
+        fileReaders.push(reader);
+        reader.onloadend = () => {
+          setImageSrcs((prevImages) => [...prevImages, reader.result]);
+        };
+        reader.readAsDataURL(file);
       });
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
-  async function getMedia(file) {
-    const src = await getImage(file, "client");
-    setImageSrcs((prev) => [...prev, src]);
-  }
+  const handleRemoveImageClick = (index) => {
+    setImgFiles((prev) => prev.filter((_, i) => i !== index));
+    setImageSrcs((prev) => prev.filter((_, i) => i !== index));
+  };
 
   return (
     // TODO redo responsive
@@ -51,9 +60,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                     alt="Avatar"
                   />
                   <button
-                    onClick={() =>
-                      setImageSrcs((prev) => prev.filter((_, i) => i !== index))
-                    }
+                    onClick={() => handleRemoveImageClick(index)}
                     className="absolute top-[-10px] right-[-10px] bg-white text-black rounded-full w-5 h-5 flex items-center justify-center border border-black pb-1"
                   >
                     x
@@ -68,37 +75,31 @@ export default function ProductMedia({ accessToken, setProduct }) {
                 : "w-full border border-light-green border-dashed py-5"
             } text-light-green flex flex-col items-center justify-center rounded-xl bg-white cursor-pointer min-h-[122px]`}
           >
-            {isImageLoading ? (
-              <Spinner />
-            ) : (
+            {imageSrcs.length < 10 && (
+              <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+                +
+              </span>
+            )}
+            {!imageSrcs.length > 0 && (
               <>
-                {imageSrcs.length < 10 && (
-                  <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-                    +
-                  </span>
-                )}
-                {!imageSrcs.length > 0 && (
-                  <>
-                    <p className="font-bold font-mcqueen text-center">
-                      Ajouter des photos
-                    </p>
-                    <p className="font-medium text-sm text-black">
-                      Ajoutez jusqu’à 10 photos
-                    </p>
-                  </>
-                )}
-                <input
-                  onChange={handleMediaChange}
-                  type="file"
-                  name="photos"
-                  className="hidden"
-                  accept="image/png, image/jpeg"
-                  multiple
-                  max={10}
-                  // required={imageSrcs.length === 0}
-                />
+                <p className="font-bold font-mcqueen text-center">
+                  Ajouter des photos
+                </p>
+                <p className="font-medium text-sm text-black">
+                  Ajoutez jusqu’à 10 photos
+                </p>
               </>
             )}
+            <input
+              ref={fileInputRef} // Attach the ref to the input
+              onChange={handleMediaChange}
+              type="file"
+              name="photos"
+              className="hidden"
+              accept="image/png, image/jpeg"
+              multiple
+              max={10}
+            />
           </label>
         </div>
       </div>
@@ -116,9 +117,7 @@ export default function ProductMedia({ accessToken, setProduct }) {
                   alt="Avatar"
                 />
                 <button
-                  onClick={() =>
-                    setImageSrcs((prev) => prev.filter((_, i) => i !== index))
-                  }
+                  onClick={() => handleRemoveImageClick(index)}
                   className="absolute top-[-10px] right-[-10px] bg-white text-black rounded-full w-5 h-5 flex items-center justify-center border border-black pb-1"
                 >
                   x
@@ -132,40 +131,37 @@ export default function ProductMedia({ accessToken, setProduct }) {
                 : "max-w-[700px] w-full border border-light-green border-dashed py-5"
             } text-light-green flex flex-col items-center justify-center rounded-xl bg-white cursor-pointer min-h-[122px]`}
           >
-            {isImageLoading ? (
-              <Spinner />
-            ) : (
+            {imageSrcs.length < 10 && (
+              <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+                +
+              </span>
+            )}
+            {!imageSrcs.length > 0 && (
               <>
-                {imageSrcs.length < 10 && (
-                  <span className="w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
-                    +
-                  </span>
-                )}
-                {!imageSrcs.length > 0 && (
-                  <>
-                    <p className="font-bold font-mcqueen text-center">
-                      Ajouter des photos
-                    </p>
-                    <p className="font-medium text-sm text-black">
-                      Ajoutez jusqu’à 10 photos
-                    </p>
-                  </>
-                )}
-                <input
-                  onChange={handleMediaChange}
-                  type="file"
-                  name="photos"
-                  className="hidden"
-                  accept="image/png, image/jpeg"
-                  multiple
-                  max={10}
-                  // required={imageSrcs.length === 0}
-                />
+                <p className="font-bold font-mcqueen text-center">
+                  Ajouter des photos
+                </p>
+                <p className="font-medium text-sm text-black">
+                  Ajoutez jusqu’à 10 photos
+                </p>
               </>
             )}
+            <input
+              ref={fileInputRef} // Attach the ref to the input
+              onChange={handleMediaChange}
+              type="file"
+              name="photos"
+              className="hidden"
+              accept="image/png, image/jpeg"
+              multiple
+              max={10}
+            />
           </label>
         </div>
       </div>
+      {isAlert && (
+        <Alert type="info">Vous avez dépassé la limite de 10 photos</Alert>
+      )}
     </>
   );
 }
