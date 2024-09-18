@@ -83,8 +83,8 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
     );
   } else {
     return (
-      <li className="w-full h-[70px] border-y border-pale-grey flex items-center justify-between">
-        <div className="flex flex-col items-center">
+      <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
+        <div className="flex flex-col lg:items-center">
           {products.map((product) => (
             <Link
               key={product.id}
@@ -108,7 +108,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
             </Link>
           ))}
         </div>
-        <p className="font-poppins font-medium text-sm whitespace-nowrap">
+        <p className="font-poppins mt-3 lg:mt-0 font-medium text-sm text-center lg:whitespace-nowrap">
           {orderMessageText[type]}
         </p>
       </li>
