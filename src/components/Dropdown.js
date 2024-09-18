@@ -35,12 +35,12 @@ export default function Dropdown({
 
   const handleStyle = () => {
     if (isActive) {
-      return "border-light-green text-light-green bg-lighter-green";
+      return "border-light-green text-light-green bg-lighter-green hover:bg-dark-green hover:text-white hover:border-white transition duration-400";
     }
     if (isBlack) {
-      return "text-black border-black";
+      return "text-black border-black hover:bg-black hover:text-white hover:border-white transition duration-400";
     } else {
-      return "text-medium-grey border-medium-grey ";
+      return "text-medium-grey border-medium-grey hover:bg-medium-grey hover:text-white hover:border-white transition duration-400";
     }
   };
 
@@ -49,7 +49,7 @@ export default function Dropdown({
       <button
         type="button"
         onClick={handleClick}
-        className={`flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold capitalize ${handleStyle()}
+        className={`group flex items-center justify-between border px-5 py-2 rounded-xl font-mcqueen font-semibold capitalize ${handleStyle()}
         ${className}`}
       >
         <div className="flex items-center">
@@ -64,10 +64,10 @@ export default function Dropdown({
           <svg
             className={`ml-2 ${
               isBlack
-                ? "stroke-black"
+                ? "stroke-black group-hover:stroke-white transition duration-400"
                 : isActive
                   ? " stroke-light-green"
-                  : "stroke-medium-grey"
+                  : "stroke-medium-grey group-hover:stroke-white transition duration-400"
             }`}
             width="10"
             height="7"
