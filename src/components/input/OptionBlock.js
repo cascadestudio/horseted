@@ -1,6 +1,14 @@
-const OptionBlock = ({ children, defaultValue, checked, onChange }) => {
+const OptionBlock = ({
+  children,
+  defaultValue,
+  checked,
+  onChange,
+  className,
+}) => {
   return (
-    <label className="flex items-center justify-between py-3 px-5 border border-darker-grey rounded-lg mb-5 bg-light-grey cursor-pointer">
+    <label
+      className={`flex items-center justify-between py-3 px-5 border border-darker-grey rounded-lg mb-5 bg-light-grey cursor-pointer ${className}`}
+    >
       <div>{children}</div>
       <span className="h-5 w-5 rounded-full border border-black flex items-center justify-center">
         {checked && (

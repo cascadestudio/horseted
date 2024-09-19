@@ -96,6 +96,7 @@ export default function OrderList({ orderType }) {
             </tr>
           ) : (
             orders.map((order) => {
+              console.log("order =>", order);
               const { id, title, price, username } = order;
               return (
                 <tr key={id} className="border-b border-lighter-grey">
@@ -103,7 +104,7 @@ export default function OrderList({ orderType }) {
                     {title}
                   </td>
                   <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate">
-                    {username}
+                    <Link href={`/vendeur/${order.userId}`}>{username}</Link>
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base font-poppins font-semibold text-center">
                     {centsToEuros(price)}€

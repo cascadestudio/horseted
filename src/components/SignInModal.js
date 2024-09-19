@@ -9,6 +9,7 @@ export default function SignInModal({ setIsSignInModal }) {
       onClose={() => {
         setIsSignInModal(false);
       }}
+      className="text-black"
     >
       <a
         href="#"
