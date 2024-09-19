@@ -1,6 +1,15 @@
 import classNames from "classnames";
+import { useEffect, useState } from "react";
 
-export default function Alert({ type, children }) {
+export default function Alert({ type, children, duration = 5000, setAlert }) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAlert(null);
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [duration]);
+
   const textClass = classNames({
     "text-dark-green": type === "success",
     "text-red": type === "error",
