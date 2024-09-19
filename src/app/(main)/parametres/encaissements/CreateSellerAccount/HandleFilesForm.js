@@ -72,7 +72,7 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
       </label> */}
       {/* <p className="text-center uppercase text-xl">ou</p> */}
       <p className="text-center uppercase text-light-green mb-2">
-        Passeport ou Carte d'identité
+        Carte d'identité
       </p>
       <div className="flex gap-8">
         <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
