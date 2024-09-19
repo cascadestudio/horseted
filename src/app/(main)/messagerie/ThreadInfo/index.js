@@ -106,14 +106,14 @@ export default function ThreadInfo() {
               product={product}
               size="small"
             />
-            <div>
+            <Link href={`/product/${product.id}`}>
               <h3 className="text-lg font-mcqueen font-bold capitalize">
                 {product.title}
               </h3>
               <p className="text-sm font-poppins">
                 {centsToEuros(product.price)} €
               </p>
-            </div>
+            </Link>
           </div>
         )}
         {orderTracking && (
