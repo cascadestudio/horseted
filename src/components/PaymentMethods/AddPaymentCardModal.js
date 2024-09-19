@@ -12,8 +12,8 @@ import Modal from "@/components/Modal";
 import Checkbox from "../input/Checkbox";
 
 const AddPaymentCardModal = ({
-  isNewPaymentMethod,
   setIsAddPaymentCardModal,
+  fetchPaymentMethods,
 }) => {
   const { user } = useAuthContext();
   const stripe = useStripe();
@@ -43,7 +43,7 @@ const AddPaymentCardModal = ({
       setLoading(false);
       setIsAddPaymentCardModal(false);
       await postPaymentMethod(token.id, isDefaultCard);
-      isNewPaymentMethod();
+      fetchPaymentMethods();
     }
   };
 
@@ -99,14 +99,7 @@ const AddPaymentCardModal = ({
       cardToken: cardToken,
       isDefault: isDefaultCard,
     };
-    const response = await fetchHorseted(
-      query,
-      user.auth.accessToken,
-      "POST",
-      body,
-      true
-    );
-    // console.log(response);
+    await fetchHorseted(query, accessToken, "POST", body, true);
   }
 };
 
