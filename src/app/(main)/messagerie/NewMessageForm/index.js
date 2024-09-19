@@ -8,10 +8,10 @@ export default function NewMessageForm() {
     getThreads,
     setActiveThread,
     activeThread,
-    getMessages,
     accessToken,
     recipient,
     product,
+    updateMessages,
   } = useThreadsContext();
 
   const [message, setMessage] = useState({
@@ -36,7 +36,7 @@ export default function NewMessageForm() {
       await getThreads();
     } else {
       await postMessage();
-      await getMessages(activeThread.id);
+      await updateMessages(activeThread.id);
     }
     resetMessage();
   }
