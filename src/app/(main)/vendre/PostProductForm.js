@@ -10,6 +10,7 @@ import { TextInput } from "@/components/input";
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { postMedia } from "@/utils/postMedia";
 
 export default function PostProductForm({
   accessToken,
@@ -17,8 +18,9 @@ export default function PostProductForm({
   setIsLoading,
 }) {
   const [formTouched, setFormTouched] = useState(false);
-
+  const [imgfiles, setImgFiles] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(true);
   const [product, setProduct] = useState({
     title: "",
     price: "",
@@ -34,7 +36,7 @@ export default function PostProductForm({
   });
 
   useEffect(() => {
-    if (formTouched) {
+    if (formTouched && !isFormValid) {
       validateForm();
     }
   }, [product, formTouched]);
@@ -64,24 +66,33 @@ export default function PostProductForm({
       formErrors.materials = "Veuillez ajouter au moins un matériau.";
     if (!product.colors || product.colors.length === 0)
       formErrors.colors = "Veuillez ajouter au moins une couleur.";
-    if (!product.medias.length)
+    if (imgfiles.length === 0)
       formErrors.medias = "Veuillez ajouter au moins une photo.";
     if (!product.brand) formErrors.brand = "Veuillez ajouter une marque.";
 
     setErrors(formErrors);
-    return Object.keys(formErrors).length === 0;
+
+    const isFormValid = Object.keys(formErrors).length === 0;
+    setIsFormValid(isFormValid);
+    return isFormValid;
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    validateForm();
 
     if (!validateForm()) return;
 
     setIsLoading(true);
+
+    const medias = await PostImgsAndReturnIds();
+
     const formattedProduct = {
       ...product,
       price: product.price * 100,
+      medias: medias,
     };
+
     const response = await fetchHorseted(
       "/products",
       accessToken,
@@ -89,9 +100,20 @@ export default function PostProductForm({
       formattedProduct,
       true
     );
+
     console.log("response =>", response);
     setIsLoading(false);
     setPostResponse(response);
+  };
+
+  const PostImgsAndReturnIds = async () => {
+    const mediaResponses = await Promise.all(
+      imgfiles.map(async (file) => {
+        const media = await postMedia(file, accessToken);
+        return media.id;
+      })
+    );
+    return mediaResponses;
   };
 
   return (
@@ -101,7 +123,10 @@ export default function PostProductForm({
         className="container mx-auto p-5 lg:p-16 bg-white rounded-3xl flex flex-col items-center gap-7 max-w-[1050px]"
       >
         <div className="relative">
-          <ProductMedia accessToken={accessToken} setProduct={setProduct} />
+          <ProductMedia
+            setImgFiles={setImgFiles}
+            handleFormChange={handleFormChange}
+          />
           {errors.medias && (
             <p className="text-red text-xs absolute right-0 bottom-[-20px]">
               {errors.medias}

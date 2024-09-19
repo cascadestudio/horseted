@@ -16,6 +16,7 @@ import Spinner from "@/components/Spinner";
 import { postUser } from "@/utils/postUser";
 import ExternalProviderLoginButton from "@/components/ExternalProviderLoginButton";
 import { TextInput } from "@/components/input";
+import Alert from "@/components/Alert";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -24,29 +25,38 @@ export default function signupPage() {
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState("");
 
-  const handleForm = async (event) => {
-    event.preventDefault();
+  const handleForm = async (e) => {
+    e.preventDefault();
     setIsLoading(true);
 
     const { result, error } = await signUp(email, password);
 
     if (error) {
       setIsLoading(false);
-      return alert(error);
+      console.error(error);
+      return setAlert("Erreur durant la création du compte Firebase");
     }
 
-    const firebaseToken = result.user.accessToken;
+    const firebaseUser = result.user;
+    const accessToken = await firebaseUser.getIdToken();
 
     try {
       await postUser({
-        firebaseToken: firebaseToken,
+        firebaseToken: accessToken,
         username: username,
         newsletter: newsletter,
       });
     } catch (error) {
+      try {
+        await firebaseUser.delete();
+      } catch (deleteError) {
+        console.error("Error deleting firebaseUser:", deleteError);
+      }
       setIsLoading(false);
-      return alert(error);
+      setAlert("Erreur durant la création du compte Horseted");
+      return console.error("Error posting user:", error);
     }
 
     setIsLoading(false);
@@ -99,9 +109,10 @@ export default function signupPage() {
                   name="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                   type="password"
                   placeholder="Mot de passe"
+                  minLength="6"
+                  required
                 />
                 <label htmlFor="username">
                   <p className="mt-[18px] font-mcqueen font-semibold">
@@ -237,6 +248,7 @@ export default function signupPage() {
           </a>
         </div>
       </div>
+      {alert !== "" && <Alert type="error">{alert}</Alert>}
     </div>
   );
 }

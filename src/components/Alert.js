@@ -14,7 +14,7 @@ export default function Alert({ type, children }) {
   });
 
   return (
-    <div className="fixed inset-x-0 bottom-5 flex justify-center">
+    <div className="fixed inset-x-0 bottom-5 flex justify-center z-20">
       <div
         className={`bg-light-grey mx-5 px-5 py-4 rounded-[20px] absolute bottom-5  lg:bottom-20 flex gap-8 items-center ${textClass}`}
       >
