@@ -3,6 +3,7 @@ import OptionBlock from "@/components/input/OptionBlock";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { TextInput } from "@/components/input";
 
 export default function SignalementModal({
   setIsSignalementModal,
@@ -48,23 +49,28 @@ export default function SignalementModal({
       }}
       buttonText="Signaler"
       onSubmit={handleSubmit}
+      className="flex flex-col gap-y-7"
     >
-      <label>
-        Ajouter un message :
-        <input
-          type="text"
-          placeholder="Votre Message"
-          onChange={(e) => setMessage(e.target.value)}
-        />
-      </label>
-      <label htmlFor="">
-        Objet du signalement :
+      <TextInput
+        label="Ajouter un message"
+        name="message"
+        type="textarea"
+        placeholder="Votre Message"
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <label className="font-mcqueen font-semibold" htmlFor="">
+        <span className="leading-[30px]">Objet du signalement :</span>
         {signalementTypes.map((signalementType, index) => (
           <OptionBlock
             key={index}
             defaultValue={signalementType}
             onChange={handleChange}
             checked={selectedType === signalementType}
+            className={`${
+              selectedType === signalementType
+                ? "border-light-green bg-white"
+                : "border-grey"
+            }`}
           >
             {signalementType}
           </OptionBlock>
