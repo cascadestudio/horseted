@@ -8,18 +8,19 @@ import AddPaymentCardModal from "./AddPaymentCardModal";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import OptionBlock from "../input/OptionBlock";
+import { deletePaymentMethods, getPaymentMethods } from "@/fetch/users";
 
 export default function PaymentMethods({
   activePaymentMethodId,
   setActivePaymentMethodId,
 }) {
-  const { user } = useAuthContext();
+  const { user, accessToken } = useAuthContext();
   const [isAddPaymentCardModal, setIsAddPaymentCardModal] = useState(false);
   const [isNewPaymentMethod, setIsNewPaymentMethod] = useState(false);
   const [paymentMethods, setPaymentMethods] = useState([]);
 
   useEffect(() => {
-    getPaymentMethods(user, setPaymentMethods);
+    fetchPaymentMethods();
   }, []);
 
   useEffect(() => {
@@ -28,12 +29,11 @@ export default function PaymentMethods({
     }
   }, [paymentMethods]);
 
-  useEffect(() => {
-    if (isNewPaymentMethod) {
-      getPaymentMethods(user, setPaymentMethods);
-      setIsNewPaymentMethod(false);
-    }
-  }, [isNewPaymentMethod]);
+  const fetchPaymentMethods = async () => {
+    const methods = await getPaymentMethods(accessToken);
+    setPaymentMethods(methods);
+    setIsNewPaymentMethod(false);
+  };
 
   const handlePaymentMethodChange = (e) => {
     const paymentMethodId = e.target.value;
@@ -54,6 +54,11 @@ export default function PaymentMethods({
     }
   };
 
+  const handleDeletePaymentMethods = async (paymentMethodId) => {
+    await deletePaymentMethods(accessToken, paymentMethodId);
+    fetchPaymentMethods();
+  };
+
   return (
     <div className="pt-4 lg:pt-14">
       <h2 className="font-mcqueen font-bold text-[24px] mb-4">
@@ -65,17 +70,25 @@ export default function PaymentMethods({
       {paymentMethods.map((paymentMethod) => {
         const { id, brand, last4 } = paymentMethod;
         return (
-          <OptionBlock
-            key={id}
-            defaultValue={id}
-            checked={activePaymentMethodId === id}
-            onChange={handlePaymentMethodChange}
-          >
-            <div className="flex gap-x-2">
-              <img src={`/logos/${brand}.svg`} width="50" alt={brand} />
-              <p>**** **** **** *{last4}</p>
-            </div>
-          </OptionBlock>
+          <div key={id} className="flex">
+            <OptionBlock
+              defaultValue={id}
+              checked={activePaymentMethodId === id}
+              onChange={handlePaymentMethodChange}
+              className="flex-grow"
+            >
+              <div className="flex gap-x-2">
+                <img src={`/logos/${brand}.svg`} width="50" alt={brand} />
+                <p>**** **** **** *{last4}</p>
+              </div>
+            </OptionBlock>
+            <button
+              className="shrink-1"
+              onClick={() => handleDeletePaymentMethods(id)}
+            >
+              Delete
+            </button>
+          </div>
         );
       })}
       <button
@@ -94,20 +107,9 @@ export default function PaymentMethods({
       {isAddPaymentCardModal && (
         <AddPaymentCardModal
           setIsAddPaymentCardModal={setIsAddPaymentCardModal}
-          isNewPaymentMethod={() => setIsNewPaymentMethod(true)}
+          fetchPaymentMethods={fetchPaymentMethods}
         />
       )}
     </div>
   );
-
-  async function getPaymentMethods() {
-    const query = `/users/me/payment_methods`;
-    const paymentMethods = await fetchHorseted(
-      query,
-      user.auth.accessToken,
-      "GET"
-    );
-    setPaymentMethods(paymentMethods);
-    // console.log("paymentMethods", paymentMethods);
-  }
 }
