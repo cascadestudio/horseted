@@ -129,7 +129,7 @@ export default function ProductPageClient({
             <ThreeDotsIcon />
           </button>
           {isThreeDotsDropdown && !isClickOutside && (
-            <div className="absolute right-0 top-10" ref={dropdownRef}>
+            <div className="absolute right-0 top-10 w-max" ref={dropdownRef}>
               <ThreeDotsProductDropDown
                 isUserSeller={isUserSeller}
                 product={product}
