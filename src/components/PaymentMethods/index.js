@@ -9,6 +9,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import OptionBlock from "../input/OptionBlock";
 import { deletePaymentMethods, getPaymentMethods } from "@/fetch/users";
+import DeleteIcon from "@/assets/icons/DeleteIcon";
 
 export default function PaymentMethods({
   activePaymentMethodId,
@@ -75,7 +76,7 @@ export default function PaymentMethods({
               defaultValue={id}
               checked={activePaymentMethodId === id}
               onChange={handlePaymentMethodChange}
-              className="flex-grow"
+              className="flex-grow max-w-[415px]"
             >
               <div className="flex gap-x-2">
                 <img src={`/logos/${brand}.svg`} width="50" alt={brand} />
@@ -83,19 +84,19 @@ export default function PaymentMethods({
               </div>
             </OptionBlock>
             <button
-              className="shrink-1"
+              className="shrink-1 mb-5 ml-5"
               onClick={() => handleDeletePaymentMethods(id)}
             >
-              Delete
+              <DeleteIcon className="w-11 h-11 text-red" />
             </button>
           </div>
         );
       })}
       <button
         onClick={() => setIsAddPaymentCardModal(true)}
-        className="flex items-center py-3 px-5 border border-darker-grey rounded-lg mb-5 bg-light-grey w-full"
+        className="flex items-center py-3 px-5 rounded-lg mb-5 bg-light-grey"
       >
-        <span className="mr-5 w-10 h-10 flex items-center justify-center bg-lighter-green border border-light-green rounded-full text-4xl text-light-green">
+        <span className="mr-5 w-10 h-10 flex items-center justify-center bg-white border border-light-green rounded-full text-4xl text-light-green">
           +
         </span>
         Ajouter une carte bancaire
