@@ -2,7 +2,6 @@
 
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useSearchParams } from "next/navigation";
 import { deleteThread, getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
@@ -31,7 +30,6 @@ export const ThreadsProvider = ({ children }) => {
 
   // console.log("order =>", order);
 
-  // Effects
   useEffect(() => {
     fetchTreads();
   }, []);

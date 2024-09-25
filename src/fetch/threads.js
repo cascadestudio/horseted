@@ -13,3 +13,29 @@ export const getMessages = async (accessToken, id) => {
 export const deleteThread = async (activeThreadId) => {
   await fetchHorseted(`/threads/${activeThreadId}`, accessToken, "DELETE");
 };
+
+export const postThread = async (
+  accessToken,
+  { userId, productId, content, medias }
+) => {
+  const thread = await fetchHorseted(
+    `/threads`,
+    accessToken,
+    "POST",
+    { userId, productId, content, medias },
+    true,
+    true
+  );
+  return thread;
+};
+
+export const postMessage = async (accessToken, { content, medias }) => {
+  const body = { content, medias };
+  await fetchHorseted(
+    `/threads/${activeThread.id}/messages`,
+    accessToken,
+    "POST",
+    body,
+    true
+  );
+};
