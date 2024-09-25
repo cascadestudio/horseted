@@ -131,7 +131,7 @@ export default function ThreadInfo() {
           accessToken={accessToken}
           setIsSignalementModal={setIsSignalementModal}
           sellerId={recipient.id}
-          productId={product.id || null}
+          productId={product?.id || null}
         />
       )}
       {isUserBlockModal && (
