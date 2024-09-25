@@ -17,15 +17,15 @@ export default function ThreadsContainer() {
     recipient,
     setIsNewMessageSearch,
     isNewMessageSearch,
+    setIsInfo,
     isInfo,
     setProducts,
     setProduct,
   } = useThreadsContext();
 
-  // console.log("order =>", order);
-
   const handleNewMessageSearchClick = () => {
     setIsNewMessageSearch(!isNewMessageSearch);
+    setIsInfo(false);
     setActiveThread(null);
     setProduct([]);
     setProducts([]);

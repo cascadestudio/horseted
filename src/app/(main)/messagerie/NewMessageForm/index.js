@@ -1,18 +1,17 @@
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import { useState } from "react";
-import fetchHorseted from "@/utils/fetchHorseted";
 import MediaInput from "./MediaInput";
 import { postThread, postMessage } from "@/fetch/threads";
 
 export default function NewMessageForm() {
   const {
-    getThreads,
     setActiveThread,
     activeThread,
     accessToken,
     recipient,
     product,
     updateMessages,
+    handleGetTreads,
   } = useThreadsContext();
 
   const [message, setMessage] = useState({
@@ -20,8 +19,6 @@ export default function NewMessageForm() {
     medias: [],
   });
   const [imageSrcs, setImageSrcs] = useState([]);
-
-  // console.log("activeThreadId =>", activeThreadId);
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -34,13 +31,13 @@ export default function NewMessageForm() {
     e.preventDefault();
     if (!activeThread) {
       await handlePostThread();
-      await getThreads();
+      await handleGetTreads();
     } else {
-      await postMessage(accessToken, {
+      await postMessage(accessToken, activeThread.id, {
         content: message.content,
         medias: message.medias,
       });
-      await updateMessages(activeThread.id);
+      await updateMessages();
     }
     resetMessage();
   }

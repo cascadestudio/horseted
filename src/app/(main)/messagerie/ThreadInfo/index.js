@@ -11,6 +11,7 @@ import UserBlockModal from "../Modals/UserBlockModal";
 import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
+import { deleteThread } from "@/fetch/threads";
 
 export default function ThreadInfo() {
   const {
@@ -18,9 +19,11 @@ export default function ThreadInfo() {
     accessToken,
     product,
     orderTracking,
-    onDeleteThread,
     order,
     recipient,
+    handleGetTreads,
+    activeThread,
+    setIsInfo,
   } = useThreadsContext();
 
   const [isDropdown, setIsDropdown] = useState(false);
@@ -43,6 +46,12 @@ export default function ThreadInfo() {
     setIsDropdown(!isDropdown);
     setIsClickOutside(false);
   }
+
+  const onDeleteThread = async () => {
+    await deleteThread(accessToken, activeThread.id);
+    await handleGetTreads();
+    setIsInfo(false);
+  };
 
   const userType = user.id === order.userId ? "buyer" : "seller";
 
@@ -122,7 +131,7 @@ export default function ThreadInfo() {
           accessToken={accessToken}
           setIsSignalementModal={setIsSignalementModal}
           sellerId={recipient.id}
-          productId={product.id || null}
+          productId={product?.id || null}
         />
       )}
       {isUserBlockModal && (

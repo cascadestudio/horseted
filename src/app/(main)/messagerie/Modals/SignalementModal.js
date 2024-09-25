@@ -23,14 +23,12 @@ export default function SignalementModal({
   const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
-    console.log(e.target.value);
     const signalement = e.target.value;
     setSelectedType(signalement);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("signalement", selectedType, message);
     const body = {
       type: selectedType,
       message: message,
@@ -57,6 +55,7 @@ export default function SignalementModal({
         type="textarea"
         placeholder="Votre Message"
         onChange={(e) => setMessage(e.target.value)}
+        value={message}
       />
       <label className="font-mcqueen font-semibold" htmlFor="">
         <span className="leading-[30px]">Objet du signalement :</span>

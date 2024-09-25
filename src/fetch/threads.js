@@ -10,7 +10,7 @@ export const getMessages = async (accessToken, id) => {
   return messages;
 };
 
-export const deleteThread = async (activeThreadId) => {
+export const deleteThread = async (accessToken, activeThreadId) => {
   await fetchHorseted(`/threads/${activeThreadId}`, accessToken, "DELETE");
 };
 
@@ -29,13 +29,16 @@ export const postThread = async (
   return thread;
 };
 
-export const postMessage = async (accessToken, { content, medias }) => {
-  const body = { content, medias };
+export const postMessage = async (
+  accessToken,
+  activeThreadId,
+  { content, medias }
+) => {
   await fetchHorseted(
-    `/threads/${activeThread.id}/messages`,
+    `/threads/${activeThreadId}/messages`,
     accessToken,
     "POST",
-    body,
+    { content, medias },
     true
   );
 };
