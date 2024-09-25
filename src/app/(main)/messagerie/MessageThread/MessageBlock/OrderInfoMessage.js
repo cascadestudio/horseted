@@ -22,7 +22,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
     orderDeliveredConfirmationRequired:
       "Colis en attente de livraison par le vendeur",
     offerAccepted: "Offre acceptée !",
-    offerRejected: "Offre refusée",
+    offerRejected: "Offre déclinée",
   };
 
   if (type === "newOffer") {
