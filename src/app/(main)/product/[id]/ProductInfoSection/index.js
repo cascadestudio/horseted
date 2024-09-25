@@ -255,7 +255,11 @@ export default function ProductPageClient({
           </tr>
         </tbody>
       </table>
-      <SellerBlock sellerData={sellerData} productId={id} />
+      <SellerBlock
+        sellerData={sellerData}
+        productId={id}
+        isUserSeller={isUserSeller}
+      />
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal
