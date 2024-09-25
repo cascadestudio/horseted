@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useSearchParams } from "next/navigation";
-import { deleteThread, getMessages, getThreads } from "@/fetch/threads";
+import { getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
 import { getUser } from "@/fetch/users";
 import { getProducts } from "@/fetch/products";
@@ -157,6 +157,7 @@ export const ThreadsProvider = ({ children }) => {
   return (
     <ThreadsContext.Provider
       value={{
+        handleGetTreads,
         threads,
         activeThread,
         setActiveThread,
@@ -165,7 +166,6 @@ export const ThreadsProvider = ({ children }) => {
         setProduct,
         order,
         orderTracking,
-        getThreads,
         getMessages,
         setMessages,
         loading,
