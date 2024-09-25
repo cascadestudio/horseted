@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { deleteThread, getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
 import { getUser } from "@/fetch/users";
+import { getProducts } from "@/fetch/products";
 
 const ThreadsContext = createContext();
 
@@ -27,8 +28,6 @@ export const ThreadsProvider = ({ children }) => {
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
   const [totalPrice, setTotalPrice] = useState(null);
-
-  // console.log("order =>", order);
 
   useEffect(() => {
     fetchTreads();
@@ -58,7 +57,7 @@ export const ThreadsProvider = ({ children }) => {
 
   useEffect(() => {
     if (order) {
-      getProducts();
+      handleGetProductsFromOrder(order);
     }
   }, [order]);
 
@@ -74,7 +73,7 @@ export const ThreadsProvider = ({ children }) => {
     if (activeThread?.orderId) {
       const order = await getOrder(accessToken, activeThread.orderId);
       setOrder(order);
-      await handleGetOrderTracking(order);
+      await handleGetOrderTracking(activeThread.orderId);
     } else {
       setOrderTracking(null);
     }
@@ -94,7 +93,7 @@ export const ThreadsProvider = ({ children }) => {
   const initNewThread = async (productIdParam) => {
     setActiveThread(null);
     setMessages([]);
-    const product = await getProduct(productIdParam);
+    const product = await handleGetProduct(productIdParam);
     await getRecipient(product.userId);
   };
 
@@ -104,12 +103,12 @@ export const ThreadsProvider = ({ children }) => {
       setRecipient(threads[0].authors[0]);
       await updateMessages(threads[0].id);
       if (threads[0].productId) {
-        getProduct(threads[0].productId);
+        handleGetProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
         const order = await getOrder(accessToken, threads[0].orderId);
         setOrder(order);
-        await handleGetOrderTracking(order);
+        await handleGetOrderTracking(threads[0].orderId);
       }
     }
   };
@@ -129,20 +128,20 @@ export const ThreadsProvider = ({ children }) => {
     setMessages(messages);
   };
 
-  const handleGetOrderTracking = async (order) => {
-    if (order.status === "paid") {
-      await getOrderTracking(order.id);
-      setOrderTracking(orderTracking);
-    }
+  const handleGetOrderTracking = async (orderId) => {
+    // if (order.status === "paid") {
+    const orderTracking = await getOrderTracking(accessToken, orderId);
+    setOrderTracking(orderTracking);
+    // }
   };
 
-  const getProduct = async (productId) => {
+  const handleGetProduct = async (productId) => {
     const product = await getProducts(productId);
     setProduct(product);
     return product;
   };
 
-  const getProducts = async () => {
+  const handleGetProductsFromOrder = async (order) => {
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
@@ -176,7 +175,6 @@ export const ThreadsProvider = ({ children }) => {
         getMessages,
         setMessages,
         loading,
-        getProduct,
         onDeleteThread,
         isNewMessageSearch,
         setIsNewMessageSearch,
@@ -192,6 +190,7 @@ export const ThreadsProvider = ({ children }) => {
         products,
         setProducts,
         setOrder,
+        handleGetProduct,
       }}
     >
       {children}

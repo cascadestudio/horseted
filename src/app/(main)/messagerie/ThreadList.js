@@ -8,7 +8,7 @@ export default function ThreadList() {
     activeThread,
     setActiveThread,
     setProduct,
-    getProduct,
+    handleGetProduct,
     user,
     setIsInfo,
     updateMessages,
@@ -20,7 +20,7 @@ export default function ThreadList() {
     setProduct(null);
     setIsInfo(false);
     if (productId) {
-      getProduct(productId);
+      handleGetProduct(productId);
     }
   }
 
