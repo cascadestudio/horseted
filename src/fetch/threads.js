@@ -10,7 +10,7 @@ export const getMessages = async (accessToken, id) => {
   return messages;
 };
 
-export const deleteThread = async (activeThreadId) => {
+export const deleteThread = async (accessToken, activeThreadId) => {
   await fetchHorseted(`/threads/${activeThreadId}`, accessToken, "DELETE");
 };
 

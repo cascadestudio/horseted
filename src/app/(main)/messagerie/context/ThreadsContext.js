@@ -30,7 +30,7 @@ export const ThreadsProvider = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(null);
 
   useEffect(() => {
-    fetchTreads();
+    handleGetTreads();
   }, []);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export const ThreadsProvider = ({ children }) => {
   }, [order]);
 
   // Helper Functions
-  const fetchTreads = async () => {
+  const handleGetTreads = async () => {
     setLoading(true);
     const threads = await getThreads(accessToken);
     setThreads(threads);
@@ -154,12 +154,6 @@ export const ThreadsProvider = ({ children }) => {
     setProducts(products);
   };
 
-  const onDeleteThread = async () => {
-    await deleteThread(accessToken, activeThread.id);
-    await fetchTreads();
-    setIsInfo(false);
-  };
-
   return (
     <ThreadsContext.Provider
       value={{
@@ -175,7 +169,6 @@ export const ThreadsProvider = ({ children }) => {
         getMessages,
         setMessages,
         loading,
-        onDeleteThread,
         isNewMessageSearch,
         setIsNewMessageSearch,
         user,
@@ -191,6 +184,7 @@ export const ThreadsProvider = ({ children }) => {
         setProducts,
         setOrder,
         handleGetProduct,
+        handleGetTreads,
       }}
     >
       {children}
