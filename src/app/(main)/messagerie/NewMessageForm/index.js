@@ -20,8 +20,6 @@ export default function NewMessageForm() {
   });
   const [imageSrcs, setImageSrcs] = useState([]);
 
-  // console.log("activeThreadId =>", activeThreadId);
-
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -35,11 +33,11 @@ export default function NewMessageForm() {
       await handlePostThread();
       await handleGetTreads();
     } else {
-      await postMessage(accessToken, {
+      await postMessage(accessToken, activeThread.id, {
         content: message.content,
         medias: message.medias,
       });
-      await updateMessages(activeThread.id);
+      await updateMessages();
     }
     resetMessage();
   }

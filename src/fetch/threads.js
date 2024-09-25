@@ -29,13 +29,16 @@ export const postThread = async (
   return thread;
 };
 
-export const postMessage = async (accessToken, { content, medias }) => {
-  const body = { content, medias };
+export const postMessage = async (
+  accessToken,
+  activeThreadId,
+  { content, medias }
+) => {
   await fetchHorseted(
-    `/threads/${activeThread.id}/messages`,
+    `/threads/${activeThreadId}/messages`,
     accessToken,
     "POST",
-    body,
+    { content, medias },
     true
   );
 };
