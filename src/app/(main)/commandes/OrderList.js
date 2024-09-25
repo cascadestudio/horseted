@@ -12,7 +12,6 @@ export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  //   console.log("purchases =>", purchases);
 
   useEffect(() => {
     getOrders();
@@ -25,6 +24,7 @@ export default function OrderList({ orderType }) {
       "/orders?statuses=paid",
       accessToken
     );
+
     let orders = [];
 
     if (orderType === "sale") {
@@ -36,7 +36,7 @@ export default function OrderList({ orderType }) {
 
     const purchasesOrSales = await Promise.all(
       orders.flatMap(async (order) => {
-        const user = await fetchHorseted(`/users/${order.userId}`, accessToken);
+        const cavalier = orderType === "sale" ? order.buyer : order.seller;
 
         return Promise.all(
           order.items.map(async (item) => {
@@ -44,7 +44,7 @@ export default function OrderList({ orderType }) {
               `/products/${item.productId}`,
               accessToken
             );
-            return { ...user, ...product };
+            return { ...product, cavalier };
           })
         );
       })
@@ -96,15 +96,16 @@ export default function OrderList({ orderType }) {
             </tr>
           ) : (
             orders.map((order) => {
-              console.log("order =>", order);
-              const { id, title, price, username } = order;
+              const { id, title, price, cavalier } = order;
               return (
                 <tr key={id} className="border-b border-lighter-grey">
                   <td className="py-4 pr-2 text-sm lg:text-base font-semibold">
                     {title}
                   </td>
                   <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate">
-                    <Link href={`/vendeur/${order.userId}`}>{username}</Link>
+                    <Link href={`/vendeur/${cavalier.id}`}>
+                      {cavalier.username}
+                    </Link>
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base font-poppins font-semibold text-center">
                     {centsToEuros(price)}€
