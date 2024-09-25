@@ -115,7 +115,7 @@ export default function ProductPageClient({
         </Link>
         <div className="flex items-center gap-5 relative">
           <div className="flex items-center gap-1">
-            <FavoriteButton favoriteCount={favoritCount} productId={id} />
+            <FavoriteButton favoriteCount={favoritCount} product={product} />
           </div>
           <button onClick={handleShareClick}>
             <ShareIcon />
