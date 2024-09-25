@@ -4,7 +4,7 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import AvatarDisplay from "@/components/AvatarDisplay";
 
-export default function SellerBlock({ sellerData, productId }) {
+export default function SellerBlock({ sellerData, productId, isUserSeller }) {
   const { username, review, id, avatar } = sellerData;
 
   return (
@@ -18,20 +18,22 @@ export default function SellerBlock({ sellerData, productId }) {
           <StarRating className="ml-3" review={review} />
         </div>
       </div>
-      <div className="flex items-center">
-        <Link
-          href={`/messagerie?productId=${productId}`}
-          className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
-        >
-          <MessageGreenIcon />
-        </Link>
-        <Button
-          href={`/vendeur/${id}`}
-          className="text-xs lg:text-sm h-8 px-4 py-2 max-w-24 lg:max-w-[110px]"
-        >
-          Voir le profil
-        </Button>
-      </div>
+      {!isUserSeller && (
+        <div className="flex items-center">
+          <Link
+            href={`/messagerie?productId=${productId}`}
+            className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
+          >
+            <MessageGreenIcon />
+          </Link>
+          <Button
+            href={`/vendeur/${id}`}
+            className="text-xs lg:text-sm h-8 px-4 py-2 max-w-24 lg:max-w-[110px]"
+          >
+            Voir le profil
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

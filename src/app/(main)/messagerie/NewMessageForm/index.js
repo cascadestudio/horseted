@@ -2,16 +2,17 @@ import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContex
 import { useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import MediaInput from "./MediaInput";
+import { postThread, postMessage } from "@/fetch/threads";
 
 export default function NewMessageForm() {
   const {
     getThreads,
     setActiveThread,
     activeThread,
-    getMessages,
     accessToken,
     recipient,
     product,
+    updateMessages,
   } = useThreadsContext();
 
   const [message, setMessage] = useState({
@@ -32,11 +33,14 @@ export default function NewMessageForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!activeThread) {
-      await postThread();
+      await handlePostThread();
       await getThreads();
     } else {
-      await postMessage();
-      await getMessages(activeThread.id);
+      await postMessage(accessToken, {
+        content: message.content,
+        medias: message.medias,
+      });
+      await updateMessages(activeThread.id);
     }
     resetMessage();
   }
@@ -46,35 +50,14 @@ export default function NewMessageForm() {
     setImageSrcs([]);
   };
 
-  async function postThread() {
-    const body = {
+  async function handlePostThread() {
+    const newThread = await postThread(accessToken, {
       userId: recipient.id,
       productId: product ? product.id : null,
       content: message.content,
       medias: message.medias,
-    };
-    const newThread = await fetchHorseted(
-      `/threads`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
+    });
     setActiveThread(newThread);
-  }
-
-  async function postMessage() {
-    const body = {
-      content: message.content,
-      medias: message.medias,
-    };
-    await fetchHorseted(
-      `/threads/${activeThread.id}/messages`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
   }
 
   return (

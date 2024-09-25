@@ -11,6 +11,7 @@ export default function NewMessageSearch() {
     setMessages,
     setRecipient,
     setIsNewMessageSearch,
+    user,
   } = useThreadsContext();
 
   const [users, setUsers] = useState([]);
@@ -20,9 +21,11 @@ export default function NewMessageSearch() {
   };
 
   async function getUsers(searchTerm) {
-    const users = await fetchHorseted(`/users?terms=${searchTerm}`);
-    const usersWithoutThreads = users.items.filter(
-      (user) => !threads.some((thread) => thread.authors[0].id === user.id)
+    const searchedUsers = await fetchHorseted(`/users?terms=${searchTerm}`);
+    const usersWithoutThreads = searchedUsers.items.filter(
+      (searchedUser) =>
+        searchedUser.id !== user.id &&
+        !threads.some((thread) => thread.authors[0].id === searchedUser.id)
     );
     setUsers(usersWithoutThreads);
   }

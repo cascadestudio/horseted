@@ -4,22 +4,18 @@ import { ISOtoShortDate } from "@/utils/formatDate";
 import Link from "next/link";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
+import { getOrder } from "@/fetch/orders";
+import { useThreadsContext } from "../context/ThreadsContext";
 
-export default function OrderInfo({
-  orderTracking,
-  userType,
-  accessToken,
-  order,
-  getOrder,
-  recipient,
-}) {
-  // console.log("orderTracking =>", orderTracking);
-
+export default function OrderInfo({ userType }) {
+  const { accessToken, setOrder, orderTracking, recipient } =
+    useThreadsContext();
   const [isReviewModal, setIsReviewModal] = useState(false);
 
   const handleIsOrderReceived = async () => {
     await patchOrderIsReceived();
-    await getOrder(order.id);
+    const order = await getOrder(accessToken, order.id);
+    setOrder(order);
     setIsReviewModal(true);
   };
 

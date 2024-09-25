@@ -20,7 +20,6 @@ export default function ThreadInfo() {
     orderTracking,
     onDeleteThread,
     order,
-    getOrder,
     recipient,
   } = useThreadsContext();
 
@@ -116,16 +115,7 @@ export default function ThreadInfo() {
             </Link>
           </div>
         )}
-        {orderTracking && (
-          <OrderInfo
-            userType={userType}
-            orderTracking={orderTracking}
-            accessToken={accessToken}
-            order={order}
-            getOrder={getOrder}
-            recipient={recipient}
-          />
-        )}
+        {orderTracking && <OrderInfo userType={userType} />}
       </div>
       {isSignalementModal && (
         <SignalementModal

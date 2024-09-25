@@ -115,7 +115,7 @@ export default function ProductPageClient({
         </Link>
         <div className="flex items-center gap-5 relative">
           <div className="flex items-center gap-1">
-            <FavoriteButton favoriteCount={favoritCount} productId={id} />
+            <FavoriteButton favoriteCount={favoritCount} product={product} />
           </div>
           <button onClick={handleShareClick}>
             <ShareIcon />
@@ -255,7 +255,11 @@ export default function ProductPageClient({
           </tr>
         </tbody>
       </table>
-      <SellerBlock sellerData={sellerData} productId={id} />
+      <SellerBlock
+        sellerData={sellerData}
+        productId={id}
+        isUserSeller={isUserSeller}
+      />
       <p className="self-end text-sm lg:text-base">Ajouté le {formattedDate}</p>
       {isCreateBundleModalOpen && (
         <CreateBundleModal

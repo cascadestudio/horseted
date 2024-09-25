@@ -7,7 +7,7 @@ import HeartIcon from "@/assets/icons/HeartIcon";
 
 export default function FavoriteButton({
   favoriteCount,
-  productId,
+  product,
   refreshFavoritPage,
 }) {
   const { user, accessToken } = useAuthContext();
@@ -17,10 +17,14 @@ export default function FavoriteButton({
   const [favoriteCountState, setFavoriteCountState] = useState(favoriteCount);
   const [isGetFavoritLoading, setIsGetFavoritLoading] = useState(true);
   const [isClickLoading, setIsClickLoading] = useState(false);
+  const [isUserProduct, setIsUserProduct] = useState(false);
 
   useEffect(() => {
     if (user) {
       getUserFavorites();
+      if (product.userId === user.id) {
+        setIsUserProduct(true);
+      }
     }
   }, [user]);
 
@@ -32,7 +36,7 @@ export default function FavoriteButton({
 
   function checkIsFavorite() {
     const favorite = userFavorites.find(
-      (favorite) => favorite.productId === productId
+      (favorite) => favorite.productId === product.id
     );
     if (favorite) {
       setIsFavorite(true);
@@ -43,7 +47,7 @@ export default function FavoriteButton({
   }
 
   async function handleFavoriteClick() {
-    if (isClickLoading) return;
+    if (isClickLoading || isUserProduct) return;
     setIsClickLoading(true);
     setIsFavorite(!isFavorite);
     if (isFavorite) {
@@ -64,7 +68,7 @@ export default function FavoriteButton({
   }
 
   async function postFavorite() {
-    const body = { productId: productId };
+    const body = { productId: product.id };
     const query = "/users/me/favorits";
     await fetchHorseted(query, accessToken, "POST", body, true);
   }
@@ -81,7 +85,7 @@ export default function FavoriteButton({
 
   return (
     <button
-      disabled={isClickLoading}
+      disabled={isClickLoading || isUserProduct}
       onClick={handleFavoriteClick}
       className="flex items-center flex-grow"
     >

@@ -8,15 +8,15 @@ export default function ThreadList() {
     activeThread,
     setActiveThread,
     setProduct,
-    getMessages,
     getProduct,
     user,
     setIsInfo,
+    updateMessages,
   } = useThreadsContext();
 
   function handleThreadClick(id, productId) {
     setActiveThread(threads.find((thread) => thread.id === id));
-    getMessages(id);
+    updateMessages(id);
     setProduct(null);
     setIsInfo(false);
     if (productId) {
