@@ -13,3 +13,14 @@ export const getOrderTracking = async (accessToken, orderId) => {
   );
   return orderTracking;
 };
+
+export const postOrderPayment = async (accessToken, orderId, body) => {
+  const paymentResponse = await fetchHorseted(
+    `/orders/${orderId}/payment`,
+    accessToken,
+    "POST",
+    body,
+    true
+  );
+  return paymentResponse;
+};
