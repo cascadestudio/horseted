@@ -10,7 +10,6 @@ import Address from "./Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";
-import UserForm from "./User";
 import Button from "@/components/Button";
 import StripeProvider from "@/components/StripeProvider";
 import { useRouter } from "next/navigation";
@@ -18,10 +17,11 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 import { formatNumber } from "@/utils/formatNumber";
+import { postOrderPayment } from "@/fetch/orders";
 
 const CheckOutPage = () => {
   const router = useRouter();
-  const { user, accessToken } = useAuthContext();
+  const { accessToken } = useAuthContext();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
@@ -35,7 +35,8 @@ const CheckOutPage = () => {
     type: "",
     message: "",
   });
-  // console.log("isAddressSaved =>", isAddressSaved);
+
+  // console.log("activeAddress =>", activeAddress);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -54,7 +55,7 @@ const CheckOutPage = () => {
   async function handlePayment() {
     setLoading(true);
     const orderId = await postOrders();
-    const paymentResponse = await ordersPayment(orderId);
+    const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
     setLoading(false);
   }
@@ -88,25 +89,20 @@ const CheckOutPage = () => {
     return order.id;
   }
 
-  async function ordersPayment(orderId) {
+  async function handleOrdersPayment(orderId) {
     const body = {
       // offerId: null, // required if offer exist
       paymentMethod: activePaymentMethodId,
       address: {
+        fullName: activeAddress.fullName,
         city: activeAddress.city,
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
       shippingMethod: shippingMethods[0].id,
-      // servicePoint: activeServicePointId, // not required
+      servicePoint: activeServicePoint?.id || null,
     };
-    const paymentResponse = await fetchHorseted(
-      `/orders/${orderId}/payment`,
-      accessToken,
-      "POST",
-      body,
-      true
-    );
+    const paymentResponse = await postOrderPayment(accessToken, orderId, body);
     return paymentResponse;
   }
 
