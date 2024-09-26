@@ -29,6 +29,7 @@ export default function SearchBar({ className }) {
         alt=""
       />
       <span className="bg-black h-5 w-px absolute left-12 top-1/2 -translate-y-1/2"></span>
+      {/* <img className="absolute" src="/icons/search-arrow-mobile.svg" alt="" /> */}
     </div>
   );
 }

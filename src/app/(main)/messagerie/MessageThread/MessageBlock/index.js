@@ -68,6 +68,16 @@ export default function MessageBlock({ message }) {
           isMessageFromRecipient={isMessageFromRecipient}
         />
       );
+    case "offerDeclined":
+      if (!products.length) break;
+      return (
+        <OrderInfoMessage
+          products={products}
+          type={type}
+          totalPrice={totalPrice}
+          isMessageFromRecipient={isMessageFromRecipient}
+        />
+      );
     case "message":
       return (
         <li

@@ -39,9 +39,6 @@ export default function MessageThread() {
               reversedMessages.map((message) => (
                 <MessageBlock key={message.id} message={message} />
               ))}
-            {/* {orderTracking && orderTracking.statuses[0] === "delivered" && (
-              <div>Terminé ! Merci pour votre commande sur Horseted</div>
-            )} */}
           </ul>
         </div>
       )}
