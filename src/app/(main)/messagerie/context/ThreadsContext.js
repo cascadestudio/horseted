@@ -29,6 +29,8 @@ export const ThreadsProvider = ({ children }) => {
   const [isInfo, setIsInfo] = useState(false);
   const [totalPrice, setTotalPrice] = useState(null);
 
+  // console.log("activeThread =>", activeThread);
+
   useEffect(() => {
     handleGetTreads();
   }, []);
@@ -129,10 +131,10 @@ export const ThreadsProvider = ({ children }) => {
   };
 
   const handleGetOrderTracking = async (orderId) => {
-    // if (order.status === "paid") {
-    const orderTracking = await getOrderTracking(accessToken, orderId);
-    setOrderTracking(orderTracking);
-    // }
+    if (order?.status === "paid") {
+      const orderTracking = await getOrderTracking(accessToken, orderId);
+      setOrderTracking(orderTracking);
+    }
   };
 
   const handleGetProduct = async (productId) => {
