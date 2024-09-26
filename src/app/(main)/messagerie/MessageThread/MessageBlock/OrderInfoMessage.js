@@ -3,16 +3,34 @@ import Button from "@/components/Button";
 import { centsToEuros } from "@/utils/centsToEuros";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Link from "next/link";
-import { patchOffer } from "@/fetch/offers";
+import { patchOffer, postOffer } from "@/fetch/offers";
 
-export default function OrderInfoMessage({ products, type, totalPrice }) {
+export default function OrderInfoMessage({
+  products,
+  type,
+  totalPrice,
+  offerId,
+}) {
   const { order, updateMessages, user, accessToken } = useThreadsContext();
+  let offer = {};
+  if (offerId && order) {
+    offer = order?.offers.find((offer) => offer.id === offerId);
+  }
+  console.log("offer =>", offer);
 
   const isMessageFromRecipient = user.id === order.userId;
 
   const handleOfferSellerResponse = async (status) => {
-    await patchOffer(status, order.offers[0].id, accessToken);
+    await patchOffer(status, offer.id, accessToken);
     updateMessages();
+  };
+
+  const handleCounterOffer = async () => {
+    await postOffer(accessToken, {
+      orderId: order.id,
+      price: offer.price - 100,
+      declinedOfferId: offer.id,
+    });
   };
 
   const orderMessageText = {
@@ -26,7 +44,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
   };
 
   // if (type === "newOffer") {
-  if (!totalPrice || !order?.offers[0]?.price) return;
+  if (!totalPrice || !offer.price) return;
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -60,7 +78,7 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
               <span className="line-through">{centsToEuros(totalPrice)} €</span>
               {" > "}
               <span className="font-bold text-light-green">
-                {centsToEuros(order?.offers[0]?.price)} €
+                {centsToEuros(offer.price)} €
               </span>
             </>
           ) : type === "offerDeclined" ? (
@@ -73,27 +91,20 @@ export default function OrderInfoMessage({ products, type, totalPrice }) {
         </p>
       </li>
       {!isMessageFromRecipient && type === "newOffer" && (
-        <div className="flex">
+        <div className="flex gap-x-3">
           <Button
             variant={"red"}
-            className="self-start p-3 mr-3"
             onClick={() => handleOfferSellerResponse("declined")}
           >
             Décliner l'offre
           </Button>
           <Button
             variant={"green"}
-            className="self-start p-3"
             onClick={() => handleOfferSellerResponse("approved")}
           >
             Accepter l'offre
           </Button>
-          <Button
-            className="self-start p-3"
-            onClick={() => handleCounterOffer()}
-          >
-            Contre offre
-          </Button>
+          <Button onClick={() => handleCounterOffer()}>Contre offre</Button>
         </div>
       )}
     </>

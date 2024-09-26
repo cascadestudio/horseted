@@ -5,11 +5,9 @@ import OrderInfoMessage from "./OrderInfoMessage";
 
 export default function MessageBlock({ message }) {
   const { products, user, totalPrice } = useThreadsContext();
-  const { content, type, medias } = message;
+  const { content, type, medias, offerId } = message;
 
   const isMessageFromRecipient = user.id === message.senderId;
-
-  console.log("type =>", type);
 
   // switch (type) {
   //   case "newOrder":
@@ -110,6 +108,7 @@ export default function MessageBlock({ message }) {
         type={type}
         totalPrice={totalPrice}
         isMessageFromRecipient={isMessageFromRecipient}
+        offerId={offerId}
       />
     );
   }
