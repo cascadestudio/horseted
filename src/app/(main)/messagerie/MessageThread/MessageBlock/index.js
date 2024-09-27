@@ -1,9 +1,13 @@
 import DisplayMedia from "@/components/DisplayMedia";
 
 import OrderInfoMessage from "./OrderInfoMessage";
+import { useThreadsContext } from "../../context/ThreadsContext";
 
 export default function MessageBlock({ message }) {
-  const { content, type, medias, offerId } = message;
+  const { content, type, medias, offerId, senderId } = message;
+  const { user } = useThreadsContext();
+
+  const isMessageFromRecipient = user?.id === senderId;
 
   if (type === "message") {
     return (
