@@ -19,7 +19,6 @@ export default function ThreadInfo() {
     accessToken,
     product,
     orderTracking,
-    order,
     recipient,
     handleGetTreads,
     activeThread,
@@ -52,8 +51,6 @@ export default function ThreadInfo() {
     await handleGetTreads();
     setIsInfo(false);
   };
-
-  const userType = user.id === order.userId ? "buyer" : "seller";
 
   return (
     <>
@@ -124,7 +121,7 @@ export default function ThreadInfo() {
             </Link>
           </div>
         )}
-        {orderTracking && <OrderInfo userType={userType} />}
+        {orderTracking && <OrderInfo />}
       </div>
       {isSignalementModal && (
         <SignalementModal

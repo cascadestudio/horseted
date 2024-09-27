@@ -8,18 +8,13 @@ import { useState } from "react";
 import OrderStatusText from "./OrderStatusText";
 
 export default function OrderInfoMessage({ type, offerId }) {
-  console.log("type =>", type);
-
   const { order, updateMessages, user, accessToken, products } =
     useThreadsContext();
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
-  let offer = {};
-  if (offerId && order) {
-    offer = order?.offers.find((offer) => offer.id === offerId);
-  }
+  const offer = order?.offers.find((offer) => offer.id === offerId);
 
-  const isMessageFromRecipient = user?.id === order?.userId;
+  const isExpectedOfferResponse = user?.id !== offer?.userId;
 
   const handleOfferSellerResponse = async (status) => {
     await patchOffer(status, offer.id, accessToken);
@@ -28,7 +23,7 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
 
-  if (!totalPrice) return;
+  // if (!totalPrice) return;
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -62,7 +57,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           offerPrice={offer?.price}
         />
       </li>
-      {!isMessageFromRecipient && type === "newOffer" && (
+      {isExpectedOfferResponse && type === "newOffer" && (
         <div className="flex gap-x-3">
           <Button
             variant={"red"}

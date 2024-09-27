@@ -7,8 +7,8 @@ import ReviewModal from "./ReviewModal";
 import { getOrder } from "@/fetch/orders";
 import { useThreadsContext } from "../context/ThreadsContext";
 
-export default function OrderInfo({ userType }) {
-  const { accessToken, setOrder, orderTracking, recipient } =
+export default function OrderInfo() {
+  const { accessToken, setOrder, orderTracking, recipient, user, order } =
     useThreadsContext();
   const [isReviewModal, setIsReviewModal] = useState(false);
 
@@ -26,6 +26,8 @@ export default function OrderInfo({ userType }) {
     };
     await fetchHorseted(query, accessToken, "PATCH", body, true);
   };
+
+  const userType = user.id === order.userId ? "buyer" : "seller";
 
   return (
     <>
