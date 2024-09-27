@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 
-export default function OfferModal({ price, onClose, products }) {
+export default function OfferModal({ price, onClose, products, offerId }) {
   const router = useRouter();
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
@@ -44,6 +44,7 @@ export default function OfferModal({ price, onClose, products }) {
     const body = {
       productIds: productIds,
       price: offer,
+      declinedOfferId: offerId || null,
     };
     const order = await fetchHorseted(
       `/orders`,

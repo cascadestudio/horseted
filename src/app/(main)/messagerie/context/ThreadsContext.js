@@ -27,9 +27,8 @@ export const ThreadsProvider = ({ children }) => {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(null);
 
-  console.log("order =>", order);
+  // console.log("order =>", order);
 
   useEffect(() => {
     handleGetTreads();
@@ -147,12 +146,6 @@ export const ThreadsProvider = ({ children }) => {
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
-
-    const totalPrice = products.reduce(
-      (sum, product) => sum + product.price,
-      0
-    );
-    setTotalPrice(totalPrice);
     setProducts(products);
   };
 
@@ -180,8 +173,6 @@ export const ThreadsProvider = ({ children }) => {
         isInfo,
         setIsInfo,
         updateMessages,
-        totalPrice,
-        setTotalPrice,
         products,
         setProducts,
         setOrder,
