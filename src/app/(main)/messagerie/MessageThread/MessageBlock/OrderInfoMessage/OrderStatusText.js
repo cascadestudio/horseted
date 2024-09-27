@@ -1,7 +1,7 @@
 import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function OrderStatusText({ type, totalPrice, offerPrice }) {
-  console.log("offerPrice =>", offerPrice);
+  // console.log("offerPrice =>", offerPrice);
 
   const orderMessageText = {
     newOrder: "Nouvelle commande",

@@ -10,11 +10,18 @@ import OrderStatusText from "./OrderStatusText";
 export default function OrderInfoMessage({ type, offerId }) {
   const { order, updateMessages, user, accessToken, products } =
     useThreadsContext();
+
+  // console.log("order =>", order);
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
   const offer = order?.offers.find((offer) => offer.id === offerId);
+  // console.log("offer =>", offer);
 
-  const isExpectedOfferResponse = user?.id !== offer?.userId;
+  const isExpectedOfferResponse =
+    offer &&
+    type === "newOffer" &&
+    user?.id !== offer.userId && // not the offer owner
+    offer.status !== "sent";
 
   const handleOfferSellerResponse = async (status) => {
     await patchOffer(status, offer.id, accessToken);
@@ -22,6 +29,11 @@ export default function OrderInfoMessage({ type, offerId }) {
   };
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
+
+  const handleCloseOfferModal = () => {
+    setIsOfferModalOpen(false);
+    updateMessages();
+  };
 
   // if (!totalPrice) return;
   return (
@@ -82,7 +94,7 @@ export default function OrderInfoMessage({ type, offerId }) {
       {isOfferModalOpen && (
         <OfferModal
           price={totalPrice}
-          onClose={() => setIsOfferModalOpen(false)}
+          onClose={handleCloseOfferModal}
           products={products}
           offerId={offerId}
         />

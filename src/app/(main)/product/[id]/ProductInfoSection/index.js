@@ -45,7 +45,10 @@ export default function ProductPageClient({
     useIsClickOutsideElement(dropdownRef);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
-  const handleCloseOfferModal = () => setIsOfferModalOpen(false);
+  const handleCloseOfferModal = () => {
+    setIsOfferModalOpen(false);
+    router.push(`/messagerie`);
+  };
 
   const handleOpenCreateBundleModal = () => {
     setIsCreateBundleModalOpen(true);

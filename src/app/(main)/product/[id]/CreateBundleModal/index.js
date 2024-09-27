@@ -24,7 +24,6 @@ export default function CreateBundleModal({
   setBundlePrice,
   onCloseCreateBundleModal,
   shippingPrice,
-  setShippingPrice,
   isCreateBundleModalOpen,
   isBundleSummaryModalOpen,
   isBundleOfferModalOpen,

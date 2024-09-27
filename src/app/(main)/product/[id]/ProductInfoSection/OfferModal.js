@@ -26,8 +26,6 @@ export default function OfferModal({ price, onClose, products, offerId }) {
     } else {
       setShowAlert(false);
       postOrder(productIds, offer);
-      // router.push(`/messagerie?productIds=${productIds.join(";")}`);
-      router.push(`/messagerie`);
       onClose();
     }
   };

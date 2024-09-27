@@ -1,5 +1,4 @@
 import DisplayMedia from "@/components/DisplayMedia";
-import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
 import OrderInfoMessage from "./OrderInfoMessage";
 
