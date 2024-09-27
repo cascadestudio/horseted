@@ -27,9 +27,8 @@ export const ThreadsProvider = ({ children }) => {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(null);
 
-  // console.log("activeThread =>", activeThread);
+  // console.log("order =>", order);
 
   useEffect(() => {
     handleGetTreads();
@@ -73,9 +72,9 @@ export const ThreadsProvider = ({ children }) => {
 
   const handleThreadOrderInfo = async () => {
     if (activeThread?.orderId) {
-      const order = await getOrder(accessToken, activeThread.orderId);
-      setOrder(order);
-      await handleGetOrderTracking(activeThread.orderId);
+      const orderResponse = await getOrder(accessToken, activeThread.orderId);
+      setOrder(orderResponse);
+      await handleGetOrderTracking(orderResponse);
     } else {
       setOrderTracking(null);
     }
@@ -108,9 +107,9 @@ export const ThreadsProvider = ({ children }) => {
         handleGetProduct(threads[0].productId);
       }
       if (threads[0].orderId) {
-        const order = await getOrder(accessToken, threads[0].orderId);
-        setOrder(order);
-        await handleGetOrderTracking(threads[0].orderId);
+        const orderResponse = await getOrder(accessToken, threads[0].orderId);
+        setOrder(orderResponse);
+        await handleGetOrderTracking(orderResponse);
       }
     }
   };
@@ -130,9 +129,9 @@ export const ThreadsProvider = ({ children }) => {
     setMessages(messages);
   };
 
-  const handleGetOrderTracking = async (orderId) => {
+  const handleGetOrderTracking = async (order) => {
     if (order?.status === "paid") {
-      const orderTracking = await getOrderTracking(accessToken, orderId);
+      const orderTracking = await getOrderTracking(accessToken, order.id);
       setOrderTracking(orderTracking);
     }
   };
@@ -147,12 +146,6 @@ export const ThreadsProvider = ({ children }) => {
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
-
-    const totalPrice = products.reduce(
-      (sum, product) => sum + product.price,
-      0
-    );
-    setTotalPrice(totalPrice);
     setProducts(products);
   };
 
@@ -180,8 +173,6 @@ export const ThreadsProvider = ({ children }) => {
         isInfo,
         setIsInfo,
         updateMessages,
-        totalPrice,
-        setTotalPrice,
         products,
         setProducts,
         setOrder,

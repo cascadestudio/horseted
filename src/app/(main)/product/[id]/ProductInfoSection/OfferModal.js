@@ -1,16 +1,13 @@
 import Modal from "@/components/Modal";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 
-export default function OfferModal({ price, onClose, products }) {
-  const router = useRouter();
+export default function OfferModal({ price, onClose, products, offerId }) {
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
-  const [productIds, setProductIds] = useState([]);
 
   console.log("products =>", products);
 
@@ -26,8 +23,6 @@ export default function OfferModal({ price, onClose, products }) {
     } else {
       setShowAlert(false);
       postOrder(productIds, offer);
-      // router.push(`/messagerie?productIds=${productIds.join(";")}`);
-      router.push(`/messagerie`);
       onClose();
     }
   };
@@ -44,6 +39,7 @@ export default function OfferModal({ price, onClose, products }) {
     const body = {
       productIds: productIds,
       price: offer,
+      declinedOfferId: offerId || null,
     };
     const order = await fetchHorseted(
       `/orders`,

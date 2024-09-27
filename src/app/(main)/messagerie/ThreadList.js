@@ -12,6 +12,7 @@ export default function ThreadList() {
     user,
     setIsInfo,
     updateMessages,
+    setIsNewMessageSearch,
   } = useThreadsContext();
 
   function handleThreadClick(id, productId) {
@@ -19,6 +20,7 @@ export default function ThreadList() {
     updateMessages(id);
     setProduct(null);
     setIsInfo(false);
+    setIsNewMessageSearch(false);
     if (productId) {
       handleGetProduct(productId);
     }
