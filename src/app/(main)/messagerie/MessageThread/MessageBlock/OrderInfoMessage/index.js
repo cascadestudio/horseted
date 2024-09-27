@@ -11,20 +11,15 @@ export default function OrderInfoMessage({ type, offerId }) {
   const { order, updateMessages, user, accessToken, products } =
     useThreadsContext();
 
-  // console.log("order =>", order);
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
   const offer = order?.offers.find((offer) => offer.id === offerId);
-  // console.log("offer =>", offer);
 
   const isExpectedOfferResponse =
-    offer &&
-    type === "newOffer" &&
-    user?.id !== offer.userId && // not the offer owner
-    offer.status !== "sent";
+    type === "newOffer" && user?.id !== offer?.userId;
 
   const handleOfferSellerResponse = async (status) => {
-    await patchOffer(status, offer.id, accessToken);
+    await patchOffer(status, offerId, accessToken);
     updateMessages();
   };
 
@@ -35,7 +30,6 @@ export default function OrderInfoMessage({ type, offerId }) {
     updateMessages();
   };
 
-  // if (!totalPrice) return;
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -89,6 +83,18 @@ export default function OrderInfoMessage({ type, offerId }) {
           >
             Contre offre
           </button>
+        </div>
+      )}
+      {offer?.status === "approved" && !isExpectedOfferResponse && (
+        <div className="flex">
+          <Button
+            withAuth
+            href={`/checkout?productIds=${products
+              .map((product) => product.id)
+              .join(",")}`}
+          >
+            Acheter
+          </Button>
         </div>
       )}
       {isOfferModalOpen && (

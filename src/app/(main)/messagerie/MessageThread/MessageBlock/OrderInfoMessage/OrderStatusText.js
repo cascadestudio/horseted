@@ -26,7 +26,7 @@ export default function OrderStatusText({ type, totalPrice, offerPrice }) {
       ) : type === "offerDeclined" ? (
         <span className="text-red">Offre déclinée</span>
       ) : type === "offerAccepted" ? (
-        <span className="text-green">Offre acceptée</span>
+        <span className="text-dark-green">Offre acceptée</span>
       ) : (
         <span>{orderMessageText[type]}</span>
       )}

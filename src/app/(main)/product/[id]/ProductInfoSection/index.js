@@ -20,6 +20,7 @@ import ShippingInfo from "./ShippingInfo";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 import ThreeDotsProductDropDown from "./ThreeDotsProductDropDown";
 import ShareDropDown from "./ShareDropDown";
+import { useRouter } from "next/navigation";
 
 export default function ProductPageClient({
   product,
@@ -30,6 +31,7 @@ export default function ProductPageClient({
 }) {
   const { user } = useAuthContext();
   const dropdownRef = useRef();
+  const router = useRouter();
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
   const [isCreateBundleModalOpen, setIsCreateBundleModalOpen] = useState(false);

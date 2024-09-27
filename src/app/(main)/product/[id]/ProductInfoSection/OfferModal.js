@@ -1,16 +1,13 @@
 import Modal from "@/components/Modal";
 import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { useRouter } from "next/navigation";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 
 export default function OfferModal({ price, onClose, products, offerId }) {
-  const router = useRouter();
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
-  const [productIds, setProductIds] = useState([]);
 
   console.log("products =>", products);
 
