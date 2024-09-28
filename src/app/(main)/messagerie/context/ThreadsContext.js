@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useState, useEffect, useContext } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+} from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { useSearchParams } from "next/navigation";
 import { getMessages, getThreads } from "@/fetch/threads";
@@ -23,39 +29,36 @@ export const ThreadsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [order, setOrder] = useState(null);
   const [orderTracking, setOrderTracking] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
 
-  // console.log("order =>", order);
-
+  // useEffect to fetch threads initially
   useEffect(() => {
-    handleGetTreads();
+    initWithLastThread();
   }, []);
 
+  // Effect to handle thread change and get recipient, messages, and order info
   useEffect(() => {
-    if (activeThread === null) return;
+    if (!activeThread) return;
     updateMessages();
+    getRecipient(activeThread);
     handleThreadOrderInfo();
-    const recipientId = activeThread.authors.find(
-      (authors) => authors.id !== user.id
-    ).id;
-    getRecipient(recipientId);
   }, [activeThread]);
 
+  // Effect to check for productId in the URL params and set active thread or initiate new thread
   useEffect(() => {
     if (productIdParam) {
       if (threads.length) {
-        findIfThreadAlreadyExist(productIdParam);
+        findIfThreadAlreadyExists(productIdParam);
       } else {
         initNewThread(productIdParam);
       }
-    } else {
-      initWithLastThread();
     }
   }, [threads, productIdParam]);
 
+  // Effect to handle fetching products from the order
   useEffect(() => {
     if (order) {
       handleGetProductsFromOrder(order);
@@ -63,14 +66,15 @@ export const ThreadsProvider = ({ children }) => {
   }, [order]);
 
   // Helper Functions
-  const handleGetTreads = async () => {
-    setLoading(true);
+  const handleGetThreads = useCallback(async () => {
+    setisLoading(true);
     const threads = await getThreads(accessToken);
+    setisLoading(false);
     setThreads(threads);
-    setLoading(false);
-  };
+    return threads;
+  }, [accessToken]);
 
-  const handleThreadOrderInfo = async () => {
+  const handleThreadOrderInfo = useCallback(async () => {
     if (activeThread?.orderId) {
       const orderResponse = await getOrder(accessToken, activeThread.orderId);
       setOrder(orderResponse);
@@ -78,81 +82,105 @@ export const ThreadsProvider = ({ children }) => {
     } else {
       setOrderTracking(null);
     }
-  };
+  }, [accessToken, activeThread]);
 
-  const findIfThreadAlreadyExist = (productIdParam) => {
-    const threadAlreadyExist = threads.find((thread) =>
+  const findIfThreadAlreadyExists = (productIdParam) => {
+    const threadAlreadyExists = threads.find((thread) =>
       String(thread.productId).includes(productIdParam)
     );
-    if (threadAlreadyExist) {
-      setActiveThread(threadAlreadyExist);
+    if (threadAlreadyExists) {
+      setActiveThread(threadAlreadyExists);
     } else {
       initNewThread(productIdParam);
     }
   };
 
-  const initNewThread = async (productIdParam) => {
-    setActiveThread(null);
-    setMessages([]);
-    const product = await handleGetProduct(productIdParam);
-    await getRecipient(product.userId);
-  };
+  const initNewThread = useCallback(
+    async (productIdParam) => {
+      setActiveThread(null);
+      setMessages([]);
+      const product = await handleGetProduct(productIdParam);
+      await getRecipient(product.userId);
+    },
+    [accessToken]
+  );
 
-  const initWithLastThread = async () => {
-    if (threads.length > 0) {
-      setActiveThread(threads[0]);
-      setRecipient(threads[0].authors[0]);
-      await updateMessages(threads[0].id);
-      if (threads[0].productId) {
-        handleGetProduct(threads[0].productId);
+  const initWithLastThread = useCallback(async () => {
+    const treadsResponse = await handleGetThreads();
+    if (treadsResponse.length > 0) {
+      const threadsNotDeletedByUser = treadsResponse.filter((thread) =>
+        thread.authors.some(
+          (author) => author.id === user.id && !author.deleted
+        )
+      );
+      setThreads(threadsNotDeletedByUser);
+      if (threadsNotDeletedByUser.length === 0) return;
+      const lastThread = threadsNotDeletedByUser[0];
+      setActiveThread(lastThread);
+      setRecipient(lastThread.authors[0]);
+      await updateMessages(lastThread.id);
+      if (lastThread.productId) {
+        handleGetProduct(lastThread.productId);
       }
-      if (threads[0].orderId) {
-        const orderResponse = await getOrder(accessToken, threads[0].orderId);
+      if (lastThread.orderId) {
+        const orderResponse = await getOrder(accessToken, lastThread.orderId);
         setOrder(orderResponse);
         await handleGetOrderTracking(orderResponse);
       }
     }
-  };
+  }, [threads, accessToken]);
 
-  const getRecipient = async (recipientId) => {
-    setLoading(true);
-    const user = await getUser(accessToken, recipientId);
-    setRecipient(user);
-    setLoading(false);
-  };
+  const getRecipient = useCallback(
+    async (activeThread) => {
+      const recipientId = activeThread.authors.find(
+        (author) => author.id !== user.id
+      )?.id;
+      if (!recipientId) return;
+      setisLoading(true);
+      const recipient = await getUser(accessToken, recipientId);
+      setRecipient(recipient);
+      setisLoading(false);
+    },
+    [accessToken, user]
+  );
 
-  const updateMessages = async (threadId) => {
-    const messages = await getMessages(
-      accessToken,
-      activeThread?.id || threadId
-    );
-    setMessages(messages);
-  };
+  const updateMessages = useCallback(
+    async (threadId) => {
+      const messages = await getMessages(
+        accessToken,
+        activeThread?.id || threadId
+      );
+      setMessages(messages);
+    },
+    [accessToken, activeThread]
+  );
 
-  const handleGetOrderTracking = async (order) => {
-    if (order?.status === "paid") {
-      const orderTracking = await getOrderTracking(accessToken, order.id);
-      setOrderTracking(orderTracking);
-    }
-  };
+  const handleGetOrderTracking = useCallback(
+    async (order) => {
+      if (order?.status === "paid") {
+        const orderTracking = await getOrderTracking(accessToken, order.id);
+        setOrderTracking(orderTracking);
+      }
+    },
+    [accessToken]
+  );
 
-  const handleGetProduct = async (productId) => {
+  const handleGetProduct = useCallback(async (productId) => {
     const product = await getProducts(productId);
     setProduct(product);
     return product;
-  };
+  }, []);
 
-  const handleGetProductsFromOrder = async (order) => {
+  const handleGetProductsFromOrder = useCallback(async (order) => {
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
     setProducts(products);
-  };
+  }, []);
 
   return (
     <ThreadsContext.Provider
       value={{
-        handleGetTreads,
         threads,
         activeThread,
         setActiveThread,
@@ -163,7 +191,7 @@ export const ThreadsProvider = ({ children }) => {
         orderTracking,
         getMessages,
         setMessages,
-        loading,
+        isLoading,
         isNewMessageSearch,
         setIsNewMessageSearch,
         user,
@@ -177,7 +205,8 @@ export const ThreadsProvider = ({ children }) => {
         setProducts,
         setOrder,
         handleGetProduct,
-        handleGetTreads,
+        initWithLastThread,
+        handleGetThreads,
       }}
     >
       {children}

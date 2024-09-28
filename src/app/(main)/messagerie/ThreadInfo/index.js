@@ -20,7 +20,7 @@ export default function ThreadInfo() {
     product,
     orderTracking,
     recipient,
-    handleGetTreads,
+    initWithLastThread,
     activeThread,
     setIsInfo,
   } = useThreadsContext();
@@ -31,8 +31,6 @@ export default function ThreadInfo() {
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
-
-  // console.log("order =>", order);
 
   useEffect(() => {
     if (isClickOutside) {
@@ -48,7 +46,7 @@ export default function ThreadInfo() {
 
   const onDeleteThread = async () => {
     await deleteThread(accessToken, activeThread.id);
-    await handleGetTreads();
+    await initWithLastThread();
     setIsInfo(false);
   };
 
@@ -104,23 +102,24 @@ export default function ThreadInfo() {
             </div>
           )}
         </div>
-        {product && (
-          <div className="flex items-start py-5">
-            <ClientProductImage
-              className="w-12 mr-4"
-              product={product}
-              size="small"
-            />
-            <Link href={`/product/${product.id}`}>
-              <h3 className="text-lg font-mcqueen font-bold capitalize">
-                {product.title}
-              </h3>
-              <p className="text-sm font-poppins">
-                {centsToEuros(product.price)} €
-              </p>
-            </Link>
-          </div>
-        )}
+        {!product ||
+          (product.length > 0 && (
+            <div className="flex items-start py-5">
+              <ClientProductImage
+                className="w-12 mr-4"
+                product={product}
+                size="small"
+              />
+              <Link href={`/product/${product.id}`}>
+                <h3 className="text-lg font-mcqueen font-bold capitalize">
+                  {product.title}
+                </h3>
+                <p className="text-sm font-poppins">
+                  {centsToEuros(product.price)} €
+                </p>
+              </Link>
+            </div>
+          ))}
         {orderTracking && <OrderInfo />}
       </div>
       {isSignalementModal && (

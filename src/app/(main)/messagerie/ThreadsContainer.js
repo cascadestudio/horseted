@@ -13,7 +13,6 @@ export default function ThreadsContainer() {
   const {
     threads,
     setActiveThread,
-    loading,
     recipient,
     setIsNewMessageSearch,
     isNewMessageSearch,
@@ -42,9 +41,7 @@ export default function ThreadsContainer() {
             <img src="/icons/new-message.svg" alt="Nouveau message" />
           </button>
         </div>
-        {loading ? (
-          <Spinner isFullScreen />
-        ) : threads.length ? (
+        {threads.length ? (
           <ThreadList />
         ) : (
           <p className="p-6 m-auto">Pas de conversation</p>
