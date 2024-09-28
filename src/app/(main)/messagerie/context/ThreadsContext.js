@@ -43,13 +43,8 @@ export const ThreadsProvider = ({ children }) => {
   useEffect(() => {
     if (!activeThread) return;
     updateMessages();
+    getRecipient(activeThread);
     handleThreadOrderInfo();
-    const recipientId = activeThread.authors.find(
-      (author) => author.id !== user.id
-    )?.id;
-    if (recipientId) {
-      getRecipient(recipientId);
-    }
   }, [activeThread]);
 
   // Effect to check for productId in the URL params and set active thread or initiate new thread
@@ -136,13 +131,17 @@ export const ThreadsProvider = ({ children }) => {
   }, [threads, accessToken]);
 
   const getRecipient = useCallback(
-    async (recipientId) => {
+    async (activeThread) => {
+      const recipientId = activeThread.authors.find(
+        (author) => author.id !== user.id
+      )?.id;
+      if (!recipientId) return;
       setLoading(true);
-      const user = await getUser(accessToken, recipientId);
-      setRecipient(user);
+      const recipient = await getUser(accessToken, recipientId);
+      setRecipient(recipient);
       setLoading(false);
     },
-    [accessToken]
+    [accessToken, user]
   );
 
   const updateMessages = useCallback(
