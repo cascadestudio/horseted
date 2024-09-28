@@ -29,7 +29,7 @@ export const ThreadsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [order, setOrder] = useState(null);
   const [orderTracking, setOrderTracking] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
@@ -67,9 +67,9 @@ export const ThreadsProvider = ({ children }) => {
 
   // Helper Functions
   const handleGetThreads = useCallback(async () => {
-    setLoading(true);
+    setisLoading(true);
     const threads = await getThreads(accessToken);
-    setLoading(false);
+    setisLoading(false);
     setThreads(threads);
     return threads;
   }, [accessToken]);
@@ -136,10 +136,10 @@ export const ThreadsProvider = ({ children }) => {
         (author) => author.id !== user.id
       )?.id;
       if (!recipientId) return;
-      setLoading(true);
+      setisLoading(true);
       const recipient = await getUser(accessToken, recipientId);
       setRecipient(recipient);
-      setLoading(false);
+      setisLoading(false);
     },
     [accessToken, user]
   );
@@ -191,7 +191,7 @@ export const ThreadsProvider = ({ children }) => {
         orderTracking,
         getMessages,
         setMessages,
-        loading,
+        isLoading,
         isNewMessageSearch,
         setIsNewMessageSearch,
         user,
