@@ -11,7 +11,7 @@ export default function NewMessageForm() {
     recipient,
     product,
     updateMessages,
-    handleGetTreads,
+    handleGetThreads,
   } = useThreadsContext();
 
   const [message, setMessage] = useState({
@@ -31,7 +31,7 @@ export default function NewMessageForm() {
     e.preventDefault();
     if (!activeThread) {
       await handlePostThread();
-      await handleGetTreads();
+      await handleGetThreads();
     } else {
       await postMessage(accessToken, activeThread.id, {
         content: message.content,

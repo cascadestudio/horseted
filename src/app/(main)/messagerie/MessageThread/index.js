@@ -7,7 +7,7 @@ import capitalizeText from "@/utils/capitalizeText";
 import Spinner from "@/components/Spinner";
 
 export default function MessageThread() {
-  const { messages, recipient, loading } = useThreadsContext();
+  const { messages, recipient, isLoading } = useThreadsContext();
 
   const reversedMessages = [...messages].reverse();
 
@@ -15,7 +15,7 @@ export default function MessageThread() {
 
   return (
     <div className="flex flex-col min-h-[400px] pb-5 sm:pb-0 flex-1">
-      {loading ? (
+      {isLoading ? (
         <Spinner isFullScreen />
       ) : (
         <div className="flex-1 flex overflow-y-scroll">
