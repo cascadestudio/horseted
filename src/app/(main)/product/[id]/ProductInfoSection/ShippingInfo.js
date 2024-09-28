@@ -15,6 +15,7 @@ export default function ShippingInfo({ product }) {
 
   const getShippingMethods = async () => {
     const defaultAddress = await getDefaultAddresses();
+    if (!defaultAddress) return;
     let query = `/delivery/shipping_methods`;
     query += `?postal_code=${defaultAddress.postalCode}`;
     query += `&product_ids=${product.id}`;
