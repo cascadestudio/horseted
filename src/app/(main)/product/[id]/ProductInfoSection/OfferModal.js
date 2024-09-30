@@ -4,25 +4,38 @@ import { useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
+import { postOffer } from "@/fetch/offers";
 
-export default function OfferModal({ price, onClose, products, offerId }) {
+export default function OfferModal({
+  price,
+  onClose,
+  products,
+  offerId,
+  isCounterOffer,
+  orderId,
+}) {
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
-
-  console.log("products =>", products);
 
   const displayPrice = centsToEuros(price);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const productIds = handleProductsIds();
-    console.log("productIds =>", productIds);
-    const offer = parseFloat(e.target.offer.value) * 100;
-    if (offer > price) {
+    const offerPrice = parseFloat(e.target.offer.value) * 100;
+    if (offerPrice > price) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      await postOrder(productIds, offer);
+      if (isCounterOffer) {
+        await postOffer(accessToken, {
+          orderId: orderId,
+          price: offerPrice,
+          declinedOfferId: offerId,
+        });
+      } else {
+        await postOrder(productIds, offerPrice);
+      }
       onClose();
     }
   };
