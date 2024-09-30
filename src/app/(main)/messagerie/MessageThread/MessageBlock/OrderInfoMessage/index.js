@@ -11,7 +11,6 @@ export default function OrderInfoMessage({ type, offerId }) {
   const { order, user, accessToken, products } = useThreadsContext();
 
   const [offer, setOffer] = useState(null);
-  const [isExpectedOfferResponse, setIsExpectedOfferResponse] = useState(false);
 
   useEffect(() => {
     if (!offerId) return;
@@ -22,16 +21,6 @@ export default function OrderInfoMessage({ type, offerId }) {
     const offer = await getOffer(accessToken, offerId);
     setOffer(offer);
   };
-
-  useEffect(() => {
-    if (!offer) return;
-    // const lastOffer = order?.offers.find((offer) => offer.id === offerId);
-    setIsExpectedOfferResponse(
-      type === "newOffer" && // is a new offer
-        user?.id !== offer?.userId // user is not the offer owner
-      // && lastOffer?.id === offer.id // is the last offer
-    );
-  }, [offer, user]);
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
 
@@ -73,9 +62,10 @@ export default function OrderInfoMessage({ type, offerId }) {
           offerPrice={offer?.price}
         />
       </li>
-      {isExpectedOfferResponse && (
-        <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
-      )}
+      {type === "newOffer" && // is a new offer and
+        user?.id !== offer?.userId && ( // user is not the offer owner
+          <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
+        )}
       {isBuyButton && (
         <div className="flex">
           <Button

@@ -5,7 +5,7 @@ import Button from "@/components/Button";
 import OfferModal from "@/app/(main)/product/[id]/ProductInfoSection/OfferModal";
 
 export default function OfferResponseButtons({ offerId, totalPrice }) {
-  const { updateMessages, accessToken, products } = useThreadsContext();
+  const { updateMessages, accessToken, products, order } = useThreadsContext();
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
@@ -47,6 +47,8 @@ export default function OfferResponseButtons({ offerId, totalPrice }) {
           onClose={handleCloseOfferModal}
           products={products}
           offerId={offerId}
+          isCounterOffer
+          orderId={order.id}
         />
       )}
     </>
