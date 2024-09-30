@@ -1,5 +1,11 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 
+export const getOffer = async (accessToken, offerId) => {
+  const response = await fetchHorseted(`/offers/${offerId}`, accessToken);
+  // console.log("response =>", response);
+  return response;
+};
+
 export const patchOffer = async (status, offerId, accessToken) => {
   const body = {
     status: status,

@@ -2,33 +2,40 @@ import ClientProductImage from "@/components/ClientProductImage";
 import Button from "@/components/Button";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Link from "next/link";
-import { patchOffer } from "@/fetch/offers";
+import { getOffer } from "@/fetch/offers";
 import OfferModal from "@/app/(main)/product/[id]/ProductInfoSection/OfferModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import OrderStatusText from "./OrderStatusText";
 
 export default function OrderInfoMessage({ type, offerId }) {
-  const { order, updateMessages, user, accessToken, products } =
-    useThreadsContext();
+  const { order, user, accessToken, products } = useThreadsContext();
 
-  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
+  const [offer, setOffer] = useState(null);
+  const [isExpectedOfferResponse, setIsExpectedOfferResponse] = useState(false);
 
-  const offer = order?.offers.find((offer) => offer.id === offerId);
+  useEffect(() => {
+    if (!offerId) return;
+    handleGetOffer(offerId);
+  }, [offerId]);
 
-  const isExpectedOfferResponse =
-    type === "newOffer" && user?.id !== offer?.userId;
-
-  const handleOfferSellerResponse = async (status) => {
-    await patchOffer(status, offerId, accessToken);
-    updateMessages();
+  const handleGetOffer = async (offerId) => {
+    const offer = await getOffer(accessToken, offerId);
+    setOffer(offer);
   };
+
+  useEffect(() => {
+    if (!offer) return;
+    const lastOffer = order?.offers.find((offer) => offer.id === offerId);
+    // console.log("lastOffer =>", lastOffer);
+    // console.log("offer =>", offer.id);
+    setIsExpectedOfferResponse(
+      type === "newOffer" && // is a new offer
+        user?.id !== offer?.userId && // user is not the offer owner
+        lastOffer?.id === offer.id // is the last offer
+    );
+  }, [offer]);
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
-
-  const handleCloseOfferModal = () => {
-    setIsOfferModalOpen(false);
-    updateMessages();
-  };
 
   return (
     <>
@@ -63,47 +70,20 @@ export default function OrderInfoMessage({ type, offerId }) {
           offerPrice={offer?.price}
         />
       </li>
-      {isExpectedOfferResponse && type === "newOffer" && (
-        <div className="flex gap-x-3">
-          <Button
-            variant={"red"}
-            onClick={() => handleOfferSellerResponse("declined")}
-          >
-            Décliner l'offre
-          </Button>
-          <Button
-            variant={"green"}
-            onClick={() => handleOfferSellerResponse("approved")}
-          >
-            Accepter l'offre
-          </Button>
-          <button
-            className="font-mcqueen font-semibold text-dark-green ml-6"
-            onClick={() => setIsOfferModalOpen(true)}
-          >
-            Contre offre
-          </button>
-        </div>
+      {isExpectedOfferResponse && (
+        <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
       )}
       {offer?.status === "approved" && !isExpectedOfferResponse && (
         <div className="flex">
           <Button
             withAuth
-            href={`/checkout?productIds=${products
+            href={`/checkout?offerId=${offer.id}?productIds=${products
               .map((product) => product.id)
               .join(",")}`}
           >
             Acheter
           </Button>
         </div>
-      )}
-      {isOfferModalOpen && (
-        <OfferModal
-          price={totalPrice}
-          onClose={handleCloseOfferModal}
-          products={products}
-          offerId={offerId}
-        />
       )}
     </>
   );

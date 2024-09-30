@@ -13,7 +13,7 @@ export default function OfferModal({ price, onClose, products, offerId }) {
 
   const displayPrice = centsToEuros(price);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const productIds = handleProductsIds();
     console.log("productIds =>", productIds);
@@ -22,7 +22,7 @@ export default function OfferModal({ price, onClose, products, offerId }) {
       setShowAlert(true);
     } else {
       setShowAlert(false);
-      postOrder(productIds, offer);
+      await postOrder(productIds, offer);
       onClose();
     }
   };

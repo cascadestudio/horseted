@@ -31,6 +31,7 @@ const CheckOutPage = () => {
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
+  const [offerId, setOfferId] = useState(null);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
@@ -40,9 +41,14 @@ const CheckOutPage = () => {
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
+    const offerId = searchParams.get("offerId");
     if (productIdsParam) {
       const productIdsParamArray = productIdsParam.split(";");
       setProductIds(productIdsParamArray);
+    }
+    if (offerId) {
+      setOfferId(offerId);
+      // getOrder()
     }
   }, [searchParams]);
 
