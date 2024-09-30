@@ -3,9 +3,9 @@ import Button from "@/components/Button";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Link from "next/link";
 import { getOffer } from "@/fetch/offers";
-import OfferModal from "@/app/(main)/product/[id]/ProductInfoSection/OfferModal";
 import { useEffect, useState } from "react";
 import OrderStatusText from "./OrderStatusText";
+import OfferResponseButtons from "./OfferResponseButtons";
 
 export default function OrderInfoMessage({ type, offerId }) {
   const { order, user, accessToken, products } = useThreadsContext();
@@ -26,12 +26,10 @@ export default function OrderInfoMessage({ type, offerId }) {
   useEffect(() => {
     if (!offer) return;
     const lastOffer = order?.offers.find((offer) => offer.id === offerId);
-    // console.log("lastOffer =>", lastOffer);
-    // console.log("offer =>", offer.id);
     setIsExpectedOfferResponse(
       type === "newOffer" && // is a new offer
-        user?.id !== offer?.userId && // user is not the offer owner
-        lastOffer?.id === offer.id // is the last offer
+        user?.id !== offer?.userId // user is not the offer owner
+      // && lastOffer?.id === offer.id // is the last offer
     );
   }, [offer]);
 

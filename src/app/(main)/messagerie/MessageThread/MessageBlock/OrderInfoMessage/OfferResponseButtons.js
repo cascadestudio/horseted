@@ -1,6 +1,8 @@
 import { patchOffer } from "@/fetch/offers";
 import { useState } from "react";
 import { useThreadsContext } from "../../../context/ThreadsContext";
+import Button from "@/components/Button";
+import OfferModal from "@/app/(main)/product/[id]/ProductInfoSection/OfferModal";
 
 export default function OfferResponseButtons({ offerId, totalPrice }) {
   const { updateMessages, accessToken, products } = useThreadsContext();
