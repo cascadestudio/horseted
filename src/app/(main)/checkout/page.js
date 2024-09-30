@@ -18,6 +18,7 @@ import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 import { formatNumber } from "@/utils/formatNumber";
 import { postOrderPayment } from "@/fetch/orders";
+import { getOffer } from "@/fetch/offers";
 
 const CheckOutPage = () => {
   const router = useRouter();
@@ -31,13 +32,11 @@ const CheckOutPage = () => {
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [offerId, setOfferId] = useState(null);
+  const [offer, setOffer] = useState(null);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
   });
-
-  // console.log("activeAddress =>", activeAddress);
 
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
@@ -47,8 +46,7 @@ const CheckOutPage = () => {
       setProductIds(productIdsParamArray);
     }
     if (offerId) {
-      setOfferId(offerId);
-      // getOrder()
+      handleGetOffer(offerId);
     }
   }, [searchParams]);
 
@@ -58,19 +56,34 @@ const CheckOutPage = () => {
     });
   }, [productIds]);
 
+  const handleGetOffer = async (offerId) => {
+    const offer = await getOffer(accessToken, offerId);
+    setOffer(offer);
+  };
+
   async function handlePayment() {
     setLoading(true);
-    const orderId = await postOrders();
+    let orderId;
+    if (offer) {
+      orderId = searchParams.get("orderId");
+    } else {
+      orderId = await postOrders();
+    }
     const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
     setLoading(false);
   }
 
-  const productsPriceSum = () => {
-    return products.reduce((total, product) => {
-      const sum = total + product.price;
-      return centsToEuros(sum);
-    }, 0);
+  const handleProductsPrice = () => {
+    if (offer) {
+      return centsToEuros(offer.price);
+    } else {
+      const productsPriceSum = products.reduce((total, product) => {
+        const sum = total + product.price;
+        return centsToEuros(sum);
+      }, 0);
+      return productsPriceSum;
+    }
   };
 
   async function getProduct(productId) {
@@ -97,7 +110,7 @@ const CheckOutPage = () => {
 
   async function handleOrdersPayment(orderId) {
     const body = {
-      // offerId: null, // required if offer exist
+      offerId: offer?.id || null,
       paymentMethod: activePaymentMethodId,
       address: {
         fullName: activeAddress.fullName,
@@ -108,6 +121,7 @@ const CheckOutPage = () => {
       shippingMethod: shippingMethods[0].id,
       servicePoint: activeServicePoint?.id || null,
     };
+    console.log(body);
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
     return paymentResponse;
   }
@@ -207,7 +221,7 @@ const CheckOutPage = () => {
                   ))}
                 </div>
               </div>
-              <p className="font-bold text-lg">{productsPriceSum()} €</p>
+              <p className="font-bold text-lg">{handleProductsPrice()} €</p>
             </div>
             <Address
               activeAddress={activeAddress}
@@ -235,7 +249,7 @@ const CheckOutPage = () => {
               <h2 className="font-bold mb-7">Résumé de la commande</h2>
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
-                <p className="justify-self-end">{productsPriceSum()} €</p>
+                <p className="justify-self-end">{handleProductsPrice()} €</p>
                 {shippingMethods[0] && (
                   <>
                     <p>Frais de port</p>
@@ -245,7 +259,8 @@ const CheckOutPage = () => {
                     <p className="font-extrabold">Total</p>
                     <p className="font-extrabold justify-self-end">
                       {formatNumber(
-                        parseFloat(productsPriceSum().replace(",", ".")) +
+                        // parseFloat(handleProductsPrice().replace(",", ".")) +
+                        parseFloat(handleProductsPrice()) +
                           parseFloat(shippingMethods[0]?.price || 0)
                       )}{" "}
                       €

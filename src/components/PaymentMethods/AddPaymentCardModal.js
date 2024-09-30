@@ -6,16 +6,16 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
 import Checkbox from "../input/Checkbox";
+import { postPaymentMethod } from "@/fetch/payment";
 
 const AddPaymentCardModal = ({
   setIsAddPaymentCardModal,
   fetchPaymentMethods,
 }) => {
-  const { user } = useAuthContext();
+  const { accessToken } = useAuthContext();
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -42,7 +42,7 @@ const AddPaymentCardModal = ({
     } else {
       setLoading(false);
       setIsAddPaymentCardModal(false);
-      await postPaymentMethod(token.id, isDefaultCard);
+      await postPaymentMethod(accessToken, token.id, isDefaultCard);
       fetchPaymentMethods();
     }
   };
@@ -92,15 +92,6 @@ const AddPaymentCardModal = ({
       </label>
     </Modal>
   );
-
-  async function postPaymentMethod(cardToken, isDefaultCard) {
-    const query = `/users/me/payment_methods`;
-    const body = {
-      cardToken: cardToken,
-      isDefault: isDefaultCard,
-    };
-    await fetchHorseted(query, accessToken, "POST", body, true);
-  }
 };
 
 export default AddPaymentCardModal;

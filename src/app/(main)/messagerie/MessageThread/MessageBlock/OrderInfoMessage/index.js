@@ -25,15 +25,20 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   useEffect(() => {
     if (!offer) return;
-    const lastOffer = order?.offers.find((offer) => offer.id === offerId);
+    // const lastOffer = order?.offers.find((offer) => offer.id === offerId);
     setIsExpectedOfferResponse(
       type === "newOffer" && // is a new offer
         user?.id !== offer?.userId // user is not the offer owner
       // && lastOffer?.id === offer.id // is the last offer
     );
-  }, [offer]);
+  }, [offer, user]);
 
   const totalPrice = products.reduce((sum, product) => sum + product.price, 0);
+
+  const isBuyButton =
+    offer?.status === "approved" &&
+    user?.id === offer?.userId &&
+    order?.status !== "paid";
 
   return (
     <>
@@ -71,11 +76,11 @@ export default function OrderInfoMessage({ type, offerId }) {
       {isExpectedOfferResponse && (
         <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
       )}
-      {offer?.status === "approved" && !isExpectedOfferResponse && (
+      {isBuyButton && (
         <div className="flex">
           <Button
             withAuth
-            href={`/checkout?offerId=${offer.id}?productIds=${products
+            href={`/checkout?orderId=${order.id}&offerId=${offer.id}&productIds=${products
               .map((product) => product.id)
               .join(",")}`}
           >
