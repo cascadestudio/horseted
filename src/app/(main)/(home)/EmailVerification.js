@@ -11,13 +11,15 @@ export default function EmailVerification() {
   const oobCode = searchParams.get("oobCode");
   const apiKey = searchParams.get("apiKey");
 
-  const [alert, setAlert] = useState({
-    type: "info",
-    message: "Vérification de votre e-mail, veuillez patienter...",
-  });
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     if (mode === "verifyEmail" && oobCode && apiKey) {
+      setAlert({
+        type: "info",
+        message: "Vérification de votre e-mail, veuillez patienter...",
+      });
+
       const auth = getAuth();
 
       applyActionCode(auth, oobCode)
@@ -41,7 +43,7 @@ export default function EmailVerification() {
   if (!alert) return null;
 
   return (
-    <Alert type={alert.type} setAlert={setAlert}>
+    <Alert type={alert.type} setAlert={setAlert} duration={10000}>
       {alert.message}
     </Alert>
   );
