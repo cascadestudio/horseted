@@ -70,7 +70,9 @@ export default function signupPage() {
       type: "success",
       message: "Un e-mail de vérification a été envoyé à votre adresse.",
     });
-    // return router.push("/");
+    setTimeout(() => {
+      return router.push("/");
+    }, 5000);
   };
 
   return (
