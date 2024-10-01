@@ -25,7 +25,7 @@ export default function signupPage() {
   const [newsletter, setNewsletter] = useState(false);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [alert, setAlert] = useState("");
+  const [alert, setAlert] = useState(null);
 
   const handleForm = async (e) => {
     e.preventDefault();
@@ -36,7 +36,10 @@ export default function signupPage() {
     if (error) {
       setIsLoading(false);
       console.error(error);
-      return setAlert("Erreur durant la création du compte Firebase");
+      return setAlert({
+        type: "error",
+        message: "Erreur durant la création du compte Firebase",
+      });
     }
 
     const firebaseUser = result.user;
@@ -55,12 +58,19 @@ export default function signupPage() {
         console.error("Error deleting firebaseUser:", deleteError);
       }
       setIsLoading(false);
-      setAlert("Erreur durant la création du compte Horseted");
+      setAlert({
+        type: "error",
+        message: "Erreur durant la création du compte Horseted",
+      });
       return console.error("Error posting user:", error);
     }
 
     setIsLoading(false);
-    return router.push("/");
+    setAlert({
+      type: "success",
+      message: "Un e-mail de vérification a été envoyé à votre adresse.",
+    });
+    // return router.push("/");
   };
 
   return (
@@ -248,7 +258,11 @@ export default function signupPage() {
           </a>
         </div>
       </div>
-      {alert !== "" && <Alert type="error">{alert}</Alert>}
+      {alert && (
+        <Alert setAlert={setAlert} type={alert.type}>
+          {alert.message}
+        </Alert>
+      )}
     </div>
   );
 }

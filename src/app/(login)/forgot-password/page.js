@@ -39,7 +39,7 @@ export default function forgotPasswordPage() {
           <div className="border-b border-black lg:border-none">
             <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
               <button
-                onClick={() => router.back()}
+                onClick={() => router.push("/signin")}
                 className="justify-self-start"
                 aria-label="Retour"
               >
