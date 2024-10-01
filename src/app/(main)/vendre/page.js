@@ -2,21 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import fetchHorseted from "@/utils/fetchHorseted";
 import Spinner from "@/components/Spinner";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductSummary from "./ProductSummary";
 import withAuth from "@/hoc/withAuth";
 import PostProductForm from "./PostProductForm";
 import Button from "@/components/Button";
+import { getSeller } from "@/fetch/seller";
 
 const SellPage = () => {
   const { accessToken } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [postResponse, setPostResponse] = useState(null);
   const [isUserSeller, setUserIsSeller] = useState(false);
-
-  // console.log("user =>", user);
 
   useEffect(() => {
     getSellerData();
@@ -25,10 +23,7 @@ const SellPage = () => {
   const getSellerData = async () => {
     try {
       setIsLoading(true);
-      const response = await fetchHorseted(
-        "/users/me/seller_account",
-        accessToken
-      );
+      await getSeller(accessToken);
       setUserIsSeller(true);
     } catch (error) {
       setUserIsSeller(false);
