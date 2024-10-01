@@ -5,8 +5,9 @@ import { getAuth, confirmPasswordReset } from "firebase/auth";
 import Modal from "@/components/Modal";
 import { TextInput } from "@/components/input";
 import { useSearchParams } from "next/navigation";
+import Alert from "@/components/Alert";
 
-export default function NewPasswordModal({ setAlert }) {
+export default function NewPasswordModal() {
   const searchParams = useSearchParams();
   const mode = searchParams.get("mode");
   const oobCode = searchParams.get("oobCode");
@@ -14,6 +15,7 @@ export default function NewPasswordModal({ setAlert }) {
 
   const [newPassword, setNewPassword] = useState("");
   const [isModal, setIsModal] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     if (mode === "resetPassword" && oobCode && apiKey) {
@@ -51,24 +53,31 @@ export default function NewPasswordModal({ setAlert }) {
     }
   };
 
-  if (!isModal) return;
-
   return (
-    <Modal
-      title="Reinitialiser le mot de passe"
-      onSubmit={handleSubmit}
-      onClose={() => setIsModal(false)}
-      buttonText="Reinitialiser le mot de passe"
-    >
-      <TextInput
-        label="Nouveau mot de passe"
-        placeholder="******"
-        type="password"
-        id="newPassword"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        required
-      />
-    </Modal>
+    <>
+      {isModal && (
+        <Modal
+          title="Reinitialiser le mot de passe"
+          onSubmit={handleSubmit}
+          onClose={() => setIsModal(false)}
+          buttonText="Reinitialiser le mot de passe"
+        >
+          <TextInput
+            label="Nouveau mot de passe"
+            placeholder="******"
+            type="password"
+            id="newPassword"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            required
+          />
+        </Modal>
+      )}
+      {alert && (
+        <Alert type={alert?.type} setAlert={setAlert}>
+          {alert?.message}
+        </Alert>
+      )}
+    </>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
@@ -10,13 +10,10 @@ import AppleIconWhite from "@/assets/icons/AppleIconWhite";
 import heroImage3 from "@/assets/images/heroImage3.jpg";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { TextInput } from "@/components/input";
-import NewPasswordModal from "./NewPasswordModal";
-import Alert from "@/components/Alert";
 
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
-  const [alert, setAlert] = useState(null);
 
   const handleForm = async (e) => {
     e.preventDefault();
@@ -146,14 +143,6 @@ export default function forgotPasswordPage() {
           </div>
         </div>
       </div>
-      <Suspense>
-        <NewPasswordModal setAlert={setAlert} />
-      </Suspense>
-      {alert && (
-        <Alert type={alert?.type} setAlert={setAlert}>
-          {alert?.message}
-        </Alert>
-      )}
     </>
   );
 }

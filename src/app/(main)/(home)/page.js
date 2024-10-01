@@ -16,6 +16,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 import horsetedApp from "@/assets/images/horsetedApp.png";
 import EmailVerification from "./EmailVerification";
 import { Suspense } from "react";
+import NewPasswordModal from "./NewPasswordModal";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
@@ -265,6 +266,7 @@ export default async function Home() {
       </div>
       <Suspense>
         <EmailVerification />
+        <NewPasswordModal />
       </Suspense>
     </main>
   );
