@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Alert({ type, children, duration = 5000, setAlert }) {
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function Alert({ type, children, duration = 5000, setAlert }) {
   });
 
   return (
-    <div className="fixed inset-x-0 bottom-5 flex justify-center z-20">
+    <div className="fixed inset-x-0 bottom-5 flex justify-center z-50">
       <div
         className={`bg-light-grey mx-5 px-5 py-4 rounded-[20px] absolute bottom-5  lg:bottom-20 flex gap-8 items-center ${textClass}`}
       >

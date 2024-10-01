@@ -41,7 +41,7 @@ export default function Modal({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-40">
       <div
         ref={modalRef}
         className="bg-light-grey py-9 px-8 rounded-[20px] sm:w-[540px] mx-5"
