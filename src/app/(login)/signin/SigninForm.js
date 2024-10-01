@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import signIn from "@/libs/firebase/auth/signin";
 import Button from "@/components/Button";
 import Link from "next/link";
@@ -15,16 +15,6 @@ export default function SigninForm({ className }) {
   const [isAlert, setIsAlert] = useState(false);
 
   const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
-
-  useEffect(() => {
-    const passwordResetSent = searchParams.get("passwordResetSent");
-    if (passwordResetSent === "true") {
-      setShowPasswordResetAlert(true);
-    }
-  }, []);
 
   const handleForm = async (event) => {
     event.preventDefault();
@@ -89,11 +79,6 @@ export default function SigninForm({ className }) {
       >
         Mot de passe oublié ?
       </Link>
-      {showPasswordResetAlert && (
-        <div className=" bg-[#EAF3E8] border border-light-green text-sm font-normal text-center h-16 rounded-[65px] flex items-center justify-center mb-8 p-6 lg:mb-0">
-          Un e-mail vous a été envoyé pour réinitialiser votre mot de passe
-        </div>
-      )}
       {isAlert && <Alert type="error">Email ou mot de passe incorrect</Alert>}
     </form>
   );
