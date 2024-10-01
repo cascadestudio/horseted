@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import fetchHorseted from "@/utils/fetchHorseted";
 import Spinner from "@/components/Spinner";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductSummary from "./ProductSummary";
@@ -16,8 +15,6 @@ const SellPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [postResponse, setPostResponse] = useState(null);
   const [isUserSeller, setUserIsSeller] = useState(false);
-
-  // console.log("user =>", user);
 
   useEffect(() => {
     getSellerData();
