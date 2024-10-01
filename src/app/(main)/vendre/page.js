@@ -9,6 +9,7 @@ import ProductSummary from "./ProductSummary";
 import withAuth from "@/hoc/withAuth";
 import PostProductForm from "./PostProductForm";
 import Button from "@/components/Button";
+import { getSeller } from "@/fetch/seller";
 
 const SellPage = () => {
   const { accessToken } = useAuthContext();
@@ -25,10 +26,7 @@ const SellPage = () => {
   const getSellerData = async () => {
     try {
       setIsLoading(true);
-      const response = await fetchHorseted(
-        "/users/me/seller_account",
-        accessToken
-      );
+      await getSeller(accessToken);
       setUserIsSeller(true);
     } catch (error) {
       setUserIsSeller(false);
