@@ -15,6 +15,7 @@ import HeroCarousel from "@/components/HeroCarousel";
 // import RightArrow from "@/assets/icons/RightArrow";
 import horsetedApp from "@/assets/images/horsetedApp.png";
 import EmailVerification from "./EmailVerification";
+import { Suspense } from "react";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
@@ -262,7 +263,9 @@ export default async function Home() {
           />
         </div>
       </div>
-      <EmailVerification />
+      <Suspense>
+        <EmailVerification />
+      </Suspense>
     </main>
   );
 }
