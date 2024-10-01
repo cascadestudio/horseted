@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
@@ -146,7 +146,9 @@ export default function forgotPasswordPage() {
           </div>
         </div>
       </div>
-      <NewPasswordModal setAlert={setAlert} />
+      <Suspense>
+        <NewPasswordModal setAlert={setAlert} />
+      </Suspense>
       {alert && (
         <Alert type={alert?.type} setAlert={setAlert}>
           {alert?.message}
