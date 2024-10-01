@@ -12,12 +12,15 @@ import WhiteThreeStripesIcon from "@/assets/icons/WhiteThreeStripesIcon";
 import appReviewImage2 from "@/assets/images/appReviewImage2.jpg";
 import CategoriesSection from "./CategoriesSection";
 import HeroCarousel from "@/components/HeroCarousel";
-import RightArrow from "@/assets/icons/RightArrow";
+// import RightArrow from "@/assets/icons/RightArrow";
 import horsetedApp from "@/assets/images/horsetedApp.png";
+import EmailVerification from "./EmailVerification";
+import { Suspense } from "react";
 
 export default async function Home() {
   const articles = await client.fetch(`*[_type == "article"]`);
   const featuredArticles = articles.filter((article) => article.isFeatured);
+
   return (
     <main>
       <div className="relative">
@@ -260,6 +263,9 @@ export default async function Home() {
           />
         </div>
       </div>
+      <Suspense>
+        <EmailVerification />
+      </Suspense>
     </main>
   );
 }
