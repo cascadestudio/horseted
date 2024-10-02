@@ -5,6 +5,7 @@ import Button from "./Button";
 export default function SignInModal({ setIsSignInModal }) {
   return (
     <Modal
+      isNotForm
       title="Se connecter"
       onClose={() => {
         setIsSignInModal(false);
