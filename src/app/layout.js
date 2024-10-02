@@ -1,10 +1,13 @@
 import "./styles/globals.css";
-import { AuthContextProvider } from "@/context/AuthContext";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
 export const metadata = {
   title: "Horseted",
   description: "Horseted",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({ children }) {

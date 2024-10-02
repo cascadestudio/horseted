@@ -14,11 +14,7 @@ const withAuth = (WrappedComponent) => {
       }
     }, [user, isLoading, router]);
 
-    if (isLoading) return <Spinner isFullScreen />;
-
-    if (!user) {
-      return null;
-    }
+    if (isLoading || !user) return <Spinner isFullScreen />;
 
     return <WrappedComponent {...props} />;
   };
