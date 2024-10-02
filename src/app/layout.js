@@ -1,9 +1,47 @@
 import "./styles/globals.css";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
+const baseUrl = "https://horseted.com";
+
+const baseMetadata = {
+  title:
+    "Achetez et vendez votre matériel d'équitation Neuf ou d'occastion avec Horseted",
+  description:
+    "Téléchargez l’application Horseted et donnez une seconde vie à vos articles d’équitation en vendant votre matériel dès maintenant !",
+  imageUrl: `${baseUrl}/images/og-image.jpg`,
+};
+
 export const metadata = {
-  title: "Horseted",
-  description: "Horseted",
+  title: baseMetadata.title,
+  description: baseMetadata.description,
+  icons: {
+    icon: "images/favicon.png",
+  },
+  openGraph: {
+    title: baseMetadata.title,
+    description: baseMetadata.description,
+
+    url: baseUrl,
+    siteName: baseMetadata.title,
+    images: [
+      {
+        url: baseMetadata.imageUrl,
+        width: 1440,
+        height: 873,
+        alt: baseMetadata.title,
+      },
+    ],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: baseMetadata.title,
+    description: baseMetadata.description,
+    images: [baseMetadata.imageUrl],
+  },
+
+  // Remove in production
   robots: {
     index: false,
     follow: false,
