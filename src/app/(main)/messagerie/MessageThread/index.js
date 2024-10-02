@@ -16,8 +16,10 @@ export default function MessageThread() {
 
   useEffect(() => {
     if (threadContainerRef.current) {
-      threadContainerRef.current.scrollTop =
-        threadContainerRef.current.scrollHeight;
+      threadContainerRef.current.scrollTo({
+        top: threadContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages]);
 
@@ -26,8 +28,8 @@ export default function MessageThread() {
       {isLoading ? (
         <Spinner isFullScreen />
       ) : (
-        <div ref={threadContainerRef} className="flex-1 flex overflow-y-scroll">
-          <ul className="flex flex-col gap-y-4 flex-1 p-10">
+        <div ref={threadContainerRef} className="overflow-y-scroll p-10">
+          <ul className="flex flex-col gap-y-4 flex-1 ">
             {recipient && (
               <li className="message-container self-start">
                 <p className="font-medium text-sm">
