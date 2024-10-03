@@ -24,7 +24,7 @@ export async function generateMetadata({ params }) {
 
   const base64Medias = await getMedias(medias);
 
-  const productImage = base64Medias?.length > 0 ? base64Medias[0].base64 : null;
+  const productImage = base64Medias?.length > 0 ? base64Medias[0] : null;
 
   return {
     title: `${product.title} | Application Horseted`,
@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
     images: [
       {
         url:
-          productImage ||
+          `data:image/png;base64, ${productImage.base64}` ||
           `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
         width: 800,
         height: 600,
