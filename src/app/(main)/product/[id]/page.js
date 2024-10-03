@@ -30,16 +30,18 @@ export async function generateMetadata({ params }) {
     title: `${product.title} | Application Horseted`,
     description: `${product.title} – article d’équitation de seconde main sur Horseted`,
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
-    images: [
-      {
-        url:
-          `data:image/png;base64, ${productImage.base64}` ||
-          `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
-        width: 800,
-        height: 600,
-        alt: product.name,
-      },
-    ],
+    openGraph: {
+      images: [
+        {
+          url:
+            `data:image/png;base64, ${productImage.base64}` ||
+            `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
+          width: 800,
+          height: 600,
+          alt: product.title,
+        },
+      ],
+    },
   };
 }
 
