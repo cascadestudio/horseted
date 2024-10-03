@@ -36,6 +36,7 @@ export async function generateMetadata({ params }) {
           url:
             `data:image/png;base64, ${productImage.base64}` ||
             `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
+          type: "image/png",
           width: 800,
           height: 600,
           alt: product.title,
