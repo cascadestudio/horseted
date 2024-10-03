@@ -1,14 +1,12 @@
 import "./styles/globals.css";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
-const baseUrl = "https://horseted.com";
-
 const baseMetadata = {
   title:
     "Achetez et vendez votre matériel d'équitation Neuf ou d'occastion avec Horseted",
   description:
     "Téléchargez l’application Horseted et donnez une seconde vie à vos articles d’équitation en vendant votre matériel dès maintenant !",
-  imageUrl: `${baseUrl}/images/og-image.jpg`,
+  imageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
 };
 
 export const metadata = {
@@ -21,7 +19,7 @@ export const metadata = {
     title: baseMetadata.title,
     description: baseMetadata.description,
 
-    url: baseUrl,
+    url: process.env.NEXT_PUBLIC_BASE_URL,
     siteName: baseMetadata.title,
     images: [
       {

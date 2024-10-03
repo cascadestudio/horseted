@@ -2,9 +2,49 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import ProductInfoSection from "./ProductInfoSection";
 import ProductsSection from "@/components/ProductsSection";
 import ProductMediaSection from "./ProductMediaSection";
+import { getProducts } from "@/fetch/products";
+import getImage from "@/utils/getImage";
+
+export async function generateMetadata({ params }) {
+  const product = await getProducts(params.id);
+  const medias = product.medias;
+
+  const getMedias = async (medias) => {
+    if (!medias) return;
+    return await Promise.all(
+      medias.map(async (media) => {
+        const base64 = await getImage(media.files.thumbnail1000, "server");
+        return {
+          ...media,
+          base64,
+        };
+      })
+    );
+  };
+
+  const base64Medias = await getMedias(medias);
+
+  const productImage = base64Medias?.length > 0 ? base64Medias[0].base64 : null;
+
+  return {
+    title: `${product.title} | Application Horseted`,
+    description: `${product.title} – article d’équitation de seconde main sur Horseted`,
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
+    images: [
+      {
+        url:
+          productImage ||
+          `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
+        width: 800,
+        height: 600,
+        alt: product.name,
+      },
+    ],
+  };
+}
 
 export default async function ProductPage({ params }) {
-  const product = await fetchHorseted(`/products/${params.id}`);
+  const product = await getProducts(params.id);
   const sellerData = await fetchHorseted(`/users/${product.userId}`);
   const userProducts = await fetchHorseted(
     `/products?orderBy=createdAt;desc&userId=${product.userId}`
