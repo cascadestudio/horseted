@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useSearchParams } from "next/navigation";

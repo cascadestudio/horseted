@@ -1,3 +1,14 @@
+export async function generateMetadata() {
+  return {
+    title: `CONDITIONS GENERALES D’UTILISATION DE LA PLATEFORME HORSETED | Horseted`,
+    description: `La société HORSETED, société par actions simplifiée, au capital social
+        de 10 000 €, immatriculée au Registre du Commerce et des Sociétés au
+        numéro 980946693, au numéro de TVA intracommunautaire FR62980946693,
+        dont le siège social est situé au 6, Impasse Vauban 66440 TORREILLES,
+        Représentée par sa présidente Madame Léa ESCANDE.`,
+  };
+}
+
 export default function CGUPage() {
   return (
     <div className="container mx-auto px-5 py-8">
