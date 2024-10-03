@@ -7,6 +7,17 @@ import BurstIcon from "@/assets/icons/BurstIcon";
 import CategoryBlogSection from "../../CategoryBlogSection";
 import ShareSection from "./ShareSection";
 
+export async function generateMetadata({ params }) {
+  const { articleSlug } = params;
+  const { article } = await getArticleData(articleSlug);
+  const { title } = article;
+
+  return {
+    title: `${title} | Application Horseted`,
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/actualites/articles/${articleSlug}`,
+  };
+}
+
 async function getArticleData(slug) {
   const articles = await client.fetch(
     `*[_type == "article" && slug.current == $slug]{
