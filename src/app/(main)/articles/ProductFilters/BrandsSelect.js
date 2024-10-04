@@ -39,13 +39,26 @@ export default function BrandSelect({
   );
 
   useEffect(() => {
-    if (isPostProduct && filteredBrands.length === 0 && searchTerm) {
-      setProduct((prev) => {
-        if (prev.searchTerm !== searchTerm) {
-          return { ...prev, brand: searchTerm };
-        }
-        return prev;
-      });
+    console.log("searchTerm =>", searchTerm);
+    if (isPostProduct) {
+      if (searchTerm === "") {
+        setProduct((prev) => ({ ...prev, brand: "" }));
+      }
+      if (
+        !brands.some((brand) =>
+          brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      ) {
+        setProduct((prev) => ({ ...prev, brand: searchTerm }));
+      } else {
+        setProduct((prev) => ({ ...prev, brand: "" }));
+      }
+      // setProduct((prev) => {
+      //   if (prev.searchTerm !== searchTerm) {
+      //     return { ...prev, brand: searchTerm };
+      //   }
+      //   return prev;
+      // });
     }
   }, [filteredBrands.length, searchTerm, isPostProduct, setProduct]);
 
