@@ -49,10 +49,13 @@ export default async function fetchHorseted(
         ? await response.json()
         : { message: response.statusText };
 
-    throw new Error(
-      `Failed to fetch ${query}: ${
-        errorResponse.message || response.statusText
-      }`
+    console.log(
+      `Failed to fetch ${query}: ${errorResponse.message || response.statusText}`
     );
+    // throw new Error(
+    //   `Failed to fetch ${query}: ${
+    //     errorResponse.message || response.statusText
+    //   }`
+    // );
   }
 }

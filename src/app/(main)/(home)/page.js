@@ -75,7 +75,7 @@ export default async function Home() {
       <CategoriesSection />
       <ProductsSection
         title="Pour la cavalière"
-        categoryId="1065"
+        categoryId="1"
         categoryName="Cavalière"
       />
       <ProductsSection
