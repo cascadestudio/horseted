@@ -79,7 +79,11 @@ export default function SigninForm({ className }) {
       >
         Mot de passe oublié ?
       </Link>
-      {isAlert && <Alert type="error">Email ou mot de passe incorrect</Alert>}
+      {isAlert && (
+        <Alert setAlert={setIsAlert} type="error">
+          Email ou mot de passe incorrect
+        </Alert>
+      )}
     </form>
   );
 }
