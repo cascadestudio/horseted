@@ -19,6 +19,8 @@ export default function Brand({ product, setProduct }) {
         className="w-full max-w-[700px]"
         isBlack
         isRadio
+        isPostProduct
+        setProduct={setProduct}
       />
     </div>
   );

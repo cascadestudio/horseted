@@ -10,6 +10,8 @@ export default function BrandSelect({
   className,
   isBlack,
   isRadio,
+  isPostProduct,
+  setProduct,
 }) {
   const [brands, setBrands] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -35,6 +37,17 @@ export default function BrandSelect({
   const filteredBrands = brands.filter(({ name }) =>
     name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  useEffect(() => {
+    if (isPostProduct && filteredBrands.length === 0 && searchTerm) {
+      setProduct((prev) => {
+        if (prev.searchTerm !== searchTerm) {
+          return { ...prev, brand: searchTerm };
+        }
+        return prev;
+      });
+    }
+  }, [filteredBrands.length, searchTerm, isPostProduct, setProduct]);
 
   const handleCheckboxChange = (e) => {
     const brand = e.target.value;
