@@ -10,7 +10,7 @@ export async function generateMetadata() {
 
 export default function ProductsPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense>
       <ProductsContent />
     </Suspense>
   );
