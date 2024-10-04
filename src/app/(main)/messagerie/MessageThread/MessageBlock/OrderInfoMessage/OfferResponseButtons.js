@@ -21,7 +21,7 @@ export default function OfferResponseButtons({ offerId, totalPrice }) {
 
   return (
     <>
-      <div className="flex gap-x-3">
+      <div className="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 gap-x-3">
         <Button
           variant={"red"}
           onClick={() => handleOfferSellerResponse("declined")}
