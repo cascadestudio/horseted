@@ -15,7 +15,11 @@ export default async function ProductsSection({
   if (categoryId) query += `?category=${categoryId}`;
 
   const productsData = await fetchHorseted(query);
+
+  if (!productsData) return;
+
   const products = productsData.items.slice(0, 16);
+
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
       <div className="container mx-auto px-5">
