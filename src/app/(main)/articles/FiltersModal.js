@@ -33,7 +33,7 @@ export default function FiltersModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-light-grey w-screen h-screen pt-11 px-5 lg:pt-0 lg:p-5 overflow-hidden">
+      <div className="bg-light-grey w-screen h-screen pt-11 px-5 lg:pt-0 lg:p-5 overflow-y-auto">
         <div className="mb-4 flex justify-between">
           <button
             className="bg-red-500 text-white rounded "
