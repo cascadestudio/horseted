@@ -97,12 +97,12 @@ export default function Footer() {
                 <a href="/aide">Aide</a>
               </li>
               <li>
+                <a href="/contact">Contact</a>
+              </li>
+              <li>
                 <Button noStyle withAuth href="/vendre">
                   Vendre
                 </Button>
-              </li>
-              <li>
-                <a href="/articles">Acheter</a>
               </li>
               <li>
                 <a href="/aide">Livraisons & retours</a>
