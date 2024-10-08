@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import horsetedApp from "@/assets/images/horsetedApp.png";
+// import horsetedApp from "/images/horsetedApp.png";
 import Image from "next/image";
 import Link from "next/link";
 import Radio from "@/components/input/Radio";
@@ -87,9 +87,11 @@ export default function Contact() {
           <div className="hidden lg:flex lg:justify-end lg:col-start-2 lg:row-start-1 lg:row-span-4">
             <Image
               sizes="(min-width: 1024px) 920px, 50vw"
-              src={horsetedApp}
+              src="/images/horsetedApp.png"
               alt="App Horseted"
-              className="w-auto h-full "
+              width={920}
+              height={500}
+              className="h-auto"
             />
           </div>
         </form>
