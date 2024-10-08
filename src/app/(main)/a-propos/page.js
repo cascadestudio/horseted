@@ -1,6 +1,6 @@
 export async function generateMetadata() {
   return {
-    title: `À propos | Application Horseted`,
+    title: `À propos | Horseted`,
     description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec.`,
   };
 }
