@@ -12,12 +12,12 @@ export async function generateMetadata() {
     openGraph: {
       title,
       description,
-      // images: [
-      //   {
-      //     url: `${process.env.NEXT_PUBLIC_BASE_URL}${image}`,
-      //     alt: "Contactez l'équipe Horseted",
-      //   },
-      // ],
+      images: [
+        {
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}${image}`,
+          alt: "Contactez l'équipe Horseted",
+        },
+      ],
     },
   };
 }
