@@ -3,8 +3,8 @@ import ProductsContent from "./ProductsContent";
 
 export async function generateMetadata() {
   return {
-    title: `Tous les articles | Application Horseted`,
-    description: `Tous les articles | Application Horseted`,
+    title: `Tous les articles | Horseted`,
+    description: `Tous les articles | Horseted`,
   };
 }
 

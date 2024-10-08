@@ -27,7 +27,7 @@ export async function generateMetadata({ params }) {
   const productImage = base64Medias?.length > 0 ? base64Medias[0] : null;
 
   return {
-    title: `${product.title} | Application Horseted`,
+    title: `${product.title} | Horseted`,
     description: `${product.title} – article d’équitation de seconde main sur Horseted`,
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
     openGraph: {

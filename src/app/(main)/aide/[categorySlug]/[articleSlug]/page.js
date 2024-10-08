@@ -25,11 +25,11 @@ export async function generateMetadata({ params }) {
   const { metaTitle, metaDescription } = article;
 
   return {
-    title: metaTitle || "Centre d'aide | Horseted",
+    title: metaTitle || "Aide | Horseted",
     description:
       metaDescription || "Découvrez nos articles d'aide sur Horseted.",
     openGraph: {
-      title: metaTitle || "Centre d'aide | Horseted",
+      title: metaTitle || "Aide | Horseted",
       description:
         metaDescription || "Découvrez nos articles d'aide sur Horseted.",
     },
