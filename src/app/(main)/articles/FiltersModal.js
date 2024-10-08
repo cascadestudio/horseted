@@ -25,6 +25,7 @@ export default function FiltersModal({
   handlePricesChange,
   setActiveSizes,
   handleMaterialsChange,
+  resetFilters,
 }) {
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "";
@@ -32,13 +33,21 @@ export default function FiltersModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-light-grey w-screen h-screen p-4 overflow-hidden">
-        <button
-          className="mb-4 bg-red-500 text-white px-3 py-1 rounded"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <CloseButton className="w-6 h-6" />
-        </button>
+      <div className="bg-light-grey w-screen h-screen pt-11 px-5 lg:pt-0 lg:p-5 overflow-hidden">
+        <div className="mb-4 flex justify-between">
+          <button
+            className="bg-red-500 text-white rounded "
+            onClick={() => setIsModalOpen(false)}
+          >
+            <CloseButton className="w-6 h-6" />
+          </button>
+          <button
+            onClick={resetFilters}
+            className="font-semibold font-mcqueen text-light-green"
+          >
+            Effacer les filtres
+          </button>
+        </div>
         <div className="flex flex-col gap-y-4">
           <SortSelect
             onOrderChange={handleOrderChange}

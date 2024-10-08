@@ -237,6 +237,7 @@ export default function ProductsPage() {
           handlePricesChange={handlePricesChange}
           setActiveSizes={setActiveSizes}
           handleOrderChange={handleOrderChange}
+          resetFilters={resetFilters}
         />
       )}
 
