@@ -1,9 +1,13 @@
-export async function generateMetadata() {
-  return {
-    title: `À propos | Horseted`,
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec.`,
-  };
-}
+export const metadata = {
+  title: "À propos | Horseted",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec.",
+  openGraph: {
+    title: "À propos | Horseted",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec.",
+  },
+};
 
 export default function AboutPage() {
   return (

@@ -6,7 +6,6 @@ import Button from "@/components/Button";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useAuthContext } from "@/context/AuthContext";
 import Breadcrumbs from "@/components/Breadcrumbs";
-// import horsetedApp from "/images/horsetedApp.png";
 import Image from "next/image";
 import Link from "next/link";
 import Radio from "@/components/input/Radio";
