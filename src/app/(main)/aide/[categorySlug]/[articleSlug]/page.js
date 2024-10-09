@@ -12,7 +12,8 @@ export async function generateMetadata({ params }) {
       metaTitle,
       metaDescription,
     }`,
-    { categorySlug, articleSlug }
+    { categorySlug, articleSlug },
+    { cache: "no-store" }
   );
 
   if (!article) {
