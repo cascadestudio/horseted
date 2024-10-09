@@ -25,7 +25,7 @@ export default function Alert({ type, children, duration = 5000, setAlert }) {
   return (
     <div className="fixed inset-x-0 bottom-5 flex justify-center z-50">
       <div
-        className={`bg-light-grey mx-5 px-5 py-4 rounded-[20px] absolute bottom-5  lg:bottom-20 flex gap-8 items-center ${textClass}`}
+        className={`bg-light-grey border border-[#E8E5DB] mx-5 px-5 py-4 rounded-[20px] absolute bottom-5  lg:bottom-20 flex gap-8 items-center ${textClass}`}
       >
         <span
           className={`border bg-opacity-10 text-xl lg:text-[36px] lg:leading-[48px] font-bold font-mcqueen text-center rounded-full aspect-square h-6 w-6 lg:h-[54px] lg:w-[54px]  flex items-center justify-center ${markClass}`}
