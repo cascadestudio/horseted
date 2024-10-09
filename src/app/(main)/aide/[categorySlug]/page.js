@@ -61,3 +61,5 @@ export default async function CategoryPage({ params }) {
     </div>
   );
 }
+
+export const revalidate = 60;
