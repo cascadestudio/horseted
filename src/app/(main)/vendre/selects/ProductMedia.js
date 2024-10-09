@@ -1,13 +1,14 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Alert from "@/components/Alert";
+import heic2any from "heic2any";
 
 export default function ProductMedia({ setImgFiles, handleFormChange }) {
   const [imageSrcs, setImageSrcs] = useState([]);
   const [isAlert, setIsAlert] = useState(false);
   const fileInputRef = useRef(null);
 
-  const handleMediaChange = (e) => {
+  const handleMediaChange = async (e) => {
     handleFormChange(e);
     const files = Array.from(e.target.files);
 
@@ -18,16 +19,44 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
     if (files) {
       const fileReaders = [];
 
-      files.forEach((file) => {
-        setImgFiles((prev) => [...prev, file]);
+      for (const file of files) {
+        if (file.type === "image/heic") {
+          try {
+            const convertedBlob = await heic2any({
+              blob: file,
+              toType: "image/jpeg",
+            });
 
-        const reader = new FileReader();
-        fileReaders.push(reader);
-        reader.onloadend = () => {
-          setImageSrcs((prevImages) => [...prevImages, reader.result]);
-        };
-        reader.readAsDataURL(file);
-      });
+            const convertedFile = new File(
+              [convertedBlob],
+              file.name.replace(".heic", ".jpg"),
+              {
+                type: "image/jpeg",
+                lastModified: new Date().getTime(),
+              }
+            );
+
+            setImgFiles((prev) => [...prev, convertedFile]);
+            const reader = new FileReader();
+            fileReaders.push(reader);
+            reader.onloadend = () => {
+              setImageSrcs((prevImages) => [...prevImages, reader.result]);
+            };
+            reader.readAsDataURL(convertedFile);
+          } catch (error) {
+            console.error("Error converting HEIC to JPEG:", error);
+          }
+        } else {
+          // For non-HEIC files, just process as usual
+          setImgFiles((prev) => [...prev, file]);
+          const reader = new FileReader();
+          fileReaders.push(reader);
+          reader.onloadend = () => {
+            setImageSrcs((prevImages) => [...prevImages, reader.result]);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
     }
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
@@ -91,12 +120,12 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
               </>
             )}
             <input
-              ref={fileInputRef} // Attach the ref to the input
+              ref={fileInputRef}
               onChange={handleMediaChange}
               type="file"
               name="photos"
               className="hidden"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/heic"
               multiple
               max={10}
             />
@@ -147,12 +176,12 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
               </>
             )}
             <input
-              ref={fileInputRef} // Attach the ref to the input
+              ref={fileInputRef}
               onChange={handleMediaChange}
               type="file"
               name="photos"
               className="hidden"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/heic"
               multiple
               max={10}
             />
