@@ -85,3 +85,5 @@ export default async function HelpArticlePage({ params }) {
     </div>
   );
 }
+
+export const revalidate = 60;
