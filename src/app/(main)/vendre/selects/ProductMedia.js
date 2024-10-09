@@ -86,7 +86,7 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
                   Ajouter des photos
                 </p>
                 <p className="font-medium text-sm text-black">
-                  Ajoutez jusqu’à 10 photos
+                  Ajoutez jusqu’à 10 photos (au format JPEG ou PNG)
                 </p>
               </>
             )}
