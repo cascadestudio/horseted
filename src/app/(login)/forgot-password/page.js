@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/components/Button";
 import Image from "next/image";
 import HorsetedLogoBlackHorizontal from "@/assets/logos/HorsetedLogoBlackHorizontal.svg";
@@ -14,6 +15,8 @@ import { TextInput } from "@/components/input";
 export default function forgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [showPasswordResetAlert, setShowPasswordResetAlert] = useState(false);
+
+  const router = useRouter();
 
   const handleForm = async (e) => {
     e.preventDefault();
@@ -36,7 +39,7 @@ export default function forgotPasswordPage() {
           <div className="border-b border-black lg:border-none">
             <div className="container mx-auto px-5 py-4 h-[65px] flex items-center relative lg:px-[52px] lg:pt-14 lg:pb-0 lg:h-[100px]">
               <button
-                onClick={() => router.push("/signin")}
+                onClick={() => router.back()}
                 className="justify-self-start"
                 aria-label="Retour"
               >
