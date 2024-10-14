@@ -1,3 +1,4 @@
+import GoogleTagManager from "@/libs/GoogleTagManager";
 import "./styles/globals.css";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
@@ -52,6 +53,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${mcqueen.variable} ${raleway.variable} ${poppins.variable} font-sans`}
       >
+        <GoogleTagManager gtmId="GTM-MX76WLD9" />
         {children}
       </body>
     </html>
