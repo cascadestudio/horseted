@@ -39,7 +39,6 @@ export default function BrandSelect({
   );
 
   useEffect(() => {
-    console.log("searchTerm =>", searchTerm);
     if (isPostProduct) {
       if (searchTerm === "") {
         setProduct((prev) => ({ ...prev, brand: "" }));

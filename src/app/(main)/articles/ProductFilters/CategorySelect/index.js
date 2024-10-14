@@ -18,8 +18,6 @@ export default function CategorySelect({
   const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [activeSubCategory, setActiveSubCategory] = useState(null);
 
-  // console.log("activeCategory =>", activeCategory);
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -46,12 +44,17 @@ export default function CategorySelect({
     setActiveSubCategory(null);
   }
 
+  const handleOnClickProductCategory = (id, name) => {
+    onClickProductCategory(id, name);
+  };
+
   return (
     <Dropdown
       className={className}
       title={title}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
+      onClickProductCategory={onClickProductCategory}
     >
       <div className="min-w-64 min-h-64 py-4">
         {activeParentCategory === null && activeSubCategory === null && (
@@ -87,7 +90,7 @@ export default function CategorySelect({
         {activeSubCategory !== null && (
           <ProductCategorySelect
             activeSubCategory={activeSubCategory}
-            onClickProductCategory={onClickProductCategory}
+            onClickProductCategory={handleOnClickProductCategory}
             onClickPrev={showSubCategories}
             activeCategory={activeCategory}
           />
