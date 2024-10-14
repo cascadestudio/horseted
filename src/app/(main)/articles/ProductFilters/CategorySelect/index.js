@@ -54,7 +54,7 @@ export default function CategorySelect({
       title={title}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
-      onClickProductCategory={onClickProductCategory}
+      onSelect={onClickProductCategory}
     >
       <div className="min-w-64 min-h-64 py-4">
         {activeParentCategory === null && activeSubCategory === null && (

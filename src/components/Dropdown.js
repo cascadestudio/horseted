@@ -10,7 +10,7 @@ export default function Dropdown({
   isActive,
   isBlack,
   isCitySelect,
-  onClickProductCategory,
+  onSelect,
 }) {
   const panelRef = useRef();
   const buttonRef = useRef();
@@ -30,7 +30,7 @@ export default function Dropdown({
   useEffect(() => {
     setIsOpen(false);
     setIsClickOutside(false);
-  }, [onClickProductCategory]);
+  }, [onSelect]);
 
   function handleClick() {
     setIsOpen(!isOpen);

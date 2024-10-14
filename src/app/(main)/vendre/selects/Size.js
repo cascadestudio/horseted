@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import SizesSelect from "../../articles/ProductFilters/SizesSelect";
 
 export default function Size({ product, setProduct }) {
-  const onSizeChange = (e) => {
-    const sizeId = e.target.value;
-    setProduct((prev) => ({ ...prev, sizeId: sizeId }));
+  const [activeSizeName, setActiveSizeName] = useState("");
+
+  const onSizeChange = (id, value) => {
+    setProduct((prev) => ({ ...prev, sizeId: id }));
+    setActiveSizeName(value);
   };
 
   if (product.categoryId === "") return;
@@ -14,10 +16,10 @@ export default function Size({ product, setProduct }) {
         Taille* :
       </h3>
       <SizesSelect
-        activeSizes={product.sizeId}
+        activeSizeId={product.sizeId}
         onSizeChange={onSizeChange}
         categoryId={product.categoryId}
-        title="Sélectionner une taille"
+        title={activeSizeName || "Sélectionner une taille"}
         className="w-full max-w-[700px]"
         isBlack
         isRadio

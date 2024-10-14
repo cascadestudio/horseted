@@ -12,6 +12,8 @@ export default function SizesSelect({
   isBlack,
   isRadio,
   onSizeChange,
+  title = "Tailles",
+  activeSizeId,
 }) {
   const [sizes, setSizes] = useState([]);
 
@@ -42,9 +44,10 @@ export default function SizesSelect({
   return (
     <Dropdown
       className={className}
-      title="Tailles"
-      isActive={activeSizes.length > 0}
+      title={title}
+      isActive={activeSizes?.length > 0 || activeSizeId !== ""}
       isBlack={isBlack}
+      onSelect={onSizeChange}
     >
       <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll py-4 pe-3">
         {sizes.map((size) => {
@@ -60,8 +63,8 @@ export default function SizesSelect({
                 <Radio
                   className="ml-20"
                   value={id}
-                  onChange={onSizeChange}
-                  checked={activeSizes?.includes(id)}
+                  onChange={() => onSizeChange(id, value)}
+                  checked={activeSizeId === id}
                 />
               ) : (
                 <Checkbox

@@ -47,6 +47,7 @@ export default function StateSelect({
       className={className}
       isBlack={isBlack}
       isActive={activeState !== ""}
+      onSelect={onStateChange}
     >
       <div className={`flex flex-col gap-y-4 max-w-96 py-4 ${className}`}>
         {states.map((state, index) => {
