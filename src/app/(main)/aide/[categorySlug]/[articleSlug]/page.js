@@ -48,7 +48,8 @@ export default async function HelpArticlePage({ params }) {
         title, slug
       }
     }`,
-    { categorySlug, articleSlug }
+    { categorySlug, articleSlug },
+    { cache: "no-store" }
   );
 
   const breadcrumbs = [

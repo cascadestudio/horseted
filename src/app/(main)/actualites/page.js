@@ -9,9 +9,12 @@ export default async function BlogPage() {
       ..., 
       category->{_id, title, slug},
       _createdAt
-    }`
+    }`,
+    { cache: "no-store" }
   );
-  const categories = await client.fetch(`*[_type == "category"]`);
+  const categories = await client.fetch(`*[_type == "category"]`, {
+    cache: "no-store",
+  });
 
   return (
     <div className="bg-light-grey">
