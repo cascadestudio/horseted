@@ -2,19 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { updateEmail } from "firebase/auth";
-import Image from "next/image";
 import Button from "@/components/Button";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { TextInput } from "@/components/input";
-import ModifyIcon from "@/assets/icons/ModifyIcon";
-import AppleIcon from "@/assets/icons/AppleIcon";
 import LogOutIcon from "@/assets/icons/LogOutIcon";
 import useHandleSignout from "@/hooks/useHandleSignout";
 import Avatar from "./Avatar";
-import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";
-import SignInModal from "@/components/SignInModal";
 import DeleteAccountButton from "./DeleteAccountButton";
 import CityInput from "./CityInput";
 import LinkAccount from "./LinkAccount";
@@ -22,7 +16,6 @@ import LinkAccount from "./LinkAccount";
 export default function Settings() {
   const handleSignout = useHandleSignout();
   const { user, accessToken } = useAuthContext();
-  const router = useRouter();
 
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
@@ -33,6 +26,7 @@ export default function Settings() {
     city: user?.city || "",
     avatar: user?.avatar?.id || null,
   });
+
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -131,19 +125,8 @@ export default function Settings() {
       </form>
       <div className="flex flex-col lg:flex-row mb-5 gap-4">
         <LinkAccount />
-        {/* <a
-          href="#"
-          className="flex items-center border border-black w-full lg:w-fit rounded-[50px] p-1 h-14"
-        >
-          <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-            <AppleIcon className="h-6 w-6" />
-          </div>
-          <span className="font-semibold pl-3 pr-10 lg:pl-6">
-            Associer un compte Apple
-          </span>
-        </a> */}
       </div>
-      <Button className="w-full mb-16">Enregistrer</Button>
+      {/* <Button className="w-full mb-16">Enregistrer</Button> */}
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
         <DeleteAccountButton accessToken={accessToken} />
         <p className="font-mcqueen text-[12px]">
