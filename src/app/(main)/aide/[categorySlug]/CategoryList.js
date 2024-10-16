@@ -6,7 +6,8 @@ export default async function CategoryList({ activeSlug }) {
     `*[_type == "helpCategory" && count(*[_type == "helpArticle" && references(^._id)]) > 0] | order(orderRank asc) {
       title,
       slug
-    }`
+    }`,
+    { cache: "no-store" }
   );
 
   return (

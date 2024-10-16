@@ -14,7 +14,8 @@ export default async function AidePage() {
   const helpCategories = await client.fetch(
     `*[_type == "helpCategory"] | order(orderRank asc) {
       slug
-    }`
+    }`,
+    { cache: "no-store" }
   );
 
   if (helpCategories.length > 0) {
