@@ -16,3 +16,9 @@ export async function deletePaymentMethods(accessToken, paymentMethodId) {
   const paymentMethods = await fetchHorseted(query, accessToken, "DELETE");
   return paymentMethods;
 }
+
+export async function getBlockedUsers(accessToken) {
+  const query = "/users/me/blocked_users";
+  const blockedUsers = await fetchHorseted(query, accessToken);
+  return blockedUsers;
+}
