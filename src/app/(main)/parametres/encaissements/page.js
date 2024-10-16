@@ -18,8 +18,12 @@ export default function Transactions() {
   const getSellerData = async () => {
     try {
       const seller = await getSeller(accessToken);
-      setSellerData(seller);
-      setUserIsSeller(true);
+      if (seller) {
+        setSellerData(seller);
+        setUserIsSeller(true);
+      } else {
+        setUserIsSeller(false);
+      }
     } catch (error) {
       setUserIsSeller(false);
     }
