@@ -12,10 +12,13 @@ import Avatar from "./Avatar";
 import DeleteAccountButton from "./DeleteAccountButton";
 import CityInput from "./CityInput";
 import LinkAccount from "./LinkAccount";
+import Alert from "@/components/Alert";
 
 export default function Settings() {
   const handleSignout = useHandleSignout();
   const { user, accessToken } = useAuthContext();
+
+  const [isAlert, setIsAlert] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
@@ -27,22 +30,12 @@ export default function Settings() {
     avatar: user?.avatar?.id || null,
   });
 
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (isMounted) {
-      patchUser();
-    } else {
-      setIsMounted(true);
-    }
-  }, [formData]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  async function patchUser() {
+  async function handleSave() {
     const user = await fetchHorseted(
       `/users/me`,
       accessToken,
@@ -50,6 +43,7 @@ export default function Settings() {
       formData,
       true
     );
+    setIsAlert(true);
     console.log("user =>", user);
   }
 
@@ -126,13 +120,20 @@ export default function Settings() {
       <div className="flex flex-col lg:flex-row mb-5 gap-4">
         <LinkAccount />
       </div>
-      {/* <Button className="w-full mb-16">Enregistrer</Button> */}
+      <Button onClick={() => handleSave()} className="w-full mb-16">
+        Enregistrer
+      </Button>
       <div className="flex flex-col gap-3 lg:gap-0 lg:flex-row items-start lg:justify-between">
         <DeleteAccountButton accessToken={accessToken} />
         <p className="font-mcqueen text-[12px]">
           *Vous ne pouvez pas modifier votre identifiant.
         </p>
       </div>
+      {isAlert && (
+        <Alert setAlert={setIsAlert} type="success">
+          Votre profil a bien été enregistré
+        </Alert>
+      )}
     </section>
   );
 }
