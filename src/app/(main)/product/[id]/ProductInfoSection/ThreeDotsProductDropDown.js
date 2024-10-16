@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function ThreeDotsProductDropDown({ isUserSeller, product }) {
   const { accessToken } = useContext(AuthContext);
-  const { router } = useRouter();
+  const router = useRouter();
   const [isSignalementModal, setIsSignalementModal] = useState(false);
 
   const handleDeleteProduct = async () => {
