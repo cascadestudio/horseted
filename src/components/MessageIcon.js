@@ -70,7 +70,7 @@ export default function MessageIcon() {
 
       {unseenMessagesNb > 0 && (
         <div className="text-sm flex items-center justify-center bg-red text-white w-5 h-5 rounded-full absolute top-[-10px] right-[-10px] border border-white">
-          {unseenMessagesNb}
+          {unseenMessagesNb > 9 ? "9+" : unseenMessagesNb}
         </div>
       )}
     </div>
