@@ -1,5 +1,6 @@
 import Dropdown from "@/components/Dropdown";
 import Radio from "@/components/input/Radio";
+import { useState } from "react";
 
 export default function Shipping({ product, setProduct }) {
   const shippings = [
@@ -29,9 +30,12 @@ export default function Shipping({ product, setProduct }) {
     },
   ];
 
-  const handleCheckboxChange = (e) => {
+  const [shippingName, setShippingName] = useState("");
+
+  const handleCheckboxChange = (e, name) => {
     const shipping = e.target.value;
     setProduct((prev) => ({ ...prev, shipping: shipping }));
+    setShippingName(name);
   };
 
   return (
@@ -40,10 +44,11 @@ export default function Shipping({ product, setProduct }) {
         Livraison* :
       </h3>
       <Dropdown
-        title="Sélectionner une taille de colis"
+        title={shippingName || "Sélectionner une taille de colis"}
         className="w-full max-w-[700px]"
         isBlack
         isActive={product.shipping !== ""}
+        onSelect={handleCheckboxChange}
       >
         <div className="flex flex-col gap-y-4 py-4 max-h-96 overflow-y-scroll pe-3">
           {shippings.map((shipping, index) => {
@@ -61,7 +66,7 @@ export default function Shipping({ product, setProduct }) {
                   className="ml-10"
                   value={value}
                   checked={product.shipping === value}
-                  onChange={handleCheckboxChange}
+                  onChange={(e) => handleCheckboxChange(e, name)}
                 />
               </label>
             );

@@ -13,9 +13,9 @@ export default function Brand({ product, setProduct }) {
         Marque* :
       </h3>
       <BrandSelect
-        activeBrands={product.brand}
+        activeBrand={product.brand}
         onBrandsChange={onBrandsChange}
-        title="Sélectionner une marque"
+        title={product.brand || "Sélectionner une marque"}
         className="w-full max-w-[700px]"
         isBlack
         isRadio

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SizesSelect from "../../articles/ProductFilters/SizesSelect";
 
 export default function Size({ product, setProduct }) {

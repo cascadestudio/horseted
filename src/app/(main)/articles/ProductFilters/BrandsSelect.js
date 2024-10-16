@@ -12,6 +12,8 @@ export default function BrandSelect({
   isRadio,
   isPostProduct,
   setProduct,
+  activeBrand,
+  title,
 }) {
   const [brands, setBrands] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -52,12 +54,6 @@ export default function BrandSelect({
       } else {
         setProduct((prev) => ({ ...prev, brand: "" }));
       }
-      // setProduct((prev) => {
-      //   if (prev.searchTerm !== searchTerm) {
-      //     return { ...prev, brand: searchTerm };
-      //   }
-      //   return prev;
-      // });
     }
   }, [filteredBrands.length, searchTerm, isPostProduct, setProduct]);
 
@@ -75,9 +71,10 @@ export default function BrandSelect({
   return (
     <Dropdown
       className={className}
-      title="Marques"
-      isActive={activeBrands.length > 0}
+      title={title || "Marques"}
+      isActive={activeBrands.length > 0 || activeBrand !== ""}
       isBlack={isBlack}
+      onSelect={onBrandsChange}
     >
       <div className="flex flex-col pt-4">
         <div className="flex items-center border-black border-b">
@@ -106,7 +103,7 @@ export default function BrandSelect({
                   className="ml-20"
                   value={name}
                   onChange={onBrandsChange}
-                  checked={activeBrands?.includes(name)}
+                  checked={activeBrand === name}
                 />
               ) : (
                 <Checkbox
