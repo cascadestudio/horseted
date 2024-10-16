@@ -12,6 +12,8 @@ import NextArrow from "@/assets/icons/NextArrow";
 import OrderInfo from "./OrderInfo";
 import Link from "next/link";
 import { deleteThread } from "@/fetch/threads";
+import { getBlockedUsers } from "@/fetch/users";
+import Alert from "@/components/Alert";
 
 export default function ThreadInfo() {
   const {
@@ -26,11 +28,29 @@ export default function ThreadInfo() {
   } = useThreadsContext();
 
   const [isDropdown, setIsDropdown] = useState(false);
+  const [alert, setAlert] = useState(false);
   const [isSignalementModal, setIsSignalementModal] = useState(false);
   const [isUserBlockModal, setIsUserBlockModal] = useState(false);
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
+  const [recipientBlocked, setRecipientBlocked] = useState(null);
+
+  useEffect(() => {
+    handleBlockedRecipient();
+  }, []);
+
+  const handleBlockedRecipient = async () => {
+    const blockedUsers = await getBlockedUsers(accessToken);
+    const blockedUser = blockedUsers.find(
+      (blockedUser) => blockedUser.blockedUserId === recipient.id
+    );
+    if (blockedUser) {
+      setRecipientBlocked(blockedUser);
+    } else {
+      setRecipientBlocked(null);
+    }
+  };
 
   useEffect(() => {
     if (isClickOutside) {
@@ -88,7 +108,7 @@ export default function ThreadInfo() {
                 className="flex items-center gap-2"
               >
                 <img src="/icons/bloquer.svg" alt="" />
-                Bloquer
+                {recipientBlocked ? "Débloquer" : "Bloquer"}
               </button>
               {!orderTracking && (
                 <button
@@ -135,8 +155,16 @@ export default function ThreadInfo() {
           accessToken={accessToken}
           setIsUserBlockModal={setIsUserBlockModal}
           userId={user.id}
-          seller={recipient}
+          recipient={recipient}
+          recipientBlocked={recipientBlocked}
+          setAlert={setAlert}
+          handleBlockedRecipient={handleBlockedRecipient}
         />
+      )}
+      {alert && (
+        <Alert setAlert={setAlert} type="success">
+          {alert}
+        </Alert>
       )}
     </>
   );
