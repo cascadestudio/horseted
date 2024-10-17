@@ -11,7 +11,7 @@ import ChevronDown from "@/assets/icons/ChevronDown";
 import OrdersIcon from "@/assets/icons/OrdersIcon";
 import SettingsIcon from "@/assets/icons/SettingsIcon";
 
-export default function MyAccountDropDown({ className, setNavIsOpen }) {
+export default function MyAccountDropDown({ className }) {
   const handleSignout = useHandleSignout();
   const dropdownRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -46,7 +46,6 @@ export default function MyAccountDropDown({ className, setNavIsOpen }) {
                 className="flex items-center justify-between p-5 border-b border-light-grey"
                 onClick={() => {
                   handleClick();
-                  setNavIsOpen(false);
                 }}
               >
                 <div className="flex items-center gap-4">
@@ -62,7 +61,6 @@ export default function MyAccountDropDown({ className, setNavIsOpen }) {
                 className="flex items-center justify-between p-5 border-b border-light-grey"
                 onClick={() => {
                   handleClick();
-                  setNavIsOpen(false);
                 }}
               >
                 <div className="flex items-center justify-center gap-[18px]">
@@ -78,7 +76,6 @@ export default function MyAccountDropDown({ className, setNavIsOpen }) {
                 className="flex items-center justify-between p-5 border-b border-light-grey"
                 onClick={() => {
                   handleClick();
-                  setNavIsOpen(false);
                 }}
               >
                 <div className="flex items-center gap-4">
@@ -91,7 +88,6 @@ export default function MyAccountDropDown({ className, setNavIsOpen }) {
             <button
               onClick={() => {
                 handleSignout();
-                setNavIsOpen(false);
               }}
               className="p-5 text-center font-semibold text-red w-full"
             >
