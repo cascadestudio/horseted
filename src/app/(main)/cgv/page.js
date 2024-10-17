@@ -1,16 +1,13 @@
-export async function generateMetadata() {
-  return {
-    title: `CONDITIONS GÉNÉRALES DE VENTE | Horseted`,
-    description: `La Plateforme Horseted (ci-après la « Plateforme » ou « Horseted ») est
-        une application Web et mobile de « place de marché » qui a pour objet la
-        mise en relation entre des acheteurs professionnels ou
-        non-professionnels (ci-après les « Acheteurs ») et des vendeurs
-        (ci-après les « Vendeurs »), professionnels ou non-professionnels, afin
-        de permettre à ces derniers de proposer leurs Produits (ci-après les «
-        Produits ») aux Acheteurs et de conclure avec eux des ventes directes
-        (ci-après la « Vente ») par l’intermédiaire de la Plateforme.`,
-  };
-}
+export const metadata = {
+  title: "Conditions générales de vente | Horseted",
+  description:
+    "La Plateforme Horseted (ci-après la « Plateforme » ou « Horseted ») est une application Web et mobile de « place de marché » qui a pour objet la mise en relation entre des acheteurs professionnels ou non-professionnels (ci-après les « Acheteurs ») et des vendeurs (ci-après les « Vendeurs »), professionnels ou non-professionnels, afin de permettre à ces derniers de proposer leurs Produits (ci-après les « Produits ») aux Acheteurs et de conclure avec eux des ventes directes (ci-après la « Vente ») par l’intermédiaire de la Plateforme.",
+  openGraph: {
+    title: "Conditions générales de vente | Horseted",
+    description:
+      "La Plateforme Horseted (ci-après la « Plateforme » ou « Horseted ») est une application Web et mobile de « place de marché » qui a pour objet la mise en relation entre des acheteurs professionnels ou non-professionnels (ci-après les « Acheteurs ») et des vendeurs (ci-après les « Vendeurs »), professionnels ou non-professionnels, afin de permettre à ces derniers de proposer leurs Produits (ci-après les « Produits ») aux Acheteurs et de conclure avec eux des ventes directes (ci-après la « Vente ») par l’intermédiaire de la Plateforme.",
+  },
+};
 
 export default function CGVPage() {
   return (

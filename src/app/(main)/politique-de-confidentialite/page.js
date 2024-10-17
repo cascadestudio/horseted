@@ -1,6 +1,13 @@
-"use client";
-
-import React from "react";
+export const metadata = {
+  title: "Politique de confidentialité | Horseted",
+  description:
+    "Découvrez comment la société HORSETED collecte, utilise et protège vos données personnelles.",
+  openGraph: {
+    title: "Politique de confidentialité | Horseted",
+    description:
+      "Découvrez comment la société HORSETED collecte, utilise et protège vos données personnelles.",
+  },
+};
 
 const PrivacyPolicyPage = () => {
   return (
