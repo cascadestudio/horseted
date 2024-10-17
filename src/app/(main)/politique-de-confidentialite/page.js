@@ -1,7 +1,3 @@
-"use client";
-
-import React from "react";
-
 export const metadata = {
   title: "Politique de confidentialité | Horseted",
   description:
