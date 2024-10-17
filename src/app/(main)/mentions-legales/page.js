@@ -79,20 +79,14 @@ export default function MentionsLegalesPage() {
       <ul className="list-disc list-inside">
         <li>
           Les Conditions Générales d’utilisation sont accessibles{" "}
-          <Link
-            href="/conditions-generales-utilisation"
-            className="text-blue-600 hover:underline"
-          >
+          <Link href="/cgu" className="text-blue-600 hover:underline">
             ici
           </Link>
           .
         </li>
         <li>
           Les Conditions Générales des ventes sont accessibles{" "}
-          <Link
-            href="/conditions-generales-vente"
-            className="text-blue-600 hover:underline"
-          >
+          <Link href="/cgv" className="text-blue-600 hover:underline">
             ici
           </Link>
           .
