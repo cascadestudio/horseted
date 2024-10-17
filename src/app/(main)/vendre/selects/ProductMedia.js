@@ -2,8 +2,14 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import Alert from "@/components/Alert";
 
-export default function ProductMedia({ setImgFiles, handleFormChange }) {
+export default function ProductMedia({
+  imgFiles,
+  setImgFiles,
+  handleFormChange,
+}) {
   const [imageSrcs, setImageSrcs] = useState([]);
+  console.log("imageSrcs =>", imageSrcs);
+  const [draggedIndex, setDraggedIndex] = useState(null);
   const [isAlert, setIsAlert] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -39,6 +45,35 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
     setImageSrcs((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleDragStart = (index) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault(); // Necessary to allow the drop event to work
+  };
+
+  const handleDrop = (index) => {
+    if (draggedIndex === null) return;
+
+    // Reorder the images by swapping the dragged image with the target image
+    const updatedImages = [...imageSrcs];
+    const draggedImage = updatedImages[draggedIndex];
+    updatedImages.splice(draggedIndex, 1); // Remove the dragged image
+    updatedImages.splice(index, 0, draggedImage); // Insert it at the new position
+
+    setImageSrcs(updatedImages);
+
+    const updatedFiles = [...imgFiles];
+    const draggedFile = updatedFiles[draggedIndex];
+    updatedFiles.splice(draggedIndex, 1); // Remove the dragged file
+    updatedFiles.splice(index, 0, draggedFile); // Insert it at the new position
+
+    setImgFiles(updatedFiles);
+
+    setDraggedIndex(null); // Reset dragged index
+  };
+
   return (
     // TODO redo responsive
     <>
@@ -51,6 +86,10 @@ export default function ProductMedia({ setImgFiles, handleFormChange }) {
                 <div
                   key={index}
                   className="relative inline-block ml-3 w-fit self-end place-self-end"
+                  draggable
+                  onDragStart={() => handleDragStart(index)}
+                  onDragOver={handleDragOver}
+                  onDrop={() => handleDrop(index)}
                 >
                   <Image
                     src={imageSrc}

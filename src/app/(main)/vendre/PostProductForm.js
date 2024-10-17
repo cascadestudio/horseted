@@ -122,6 +122,7 @@ export default function PostProductForm({
       >
         <div className="relative">
           <ProductMedia
+            imgFiles={imgfiles}
             setImgFiles={setImgFiles}
             handleFormChange={handleFormChange}
           />
