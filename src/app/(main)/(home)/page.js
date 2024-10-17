@@ -19,7 +19,9 @@ import { Suspense } from "react";
 import NewPasswordModal from "./NewPasswordModal";
 
 export default async function Home() {
-  const articles = await client.fetch(`*[_type == "article"]`);
+  const articles = await client.fetch(`*[_type == "article"]`, {
+    cache: "no-store",
+  });
   const featuredArticles = articles.filter((article) => article.isFeatured);
 
   return (

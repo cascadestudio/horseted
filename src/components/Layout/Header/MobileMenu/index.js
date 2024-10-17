@@ -13,16 +13,20 @@ import CloseButton from "@/assets/icons/CloseButton";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import InstagramIcon from "@/assets/icons/InstagramIcon";
-import YoutubeIcon from "@/assets/icons/YoutubeIcon";
 import FacebookIcon from "@/assets/icons/FacebookIcon";
-import LinkedInIcon from "@/assets/icons/LinkedInIcon";
 import MobileMessageButton from "./MobileMessageButton";
 import { useAuthContext } from "@/context/AuthContext";
+import { usePathname } from "next/navigation";
 
 export default function MobileMenu({ categories }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const { user } = useAuthContext();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsNavOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (isNavOpen) {
@@ -41,7 +45,7 @@ export default function MobileMenu({ categories }) {
 
   return (
     <div
-      className={`xl:hidden bg-white z-10 w-screen ${isNavOpen ? "fixed top-5 bottom-0 right-0 left-0 overflow-y-auto" : ""}`}
+      className={`xl:hidden bg-white z-30 w-screen ${isNavOpen ? "fixed top-5 bottom-0 right-0 left-0 overflow-y-auto" : ""}`}
     >
       <div
         className={`grid grid-cols-[30px,1fr,30px] w-full items-center px-5 pb-5 ${
@@ -67,20 +71,12 @@ export default function MobileMenu({ categories }) {
           <div className="flex flex-col items-center mt-4 mb-9 pb-3 border-b">
             <div className="w-full mb-2 px-5">
               {user && (
-                <Button
-                  withAuth
-                  onClick={() => setIsNavOpen(false)}
-                  href="/vendre"
-                >
+                <Button withAuth href="/vendre">
                   Vendre
                 </Button>
               )}
             </div>
-            <AccountHandler
-              setIsNavOpen={setIsNavOpen}
-              className="w-full px-5"
-              isInMobileMenu
-            />
+            <AccountHandler className="w-full px-5" isInMobileMenu />
             <h3 className="uppercase font-semibold text-sm text-center mt-5 mb-1 border-t w-full pt-5">
               Parcourir
             </h3>
@@ -91,7 +87,6 @@ export default function MobileMenu({ categories }) {
                   href={`/articles?categoryId=${id}&categoryName=${name}`}
                   key={category.id}
                   className="w-full px-11 py-2 font-semibold"
-                  onClick={() => setIsNavOpen(false)}
                 >
                   {capitalizeText(category.name)}
                 </Link>
@@ -100,24 +95,15 @@ export default function MobileMenu({ categories }) {
             <h3 className="uppercase font-semibold text-sm text-center mt-3 mb-1 border-t w-full pt-5">
               Découvrir
             </h3>
-            <Link
-              className="w-full px-11 py-2 font-semibold"
-              href="/aide"
-              onClick={() => setIsNavOpen(false)}
-            >
+            <Link className="w-full px-11 py-2 font-semibold" href="/aide">
               Aide
             </Link>
-            <Link
-              className="w-full px-11 py-2 font-semibold"
-              href="/a-propos"
-              onClick={() => setIsNavOpen(false)}
-            >
+            <Link className="w-full px-11 py-2 font-semibold" href="/a-propos">
               À propos
             </Link>
             <Link
               className="w-full px-11 py-2 font-semibold"
               href="/actualites"
-              onClick={() => setIsNavOpen(false)}
             >
               Actualités
             </Link>
@@ -128,7 +114,6 @@ export default function MobileMenu({ categories }) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center border border-black bg-white px-9 py-3 rounded-xl mb-3"
-              onClick={() => setIsNavOpen(false)}
             >
               <GooglePlayIcon className="w-8 h-8 mr-4" />
               <div>
@@ -145,7 +130,6 @@ export default function MobileMenu({ categories }) {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center border border-black bg-white px-9 py-3 rounded-xl"
-              onClick={() => setIsNavOpen(false)}
             >
               <AppleIcon className="w-auto h-8 mr-4" />
               <div>

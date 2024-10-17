@@ -24,7 +24,8 @@ export default async function CategoryPage({ params }) {
         slug
       }
     }`,
-    { categorySlug }
+    { categorySlug },
+    { cache: "no-store" }
   );
 
   const breadcrumbs = [
