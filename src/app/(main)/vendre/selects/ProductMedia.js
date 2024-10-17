@@ -8,7 +8,6 @@ export default function ProductMedia({
   handleFormChange,
 }) {
   const [imageSrcs, setImageSrcs] = useState([]);
-  console.log("imageSrcs =>", imageSrcs);
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [isAlert, setIsAlert] = useState(false);
   const fileInputRef = useRef(null);
