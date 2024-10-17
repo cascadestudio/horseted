@@ -151,15 +151,18 @@ export default function Footer() {
               <p className="uppercase font-extrabold pb-2 text-lg">Légal</p>
               <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
-                  <Link href="/politique-de-confidentialite">
-                    Mentions légales
-                  </Link>
+                  <Link href="/mentions-legales">Mentions légales</Link>
                 </li>
                 <li>
                   <Link href="/cgv">Conditions générales des ventes</Link>
                 </li>
                 <li>
                   <Link href="/cgu">Conditions d’utilisation</Link>
+                </li>
+                <li>
+                  <Link href="/politique-de-confidentialite">
+                    Politique de confidentialité
+                  </Link>
                 </li>
                 <li>
                   <Link href="/charte-vendeur">Charte vendeur</Link>
