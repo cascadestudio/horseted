@@ -4,6 +4,7 @@ const OptionBlock = ({
   checked,
   onChange,
   className,
+  required,
 }) => {
   return (
     <label
@@ -21,6 +22,7 @@ const OptionBlock = ({
         defaultValue={defaultValue}
         checked={checked}
         onChange={onChange}
+        required={required}
       />
     </label>
   );

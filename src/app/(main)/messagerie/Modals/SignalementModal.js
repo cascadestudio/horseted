@@ -13,10 +13,26 @@ export default function SignalementModal({
   const { accessToken } = useAuthContext();
 
   const signalementTypes = [
-    "spam",
-    "Arnaque",
-    "Message insultant",
-    "Note innapropriée",
+    {
+      value: "spam",
+      label: "Spam",
+    },
+    {
+      value: "Arnaque",
+      label: "Arnaque",
+    },
+    {
+      value: "Message insultant",
+      label: "Message insultant",
+    },
+    {
+      value: "Note innapropriée",
+      label: "Note innapropriée",
+    },
+    {
+      value: "order_issue",
+      label: "Un problème avec une commande",
+    },
   ];
 
   const [selectedType, setSelectedType] = useState("");
@@ -56,22 +72,24 @@ export default function SignalementModal({
         placeholder="Votre Message"
         onChange={(e) => setMessage(e.target.value)}
         value={message}
+        required
       />
       <label className="font-mcqueen font-semibold" htmlFor="">
         <span className="leading-[30px]">Objet du signalement :</span>
         {signalementTypes.map((signalementType, index) => (
           <OptionBlock
+            required={true}
             key={index}
-            defaultValue={signalementType}
+            defaultValue={signalementType.value}
             onChange={handleChange}
-            checked={selectedType === signalementType}
+            checked={selectedType === signalementType.value}
             className={`${
-              selectedType === signalementType
+              selectedType === signalementType.value
                 ? "border-light-green bg-white"
                 : "border-grey"
             }`}
           >
-            {signalementType}
+            {signalementType.label}
           </OptionBlock>
         ))}
       </label>
