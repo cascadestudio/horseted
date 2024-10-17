@@ -42,7 +42,6 @@ export default function ProductCard({
       ${className} relative flex flex-col items-center border-b border-grey focus:outline-none"
     `}
     >
-      <Link href={`/product/${id}`} className="absolute inset-0 z-10" />
       <ClientProductImage
         product={product}
         className="w-[280px] max-h-[340px]"
@@ -51,9 +50,13 @@ export default function ProductCard({
       <div className="flex w-full p-5 justify-between self-start">
         <div className="max-w-[82%]">
           <p className="font-poppins font-bold">{centsToEuros(price)} €</p>
-          <p className="text-lg font-extrabold text-light-green truncate">
+          <Link
+            href={`/product/${id}`}
+            className="text-lg font-extrabold text-light-green truncate"
+          >
             {title}
-          </p>
+            <span className="absolute inset-0"></span>
+          </Link>
           <p className="text-grey">{shippingSizeFrench}</p>
         </div>
         <div className="flex items-start z-20">

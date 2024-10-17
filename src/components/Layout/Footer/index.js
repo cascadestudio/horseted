@@ -164,9 +164,6 @@ export default function Footer() {
                     Politique de confidentialité
                   </Link>
                 </li>
-                <li>
-                  <Link href="/charte-vendeur">Charte vendeur</Link>
-                </li>
               </ul>
             </div>
             <div className="flex justify-center lg:justify-start">
