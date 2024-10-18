@@ -38,7 +38,7 @@ export default function signupPage() {
       console.error(error);
       return setAlert({
         type: "error",
-        message: "Erreur durant la création du compte Firebase",
+        message: "Erreur lors de la création de votre compte",
       });
     }
 

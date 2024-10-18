@@ -1,9 +1,11 @@
 import Link from "next/link";
 
-const Breadcrumbs = ({ breadcrumbs, white }) => {
+const Breadcrumbs = ({ breadcrumbs, white, centered }) => {
   return (
     <nav className="flex pt-10 pb-2" aria-label="Breadcrumb">
-      <ol className="inline-flex items-center w-full overflow-hidden sm:overflow-visible sm:text-nowrap">
+      <ol
+        className={`inline-flex items-center w-full overflow-hidden sm:overflow-visible sm:text-nowrap ${centered ? "justify-center" : ""}`}
+      >
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             key={index}

@@ -34,16 +34,10 @@ export default function AccountHandler({ className, isInMobileMenu = false }) {
           <div className="w-full lg:hidden">
             <MyAccountDropDown className="w-full" />
             <div className="flex items-center justify-center mt-5 gap-4">
-              <Button
-                noStyle
-                withAuth
-                href="/favoris"
-                // onClick={() => setNavIsOpen(false)}
-              >
+              <Button noStyle withAuth href="/favoris">
                 <HeartIcon />
               </Button>
               <span className="bg-black h-5 w-px"></span>
-              {/* <Link href="/messagerie" onClick={() => setNavIsOpen(false)}> */}
               <Link href="/messagerie">
                 <MessageIcon />
               </Link>

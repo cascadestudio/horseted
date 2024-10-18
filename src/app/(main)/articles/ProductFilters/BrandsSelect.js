@@ -10,6 +10,10 @@ export default function BrandSelect({
   className,
   isBlack,
   isRadio,
+  isPostProduct,
+  setProduct,
+  activeBrand,
+  title,
 }) {
   const [brands, setBrands] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,6 +40,23 @@ export default function BrandSelect({
     name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  useEffect(() => {
+    if (isPostProduct) {
+      if (searchTerm === "") {
+        setProduct((prev) => ({ ...prev, brand: "" }));
+      }
+      if (
+        !brands.some((brand) =>
+          brand.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      ) {
+        setProduct((prev) => ({ ...prev, brand: searchTerm }));
+      } else {
+        setProduct((prev) => ({ ...prev, brand: "" }));
+      }
+    }
+  }, [filteredBrands.length, searchTerm, isPostProduct, setProduct]);
+
   const handleCheckboxChange = (e) => {
     const brand = e.target.value;
     if (e.target.checked) {
@@ -50,9 +71,10 @@ export default function BrandSelect({
   return (
     <Dropdown
       className={className}
-      title="Marques"
-      isActive={activeBrands.length > 0}
+      title={title || "Marques"}
+      isActive={activeBrands.length > 0 || activeBrand !== ""}
       isBlack={isBlack}
+      onSelect={onBrandsChange}
     >
       <div className="flex flex-col pt-4">
         <div className="flex items-center border-black border-b">
@@ -81,7 +103,7 @@ export default function BrandSelect({
                   className="ml-20"
                   value={name}
                   onChange={onBrandsChange}
-                  checked={activeBrands?.includes(name)}
+                  checked={activeBrand === name}
                 />
               ) : (
                 <Checkbox

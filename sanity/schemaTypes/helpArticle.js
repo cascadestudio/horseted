@@ -15,6 +15,21 @@ export const helpArticle = {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "metaTitle",
+      title: "Méta Titre",
+      type: "string",
+      description: "Titre pour le SEO et le partage sur les réseaux sociaux.",
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "metaDescription",
+      title: "Méta Description",
+      type: "text",
+      description:
+        "Description pour le SEO et le partage sur les réseaux sociaux.",
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "slug",
       title: "URL",
       type: "slug",

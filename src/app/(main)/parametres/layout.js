@@ -3,7 +3,7 @@ import withAuth from "@/hoc/withAuth";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import SettingsProfileIcon from "@/assets/icons/SettingsProfileIcon";
-import PersonalisationIcon from "@/assets/icons/PersonalisationIcon";
+// import PersonalisationIcon from "@/assets/icons/PersonalisationIcon"; V2
 import PaymentsIcon from "@/assets/icons/PaymentsIcon";
 import CashIcon from "@/assets/icons/CashIcon";
 import AddressesIcon from "@/assets/icons/AddressesIcon";
@@ -13,12 +13,6 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 
 const pages = [
   { title: "Paramètres du profil", path: "", icon: SettingsProfileIcon },
-  // Pas pour la v1
-  // {
-  //   title: "Personnalisation",
-  //   path: "personalisation",
-  //   icon: PersonalisationIcon,
-  // },
   { title: "Paiements", path: "paiements", icon: PaymentsIcon },
   { title: "Encaissements", path: "encaissements", icon: CashIcon },
   { title: "Adresses", path: "adresses", icon: AddressesIcon },

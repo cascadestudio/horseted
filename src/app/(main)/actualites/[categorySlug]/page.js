@@ -3,11 +3,29 @@ import BlogCard from "@/components/BlogCard";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
+export async function generateMetadata({ params }) {
+  const { categorySlug } = params;
+  const { category } = await getData(categorySlug);
+
+  const { metaTitle, metaDescription } = category;
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+    },
+  };
+}
+
 async function getData(categorySlug) {
   const category = await client.fetch(
     `*[_type == "category" && slug.current == $categorySlug][0]{
       _id,
       title,
+      metaTitle,
+      metaDescription,
       "articles": *[_type == "article" && references(^._id)]{
         title,
         body,
@@ -15,7 +33,8 @@ async function getData(categorySlug) {
         slug
       }
     }`,
-    { categorySlug }
+    { categorySlug },
+    { cache: "no-store" }
   );
 
   if (!category) {

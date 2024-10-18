@@ -4,6 +4,39 @@ import PortableTextComponents from "@/components/PortableTextComponents";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import CategoryList from "../CategoryList";
 
+export async function generateMetadata({ params }) {
+  const { categorySlug, articleSlug } = params;
+
+  const article = await client.fetch(
+    `*[_type == "helpArticle" && slug.current == $articleSlug && helpCategory->slug.current == $categorySlug][0] {
+      metaTitle,
+      metaDescription,
+    }`,
+    { categorySlug, articleSlug },
+    { cache: "no-store" }
+  );
+
+  if (!article) {
+    return {
+      title: "Article non trouvé | Horseted",
+      description: "Cet article n'existe plus.",
+    };
+  }
+
+  const { metaTitle, metaDescription } = article;
+
+  return {
+    title: metaTitle || "Aide | Horseted",
+    description:
+      metaDescription || "Découvrez nos articles d'aide sur Horseted.",
+    openGraph: {
+      title: metaTitle || "Aide | Horseted",
+      description:
+        metaDescription || "Découvrez nos articles d'aide sur Horseted.",
+    },
+  };
+}
+
 export default async function HelpArticlePage({ params }) {
   const { categorySlug, articleSlug } = params;
 
@@ -15,14 +48,19 @@ export default async function HelpArticlePage({ params }) {
         title, slug
       }
     }`,
-    { categorySlug, articleSlug }
+    { categorySlug, articleSlug },
+    { cache: "no-store" }
   );
 
   const breadcrumbs = [
     { label: "Accueil", href: "/" },
     { label: "Centre d'aide", href: "/aide" },
-    { label: article.helpCategory.title, href: `/aide/${categorySlug}` },
-    { label: article.title, href: `/aide/${categorySlug}/${articleSlug}` },
+    article
+      ? { label: article.helpCategory.title, href: `/aide/${categorySlug}` }
+      : null,
+    article
+      ? { label: article.title, href: `/aide/${categorySlug}/${articleSlug}` }
+      : null,
   ];
 
   if (!article) {

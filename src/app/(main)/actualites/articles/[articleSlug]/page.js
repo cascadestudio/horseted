@@ -10,10 +10,24 @@ import ShareSection from "./ShareSection";
 export async function generateMetadata({ params }) {
   const { articleSlug } = params;
   const { article } = await getArticleData(articleSlug);
-  const { title } = article;
+  const { metaTitle, metaDescription, image } = article;
 
   return {
-    title: `${title} | Application Horseted`,
+    title: metaTitle,
+    description: metaDescription,
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      images: [
+        {
+          url: urlForImage(image),
+          type: "image/png",
+          width: 800,
+          height: 600,
+          alt: metaTitle,
+        },
+      ],
+    },
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/actualites/articles/${articleSlug}`,
   };
 }
@@ -24,9 +38,12 @@ async function getArticleData(slug) {
     title,
     body,
     image,
-    "category": category->{title, _id, slug}
+    "category": category->{title, _id, slug},
+    metaTitle,
+      metaDescription
   }`,
-    { slug }
+    { slug },
+    { cache: "no-store" }
   );
 
   const categoryArticles = await client.fetch(
@@ -37,7 +54,8 @@ async function getArticleData(slug) {
       slug,
       "category": category->{title, _id, slug}
     }`,
-    { categoryId: articles[0].category._id }
+    { categoryId: articles[0].category._id },
+    { cache: "no-store" }
   );
 
   return { article: articles[0], categoryArticles };

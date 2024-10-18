@@ -1,3 +1,4 @@
+import GoogleTagManager from "@/libs/GoogleTagManager";
 import "./styles/globals.css";
 import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
@@ -13,7 +14,7 @@ export const metadata = {
   title: baseMetadata.title,
   description: baseMetadata.description,
   icons: {
-    icon: "images/favicon.png",
+    icon: "/images/favicon.png",
   },
   openGraph: {
     title: baseMetadata.title,
@@ -46,6 +47,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${mcqueen.variable} ${raleway.variable} ${poppins.variable} font-sans`}
       >
+        <GoogleTagManager gtmId="GTM-MX76WLD9" />
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MX76WLD9"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
         {children}
       </body>
     </html>

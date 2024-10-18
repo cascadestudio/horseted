@@ -1,3 +1,7 @@
+import Image from "next/image";
+import { urlForImage } from "../../sanity/lib/image";
+import { getImageDimensions } from "@sanity/asset-utils";
+
 const PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="text-black my-4">{children}</p>,
@@ -26,6 +30,23 @@ const PortableTextComponents = {
         {children}
       </blockquote>
     ),
+  },
+  types: {
+    image: ({ value }) => {
+      const { width, height } = getImageDimensions(value);
+      return (
+        <div className="flex justify-center">
+          <Image
+            src={urlForImage(value.asset)}
+            alt={value.alt || "Image de l'article"}
+            width={width}
+            height={height}
+            className="rounded-lg"
+            loading="lazy"
+          />
+        </div>
+      );
+    },
   },
 };
 

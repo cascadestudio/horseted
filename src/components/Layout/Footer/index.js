@@ -10,6 +10,7 @@ import RightArrow from "@/assets/icons/RightArrow.js";
 import GooglePlayIcon from "@/assets/icons/GooglePlayIcon";
 import AppleIcon from "@/assets/icons/AppleIcon";
 import FooterLink from "./FooterLink";
+import Link from "next/link";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -91,10 +92,13 @@ export default function Footer() {
             <p className="uppercase font-extrabold pb-2 text-lg">Horseted</p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <li>
-                <a href="/a-propos">À propos</a>
+                <Link href="/a-propos">À propos</Link>
               </li>
               <li>
-                <a href="/aide">Aide</a>
+                <Link href="/aide">Aide</Link>
+              </li>
+              <li>
+                <Link href="/contact">Contact</Link>
               </li>
               <li>
                 <Button noStyle withAuth href="/vendre">
@@ -102,16 +106,13 @@ export default function Footer() {
                 </Button>
               </li>
               <li>
-                <a href="/articles">Acheter</a>
+                <Link href="/aide">Livraisons & retours</Link>
               </li>
               <li>
-                <a href="/aide">Livraisons & retours</a>
+                <Link href="/articles">Articles</Link>
               </li>
               <li>
-                <a href="/articles">Articles</a>
-              </li>
-              <li>
-                <a href="/mon-compte">Écurie</a>
+                <Link href="/mon-compte">Écurie</Link>
               </li>
             </ul>
           </div>
@@ -150,16 +151,18 @@ export default function Footer() {
               <p className="uppercase font-extrabold pb-2 text-lg">Légal</p>
               <ul className="pb-9 lg:pb-0 [&>li]:pb-2 [&>li]:font-semibold">
                 <li>
-                  <a href="/politique-de-confidentialite">Mentions légales</a>
+                  <Link href="/mentions-legales">Mentions légales</Link>
                 </li>
                 <li>
-                  <a href="/cgv">Conditions générales des ventes</a>
+                  <Link href="/cgv">Conditions générales des ventes</Link>
                 </li>
                 <li>
-                  <a href="/cgu">Conditions d’utilisation</a>
+                  <Link href="/cgu">Conditions d’utilisation</Link>
                 </li>
                 <li>
-                  <a href="/charte-vendeur">Charte vendeur</a>
+                  <Link href="/politique-de-confidentialite">
+                    Politique de confidentialité
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -193,7 +196,12 @@ export default function Footer() {
         </div>
         <div className="mt-10 bg-light-grey">
           <div className="text-center pt-8 pb-16 lg:container lg:flex lg:justify-between lg:mx-auto lg:px-5 lg:pb-8">
-            <p>SAS HORSETED copyright {currentYear}</p>
+            <p>
+              SAS HORSETED copyright {currentYear} -{" "}
+              <Link className="underline" href="/contact">
+                Signaler un bug
+              </Link>
+            </p>
             <p className="hidden lg:block">
               Site créé par{" "}
               <a

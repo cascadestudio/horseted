@@ -1,18 +1,21 @@
 import { redirect } from "next/navigation";
 import { client } from "../../../../sanity/lib/client";
 
-export async function generateMetadata() {
-  return {
-    title: `Aide | Application Horseted`,
-    description: `Aide | Application Horseted`,
-  };
-}
+export const metadata = {
+  title: "Aide | Horseted",
+  description: "Aide | Horseted",
+  openGraph: {
+    title: "Aide | Horseted",
+    description: "Aide | Horseted",
+  },
+};
 
 export default async function AidePage() {
   const helpCategories = await client.fetch(
     `*[_type == "helpCategory"] | order(orderRank asc) {
       slug
-    }`
+    }`,
+    { cache: "no-store" }
   );
 
   if (helpCategories.length > 0) {

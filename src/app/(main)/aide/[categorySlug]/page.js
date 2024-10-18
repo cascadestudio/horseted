@@ -3,6 +3,15 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { client } from "../../../../../sanity/lib/client";
 import ChevronRight from "@/assets/icons/ChevronRight";
 
+export const metadata = {
+  title: "Aide | Horseted",
+  description: "Aide | Horseted",
+  openGraph: {
+    title: "Aide | Horseted",
+    description: "Aide | Horseted",
+  },
+};
+
 export default async function CategoryPage({ params }) {
   const { categorySlug } = params;
 
@@ -15,7 +24,8 @@ export default async function CategoryPage({ params }) {
         slug
       }
     }`,
-    { categorySlug }
+    { categorySlug },
+    { cache: "no-store" }
   );
 
   const breadcrumbs = [

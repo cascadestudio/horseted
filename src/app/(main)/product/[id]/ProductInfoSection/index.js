@@ -109,7 +109,7 @@ export default function ProductPageClient({
   const isUserSeller = user?.id === sellerData?.id;
 
   return (
-    <section className="flex flex-col mt-5 lg:mt-0 lg:ml-16 lg:max-w-[430px]">
+    <section className="flex flex-col mt-5 w-full lg:mt-0 lg:ml-16 lg:min-w-[34%] lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
         <Link
           key={category.id}
@@ -118,7 +118,7 @@ export default function ProductPageClient({
         >
           {category.name}
         </Link>
-        <div className="flex items-center gap-5 relative">
+        <div className="flex items-center ml-5 gap-5 relative">
           <div className="flex items-center gap-1">
             <FavoriteButton favoriteCount={favoritCount} product={product} />
           </div>

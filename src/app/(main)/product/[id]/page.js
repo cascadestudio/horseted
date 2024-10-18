@@ -26,16 +26,18 @@ export async function generateMetadata({ params }) {
 
   const productImage = base64Medias?.length > 0 ? base64Medias[0] : null;
 
+  const productImageUrl = productImage?.base64
+    ? `data:image/png;base64,${productImage.base64}`
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`;
+
   return {
-    title: `${product.title} | Application Horseted`,
+    title: `${product.title} | Horseted`,
     description: `${product.title} – article d’équitation de seconde main sur Horseted`,
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
     openGraph: {
       images: [
         {
-          url:
-            `data:image/png;base64,${productImage.base64}` ||
-            `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,
+          url: productImageUrl,
           type: "image/png",
           width: 800,
           height: 600,

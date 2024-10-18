@@ -44,7 +44,9 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/mon-compte"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
-                onClick={handleClick}
+                onClick={() => {
+                  handleClick();
+                }}
               >
                 <div className="flex items-center gap-4">
                   <MyAccountIcon className="w-[18px] h-[18px]" />
@@ -57,7 +59,9 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/commandes/achats"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
-                onClick={handleClick}
+                onClick={() => {
+                  handleClick();
+                }}
               >
                 <div className="flex items-center justify-center gap-[18px]">
                   <OrdersIcon className="w-3 h-5 ml-[3px]" />
@@ -70,7 +74,9 @@ export default function MyAccountDropDown({ className }) {
               <Link
                 href="/parametres"
                 className="flex items-center justify-between p-5 border-b border-light-grey"
-                onClick={handleClick}
+                onClick={() => {
+                  handleClick();
+                }}
               >
                 <div className="flex items-center gap-4">
                   <SettingsIcon className="w-[18px] h-[18px]" />
@@ -80,7 +86,9 @@ export default function MyAccountDropDown({ className }) {
               </Link>
             </li>
             <button
-              onClick={handleSignout}
+              onClick={() => {
+                handleSignout();
+              }}
               className="p-5 text-center font-semibold text-red w-full"
             >
               Se déconnecter

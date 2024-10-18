@@ -24,6 +24,20 @@ export const category = {
       },
       validation: (Rule) => Rule.required(),
     },
+    {
+      name: "metaTitle",
+      title: "Méta Titre",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "metaDescription",
+      title: "Méta Description",
+      type: "text",
+      description:
+        "Description pour le SEO et le partage sur les réseaux sociaux. Doit avoir 155 caractères maximum.",
+      validation: (Rule) => Rule.required(),
+    },
     orderRankField({ type: "category", newItemPosition: "after" }),
   ],
   orderings: [orderRankOrdering],

@@ -35,7 +35,7 @@ export default function OfferResponseButtons({ offerId, totalPrice }) {
           Accepter l'offre
         </Button>
         <button
-          className="font-mcqueen font-semibold text-dark-green ml-6"
+          className="font-mcqueen font-semibold text-dark-green lg:ml-6"
           onClick={() => setIsOfferModalOpen(true)}
         >
           Contre offre

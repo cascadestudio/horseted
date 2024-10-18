@@ -62,8 +62,6 @@ export default function PostProductForm({
       formErrors.state = "Veuillez indiquer l'état du produit.";
     if (!product.shipping)
       formErrors.shipping = "Veuillez choisir un mode d'expédition.";
-    if (!product.materials || product.materials.length === 0)
-      formErrors.materials = "Veuillez ajouter au moins un matériau.";
     if (!product.colors || product.colors.length === 0)
       formErrors.colors = "Veuillez ajouter au moins une couleur.";
     if (imgfiles.length === 0)
@@ -124,6 +122,7 @@ export default function PostProductForm({
       >
         <div className="relative">
           <ProductMedia
+            imgFiles={imgfiles}
             setImgFiles={setImgFiles}
             handleFormChange={handleFormChange}
           />

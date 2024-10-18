@@ -10,15 +10,17 @@ export default function Brand({ product, setProduct }) {
   return (
     <div className="w-full flex flex-col lg:flex-row lg:justify-center">
       <h3 className="font-mcqueen font-semibold w-[200px] my-auto mb-3 lg:mb-0">
-        Marque :
+        Marque* :
       </h3>
       <BrandSelect
-        activeBrands={product.brand}
+        activeBrand={product.brand}
         onBrandsChange={onBrandsChange}
-        title="Sélectionner une marque"
+        title={product.brand || "Sélectionner une marque"}
         className="w-full max-w-[700px]"
         isBlack
         isRadio
+        isPostProduct
+        setProduct={setProduct}
       />
     </div>
   );
