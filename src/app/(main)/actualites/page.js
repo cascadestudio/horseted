@@ -5,16 +5,17 @@ import Link from "next/link";
 
 export default async function BlogPage() {
   const articles = await client.fetch(
-    `*[_type == "article"] | order(_createdAt desc) { 
+    `*[_type == "article"] | order(orderRank asc) { 
       ..., 
       category->{_id, title, slug},
       _createdAt
     }`,
     { cache: "no-store" }
   );
-  const categories = await client.fetch(`*[_type == "category"]`, {
-    cache: "no-store",
-  });
+  const categories = await client.fetch(
+    `*[_type == "category"] | order(orderRank asc)`,
+    { cache: "no-store" }
+  );
 
   return (
     <div className="bg-light-grey">
