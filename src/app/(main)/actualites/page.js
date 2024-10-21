@@ -21,19 +21,33 @@ export default async function BlogPage() {
     <div className="bg-light-grey">
       <div className="container mx-auto px-5 py-12">
         <h2 className="font-mcqueen font-bold text-2xl mb-5 lg:text-4xl">
-          L'équitation, notre passion : tous les articles
+          Tout ce qu’il faut savoir sur le matériel d’équitation de seconde main
         </h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Sodales ut
-          eu sem integer vitae justo eget. Nibh mauris cursus mattis molestie a.
-          Tristique nulla aliquet enim tortor at auctor urna nunc. Id diam
-          maecenas ultricies mi. Risus viverra adipiscing at in tellus integer
-          feugiat. Ut consequat semper viverra nam libero. In cursus turpis
-          massa tincidunt dui ut ornare lectus. Elit pellentesque habitant morbi
-          tristique senectus et netus et. Purus faucibus ornare suspendisse sed
-          nisi. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu.
-          Mauris rhoncus aenean vel elit. Non consectetur a erat nam at lectus.
+          L’achat de matériel d’équitation de seconde main est un excellent
+          moyen de faire des économies tout en contribuant à une démarche plus
+          durable et respectueuse de l’environnement. Que vous soyez cavalier
+          débutant ou confirmé, trouver des équipements de qualité à un prix
+          réduit est essentiel pour pratiquer l’équitation dans de bonnes
+          conditions. Sur cette page, nous allons vous guider à travers toutes
+          les étapes nécessaires pour réussir vos achats.
+        </p>
+        <p>
+          Selles, filets, bottes, gilets de protection, mors… Chaque article a
+          ses spécificités, et bien comprendre les critères de choix peut faire
+          la différence entre un achat durable et un équipement inadapté.
+        </p>
+        <p>
+          Enfin, acheter d’occasion avec{" "}
+          <Link title="Horseted" href="/a-propos">
+            Horseted
+          </Link>{" "}
+          ne signifie pas sacrifier la qualité. Avec les bons conseils, vous
+          apprendrez à identifier les opportunités, à vérifier la provenance des
+          articles, et à faire des affaires tout en restant confiant dans la
+          fiabilité des équipements. Nous aborderons également des astuces pour
+          bien entretenir votre matériel, afin de prolonger sa durée de vie et
+          d’autres sujets sur <strong>l’équitation, notre passion !</strong>
         </p>
         <span className="font-semibold text-sm leading-[48px] uppercase tracking-[0.2em]">
           Sujets :
