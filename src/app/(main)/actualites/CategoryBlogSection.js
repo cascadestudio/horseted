@@ -7,11 +7,19 @@ export default async function CategoryBlogSection({
   category,
   articles,
   customTitle,
+  currentArticleSlug,
 }) {
   const categoryArticles = articles.filter(
-    (article) => article.category && article.category._id === category._id
+    (article) =>
+      article.category &&
+      article.category._id === category._id &&
+      article.slug.current !== currentArticleSlug
   );
   const title = customTitle || category.title;
+
+  if (categoryArticles.length === 0) {
+    return null;
+  }
 
   return (
     <section className="pb-8 bg-light-grey">

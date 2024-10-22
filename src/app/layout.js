@@ -39,12 +39,6 @@ export const metadata = {
     description: baseMetadata.description,
     images: [baseMetadata.imageUrl],
   },
-
-  // Remove in production
-  robots: {
-    index: false,
-    follow: false,
-  },
 };
 
 export default function RootLayout({ children }) {
