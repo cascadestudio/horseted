@@ -9,7 +9,7 @@ import ShareSection from "./ShareSection";
 
 export async function generateMetadata({ params }) {
   const { articleSlug } = params;
-  const { article } = await getArticleData(articleSlug);
+  const { article, categoryArticles } = await getArticleData(articleSlug);
   const { metaTitle, metaDescription, image } = article;
 
   return {
@@ -101,11 +101,12 @@ export default async function ArticlePage({ params }) {
         </div>
       </div>
       <div className="container mx-auto px-5">
-        <div className="prose max-w-none mb-10 text-black">
+        <div className="prose max-w-none pb-10 text-black">
           <PortableText value={body} components={PortableTextComponents} />
         </div>
         <CategoryBlogSection
           category={category}
+          currentArticleSlug={articleSlug}
           articles={categoryArticles}
           customTitle="Sur le même sujet"
         />
