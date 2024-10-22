@@ -2,14 +2,14 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { structureTool } from "sanity/structure";
 import { frFRLocale } from "@sanity/locale-fr-fr";
-import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list"; // Correct import
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schema } from "./sanity/schema";
 
 const deskStructure = (S, context) =>
   S.list()
-    .title("Content")
+    .title("Gestion du blog et du centre d'aide")
     .items([
       orderableDocumentListDeskItem({
         type: "article",
