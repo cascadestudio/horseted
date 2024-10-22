@@ -5,6 +5,7 @@ import { urlForImage } from "../../../sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
+import PortableTextComponents from "@/components/PortableTextComponents";
 
 export default function BlogCard({ title, image, body, link, className }) {
   const fullConfig = resolveConfig(tailwindConfig);
@@ -31,7 +32,10 @@ export default function BlogCard({ title, image, body, link, className }) {
           {title}
         </p>
         <div className="prose line-clamp-3 lg:prose-lg">
-          <PortableText value={body} />
+          <PortableText
+            components={PortableTextComponents(true)}
+            value={body}
+          />
         </div>
         <p className="flex items-center text-light-green justify-self-end">
           Lire l'article
