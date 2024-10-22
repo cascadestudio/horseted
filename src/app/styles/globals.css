@@ -44,7 +44,7 @@
 
   @screen xl {
     :root {
-      --header-height: 130px;
+      --header-height: 135px;
     }
   }
 
