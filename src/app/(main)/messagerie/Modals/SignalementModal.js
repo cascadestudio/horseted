@@ -18,15 +18,15 @@ export default function SignalementModal({
       label: "Spam",
     },
     {
-      value: "Arnaque",
+      value: "scam",
       label: "Arnaque",
     },
     {
-      value: "Message insultant",
+      value: "insulting_message",
       label: "Message insultant",
     },
     {
-      value: "Note innapropriée",
+      value: "inappropriate_note",
       label: "Note innapropriée",
     },
     {
