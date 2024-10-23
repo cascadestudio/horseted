@@ -2,12 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import RightArrow from "@/assets/icons/RightArrow.js";
 import { urlForImage } from "../../../sanity/lib/image";
-import { PortableText } from "@portabletext/react";
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../../tailwind.config.js";
-import PortableTextComponents from "@/components/PortableTextComponents";
 
-export default function BlogCard({ title, image, body, link, className }) {
+export default function BlogCard({
+  title,
+  image,
+  description,
+  link,
+  className,
+}) {
   const fullConfig = resolveConfig(tailwindConfig);
   return (
     <div
@@ -31,12 +35,7 @@ export default function BlogCard({ title, image, body, link, className }) {
         <p className="font-mcqueen font-semibold text-xl line-clamp-2 overflow-hidden text-ellipsis">
           {title}
         </p>
-        <div className="prose line-clamp-3 lg:prose-lg">
-          <PortableText
-            components={PortableTextComponents(true)}
-            value={body}
-          />
-        </div>
+        <div className="prose line-clamp-3 lg:prose-lg">{description}</div>
         <p className="flex items-center text-light-green justify-self-end">
           Lire l'article
           <RightArrow
