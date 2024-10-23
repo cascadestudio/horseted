@@ -40,7 +40,7 @@ async function getArticleData(slug) {
     image,
     "category": category->{title, _id, slug},
     metaTitle,
-      metaDescription
+    metaDescription
   }`,
     { slug },
     { cache: "no-store" }
