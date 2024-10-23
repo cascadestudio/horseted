@@ -101,7 +101,7 @@ export default async function ArticlePage({ params }) {
         </div>
       </div>
       <div className="container mx-auto px-5">
-        <div className="prose max-w-none pb-10 text-black">
+        <div className="prose max-w-[1024px] mx-auto pb-10 text-black">
           <PortableText value={body} components={PortableTextComponents} />
         </div>
         <CategoryBlogSection
