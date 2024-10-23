@@ -23,8 +23,12 @@ const SellPage = () => {
   const getSellerData = async () => {
     try {
       setIsLoading(true);
-      await getSeller(accessToken);
-      setUserIsSeller(true);
+      const seller = await getSeller(accessToken);
+      if (seller) {
+        setUserIsSeller(true);
+      } else {
+        setUserIsSeller(false);
+      }
     } catch (error) {
       setUserIsSeller(false);
     } finally {
