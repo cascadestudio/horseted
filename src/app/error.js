@@ -11,10 +11,9 @@ export default function NotFound() {
             Erreur
           </h1>
           <p className="text-center lg:text-lg mb-8">
-            Désolé, mais on dirait qu'une erreur est survenue. Revenir à la page
-            d’accueil.
+            Désolé, mais on dirait qu'une erreur est survenue.
           </p>
-          <Button href="/">Retour accueil</Button>
+          <Button href="/">Retourner à la page d'accueil</Button>
         </div>
       </div>
     </>

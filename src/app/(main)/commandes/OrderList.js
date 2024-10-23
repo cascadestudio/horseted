@@ -27,6 +27,8 @@ export default function OrderList({ orderType }) {
 
     let orders = [];
 
+    console.log("ordersData =>", ordersData);
+
     if (orderType === "sale") {
       orders = ordersData.filter((order) => order.userId !== user.id);
     }

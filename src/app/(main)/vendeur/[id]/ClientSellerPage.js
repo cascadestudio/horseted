@@ -30,6 +30,7 @@ function SellerPage({ params }) {
 
   const getSeller = async () => {
     const seller = await fetchHorseted(`/users/${params.id}`, accessToken);
+    console.log("seller =>", seller);
     setSeller(seller);
   };
 
