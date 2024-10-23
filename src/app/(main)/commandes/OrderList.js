@@ -7,6 +7,7 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { getOrderDocuments } from "@/fetch/orders";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
@@ -60,15 +61,9 @@ export default function OrderList({ orderType }) {
     {
       /*  GET /orders/:id/documents/:document_type où document_type = receipt | fees_invoice */
     }
-    const document = await fetchHorseted(
-      `/orders/${orderId}/documents/fees_invoice`,
-      accessToken,
-      "GET",
-      null,
-      false,
-      true
-    );
-    console.log("document =>", document);
+    const documentType = "receipt";
+    const documentName = `order_${orderId}_${documentType}.pdf`;
+    await getOrderDocuments(orderId, documentType, accessToken, documentName);
   };
 
   if (isLoading) {

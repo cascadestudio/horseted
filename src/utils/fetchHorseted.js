@@ -40,8 +40,7 @@ export default async function fetchHorseted(
   if (response.ok && contentType && contentType.includes("application/json")) {
     return await response.json();
   } else if (response.ok) {
-    // If the response is okay but doesn't contain JSON, return null or an empty object
-    return null;
+    return await response.blob();
   } else {
     // Handle non-OK responses
     const errorResponse =

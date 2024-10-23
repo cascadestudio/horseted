@@ -18,7 +18,7 @@ export default function AddressModal({
     postalCode: "",
     city: "",
     country: "FR",
-    additionalInfos: "1er étage",
+    additionalInfos: "", //body not valid if empty
     type: "delivery",
     isDefault: false,
   });
@@ -56,6 +56,7 @@ export default function AddressModal({
       accessToken,
       "POST",
       formData,
+      true,
       true
     );
     setActiveAddress(address);
