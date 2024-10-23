@@ -15,7 +15,6 @@ export default function BlogSection({ articles }) {
           {articles?.length > 0 ? (
             articles.slice(0, 3).map((article) => {
               const { title, image, metaDescription, slug } = article;
-              console.log(metaDescription);
               return (
                 <BlogCard
                   title={title}

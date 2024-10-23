@@ -29,6 +29,7 @@ async function getData(categorySlug) {
       "articles": *[_type == "article" && references(^._id)] | order(orderRank asc) {
         title,
         body,
+        metaDescription,
         image,
         slug
       }

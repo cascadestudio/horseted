@@ -20,6 +20,7 @@ export default function BlogCard({
       <Link
         href={`/actualites/articles/${link}`}
         className="absolute inset-0 z-10"
+        title={title}
       />
 
       <div className="flex items-center justify-center w-full p-1 z-0">

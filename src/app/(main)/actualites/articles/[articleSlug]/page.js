@@ -50,6 +50,7 @@ async function getArticleData(slug) {
     `*[_type == "article" && references($categoryId)]{
       title,
       body,
+      metaDescription,
       image,
       slug,
       "category": category->{title, _id, slug}
