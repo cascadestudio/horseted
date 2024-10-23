@@ -29,6 +29,7 @@ async function getData(categorySlug) {
       "articles": *[_type == "article" && references(^._id)] | order(orderRank asc) {
         title,
         body,
+        metaDescription,
         image,
         slug
       }
@@ -73,12 +74,12 @@ export default async function CategoryPage({ params }) {
         <div className="grid grid-cols-1 gap-6 justify-items-center md:justify-between mb-8 md:grid-cols-[350px_350px] md:gap-8 lg:gap-[30px] xl:grid-cols-[350px_350px_350px] 2xl:grid-cols-4 xl:gap-[38px] 2xl:gap-[66px]">
           {articles.length > 0 ? (
             articles.map((article) => {
-              const { title, image, body, slug } = article;
+              const { title, image, metaDescription, slug } = article;
               return (
                 <BlogCard
                   key={title}
                   title={title}
-                  body={body}
+                  description={metaDescription}
                   image={image}
                   link={slug.current}
                 />

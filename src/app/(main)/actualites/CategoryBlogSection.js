@@ -40,11 +40,11 @@ export default async function CategoryBlogSection({
         {categoryArticles.length < 4 ? (
           <div className="grid grid-cols-1 gap-6 justify-items-center sm:justify-items-start mb-8 md:grid-cols-[350px_350px] md:gap-8 lg:gap-[30px] xl:grid-cols-[350px_350px_350px] xl:gap-[38px] 2xl:gap-[66px]">
             {categoryArticles.map((article) => {
-              const { title, image, body, slug } = article;
+              const { title, image, metaDescription, slug } = article;
               return (
                 <BlogCard
                   title={title}
-                  body={body}
+                  description={metaDescription}
                   image={image}
                   link={slug.current}
                   key={title}
@@ -55,11 +55,11 @@ export default async function CategoryBlogSection({
         ) : (
           <CardCarousel cardType="article">
             {categoryArticles.map((article) => {
-              const { title, image, body, slug } = article;
+              const { title, image, metaDescription, slug } = article;
               return (
                 <BlogCard
                   title={title}
-                  body={body}
+                  description={metaDescription}
                   image={image}
                   link={slug.current}
                   key={title}
@@ -73,11 +73,11 @@ export default async function CategoryBlogSection({
       <div className="block lg:hidden">
         <CardCarousel className="blog-carousel" cardType="article">
           {categoryArticles.map((article) => {
-            const { title, image, body, slug } = article;
+            const { title, image, metaDescription, slug } = article;
             return (
               <BlogCard
                 title={title}
-                body={body}
+                description={metaDescription}
                 image={image}
                 link={slug.current}
                 key={title}
