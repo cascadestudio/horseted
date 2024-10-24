@@ -12,7 +12,7 @@ export const TextInput = ({
   hideLabel = false,
   minLength,
 }) => (
-  <label htmlFor={name} className={`w-full mx-2 ${className}`}>
+  <label htmlFor={name} className={`w-full ${className}`}>
     {!hideLabel && (
       <p className="label font-mcqueen font-semibold">{label} :</p>
     )}
