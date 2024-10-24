@@ -72,7 +72,7 @@ export default function BrandSelect({
     <Dropdown
       className={className}
       title={title || "Marques"}
-      isActive={activeBrands.length > 0 || activeBrand !== ""}
+      isActive={activeBrands.length > 0 || (activeBrand && activeBrand !== "")}
       isBlack={isBlack}
       onSelect={onBrandsChange}
     >

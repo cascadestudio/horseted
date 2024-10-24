@@ -31,3 +31,23 @@ export const postOrderPayment = async (accessToken, orderId, body) => {
   );
   return paymentResponse;
 };
+
+export const getOrderDocuments = async (
+  orderId,
+  documentType,
+  accessToken,
+  documentName
+) => {
+  const blob = await fetchHorseted(
+    `/orders/${orderId}/documents/${documentType}`,
+    accessToken
+  );
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = documentName;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
+  document.body.removeChild(a);
+};

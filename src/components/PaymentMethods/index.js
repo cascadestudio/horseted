@@ -6,7 +6,6 @@
 import { useEffect, useState } from "react";
 import AddPaymentCardModal from "./AddPaymentCardModal";
 import { useAuthContext } from "@/context/AuthContext";
-import fetchHorseted from "@/utils/fetchHorseted";
 import OptionBlock from "../input/OptionBlock";
 import { deletePaymentMethods, getPaymentMethods } from "@/fetch/users";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
@@ -57,7 +56,10 @@ export default function PaymentMethods({
 
   const handleDeletePaymentMethods = async (paymentMethodId) => {
     await deletePaymentMethods(accessToken, paymentMethodId);
-    fetchPaymentMethods();
+    if (setActivePaymentMethodId) {
+      setActivePaymentMethodId(null);
+    }
+    await fetchPaymentMethods();
   };
 
   return (

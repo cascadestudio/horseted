@@ -14,8 +14,9 @@ export default function Button({
   onClick,
   withAuth,
   noStyle,
+  disabled = false,
 }) {
-  const baseStyles = `${className} flex justify-center items-center text-center whitespace-nowrap font-mcqueen font-semibold rounded-xl h-11 px-7`;
+  const baseStyles = `${className} flex justify-center items-center text-center whitespace-nowrap font-mcqueen font-semibold rounded-xl h-11 px-7 ${disabled ? "opacity-80 cursor-not-allowed" : "cursor-pointer"}`;
 
   const variantStyles = {
     red: "bg-red text-white",
@@ -55,6 +56,7 @@ export default function Button({
         </Link>
       ) : (
         <button
+          disabled={disabled}
           onClick={handleClick}
           type={type}
           className={!noStyle ? style : ""}

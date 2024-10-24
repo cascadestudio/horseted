@@ -7,11 +7,14 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { getOrderDocuments } from "@/fetch/orders";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
-  const [orders, setOrders] = useState([]);
+  const [purchasesOrSales, setPurchasesOrSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log("purchasesOrSales =>", purchasesOrSales);
 
   useEffect(() => {
     getOrders();
@@ -44,15 +47,24 @@ export default function OrderList({ orderType }) {
               `/products/${item.productId}`,
               accessToken
             );
-            return { ...product, cavalier };
+            return { product, cavalier, order };
           })
         );
       })
     );
 
-    setOrders(purchasesOrSales.flat());
+    setPurchasesOrSales(purchasesOrSales.flat());
     setIsLoading(false);
   }
+
+  const handleDocumentDownload = async (orderId) => {
+    {
+      /*  GET /orders/:id/documents/:document_type où document_type = receipt | fees_invoice */
+    }
+    const documentType = "receipt";
+    const documentName = `order_${orderId}_${documentType}.pdf`;
+    await getOrderDocuments(orderId, documentType, accessToken, documentName);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -83,7 +95,7 @@ export default function OrderList({ orderType }) {
           </tr>
         </thead>
         <tbody>
-          {orders.length === 0 ? (
+          {purchasesOrSales.length === 0 ? (
             <tr>
               <td
                 colSpan="4"
@@ -95,12 +107,12 @@ export default function OrderList({ orderType }) {
               </td>
             </tr>
           ) : (
-            orders.map((order) => {
-              const { id, title, price, cavalier } = order;
+            purchasesOrSales.map((purchaseOrSale) => {
+              const { product, cavalier, order } = purchaseOrSale;
               return (
-                <tr key={id} className="border-b border-lighter-grey">
+                <tr key={order.id} className="border-b border-lighter-grey">
                   <td className="py-4 pr-2 text-sm lg:text-base font-semibold">
-                    {title}
+                    {product.title}
                   </td>
                   <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate">
                     <Link href={`/vendeur/${cavalier.id}`}>
@@ -108,12 +120,15 @@ export default function OrderList({ orderType }) {
                     </Link>
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base font-poppins font-semibold text-center">
-                    {centsToEuros(price)}€
+                    {centsToEuros(order.transferAmount)}€
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base text-center">
-                    <a href="#" className="font-semibold text-light-green">
+                    <button
+                      onClick={() => handleDocumentDownload(order.id)}
+                      className="font-semibold text-light-green"
+                    >
                       Voir
-                    </a>
+                    </button>
                   </td>
                 </tr>
               );

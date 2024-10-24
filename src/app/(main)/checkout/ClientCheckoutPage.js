@@ -290,19 +290,18 @@ const CheckOutPage = () => {
                   </>
                 )}
               </div>
-              {activePaymentMethodId ? (
-                <>
-                  <Button
-                    className="mt-12 w-full"
-                    onClick={() => handlePayment()}
-                  >
-                    Payer
-                  </Button>
-                  <p className="mt-3 font-semibold text-center">
-                    Paiement sécurisé
-                  </p>
-                </>
-              ) : null}
+              <>
+                <Button
+                  className="mt-12 w-full"
+                  onClick={() => handlePayment()}
+                  disabled={!activePaymentMethodId || !activeAddress}
+                >
+                  Payer
+                </Button>
+                <p className="mt-3 font-semibold text-center">
+                  Paiement sécurisé
+                </p>
+              </>
             </div>
           </div>
         </div>

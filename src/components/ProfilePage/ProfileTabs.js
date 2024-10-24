@@ -5,9 +5,11 @@ import ReviewCard from "@/components/ReviewCard";
 import fetchHorseted from "@/utils/fetchHorseted";
 import StarRating from "@/components/StarRating";
 import { usePathname } from "next/navigation";
+import Spinner from "@/components/Spinner";
 
 export default function ProfileTabs({ profile }) {
   const { accessToken } = useAuthContext();
+  const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("products");
   const [products, setProducts] = useState([]);
   const [reviews, setReviews] = useState({});
@@ -21,23 +23,30 @@ export default function ProfileTabs({ profile }) {
   }, [profile]);
 
   const getProducts = async () => {
+    setIsLoading(true);
     const query = `/products?userId=${profile.id}`;
     const products = await fetchHorseted(query, accessToken);
+    console.log("products =>", products);
     setProducts(products.items);
+    setIsLoading(false);
   };
 
   const getReviews = async () => {
+    setIsLoading(true);
     const response = await fetchHorseted(
       `/users/${profile.id}/reviews`,
       accessToken
     );
     setReviews(response);
+    setIsLoading(false);
   };
 
   const globalReview = {
     count: reviews?.reviews?.length,
     rating: reviews?.rating,
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="mt-8">
