@@ -8,13 +8,13 @@ import { centsToEuros } from "@/utils/centsToEuros";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { getOrderDocuments } from "@/fetch/orders";
+import OrderDetails from "./OrderDetails";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
   const [purchasesOrSales, setPurchasesOrSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("purchasesOrSales =>", purchasesOrSales);
+  const [purchaseOrSale, setPurchaseOrSale] = useState(null);
 
   useEffect(() => {
     getOrders();
@@ -66,8 +66,18 @@ export default function OrderList({ orderType }) {
     await getOrderDocuments(orderId, documentType, accessToken, documentName);
   };
 
+  const onShowOrderDetails = (purchaseOrSale) => {
+    console.log("Selected purchaseOrSale: ", purchaseOrSale); // Add this line
+
+    setPurchaseOrSale(purchaseOrSale);
+  };
+
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (purchaseOrSale) {
+    return <OrderDetails purchaseOrSale={purchaseOrSale} />;
   }
 
   return (
@@ -124,7 +134,7 @@ export default function OrderList({ orderType }) {
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base text-center">
                     <button
-                      onClick={() => handleDocumentDownload(order.id)}
+                      onClick={() => onShowOrderDetails(purchaseOrSale)}
                       className="font-semibold text-light-green"
                     >
                       Voir
