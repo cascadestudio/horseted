@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <>
       <div className="border-b border-light-green bg-light-green bg-opacity-10">
-        <div className="container mx-auto px-4 pb-8 lg:py-20 flex flex-col items-center">
+        <div className="container mx-auto px-5 pb-8 lg:py-20 flex flex-col items-center">
           <Breadcrumbs breadcrumbs={breadcrumbs} centered />
           <p className="font-medium text-sm uppercase tracking-[0.7em] text-center mt-1 mb-4">
             Notre mission
@@ -93,7 +93,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto px-4 py-8 lg:py-20">
+      <div className="container mx-auto px-5 py-8 lg:py-20">
         <div className="flex flex-col-reverse lg:flex-row lg:justify-between lg:items-center mb-8 lg:mb-24">
           <div className="max-w-[580px]">
             <h2 className="font-mcqueen font-bold text-[28px] leading-9 mb-5">

@@ -37,7 +37,7 @@ function SellerPage({ params }) {
   if (!seller) return <Spinner isFullScreen />;
 
   return (
-    <div className="container mx-auto pt-7 pb-12 px-5 lg:px-0">
+    <div className="container mx-auto pt-7 pb-12 px-5">
       <div className="flex flex-col lg:flex-row gap-4 items-center">
         <ProfileInfo profile={seller} accessToken={accessToken} />
         <div className="flex gap-3 lg:ml-8">

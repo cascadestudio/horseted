@@ -38,7 +38,7 @@ export default async function Header() {
 
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
-      <div className="container mx-auto">
+      <div className="container mx-auto lg:px-5">
         <div className="flex justify-between items-center xl:gap-x-[0.6rem] py-5">
           <MobileMenu categories={categories} />
           <Link href="/">
