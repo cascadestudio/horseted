@@ -45,7 +45,9 @@ export default function SizesSelect({
     <Dropdown
       className={className}
       title={title}
-      isActive={activeSizes?.length > 0 || activeSizeId !== ""}
+      isActive={
+        activeSizes?.length > 0 || (activeSizeId && activeSizeId !== "")
+      }
       isBlack={isBlack}
       onSelect={onSizeChange}
     >
