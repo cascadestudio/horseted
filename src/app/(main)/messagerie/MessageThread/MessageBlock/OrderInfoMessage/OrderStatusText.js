@@ -1,6 +1,11 @@
 import { centsToEuros } from "@/utils/centsToEuros";
 
-export default function OrderStatusText({ type, totalPrice, offerPrice }) {
+export default function OrderStatusText({
+  type,
+  totalPrice,
+  offerPrice,
+  isSeller,
+}) {
   const orderMessageText = {
     newOrder: "Nouvelle commande",
     orderSent: "Colis envoyé !",
@@ -8,6 +13,8 @@ export default function OrderStatusText({ type, totalPrice, offerPrice }) {
     orderDeliveredConfirmationRequired: "Confirmation de livraison requise !",
     offerAccepted: "Offre acceptée !",
     offerRejected: "Offre déclinée",
+    addReview: "Ajouter une évaluation",
+    newBuyerReview: "Ajouter une évaluation",
   };
 
   return (

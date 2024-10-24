@@ -2,18 +2,17 @@ import Modal from "@/components/Modal";
 import { TextInput } from "@/components/input";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useState } from "react";
-import { useAuthContext } from "@/context/AuthContext";
 import AddReviewStarIcon from "@/assets/icons/AddReviewStarIcon";
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
 export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
-  const { accessToken } = useAuthContext();
+  const { accessToken, updateMessages } = useThreadsContext();
+
   const [review, setReview] = useState({
     comment: "",
     rating: 0,
     orderId: orderId,
   });
-
-  //   console.log("review =>", review);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,6 +29,7 @@ export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
       true
     );
     console.log("response =>", response);
+    updateMessages();
     setIsReviewModal(false);
   }
 

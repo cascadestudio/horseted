@@ -9,7 +9,6 @@ import { useThreadsContext } from "../context/ThreadsContext";
 export default function OrderInfo() {
   const { accessToken, setOrder, orderTracking, recipient, user, order } =
     useThreadsContext();
-  console.log(order);
   const [isReviewModal, setIsReviewModal] = useState(false);
 
   const handleIsOrderReceived = async () => {
@@ -56,7 +55,7 @@ export default function OrderInfo() {
                     Confirmation de livraison requise par l'acheteur !
                   </p>
                 ))}
-              {userType === "buyer" &&
+              {/* {userType === "buyer" &&
                 (order.received ? (
                   <p className="font-mcqueen text-lg font-bold text-light-green">
                     Évaluation ajoutée
@@ -78,7 +77,7 @@ export default function OrderInfo() {
                       </Link>
                     </div>
                   </>
-                ))}
+                ))} */}
             </div>
           );
         }

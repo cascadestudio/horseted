@@ -7,13 +7,15 @@ import { useEffect, useState } from "react";
 import OrderStatusText from "./OrderStatusText";
 import OfferResponseButtons from "./OfferResponseButtons";
 import { patchOrderIsReceived } from "@/fetch/orders";
+import ReviewModal from "../../../ThreadInfo/ReviewModal";
 
 export default function OrderInfoMessage({ type, offerId }) {
   console.log("type =>", type);
-  const { order, user, accessToken, products, updateMessages } =
+  const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
 
   const [offer, setOffer] = useState(null);
+  const [isReviewModal, setIsReviewModal] = useState(false);
 
   useEffect(() => {
     if (!offerId) return;
@@ -68,6 +70,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           type={type}
           totalPrice={totalPrice}
           offerPrice={offer?.price}
+          isSeller={user?.id === offer?.userId}
         />
       </li>
       {type === "newOffer" && // is a new offer and
@@ -77,10 +80,18 @@ export default function OrderInfoMessage({ type, offerId }) {
       {type === "orderDeliveredConfirmationRequired" && (
         <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
           Confirmer la réception
+          <Link className="text-dark-green text-xs underline" href="/contact">
+            Ouvrir un litige
+          </Link>
         </Button>
       )}
-      {type === "addReview" && (
-        <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
+      {type === "addReview" && user?.id !== offer?.userId && (
+        <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
+          Ajouter une évaluation
+        </Button>
+      )}
+      {type === "newBuyerReview" && user?.id === offer?.userId && (
+        <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
           Ajouter une évaluation
         </Button>
       )}
@@ -95,6 +106,13 @@ export default function OrderInfoMessage({ type, offerId }) {
             Acheter
           </Button>
         </div>
+      )}
+      {isReviewModal && (
+        <ReviewModal
+          setIsReviewModal={setIsReviewModal}
+          orderId={order.id}
+          recipient={recipient}
+        />
       )}
     </>
   );
