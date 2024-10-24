@@ -51,3 +51,11 @@ export const getOrderDocuments = async (
   window.URL.revokeObjectURL(url);
   document.body.removeChild(a);
 };
+
+export const patchOrderIsReceived = async (orderId, accessToken) => {
+  const query = `/orders/${orderId}`;
+  const body = {
+    received: true,
+  };
+  await fetchHorseted(query, accessToken, "PATCH", body, true);
+};

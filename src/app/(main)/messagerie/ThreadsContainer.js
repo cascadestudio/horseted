@@ -1,5 +1,4 @@
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
-import Spinner from "@/components/Spinner";
 
 // Local Components
 import MessageThread from "./MessageThread";

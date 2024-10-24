@@ -6,9 +6,12 @@ import { getOffer } from "@/fetch/offers";
 import { useEffect, useState } from "react";
 import OrderStatusText from "./OrderStatusText";
 import OfferResponseButtons from "./OfferResponseButtons";
+import { patchOrderIsReceived } from "@/fetch/orders";
 
 export default function OrderInfoMessage({ type, offerId }) {
-  const { order, user, accessToken, products } = useThreadsContext();
+  console.log("type =>", type);
+  const { order, user, accessToken, products, updateMessages } =
+    useThreadsContext();
 
   const [offer, setOffer] = useState(null);
 
@@ -28,6 +31,11 @@ export default function OrderInfoMessage({ type, offerId }) {
     offer?.status === "approved" &&
     user?.id === offer?.userId &&
     order?.status !== "paid";
+
+  const handleConfirmOrderDelivered = async () => {
+    await patchOrderIsReceived(order.id, accessToken);
+    updateMessages();
+  };
 
   return (
     <>
@@ -66,6 +74,16 @@ export default function OrderInfoMessage({ type, offerId }) {
         user?.id !== offer?.userId && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
         )}
+      {type === "orderDeliveredConfirmationRequired" && (
+        <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
+          Confirmer la réception
+        </Button>
+      )}
+      {type === "addReview" && (
+        <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
+          Ajouter une évaluation
+        </Button>
+      )}
       {isBuyButton && (
         <div className="flex">
           <Button
