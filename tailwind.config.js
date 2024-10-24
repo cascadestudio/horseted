@@ -27,9 +27,9 @@ module.exports = {
         "pale-grey": "#E7E5DC",
       },
       fontFamily: {
-        sans: ["var(--font-raleway)"],
-        mcqueen: ["var(--font-mcqueen)"],
-        poppins: ["var(--font-poppins)"],
+        sans: ["var(--font-raleway)", "sans-serif"],
+        mcqueen: ["var(--font-mcqueen)", "sans-serif"],
+        poppins: ["var(--font-poppins)", "sans-serif"],
       },
       fontSize: {
         sm: ["14px", "16px"],
