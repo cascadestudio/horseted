@@ -46,7 +46,6 @@ export default defineConfig({
     structureTool({
       structure: deskStructure,
     }),
-    visionTool({ defaultApiVersion: apiVersion }),
     frFRLocale(),
   ],
 });
