@@ -9,16 +9,17 @@ export default function ProductCategories({
   const [itemCategories, setItemCategories] = useState([]);
 
   useEffect(() => {
-    if (subCategories.length > 0) {
+    if (subCategories && subCategories.length > 0) {
+      // console.log("subCategories =>", subCategories);
       setItemCategories(
         subCategories.find(
           (subCategory) => subCategory.id === selectedSubCategoriesId
-        ).productCategories
+        ).subCategories
       );
     }
   }, [subCategories, selectedSubCategoriesId]);
 
-  if (itemCategories.length > 0) {
+  if (itemCategories && itemCategories.length > 0) {
     return (
       <div className="px-5 py-2">
         <ul className={itemCategories.length > 12 ? `columns-2` : ``}>

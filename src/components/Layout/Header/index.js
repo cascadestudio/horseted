@@ -9,32 +9,55 @@ import MobileMenu from "./MobileMenu";
 import { getCategories } from "@/fetch/getCategories";
 
 export default async function Header() {
+  async function getSubCategoriesRecursive(categoryId) {
+    const subCategories = await getCategories(categoryId);
+
+    if (!subCategories || subCategories.length === 0) {
+      return [];
+    }
+
+    const updatedSubCategories = await Promise.all(
+      subCategories.map(async (subCategory) => {
+        if (subCategory.hasChildren) {
+          const childSubCategories = await getSubCategoriesRecursive(
+            subCategory.id
+          );
+          return {
+            ...subCategory,
+            subCategories: childSubCategories,
+          };
+        } else {
+          return {
+            ...subCategory,
+            subCategories: [],
+          };
+        }
+      })
+    );
+
+    return updatedSubCategories;
+  }
+
   const parentCategories = await getCategories();
 
   const categories = await Promise.all(
     parentCategories.map(async (category) => {
-      const subCategories = await getCategories(category.id);
-
-      if (subCategories && subCategories.length > 0) {
-        const updatedSubCategories = await Promise.all(
-          subCategories.map(async (subCategory) => {
-            const productCategories = await getCategories(subCategory.id);
-            return {
-              ...subCategory,
-              productCategories: productCategories || [],
-            };
-          })
-        );
-
+      if (category.hasChildren) {
+        const subCategories = await getSubCategoriesRecursive(category.id);
         return {
           ...category,
-          subCategories: updatedSubCategories,
+          subCategories,
+        };
+      } else {
+        return {
+          ...category,
+          subCategories: [],
         };
       }
-
-      return category;
     })
   );
+
+  console.log(categories);
 
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
