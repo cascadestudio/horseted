@@ -59,3 +59,9 @@ export const patchOrderIsReceived = async (orderId, accessToken) => {
   };
   await fetchHorseted(query, accessToken, "PATCH", body, true);
 };
+
+export const getPaymentInfos = async (accessToken, orderId) => {
+  const query = `/orders/${orderId}/payment_infos`;
+  const paymentInfos = await fetchHorseted(query, accessToken);
+  return paymentInfos;
+};

@@ -67,7 +67,7 @@ export default function OrderList({ orderType }) {
   };
 
   const onShowOrderDetails = (purchaseOrSale) => {
-    console.log("Selected purchaseOrSale: ", purchaseOrSale); // Add this line
+    console.log("Selected purchaseOrSale: ", purchaseOrSale);
 
     setPurchaseOrSale(purchaseOrSale);
   };
@@ -133,12 +133,19 @@ export default function OrderList({ orderType }) {
                     {centsToEuros(order.transferAmount)}€
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base text-center">
-                    <button
-                      onClick={() => onShowOrderDetails(purchaseOrSale)}
+                    <Link
+                      href={{
+                        pathname: `/commandes/${order.id}`,
+                        query: {
+                          productId: product.id,
+                          cavalierId: cavalier.id,
+                        },
+                      }}
+                      // onClick={() => onShowOrderDetails(purchaseOrSale)}
                       className="font-semibold text-light-green"
                     >
                       Voir
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               );

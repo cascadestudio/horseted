@@ -57,8 +57,6 @@ export default async function Header() {
     })
   );
 
-  console.log(categories);
-
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
       <div className="container mx-auto lg:px-5">
