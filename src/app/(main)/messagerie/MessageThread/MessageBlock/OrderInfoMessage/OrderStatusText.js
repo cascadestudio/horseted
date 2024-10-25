@@ -4,7 +4,7 @@ export default function OrderStatusText({
   type,
   totalPrice,
   offerPrice,
-  isSeller,
+  userRole,
 }) {
   const orderMessageText = {
     newOrder: "Nouvelle commande",
@@ -14,7 +14,10 @@ export default function OrderStatusText({
     offerAccepted: "Offre acceptée !",
     offerRejected: "Offre déclinée",
     addReview: "Ajouter une évaluation",
-    newBuyerReview: "Ajouter une évaluation",
+    newBuyerReview:
+      userRole === "seller" ? "Ajouter une évaluation" : "Évaluation ajoutée",
+    newSellerReview:
+      userRole === "buyer" ? "Ajouter une évaluation" : "Évaluation ajoutée",
   };
 
   return (

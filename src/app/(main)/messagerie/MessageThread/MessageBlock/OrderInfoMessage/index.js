@@ -13,9 +13,22 @@ export default function OrderInfoMessage({ type, offerId }) {
   console.log("type =>", type);
   const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
-
+  // console.log("order =>", order);
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
+
+  const userRole = getUserRole();
+
+  function getUserRole() {
+    if (!order || !user) return;
+    if (order.buyer.id === user.id) {
+      return "buyer";
+    } else if (order.seller.id === user.id) {
+      return "seller";
+    } else {
+      return "unknown";
+    }
+  }
 
   useEffect(() => {
     if (!offerId) return;
@@ -38,6 +51,8 @@ export default function OrderInfoMessage({ type, offerId }) {
     await patchOrderIsReceived(order.id, accessToken);
     updateMessages();
   };
+
+  const isOfferOwner = user?.id === offer?.userId;
 
   return (
     <>
@@ -70,31 +85,48 @@ export default function OrderInfoMessage({ type, offerId }) {
           type={type}
           totalPrice={totalPrice}
           offerPrice={offer?.price}
-          isSeller={user?.id === offer?.userId}
+          userRole={userRole}
         />
       </li>
       {type === "newOffer" && // is a new offer and
-        user?.id !== offer?.userId && ( // user is not the offer owner
+        !isOfferOwner && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
         )}
       {type === "orderDeliveredConfirmationRequired" && (
-        <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
-          Confirmer la réception
+        <div className="flex justify-between	items-center">
+          <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
+            Confirmer la réception
+          </Button>
           <Link className="text-dark-green text-xs underline" href="/contact">
             Ouvrir un litige
           </Link>
-        </Button>
+        </div>
       )}
-      {type === "addReview" && user?.id !== offer?.userId && (
-        <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
-          Ajouter une évaluation
-        </Button>
+      {type === "addReview" && (
+        <div className="flex">
+          <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
+            Ajouter une évaluation
+          </Button>
+        </div>
       )}
-      {type === "newBuyerReview" && user?.id === offer?.userId && (
-        <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
-          Ajouter une évaluation
-        </Button>
-      )}
+      {type === "newBuyerReview" &&
+        userRole === "seller" &&
+        !order.reviewedBySeller && (
+          <div className="flex">
+            <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
+              Ajouter une évaluation
+            </Button>
+          </div>
+        )}
+      {type === "newSellerReview" &&
+        userRole === "buyer" &&
+        !order.reviewedByBuyer && (
+          <div className="flex">
+            <Button variant={"green"} onClick={() => setIsReviewModal(true)}>
+              Ajouter une évaluation
+            </Button>
+          </div>
+        )}
       {isBuyButton && (
         <div className="flex">
           <Button
