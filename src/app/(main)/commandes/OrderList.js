@@ -7,14 +7,11 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Button from "@/components/Button";
 import Link from "next/link";
-import { getOrderDocuments } from "@/fetch/orders";
-import OrderDetails from "./OrderDetails";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
   const [purchasesOrSales, setPurchasesOrSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [purchaseOrSale, setPurchaseOrSale] = useState(null);
 
   useEffect(() => {
     getOrders();

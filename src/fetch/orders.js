@@ -32,12 +32,7 @@ export const postOrderPayment = async (accessToken, orderId, body) => {
   return paymentResponse;
 };
 
-export const getOrderDocuments = async (
-  orderId,
-  documentType,
-  accessToken,
-  documentName
-) => {
+export const getOrderDocuments = async (orderId, documentType, accessToken) => {
   const blob = await fetchHorseted(
     `/orders/${orderId}/documents/${documentType}`,
     accessToken
