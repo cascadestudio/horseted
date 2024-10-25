@@ -15,9 +15,9 @@ export default function OrderStatusText({
     offerRejected: "Offre déclinée",
     addReview: "Ajouter une évaluation",
     newBuyerReview:
-      userRole === "seller" ? "Ajouter une évaluation" : "Évaluation ajoutée",
+      userRole === "seller" ? "Ajouter une évaluation" : "Évaluation ajoutée !",
     newSellerReview:
-      userRole === "buyer" ? "Ajouter une évaluation" : "Évaluation ajoutée",
+      userRole === "buyer" ? "Ajouter une évaluation" : "Évaluation ajoutée !",
   };
 
   return (

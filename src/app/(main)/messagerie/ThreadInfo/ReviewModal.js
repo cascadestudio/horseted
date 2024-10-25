@@ -5,8 +5,13 @@ import { useState } from "react";
 import AddReviewStarIcon from "@/assets/icons/AddReviewStarIcon";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 
-export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
-  const { accessToken, updateMessages } = useThreadsContext();
+export default function ReviewModal({
+  setIsReviewModal,
+  orderId,
+  recipient,
+  userRole,
+}) {
+  const { accessToken, updateMessages, setOrder } = useThreadsContext();
 
   const [review, setReview] = useState({
     comment: "",
@@ -29,6 +34,12 @@ export default function ReviewModal({ setIsReviewModal, orderId, recipient }) {
       true
     );
     console.log("response =>", response);
+    if (userRole === "seller") {
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        reviewedBySeller: true,
+      }));
+    }
     updateMessages();
     setIsReviewModal(false);
   }

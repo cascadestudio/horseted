@@ -54,6 +54,8 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   const isOfferOwner = user?.id === offer?.userId;
 
+  if (type === "addReview" && userRole === "seller") return;
+
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -144,6 +146,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           setIsReviewModal={setIsReviewModal}
           orderId={order.id}
           recipient={recipient}
+          userRole={userRole}
         />
       )}
     </>
