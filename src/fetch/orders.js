@@ -42,14 +42,7 @@ export const getOrderDocuments = async (
     `/orders/${orderId}/documents/${documentType}`,
     accessToken
   );
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = documentName;
-  document.body.appendChild(a);
-  a.click();
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+  return blob;
 };
 
 export const patchOrderIsReceived = async (orderId, accessToken) => {

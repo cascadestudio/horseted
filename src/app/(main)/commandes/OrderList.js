@@ -57,27 +57,8 @@ export default function OrderList({ orderType }) {
     setIsLoading(false);
   }
 
-  const handleDocumentDownload = async (orderId) => {
-    {
-      /*  GET /orders/:id/documents/:document_type où document_type = receipt | fees_invoice */
-    }
-    const documentType = "receipt";
-    const documentName = `order_${orderId}_${documentType}.pdf`;
-    await getOrderDocuments(orderId, documentType, accessToken, documentName);
-  };
-
-  const onShowOrderDetails = (purchaseOrSale) => {
-    console.log("Selected purchaseOrSale: ", purchaseOrSale);
-
-    setPurchaseOrSale(purchaseOrSale);
-  };
-
   if (isLoading) {
     return <Spinner />;
-  }
-
-  if (purchaseOrSale) {
-    return <OrderDetails purchaseOrSale={purchaseOrSale} />;
   }
 
   return (
@@ -141,7 +122,6 @@ export default function OrderList({ orderType }) {
                           cavalierId: cavalier.id,
                         },
                       }}
-                      // onClick={() => onShowOrderDetails(purchaseOrSale)}
                       className="font-semibold text-light-green"
                     >
                       Voir

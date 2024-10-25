@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { getPaymentInfos } from "@/fetch/orders";
+import { getOrderDocuments, getPaymentInfos } from "@/fetch/orders";
 import { useSearchParams } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { getProducts } from "@/fetch/products";
 import { getUser } from "@/fetch/users";
+import Button from "@/components/Button";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
@@ -44,6 +45,35 @@ export default function OrderDetails({ params }) {
     console.log("user =>", user);
   };
 
+  const handleDocumentDownload = async (documentType) => {
+    const documentName = `order_${orderId}_${documentType}.pdf`;
+    const blob = await getOrderDocuments(
+      orderId,
+      documentType,
+      accessToken,
+      documentName
+    );
+
+    if (blob) {
+      downloadDocument(blob, documentName);
+      return;
+    }
+  };
+
+  const downloadDocument = (blob, documentName) => {
+    const pdfBlob = new Blob([blob], { type: "application/pdf" });
+    const url = URL.createObjectURL(pdfBlob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = documentName;
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
   if (!paymentInfos || !products || !user) {
     return <Spinner />;
   }
@@ -70,10 +100,21 @@ export default function OrderDetails({ params }) {
         <ul>
           <li>Commande : {amount}€</li>
           <li>Frais de port : {shippingPrice}€</li>
-          <li>Protection acheteur : {appFees}€</li>
+          <li>
+            <button
+              className="text-dark-green"
+              onClick={() => handleDocumentDownload("fees_invoice")}
+            >
+              Protection acheteur
+            </button>{" "}
+            {appFees}€
+          </li>
           <li>Total : {amount + shippingPrice + appFees}€</li>
         </ul>
       </div>
+      <Button onClick={() => handleDocumentDownload("receipt")}>
+        Voir le reçu
+      </Button>
     </>
   );
 }
