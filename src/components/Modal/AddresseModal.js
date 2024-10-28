@@ -12,9 +12,11 @@ export default function AddressModal({
   handleGetAddresses,
   setActiveAddress,
   isSaveAddressCheckbox,
+  isAddressSaved,
+  setIsAddressSaved,
+  setAlert,
 }) {
   const { accessToken } = useAuthContext();
-  const [isAddressSaved, setIsAddressSaved] = useState(false);
 
   const [address, setAddress] = useState({
     fullName: "",
@@ -45,18 +47,23 @@ export default function AddressModal({
     if (!addressData.additionalInfos) {
       delete addressData.additionalInfos;
     }
-    if (isSaveAddressCheckbox) {
-      setActiveAddress(address);
-      if (isAddressSaved) {
-        await postAddress(accessToken, addressData);
-      }
-    } else {
-      await postAddress(accessToken, addressData);
-      if (isDeliverySimilar) {
-        addressData.type = "shipping";
-        await postAddress(accessToken, addressData);
-      }
+    const response = await postAddress(accessToken, addressData);
+    if (response === "address_not_valid") {
+      setAlert({
+        type: "error",
+        message: "Adresse invalide",
+      });
+      return;
     }
+    setAlert;
+    if (setActiveAddress) {
+      setActiveAddress(response);
+    }
+    if (isDeliverySimilar) {
+      addressData.type = "shipping";
+      await postAddress(accessToken, addressData);
+    }
+
     setIsModal(false);
     if (handleGetAddresses) {
       await handleGetAddresses();

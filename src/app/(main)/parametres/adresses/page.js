@@ -7,11 +7,13 @@ import Checkbox from "@/components/input/Checkbox";
 import AddAddressButton from "./AddAddressButton";
 import AddressCard from "./AddressCard";
 import { getAddresses } from "@/fetch/addresses";
+import Alert from "@/components/Alert";
 
 export default function Addresses() {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
   const [isDeliverySimilar, setIsDeliverySimilar] = useState(true);
+  const [alert, setAlert] = useState(null);
   const [modal, setModal] = useState({
     isOpen: false,
     type: "",
@@ -100,8 +102,10 @@ export default function Addresses() {
           type={modal.type}
           setIsModal={() => setModal((prev) => ({ ...prev, isOpen: false }))}
           handleGetAddresses={handleGetAddresses}
+          setAlert={setAlert}
         />
       )}
+      {alert && <Alert type={alert.type} message={alert.message} />}
     </div>
   );
 }
