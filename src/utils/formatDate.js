@@ -52,7 +52,7 @@ export function ISOtoShortDate(ISODate) {
   const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-based
   const year = date.getUTCFullYear();
 
-  return `${month}/${day}/${year}`;
+  return `${day}/${month}/${year}`;
 }
 
 export function dateToISO(dateString) {
