@@ -8,6 +8,7 @@ import Spinner from "@/components/Spinner";
 import { getProducts } from "@/fetch/products";
 import { getUser } from "@/fetch/users";
 import Button from "@/components/Button";
+import { ISOtoDate } from "@/utils/formatDate";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
@@ -83,33 +84,61 @@ export default function OrderDetails({ params }) {
 
   return (
     <>
-      <div>
+      <div className="bg-white rounded-xl p-8 border border-lighter-grey">
         <ul>
-          <li>N° de commande : {orderId}</li>
-          <li>Date : {date}</li>
-          <li>N°transaction : {paymentMethod}</li>
+          <li className="font-semibold">
+            <span className="underline">N° de commande</span> :{" "}
+            <span className="font-poppins">{orderId}</span>
+          </li>
+          <li className="font-semibold">
+            <span className="underline">Date</span> :{" "}
+            <span className="font-poppins">{ISOtoDate(date)}</span>
+          </li>
+          <li className="font-semibold">
+            <span className="underline">N°transaction</span> :{" "}
+            <span className="font-poppins">{paymentMethod}</span>
+          </li>
         </ul>
       </div>
-      <div>
-        <h2>Adresse de livraison</h2>
-        {shipping.name}, {shipping.postalCode}, {shipping.street},
-        {shipping.city}
+      <div className="bg-white rounded-xl p-8 border border-lighter-grey">
+        <h2 className="font-bold mb-2">Adresse de livraison</h2>
+        <p className="text-sm">
+          {shipping.name}, {shipping.street}
+          <br />
+          {shipping.postalCode} {shipping.city}
+        </p>
       </div>
-      <div>
-        <h2>Résumé de la commande</h2>
+      <div className="bg-white rounded-xl p-8 border border-lighter-grey">
+        <h2 className="font-bold mb-2">Résumé de la commande</h2>
         <ul>
-          <li>Commande : {amount}€</li>
-          <li>Frais de port : {shippingPrice}€</li>
-          <li>
+          <li className="flex justify-between">
+            <span className="font-semibold">Commande</span>
+            <span className="font-poppins font-medium">{amount}€</span>
+          </li>
+          <li className="flex justify-between">
+            <span className="font-semibold">Frais de port</span>
+            <span className="font-poppins font-medium">{shippingPrice}€</span>
+          </li>
+          <li className="flex justify-between">
             <button
-              className="text-dark-green"
+              className="text-light-green underline font-semibold"
               onClick={() => handleDocumentDownload("fees_invoice")}
             >
               Protection acheteur
+              <img
+                className="relative top-[-8px] ml-1 inline-block"
+                src="/icons/external-link.svg"
+                alt=""
+              />
             </button>{" "}
-            {appFees}€
+            <span className="font-poppins font-medium">{appFees}€</span>
           </li>
-          <li>Total : {amount + shippingPrice + appFees}€</li>
+          <li className="flex justify-between font-semibold">
+            <span>Total</span>
+            <span className="font-poppins font-extrabold">
+              {amount + shippingPrice + appFees}€
+            </span>
+          </li>
         </ul>
       </div>
       <Button onClick={() => handleDocumentDownload("receipt")}>
