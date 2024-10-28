@@ -1,9 +1,9 @@
 import { TextInput } from "@/components/input";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
+import { postAddress } from "@/fetch/addresses";
 
 export default function AddressModal({
   setIsModal,
@@ -18,7 +18,7 @@ export default function AddressModal({
     postalCode: "",
     city: "",
     country: "FR",
-    additionalInfos: "", //body not valid if empty
+    additionalInfos: "",
     type: "delivery",
     isDefault: false,
   });
@@ -45,22 +45,15 @@ export default function AddressModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await postAddress();
+    const addressData = { ...formData };
+    if (!addressData.additionalInfos) {
+      delete addressData.additionalInfos;
+    }
+    console.log("addressData =>", addressData);
+    const address = await postAddress(accessToken, addressData);
+    setActiveAddress(address);
     setIsModal(false);
   };
-
-  async function postAddress() {
-    const query = `/users/me/addresses`;
-    const address = await fetchHorseted(
-      query,
-      accessToken,
-      "POST",
-      formData,
-      true,
-      true
-    );
-    setActiveAddress(address);
-  }
 
   return (
     <Modal

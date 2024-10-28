@@ -22,3 +22,16 @@ export async function patchAddress(accessToken, newAddress, addressId) {
   console.log("adresses =>", adresses);
   return adresses;
 }
+
+export async function postAddress(accessToken, address) {
+  const query = `/users/me/addresses`;
+  const response = await fetchHorseted(
+    query,
+    accessToken,
+    "POST",
+    address,
+    true,
+    true
+  );
+  return response;
+}

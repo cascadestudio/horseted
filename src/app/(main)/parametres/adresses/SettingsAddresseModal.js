@@ -2,14 +2,17 @@ import { TextInput } from "@/components/input";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
+import { postAddress } from "@/fetch/addresses";
+import { useAuthContext } from "@/context/AuthContext";
+import { getAddresses } from "@/fetch/addresses";
 
 export default function AddressModal({
   setIsModal,
-  getAddresses,
   type,
   isDeliverySimilar,
-  postAddress,
+  handleGetAddresses,
 }) {
+  const { accessToken } = useAuthContext();
   const [address, setAddress] = useState({
     fullName: "",
     street: "",
@@ -33,14 +36,17 @@ export default function AddressModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsModal(false);
-    let newAddress = address;
-    await postAddress(newAddress);
-    if (isDeliverySimilar) {
-      newAddress.type = "shipping";
-      await postAddress(newAddress);
+    let addressData = { ...address };
+    if (!addressData.additionalInfos) {
+      delete addressData.additionalInfos;
     }
-    getAddresses();
+    await postAddress(accessToken, addressData);
+    if (isDeliverySimilar) {
+      addressData.type = "shipping";
+      await postAddress(accessToken, addressData);
+    }
+    setIsModal(false);
+    await handleGetAddresses();
   };
 
   return (

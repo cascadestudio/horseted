@@ -1,7 +1,6 @@
 "use client";
 
 import { useAuthContext } from "@/context/AuthContext";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import AddressModal from "./SettingsAddresseModal";
 import Checkbox from "@/components/input/Checkbox";
@@ -18,13 +17,11 @@ export default function Addresses() {
     type: "",
   });
 
-  console.log("addresses =>", addresses);
-
   useEffect(() => {
-    handleAddresses();
+    handleGetAddresses();
   }, []);
 
-  async function handleAddresses() {
+  async function handleGetAddresses() {
     const adresses = await getAddresses(accessToken);
     setAddresses(adresses);
   }
@@ -38,17 +35,7 @@ export default function Addresses() {
 
   const handleIsDeliverySimilar = async () => {
     setIsDeliverySimilar(!isDeliverySimilar);
-    // if (deliveryAddresses.length > 0 && shippingAddresses.length === 0) {
-    //   let lastAddress = deliveryAddresses[0];
-    //   lastAddress.type = "shipping";
-    //   await postAddress(lastAddress);
-    // }
   };
-
-  async function postAddress(newAddress) {
-    const query = `/users/me/addresses`;
-    await fetchHorseted(query, accessToken, "POST", newAddress, true);
-  }
 
   return (
     <div className="grid grid-cols-1 lg:pt-14 lg:grid-cols-2 lg:gap-x-14 gap-y-4 lg:gap-y-2">
@@ -63,6 +50,7 @@ export default function Addresses() {
                 address={address}
                 getAddresses={getAddresses}
                 accessToken={accessToken}
+                handleGetAddresses={handleGetAddresses}
               />
             </div>
           );
@@ -92,8 +80,8 @@ export default function Addresses() {
                 <AddressCard
                   address={address}
                   key={address.id}
-                  getAddresses={getAddresses}
                   accessToken={accessToken}
+                  handleGetAddresses={handleGetAddresses}
                 />
               );
             })}
@@ -111,8 +99,7 @@ export default function Addresses() {
           isDeliverySimilar={isDeliverySimilar}
           type={modal.type}
           setIsModal={() => setModal((prev) => ({ ...prev, isOpen: false }))}
-          getAddresses={getAddresses}
-          postAddress={postAddress}
+          handleGetAddresses={handleGetAddresses}
         />
       )}
     </div>
