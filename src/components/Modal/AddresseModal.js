@@ -4,15 +4,18 @@ import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 import { postAddress } from "@/fetch/addresses";
 import { useAuthContext } from "@/context/AuthContext";
-import { getAddresses } from "@/fetch/addresses";
 
 export default function AddressModal({
   setIsModal,
   type,
   isDeliverySimilar,
   handleGetAddresses,
+  setActiveAddress,
+  isSaveAddressCheckbox,
 }) {
   const { accessToken } = useAuthContext();
+  const [isAddressSaved, setIsAddressSaved] = useState(false);
+
   const [address, setAddress] = useState({
     fullName: "",
     street: "",
@@ -24,7 +27,9 @@ export default function AddressModal({
     isDefault: false,
   });
 
-  // console.log("address =>", address);
+  const handleIsAddressSaved = (e) => {
+    setIsAddressSaved(e.target.checked);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,13 +45,22 @@ export default function AddressModal({
     if (!addressData.additionalInfos) {
       delete addressData.additionalInfos;
     }
-    await postAddress(accessToken, addressData);
-    if (isDeliverySimilar) {
-      addressData.type = "shipping";
+    if (isSaveAddressCheckbox) {
+      setActiveAddress(address);
+      if (isAddressSaved) {
+        await postAddress(accessToken, addressData);
+      }
+    } else {
       await postAddress(accessToken, addressData);
+      if (isDeliverySimilar) {
+        addressData.type = "shipping";
+        await postAddress(accessToken, addressData);
+      }
     }
     setIsModal(false);
-    await handleGetAddresses();
+    if (handleGetAddresses) {
+      await handleGetAddresses();
+    }
   };
 
   return (
@@ -102,6 +116,19 @@ export default function AddressModal({
         onChange={handleChange}
         required
       />
+      {isSaveAddressCheckbox && (
+        <label className="flex items-start mt-3">
+          <Checkbox
+            name="isAddressSaved"
+            value={isAddressSaved}
+            checked={isAddressSaved}
+            onChange={handleIsAddressSaved}
+          />
+          <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
+            Enregistrer l’adresse pour plus tard
+          </span>
+        </label>
+      )}
       <label className="flex items-start mt-3">
         <Checkbox
           name="isDefault"

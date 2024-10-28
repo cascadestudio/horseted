@@ -2,7 +2,7 @@
 
 import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
-import AddressModal from "./SettingsAddresseModal";
+import AddressModal from "@/components/Modal/AddresseModal";
 import Checkbox from "@/components/input/Checkbox";
 import AddAddressButton from "./AddAddressButton";
 import AddressCard from "./AddressCard";

@@ -1,15 +1,10 @@
-import AddressModal from "./AddressModal";
+import AddressModal from "@/components/Modal/AddresseModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
 
-export default function Address({
-  activeAddress,
-  setActiveAddress,
-  setIsAddressSaved,
-  isAddressSaved,
-}) {
+export default function Address({ activeAddress, setActiveAddress }) {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
   const [isModal, setIsModal] = useState(false);
@@ -53,8 +48,7 @@ export default function Address({
         <AddressModal
           setIsModal={setIsModal}
           setActiveAddress={setActiveAddress}
-          setIsAddressSaved={setIsAddressSaved}
-          isAddressSaved={isAddressSaved}
+          isSaveAddressCheckbox
         />
       )}
     </>
