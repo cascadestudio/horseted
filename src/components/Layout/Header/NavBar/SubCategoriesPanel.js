@@ -6,15 +6,11 @@ export default function SubCategoriesPanel({
   panelRef,
   setIsOpen,
 }) {
-  const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
-
-  function handleClick(id) {
-    setSelectedSubCategoriesId(id);
-  }
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
 
   useEffect(() => {
     if (subCategories.length > 0) {
-      setSelectedSubCategoriesId(subCategories[0].id);
+      setSelectedSubCategory(subCategories[0]);
     }
   }, [subCategories]);
 
@@ -26,14 +22,14 @@ export default function SubCategoriesPanel({
       <ul className="border-r px-2">
         {subCategories?.map((category) => {
           const { name, id } = category;
-          const isActive = selectedSubCategoriesId === id;
+          const isActive = setSelectedSubCategory.id === id;
           return (
             <li key={name}>
               <button
                 className={`text-left w-full px-6 pt-4 pb-3 mb-1 capitalize whitespace-nowrap font-semibold ${
                   isActive && "border-b border-light-green text-light-green"
                 }`}
-                onClick={() => handleClick(id)}
+                onClick={() => setSelectedSubCategory(category)}
               >
                 {name}
               </button>
@@ -41,10 +37,10 @@ export default function SubCategoriesPanel({
           );
         })}
       </ul>
-      {selectedSubCategoriesId !== null && (
+      {selectedSubCategory !== null && (
         <ProductCategories
           subCategories={subCategories}
-          selectedSubCategoriesId={selectedSubCategoriesId}
+          selectedSubCategory={selectedSubCategory}
           setIsOpen={setIsOpen}
         />
       )}
