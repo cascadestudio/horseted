@@ -6,7 +6,6 @@ import { useRef, useState } from "react";
 import { useIsClickOutsideElement } from "@/utils/hooks";
 
 export default function CategoriesNav({ categories }) {
-  // console.log("categories =>", categories);
   const buttonRef = useRef();
   const panelRef = useRef();
   const [selectedSubCategories, setSelectedSubCategories] = useState(null);
