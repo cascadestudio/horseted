@@ -2,96 +2,77 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import RecursiveSubCategoriesPanel from "./RecursiveSubCategoriesPanel";
 
-export default function ProductCategories({
-  subCategories,
+function Category({
+  category,
+  expandedCategoryId,
+  onCategoryClick,
   setIsOpen,
-  selectedSubCategory,
 }) {
-  const [itemCategories, setItemCategories] = useState([]);
-  const [selectedItemCategory, setSelectedItemCategory] = useState(null);
+  const { name, id, hasChildren } = category;
+  const isExpanded = expandedCategoryId === id;
 
-  return (
-    <div className="p-4">
-      {selectedSubCategory.subCategories.map((category) => (
-        <Category key={category.id} category={category} />
-      ))}
-    </div>
-  );
+  if (hasChildren) {
+    return (
+      <>
+        <button
+          className="whitespace-nowrap font-medium p-2 block"
+          onClick={() => onCategoryClick(id)}
+        >
+          {name}
+        </button>
 
-  // console.log("itemCategories =>", itemCategories);
-
-  // useEffect(() => {
-  //   setSelectedItemCategory(null);
-  //   if (subCategories && subCategories.length > 0) {
-  //     setItemCategories(
-  //       subCategories.find(
-  //         (subCategory) => subCategory.id === selectedSubCategoriesId
-  //       ).subCategories
-  //     );
-  //   }
-  // }, [subCategories, selectedSubCategoriesId]);
-
-  // if (selectedItemCategory) {
-  //   return (
-  //     <RecursiveSubCategoriesPanel
-  //       itemCategory={selectedItemCategory}
-  //       setIsOpen={setIsOpen}
-  //       setSelectedItemCategory={setSelectedItemCategory}
-  //     />
-  //   );
-  // } else {
-  //   if (itemCategories && itemCategories.length > 0) {
-  //     return (
-  //       <div className="px-5 py-2">
-  //         <ul className={itemCategories.length > 12 ? `columns-2` : ``}>
-  //           {itemCategories.map((category) => {
-  //             const { name, id, hasChildren } = category;
-  //             return (
-  //               <li key={name} className="">
-  //                 {hasChildren ? (
-  //                   <button onClick={() => setSelectedItemCategory(category)}>
-  //                     {name}
-  //                   </button>
-  //                 ) : (
-  //                   <Link
-  //                     onClick={() => setIsOpen(false)}
-  //                     className="whitespace-nowrap font-medium p-2 block"
-  //                     href={`/articles?categoryId=${id}&categoryName=${name}`}
-  //                   >
-  //                     {name}
-  //                   </Link>
-  //                 )}
-  //               </li>
-  //             );
-  //           })}
-  //         </ul>
-  //       </div>
-  //     );
-  //   }
-  // }
+        {isExpanded && (
+          <>
+            {category.subCategories.map((subCategory) => (
+              <Category
+                key={subCategory.id}
+                category={subCategory}
+                onCategoryClick={() => {}}
+              />
+            ))}
+          </>
+        )}
+      </>
+    );
+  } else {
+    return (
+      <Link
+        onClick={() => setIsOpen(false)}
+        className="whitespace-nowrap font-medium p-2 block"
+        href={`/articles?categoryId=${id}&categoryName=${name}`}
+      >
+        {name}
+      </Link>
+    );
+  }
 }
 
-function Category({ category }) {
-  const [showSubCategories, setShowSubCategories] = useState(false);
+export default function ProductCategories({ setIsOpen, selectedSubCategory }) {
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
+
+  const handleCategoryClick = (id) => {
+    setExpandedCategoryId((prevId) => (prevId === id ? null : id));
+  };
 
   return (
-    <div className="mb-2">
-      <button
-        onClick={() => setShowSubCategories(!showSubCategories)}
-        className="w-full text-left p-2 bg-gray-100 hover:bg-gray-200 rounded-lg"
+    <div className="px-5 py-2">
+      <ul
+        className={
+          selectedSubCategory.subCategories.length > 12 ? `columns-2` : ``
+        }
       >
-        {category.name}
-      </button>
-
-      {showSubCategories &&
-        category.subCategories &&
-        category.subCategories.length > 0 && (
-          <div className="pl-4 mt-2 border-l-2 border-gray-200">
-            {category.subCategories.map((subCategory) => (
-              <Category key={subCategory.id} category={subCategory} />
-            ))}
-          </div>
-        )}
+        {selectedSubCategory.subCategories.map((category) => {
+          return (
+            <Category
+              key={category.id}
+              category={category}
+              expandedCategoryId={expandedCategoryId}
+              onCategoryClick={handleCategoryClick}
+              setIsOpen={setIsOpen}
+            />
+          );
+        })}
+      </ul>
     </div>
   );
 }
