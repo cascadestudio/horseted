@@ -6,56 +6,10 @@ import NavBar from "./NavBar";
 import Link from "next/link";
 import AccountHandler from "./AccountHandler";
 import MobileMenu from "./MobileMenu";
-import { getCategories } from "@/fetch/getCategories";
+import { getAllCategories } from "@/fetch/categories";
 
 export default async function Header() {
-  async function getSubCategoriesRecursive(categoryId) {
-    const subCategories = await getCategories(categoryId);
-
-    if (!subCategories || subCategories.length === 0) {
-      return [];
-    }
-
-    const updatedSubCategories = await Promise.all(
-      subCategories.map(async (subCategory) => {
-        if (subCategory.hasChildren) {
-          const childSubCategories = await getSubCategoriesRecursive(
-            subCategory.id
-          );
-          return {
-            ...subCategory,
-            subCategories: childSubCategories,
-          };
-        } else {
-          return {
-            ...subCategory,
-            subCategories: [],
-          };
-        }
-      })
-    );
-
-    return updatedSubCategories;
-  }
-
-  const parentCategories = await getCategories();
-
-  const categories = await Promise.all(
-    parentCategories.map(async (category) => {
-      if (category.hasChildren) {
-        const subCategories = await getSubCategoriesRecursive(category.id);
-        return {
-          ...category,
-          subCategories,
-        };
-      } else {
-        return {
-          ...category,
-          subCategories: [],
-        };
-      }
-    })
-  );
+  const categories = await getAllCategories();
 
   return (
     <header className="xl:border-b border-b-light-green h-[var(--header-height)]">
