@@ -127,11 +127,10 @@ export default function OrderDetails({ params }) {
                   className="w-10 h-[50px]"
                 />
                 <div className="font-extrabold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
-                  <p>{product.title}</p>
-                  <p className="text-sm font-medium">
+                  <p>
                     {products.length > 1
                       ? `${products.length} articles`
-                      : " 1 article"}
+                      : product.title}
                   </p>
                 </div>
               </div>
