@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import RecursiveSubCategoriesPanel from "./RecursiveSubCategoriesPanel";
+import LeftArrow from "@/assets/icons/LeftArrow";
 
 function Category({
   category,
   expandedCategoryId,
   onCategoryClick,
   setIsOpen,
+  isActive,
 }) {
-  const { name, id, hasChildren } = category;
+  const { name, id, hasChildren, subCategories } = category;
   const isExpanded = expandedCategoryId === id;
 
   if (hasChildren) {
@@ -18,16 +19,25 @@ function Category({
           className="whitespace-nowrap font-medium p-2 block"
           onClick={() => onCategoryClick(id)}
         >
-          {name}
+          {isActive ? (
+            <div className="flex items-center">
+              <LeftArrow className="stroke-light-green mr-2" />
+              <p className="font-bold text-light-green">{name}</p>
+            </div>
+          ) : (
+            name
+          )}
         </button>
 
-        {isExpanded && (
+        {isExpanded && subCategories && (
           <>
-            {category.subCategories.map((subCategory) => (
+            {subCategories.map((subCategory) => (
               <Category
                 key={subCategory.id}
                 category={subCategory}
-                onCategoryClick={() => {}}
+                expandedCategoryId={expandedCategoryId}
+                onCategoryClick={onCategoryClick}
+                setIsOpen={setIsOpen}
               />
             ))}
           </>
@@ -62,15 +72,19 @@ export default function ProductCategories({ setIsOpen, selectedSubCategory }) {
         }
       >
         {selectedSubCategory.subCategories.map((category) => {
-          return (
-            <Category
-              key={category.id}
-              category={category}
-              expandedCategoryId={expandedCategoryId}
-              onCategoryClick={handleCategoryClick}
-              setIsOpen={setIsOpen}
-            />
-          );
+          const isActive = expandedCategoryId === category.id;
+          if (expandedCategoryId === null || isActive) {
+            return (
+              <Category
+                isActive={isActive}
+                key={category.id}
+                category={category}
+                expandedCategoryId={expandedCategoryId}
+                onCategoryClick={handleCategoryClick}
+                setIsOpen={setIsOpen}
+              />
+            );
+          }
         })}
       </ul>
     </div>
