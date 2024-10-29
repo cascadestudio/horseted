@@ -103,13 +103,13 @@ const CheckOutPage = () => {
 
   const handleProductsPrice = () => {
     if (offer) {
-      return centsToEuros(offer.price);
+      return offer.price ? centsToEuros(offer.price) : "0,00";
     } else {
       const productsPriceSum = products.reduce((total, product) => {
         const sum = total + product.price;
-        return centsToEuros(sum);
+        return sum;
       }, 0);
-      return productsPriceSum;
+      return centsToEuros(productsPriceSum);
     }
   };
 
@@ -285,9 +285,12 @@ const CheckOutPage = () => {
                     <p className="font-extrabold">Total</p>
                     <p className="font-extrabold justify-self-end">
                       {formatNumber(
-                        // parseFloat(handleProductsPrice().replace(",", ".")) +
-                        parseFloat(handleProductsPrice()) +
-                          parseFloat(shippingMethods[0]?.price || 0)
+                        parseFloat(handleProductsPrice().replace(",", ".")) +
+                          parseFloat(
+                            centsToEuros(
+                              shippingMethods[0]?.price || 0
+                            ).replace(",", ".")
+                          )
                       )}{" "}
                       €
                     </p>
