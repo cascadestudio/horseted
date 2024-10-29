@@ -26,7 +26,7 @@ export default function StarRating({
         return (
           <StarIcon
             key={index}
-            className={`h-4 w-auto lg:h-6 ${
+            className={`h-4 w-auto lg:h-5 ${
               fillPercentage > 0 ? "text-yellow" : "text-white"
             } ${size == "sm" && "lg:h-4"}`}
             fillPercentage={fillPercentage}
