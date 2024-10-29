@@ -88,8 +88,8 @@ export default function OrderDetails({ params }) {
     paymentInfos;
 
   return (
-    <div className="flex gap-7">
-      <div className="flex-[6]">
+    <div className="flex flex-col lg:flex-row lg:gap-7">
+      <div className="flex-[6] w-full lg:w-auto">
         <div className="bg-white rounded-xl p-8 border border-lighter-grey mb-3">
           <ul>
             <li className="font-semibold">
@@ -156,7 +156,7 @@ export default function OrderDetails({ params }) {
           </Link>
         </div>
       </div>
-      <div className="flex-[4]">
+      <div className="flex-[4] w-full lg:w-auto">
         <div className="bg-white rounded-xl p-8 border border-lighter-grey mb-4">
           <h2 className="font-bold mb-8">Résumé de la commande</h2>
           <ul>
