@@ -16,11 +16,12 @@ export default function CategorySelect({
   categories,
 }) {
   // const [parentCategories, setParentCategories] = useState(categories);
-  const [activeParentCategory, setActiveParentCategory] = useState(null);
   // const [activeSubCategory, setActiveSubCategory] = useState(null);
 
-  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [activeParentCategory, setActiveParentCategory] = useState(null);
   const [expandedCategoryId, setExpandedCategoryId] = useState(null);
+
+  // console.log("expandedCategoryId =>", expandedCategoryId);
 
   // function onClickSubCategory(id, name) {
   //   setActiveSubCategory({ id: id, name: name });
@@ -54,8 +55,9 @@ export default function CategorySelect({
               return (
                 <button
                   className="flex items-center justify-between"
-                  onClick={(e) => {
+                  onClick={() => {
                     setActiveParentCategory(category);
+                    setExpandedCategoryId(null);
                   }}
                   key={id}
                 >
@@ -75,7 +77,9 @@ export default function CategorySelect({
             // onClickSubCategory={onClickSubCategory}
             // activeSubCategory={activeSubCategory}
             onClickPrev={showParentCategories}
-            subCategories={activeParentCategory.subCategories || []}
+            // subCategories={activeParentCategory.subCategories || []}
+            setExpandedCategoryId={setExpandedCategoryId}
+            expandedCategoryId={expandedCategoryId}
           />
         )}
         {/* {activeSubCategory !== null && (

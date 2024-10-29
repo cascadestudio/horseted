@@ -1,18 +1,23 @@
 export default function Category({
   category,
   expandedCategoryId,
-  onCategoryClick,
   isActive,
+  setExpandedCategoryId,
 }) {
+  //   console.log("category =>", category);
   const { name, id, hasChildren, subCategories } = category;
   const isExpanded = expandedCategoryId === id;
+
+  const handleCategoryClick = (id) => {
+    setExpandedCategoryId((prevId) => (prevId === id ? null : id));
+  };
 
   if (hasChildren) {
     return (
       <>
         <button
           className="whitespace-nowrap font-medium p-2 block"
-          onClick={() => onCategoryClick(id)}
+          onClick={() => handleCategoryClick(id)}
         >
           {isActive ? (
             <div className="flex items-center">
@@ -30,7 +35,7 @@ export default function Category({
                 key={subCategory.id}
                 category={subCategory}
                 expandedCategoryId={expandedCategoryId}
-                onCategoryClick={onCategoryClick}
+                setExpandedCategoryId={setExpandedCategoryId}
               />
             ))}
           </ul>
