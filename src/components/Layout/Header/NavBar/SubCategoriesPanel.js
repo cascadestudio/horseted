@@ -23,7 +23,7 @@ export default function SubCategoriesPanel({
       <ul className="border-r px-2">
         {subCategories?.map((category) => {
           const { name, id } = category;
-          const isActive = selectedSubCategory.id === id;
+          const isActive = selectedSubCategory?.id === id;
           return (
             <li key={name}>
               <button
