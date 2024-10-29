@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Link from "next/link";
 import LeftArrow from "@/assets/icons/LeftArrow";
 
@@ -57,9 +56,12 @@ function Category({
   }
 }
 
-export default function ProductCategories({ setIsOpen, selectedSubCategory }) {
-  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
-
+export default function ProductCategories({
+  setIsOpen,
+  selectedSubCategory,
+  expandedCategoryId,
+  setExpandedCategoryId,
+}) {
   const handleCategoryClick = (id) => {
     setExpandedCategoryId((prevId) => (prevId === id ? null : id));
   };

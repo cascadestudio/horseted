@@ -7,6 +7,7 @@ export default function SubCategoriesPanel({
   setIsOpen,
 }) {
   const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
   useEffect(() => {
     if (subCategories.length > 0) {
@@ -29,7 +30,10 @@ export default function SubCategoriesPanel({
                 className={`text-left w-full px-6 pt-4 pb-3 mb-1 capitalize whitespace-nowrap font-semibold ${
                   isActive && "border-b border-light-green text-light-green"
                 }`}
-                onClick={() => setSelectedSubCategory(category)}
+                onClick={() => {
+                  setSelectedSubCategory(category);
+                  setExpandedCategoryId(null);
+                }}
               >
                 {name}
               </button>
@@ -42,6 +46,8 @@ export default function SubCategoriesPanel({
           subCategories={subCategories}
           selectedSubCategory={selectedSubCategory}
           setIsOpen={setIsOpen}
+          expandedCategoryId={expandedCategoryId}
+          setExpandedCategoryId={setExpandedCategoryId}
         />
       )}
     </div>
