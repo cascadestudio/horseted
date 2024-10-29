@@ -12,6 +12,7 @@ export default function BundleSummaryModal({
   onOpenOfferModal,
 }) {
   const bundleIdsQuery = bundle.map((product) => product.id).join(";");
+  const totalPrice = bundlePrice + shippingPrice;
 
   return (
     <Modal title="Votre lot" onClose={onCloseBundleSummaryModal}>
@@ -38,10 +39,7 @@ export default function BundleSummaryModal({
       </div>
       <div className="flex justify-between font-bold mb-6">
         <span>Total</span>
-        <span>
-          {formatNumber(parseFloat(centsToEuros(bundlePrice)) + shippingPrice)}{" "}
-          €
-        </span>
+        <span>{formatNumber(centsToEuros(totalPrice))} €</span>
       </div>
       <Button
         href={`/checkout?productIds=${bundleIdsQuery}`}
