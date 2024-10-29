@@ -18,12 +18,12 @@ export default function SubCategoriesPanel({
   return (
     <div
       ref={panelRef}
-      className="absolute top-[48px] bg-white border border-light-green rounded-b-[20px] flex z-10 py-2"
+      className="absolute top-[48px] bg-white border border-light-green rounded-b-[20px] flex z-30 py-2"
     >
       <ul className="border-r px-2">
         {subCategories?.map((category) => {
           const { name, id } = category;
-          const isActive = setSelectedSubCategory.id === id;
+          const isActive = selectedSubCategory.id === id;
           return (
             <li key={name}>
               <button

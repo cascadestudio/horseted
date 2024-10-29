@@ -29,7 +29,7 @@ function Category({
         </button>
 
         {isExpanded && subCategories && (
-          <>
+          <ul className={subCategories.length > 12 ? `columns-2` : ``}>
             {subCategories.map((subCategory) => (
               <Category
                 key={subCategory.id}
@@ -39,7 +39,7 @@ function Category({
                 setIsOpen={setIsOpen}
               />
             ))}
-          </>
+          </ul>
         )}
       </>
     );
@@ -67,7 +67,7 @@ export default function ProductCategories({
   };
 
   return (
-    <div className="px-5 py-2">
+    <div className="px-5 py-2 min-w-64">
       <ul
         className={
           selectedSubCategory.subCategories.length > 12 ? `columns-2` : ``
