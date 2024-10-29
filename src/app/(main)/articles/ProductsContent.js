@@ -22,7 +22,7 @@ import Button from "@/components/Button";
 import FiltersModal from "./FiltersModal";
 import { shippingSizeTranslations } from "@/utils/translations";
 
-export default function ProductsPage() {
+export default function ProductsPage({ categories }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const searchParam = searchParams.get("search");
@@ -254,6 +254,7 @@ export default function ProductsPage() {
           onStateChange={handleStateChange}
         />
         <CategorySelect
+          categories={categories}
           onClickProductCategory={handleCategoryChange}
           activeCategory={activeCategory !== null ? activeCategory.id : null}
         />

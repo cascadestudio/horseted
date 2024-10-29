@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import ProductsContent from "./ProductsContent";
+import { getAllCategories } from "@/fetch/categories";
 
 export async function generateMetadata() {
   return {
@@ -8,10 +9,12 @@ export async function generateMetadata() {
   };
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const categories = await getAllCategories();
+
   return (
     <Suspense>
-      <ProductsContent />
+      <ProductsContent categories={categories} />
     </Suspense>
   );
 }

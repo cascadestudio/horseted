@@ -1,29 +1,26 @@
 import { useEffect, useState } from "react";
-import fetchHorseted from "@/utils/fetchHorseted";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import capitalizeText from "@/utils/capitalizeText";
-import NextArrow from "@/assets/icons/NextArrow";
+import Category from "./Category";
 
 export default function SubCategorySelect({
   activeParentCategory,
-  onClickSubCategory,
-  activeSubCategory,
   onClickPrev,
+  subCategories,
 }) {
-  const [subCategory, setSubCategory] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories?parentId=${activeParentCategory.id}`;
-        const data = await fetchHorseted(query);
-        setSubCategory(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    activeParentCategory !== null && fetchCategories();
-  }, [activeParentCategory]);
+    if (subCategories.length > 0) {
+      setSelectedSubCategory(subCategories[0]);
+    }
+  }, [subCategories]);
+
+  const handleCategoryClick = (id) => {
+    setExpandedCategoryId((prevId) => (prevId === id ? null : id));
+  };
+
   return (
     <>
       <button
@@ -35,19 +32,30 @@ export default function SubCategorySelect({
           {capitalizeText(activeParentCategory.name)}
         </p>
       </button>
-      {activeParentCategory !== null && (
+      {subCategories !== null && (
         <div className="flex flex-col gap-y-4">
-          {subCategory.map(({ id, name }) => {
-            return (
-              <button
-                onClick={() => onClickSubCategory(id, name)}
-                className="flex items-center justify-between"
-                key={id}
-              >
-                <p className="font-semibold mr-14">{name}</p>
-                <NextArrow />
-              </button>
-            );
+          {subCategories.map((category) => {
+            const isActive = selectedSubCategory?.id === category.id;
+            if (expandedCategoryId === null || isActive) {
+              return (
+                <Category
+                  isActive={isActive}
+                  key={category.id}
+                  category={category}
+                  expandedCategoryId={expandedCategoryId}
+                  onCategoryClick={handleCategoryClick}
+                />
+
+                // <button
+                //   onClick={() => onClickSubCategory(id, name)}
+                //   className="flex items-center justify-between"
+                //   key={id}
+                // >
+                //   <p className="font-semibold mr-14">{name}</p>
+                //   <NextArrow />
+                // </button>
+              );
+            }
           })}
         </div>
       )}
