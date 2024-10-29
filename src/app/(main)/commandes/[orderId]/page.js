@@ -14,6 +14,7 @@ import AvatarDisplay from "@/components/AvatarDisplay";
 import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
+import { centsToEuros } from "@/utils/centsToEuros";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
@@ -135,7 +136,7 @@ export default function OrderDetails({ params }) {
                 </div>
               </div>
               <div className="font-poppins font-extrabold text-sm">
-                {amount}€
+                {centsToEuros(amount)}€
               </div>
             </div>
           ))}
@@ -161,11 +162,15 @@ export default function OrderDetails({ params }) {
           <ul>
             <li className="flex justify-between mb-3">
               <span className="font-semibold">Commande</span>
-              <span className="font-poppins font-medium">{amount}€</span>
+              <span className="font-poppins font-medium">
+                {centsToEuros(amount)}€
+              </span>
             </li>
             <li className="flex justify-between mb-3">
               <span className="font-semibold">Frais de port</span>
-              <span className="font-poppins font-medium">{shippingPrice}€</span>
+              <span className="font-poppins font-medium">
+                {centsToEuros(shippingPrice)}€
+              </span>
             </li>
             <li className="flex justify-between mb-14">
               <button
@@ -179,12 +184,14 @@ export default function OrderDetails({ params }) {
                   alt=""
                 />
               </button>{" "}
-              <span className="font-poppins font-medium">{appFees}€</span>
+              <span className="font-poppins font-medium">
+                {centsToEuros(appFees)}€
+              </span>
             </li>
             <li className="flex justify-between font-semibold">
               <span>Total</span>
               <span className="font-poppins font-extrabold">
-                {amount + shippingPrice + appFees}€
+                {centsToEuros(amount + shippingPrice + appFees)}€
               </span>
             </li>
           </ul>
