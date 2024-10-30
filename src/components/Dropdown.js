@@ -92,7 +92,7 @@ export default function Dropdown({
         <div
           className={`absolute bg-light-grey border ${
             isBlack ? "border-black" : "border-light-green"
-          } rounded-xl px-5 mt-2 z-10 ${className}`}
+          } rounded-xl px-5 mt-2 z-30 ${className}`}
         >
           {children}
         </div>
