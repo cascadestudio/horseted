@@ -43,6 +43,7 @@ export default function CategorySelect({
       title={title}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
+      onSelect={() => handleSelectCategory()}
     >
       <div className="min-w-64 min-h-64 py-4">
         {categoryStack.length > 0 && (
@@ -59,7 +60,6 @@ export default function CategorySelect({
         <div className="flex flex-col gap-y-4">
           {currentCategories.map((category) =>
             isLastLevel ? (
-              // Render radio button for the last level categories
               <label
                 key={category.id}
                 className="flex justify-between items-center cursor-pointer font-semibold"
@@ -75,15 +75,10 @@ export default function CategorySelect({
                 />
               </label>
             ) : (
-              // Render button with icon for non-last level categories
               <button
                 key={category.id}
                 className="flex items-center justify-between"
-                onClick={() =>
-                  category.hasChildren
-                    ? navigateToCategory(category)
-                    : handleSelectCategory(category.id, category.name)
-                }
+                onClick={() => navigateToCategory(category)}
               >
                 <div className="flex mr-14">
                   {categoryStack.length === 0 && (
