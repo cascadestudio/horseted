@@ -20,7 +20,6 @@ export default function CategoriesNav({ categories }) {
       setIsClickOutside(false);
     }
     if (id === selectedSubCategories) {
-      console.log("id === selectedSubCategories");
       setIsOpen(!isOpen);
     } else {
       setSelectedSubCategories(id);

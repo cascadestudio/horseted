@@ -1,32 +1,18 @@
 import { useEffect, useState } from "react";
-import fetchHorseted from "@/utils/fetchHorseted";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import capitalizeText from "@/utils/capitalizeText";
-import NextArrow from "@/assets/icons/NextArrow";
+import Category from "./Category";
 
 export default function SubCategorySelect({
+  // subCategories,
+  setExpandedCategoryId,
+  expandedCategoryId,
   activeParentCategory,
-  onClickSubCategory,
-  activeSubCategory,
-  onClickPrev,
 }) {
-  const [subCategory, setSubCategory] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories?parentId=${activeParentCategory.id}`;
-        const data = await fetchHorseted(query);
-        setSubCategory(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    activeParentCategory !== null && fetchCategories();
-  }, [activeParentCategory]);
+  // console.log("activeParentCategory =>", activeParentCategory);
   return (
     <>
-      <button
+      {/* <button
         className="flex items-center w-full border-b border-black pb-4 mb-4"
         onClick={() => onClickPrev()}
       >
@@ -34,23 +20,33 @@ export default function SubCategorySelect({
         <p className="ml-3 basis-full justify-self-center font-bold">
           {capitalizeText(activeParentCategory.name)}
         </p>
-      </button>
-      {activeParentCategory !== null && (
-        <div className="flex flex-col gap-y-4">
-          {subCategory.map(({ id, name }) => {
+      </button> */}
+      <div className="flex flex-col gap-y-4">
+        {activeParentCategory.subCategories.map((category) => {
+          // console.log("category =>", category.id);
+          const isActive = expandedCategoryId === category.id;
+          if (expandedCategoryId === null || isActive) {
             return (
-              <button
-                onClick={() => onClickSubCategory(id, name)}
-                className="flex items-center justify-between"
-                key={id}
-              >
-                <p className="font-semibold mr-14">{name}</p>
-                <NextArrow />
-              </button>
+              <Category
+                isActive={isActive}
+                key={category.id}
+                category={category}
+                expandedCategoryId={expandedCategoryId}
+                setExpandedCategoryId={setExpandedCategoryId}
+              />
+
+              // <button
+              //   onClick={() => onClickSubCategory(id, name)}
+              //   className="flex items-center justify-between"
+              //   key={id}
+              // >
+              //   <p className="font-semibold mr-14">{name}</p>
+              //   <NextArrow />
+              // </button>
             );
-          })}
-        </div>
-      )}
+          }
+        })}
+      </div>
     </>
   );
 }

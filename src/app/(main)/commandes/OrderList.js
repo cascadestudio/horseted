@@ -7,14 +7,11 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Button from "@/components/Button";
 import Link from "next/link";
-import { getOrderDocuments } from "@/fetch/orders";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
   const [purchasesOrSales, setPurchasesOrSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log("purchasesOrSales =>", purchasesOrSales);
 
   useEffect(() => {
     getOrders();
@@ -56,15 +53,6 @@ export default function OrderList({ orderType }) {
     setPurchasesOrSales(purchasesOrSales.flat());
     setIsLoading(false);
   }
-
-  const handleDocumentDownload = async (orderId) => {
-    {
-      /*  GET /orders/:id/documents/:document_type où document_type = receipt | fees_invoice */
-    }
-    const documentType = "receipt";
-    const documentName = `order_${orderId}_${documentType}.pdf`;
-    await getOrderDocuments(orderId, documentType, accessToken, documentName);
-  };
 
   if (isLoading) {
     return <Spinner />;
@@ -123,12 +111,18 @@ export default function OrderList({ orderType }) {
                     {centsToEuros(order.transferAmount)}€
                   </td>
                   <td className="py-4 px-2 text-sm lg:text-base text-center">
-                    <button
-                      onClick={() => handleDocumentDownload(order.id)}
+                    <Link
+                      href={{
+                        pathname: `/commandes/${order.id}`,
+                        query: {
+                          productId: product.id,
+                          cavalierId: cavalier.id,
+                        },
+                      }}
                       className="font-semibold text-light-green"
                     >
                       Voir
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               );

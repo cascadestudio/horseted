@@ -32,22 +32,24 @@ export const postOrderPayment = async (accessToken, orderId, body) => {
   return paymentResponse;
 };
 
-export const getOrderDocuments = async (
-  orderId,
-  documentType,
-  accessToken,
-  documentName
-) => {
+export const getOrderDocuments = async (orderId, documentType, accessToken) => {
   const blob = await fetchHorseted(
     `/orders/${orderId}/documents/${documentType}`,
     accessToken
   );
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = documentName;
-  document.body.appendChild(a);
-  a.click();
-  window.URL.revokeObjectURL(url);
-  document.body.removeChild(a);
+  return blob;
+};
+
+export const patchOrderIsReceived = async (orderId, accessToken) => {
+  const query = `/orders/${orderId}`;
+  const body = {
+    received: true,
+  };
+  await fetchHorseted(query, accessToken, "PATCH", body, true);
+};
+
+export const getPaymentInfos = async (accessToken, orderId) => {
+  const query = `/orders/${orderId}/payment_infos`;
+  const paymentInfos = await fetchHorseted(query, accessToken);
+  return paymentInfos;
 };

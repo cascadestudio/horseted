@@ -13,40 +13,31 @@ export default function CategorySelect({
   className,
   isBlack,
   title = "Catégorie",
+  categories,
 }) {
-  const [parentCategories, setParentCategories] = useState([]);
+  // const [parentCategories, setParentCategories] = useState(categories);
+  // const [activeSubCategory, setActiveSubCategory] = useState(null);
+
   const [activeParentCategory, setActiveParentCategory] = useState(null);
-  const [activeSubCategory, setActiveSubCategory] = useState(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories`;
-        const data = await fetchHorseted(query);
-        setParentCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
+  // console.log("expandedCategoryId =>", expandedCategoryId);
 
-    fetchCategories();
-  }, []);
-
-  function onClickSubCategory(id, name) {
-    setActiveSubCategory({ id: id, name: name });
-  }
+  // function onClickSubCategory(id, name) {
+  //   setActiveSubCategory({ id: id, name: name });
+  // }
 
   function showParentCategories() {
     setActiveParentCategory(null);
   }
 
-  function showSubCategories() {
-    setActiveSubCategory(null);
-  }
+  // function showSubCategories() {
+  //   setActiveSubCategory(null);
+  // }
 
-  const handleOnClickProductCategory = (id, name) => {
-    onClickProductCategory(id, name);
-  };
+  // const handleOnClickProductCategory = (id, name) => {
+  //   onClickProductCategory(id, name);
+  // };
 
   return (
     <Dropdown
@@ -57,15 +48,16 @@ export default function CategorySelect({
       onSelect={onClickProductCategory}
     >
       <div className="min-w-64 min-h-64 py-4">
-        {activeParentCategory === null && activeSubCategory === null && (
+        {activeParentCategory === null && (
           <div className="flex flex-col gap-y-4">
-            {parentCategories.map((parentCategorie) => {
-              const { id, name } = parentCategorie;
+            {categories.map((category) => {
+              const { id, name } = category;
               return (
                 <button
                   className="flex items-center justify-between"
-                  onClick={(e) => {
-                    setActiveParentCategory({ id: id, name: name });
+                  onClick={() => {
+                    setActiveParentCategory(category);
+                    setExpandedCategoryId(null);
                   }}
                   key={id}
                 >
@@ -79,22 +71,25 @@ export default function CategorySelect({
             })}
           </div>
         )}
-        {activeParentCategory !== null && activeSubCategory === null && (
+        {activeParentCategory !== null && (
           <SubCategorySelect
             activeParentCategory={activeParentCategory}
-            onClickSubCategory={onClickSubCategory}
-            activeSubCategory={activeSubCategory}
+            // onClickSubCategory={onClickSubCategory}
+            // activeSubCategory={activeSubCategory}
             onClickPrev={showParentCategories}
+            // subCategories={activeParentCategory.subCategories || []}
+            setExpandedCategoryId={setExpandedCategoryId}
+            expandedCategoryId={expandedCategoryId}
           />
         )}
-        {activeSubCategory !== null && (
+        {/* {activeSubCategory !== null && (
           <ProductCategorySelect
             activeSubCategory={activeSubCategory}
             onClickProductCategory={handleOnClickProductCategory}
             onClickPrev={showSubCategories}
             activeCategory={activeCategory}
           />
-        )}
+        )} */}
       </div>
     </Dropdown>
   );

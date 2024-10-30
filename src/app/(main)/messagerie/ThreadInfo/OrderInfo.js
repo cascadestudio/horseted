@@ -1,10 +1,9 @@
 import Button from "@/components/Button";
-import fetchHorseted from "@/utils/fetchHorseted";
 import { ISOtoShortDate } from "@/utils/formatDate";
 import Link from "next/link";
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
-import { getOrder } from "@/fetch/orders";
+import { getOrder, patchOrderIsReceived } from "@/fetch/orders";
 import { useThreadsContext } from "../context/ThreadsContext";
 
 export default function OrderInfo() {
@@ -13,18 +12,10 @@ export default function OrderInfo() {
   const [isReviewModal, setIsReviewModal] = useState(false);
 
   const handleIsOrderReceived = async () => {
-    await patchOrderIsReceived();
+    await patchOrderIsReceived(accessToken);
     const order = await getOrder(accessToken, order.id);
     setOrder(order);
     setIsReviewModal(true);
-  };
-
-  const patchOrderIsReceived = async () => {
-    const query = `/orders/${order.id}`;
-    const body = {
-      received: true,
-    };
-    await fetchHorseted(query, accessToken, "PATCH", body, true);
   };
 
   const userType = user.id === order.userId ? "buyer" : "seller";
@@ -53,7 +44,7 @@ export default function OrderInfo() {
                 (order.received ? (
                   <>
                     <p className="font-mcqueen text-lg font-bold text-light-green">
-                      Livraison confirmée par l'acheteur
+                      Colis livré
                     </p>
                     <Button onClick={() => setIsReviewModal(true)}>
                       Laisser un avis
@@ -64,7 +55,7 @@ export default function OrderInfo() {
                     Confirmation de livraison requise par l'acheteur !
                   </p>
                 ))}
-              {userType === "buyer" &&
+              {/* {userType === "buyer" &&
                 (order.received ? (
                   <p className="font-mcqueen text-lg font-bold text-light-green">
                     Évaluation ajoutée
@@ -86,7 +77,7 @@ export default function OrderInfo() {
                       </Link>
                     </div>
                   </>
-                ))}
+                ))} */}
             </div>
           );
         }
@@ -150,7 +141,7 @@ export default function OrderInfo() {
               <div key={index} className="flex items-center mb-3">
                 <img src="/icons/delivery-check.svg" alt="" />
                 <div className="ml-5">
-                  <p className="font-medium">Prêt à être livré</p>
+                  <p className="font-medium">Colis envoyé</p>
                   <p className="text-sm font-poppins text-grey">
                     {ISOtoShortDate(status.updatedAt)}
                   </p>
@@ -176,7 +167,7 @@ export default function OrderInfo() {
               <div className="flex items-center mb-3">
                 <img src="/icons/delivery-check.svg" alt="" />
                 <div className="ml-5">
-                  <p className="font-medium">En cours de livraison</p>
+                  <p className="font-medium">Colis en cours de livraison</p>
                   <p className="text-sm font-poppins text-grey">
                     {ISOtoShortDate(status.updatedAt)}
                   </p>
@@ -189,7 +180,9 @@ export default function OrderInfo() {
               <div className="flex items-center mb-3">
                 <img src="/icons/delivery-check.svg" alt="" />
                 <div className="ml-5">
-                  <p className="font-medium">Disponible en point relais</p>
+                  <p className="font-medium">
+                    Colis Arrivé au point de livraison
+                  </p>
                   <p className="text-sm font-poppins text-grey">
                     {ISOtoShortDate(status.updatedAt)}
                   </p>
@@ -201,7 +194,7 @@ export default function OrderInfo() {
             return (
               <div className="flex items-center mb-3">
                 <div className="ml-10">
-                  <p className="font-medium text-red-500">Commande en retard</p>
+                  <p className="font-medium text-red-500">Colis en retard</p>
                   <p className="text-sm font-poppins text-grey">
                     {ISOtoShortDate(status.updatedAt)}
                   </p>

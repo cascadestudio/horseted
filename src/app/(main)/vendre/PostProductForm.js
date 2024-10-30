@@ -140,7 +140,7 @@ export default function PostProductForm({
             onChange={handleFormChange}
             name="title"
             value={product.title}
-            className="mx-0 lg:mx-2 max-w-[700px]"
+            className="mx-0 max-w-[700px]"
             hideLabel
             placeholder="Ex : Couverture de poney"
           />

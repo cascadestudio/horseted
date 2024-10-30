@@ -52,7 +52,7 @@ export default function ProductCard({
           <p className="font-poppins font-bold">{centsToEuros(price)} €</p>
           <Link
             href={`/product/${id}`}
-            className="text-lg font-extrabold text-light-green truncate"
+            className="block text-lg font-extrabold text-light-green truncate"
           >
             {title}
             <span className="absolute inset-0"></span>

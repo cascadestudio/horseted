@@ -52,8 +52,9 @@ const CheckOutPage = () => {
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
-  const [productIds, setProductIds] = useState([]);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
+
+  const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [alert, setAlert] = useState({
     type: "",
@@ -93,18 +94,22 @@ const CheckOutPage = () => {
     }
     const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
+    if (!isAddressSaved) {
+      const query = `/users/me/addresses/${activeAddress.id}`;
+      await fetchHorseted(query, accessToken, "DELETE");
+    }
     setLoading(false);
   }
 
   const handleProductsPrice = () => {
     if (offer) {
-      return centsToEuros(offer.price);
+      return offer.price ? centsToEuros(offer.price) : "0,00";
     } else {
       const productsPriceSum = products.reduce((total, product) => {
         const sum = total + product.price;
-        return centsToEuros(sum);
+        return sum;
       }, 0);
-      return productsPriceSum;
+      return centsToEuros(productsPriceSum);
     }
   };
 
@@ -259,7 +264,6 @@ const CheckOutPage = () => {
               setShippingMethods={setShippingMethods}
               activeServicePoint={activeServicePoint}
               setActiveServicePoint={setActiveServicePoint}
-              isAddressSaved={isAddressSaved}
             />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
@@ -281,9 +285,12 @@ const CheckOutPage = () => {
                     <p className="font-extrabold">Total</p>
                     <p className="font-extrabold justify-self-end">
                       {formatNumber(
-                        // parseFloat(handleProductsPrice().replace(",", ".")) +
-                        parseFloat(handleProductsPrice()) +
-                          parseFloat(shippingMethods[0]?.price || 0)
+                        parseFloat(handleProductsPrice().replace(",", ".")) +
+                          parseFloat(
+                            centsToEuros(
+                              shippingMethods[0]?.price || 0
+                            ).replace(",", ".")
+                          )
                       )}{" "}
                       €
                     </p>

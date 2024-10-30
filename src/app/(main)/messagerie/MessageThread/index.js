@@ -10,6 +10,8 @@ import Spinner from "@/components/Spinner";
 export default function MessageThread() {
   const { messages, recipient, isLoading } = useThreadsContext();
 
+  console.log(messages);
+
   const threadContainerRef = useRef(null);
 
   const reversedMessages = [...messages].reverse();

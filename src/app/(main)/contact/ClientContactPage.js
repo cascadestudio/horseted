@@ -8,18 +8,26 @@ import { useAuthContext } from "@/context/AuthContext";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Image from "next/image";
 import Link from "next/link";
-import Radio from "@/components/input/Radio";
+import Checkbox from "@/components/input/Checkbox";
 
 export default function Contact() {
   const { accessToken } = useAuthContext();
   const [contactData, setContactData] = useState({
     object: "",
     message: "",
+    acceptTerms: false,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContactData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (e) => {
+    setContactData((prev) => ({
+      ...prev,
+      acceptTerms: e.target.checked,
+    }));
   };
 
   async function postContact() {
@@ -39,7 +47,7 @@ export default function Contact() {
   return (
     <div>
       <div className="bg-dark-green">
-        <div className="container mx-auto px-5 lg:px-0 pb-5 lg:pb-11">
+        <div className="container mx-auto px-5 pb-5 lg:pb-11">
           <Breadcrumbs breadcrumbs={breadcrumbs} white />
           <h1 className="text-4xl font-mcqueen font-bold text-white">
             Contactez l'équipe Horseted
@@ -47,9 +55,12 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="container mx-auto py-11 px-5 lg:px-0">
+      <div className="container mx-auto py-11 px-5">
         <form
-          action={postContact}
+          onSubmit={(e) => {
+            e.preventDefault();
+            postContact();
+          }}
           className="form-container grid grid-cols-1 lg:grid-cols-2 gap-3 mb-5"
         >
           <TextInput
@@ -72,7 +83,12 @@ export default function Contact() {
             placeholder="Votre message..."
           />
           <div className="flex items-center gap-3 p-5 h-fit col-span-2 lg:col-span-1">
-            <Radio />
+            <Checkbox
+              name="acceptTerms"
+              checked={contactData.acceptTerms}
+              onChange={handleCheckboxChange}
+              required={true}
+            />
             <p className="font-semibold text-sm">
               J’accepte les{" "}
               <Link className=" underline" href="/cgu">

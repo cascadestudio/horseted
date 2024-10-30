@@ -6,34 +6,34 @@ export default function SubCategoriesPanel({
   panelRef,
   setIsOpen,
 }) {
-  const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState(null);
-
-  function handleClick(id) {
-    setSelectedSubCategoriesId(id);
-  }
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
   useEffect(() => {
     if (subCategories.length > 0) {
-      setSelectedSubCategoriesId(subCategories[0].id);
+      setSelectedSubCategory(subCategories[0]);
     }
   }, [subCategories]);
 
   return (
     <div
       ref={panelRef}
-      className="absolute top-[48px] bg-white border border-dark-green rounded-b-[20px] flex z-10 py-2"
+      className="absolute top-[48px] bg-white border border-light-green rounded-b-[20px] flex z-30 py-2"
     >
       <ul className="border-r px-2">
         {subCategories?.map((category) => {
           const { name, id } = category;
-          const isActive = selectedSubCategoriesId === id;
+          const isActive = selectedSubCategory?.id === id;
           return (
             <li key={name}>
               <button
                 className={`text-left w-full px-6 pt-4 pb-3 mb-1 capitalize whitespace-nowrap font-semibold ${
                   isActive && "border-b border-light-green text-light-green"
                 }`}
-                onClick={() => handleClick(id)}
+                onClick={() => {
+                  setSelectedSubCategory(category);
+                  setExpandedCategoryId(null);
+                }}
               >
                 {name}
               </button>
@@ -41,11 +41,13 @@ export default function SubCategoriesPanel({
           );
         })}
       </ul>
-      {selectedSubCategoriesId !== null && (
+      {selectedSubCategory !== null && (
         <ProductCategories
           subCategories={subCategories}
-          selectedSubCategoriesId={selectedSubCategoriesId}
+          selectedSubCategory={selectedSubCategory}
           setIsOpen={setIsOpen}
+          expandedCategoryId={expandedCategoryId}
+          setExpandedCategoryId={setExpandedCategoryId}
         />
       )}
     </div>

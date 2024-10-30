@@ -22,7 +22,7 @@ import ThreeDotsProductDropDown from "./ThreeDotsProductDropDown";
 import ShareDropDown from "./ShareDropDown";
 import { useRouter } from "next/navigation";
 
-export default function ProductPageClient({
+export default function ProductInfoSection({
   product,
   sellerData,
   userProducts,
@@ -102,6 +102,8 @@ export default function ProductPageClient({
     size,
   } = product;
 
+  console.log("product =>", product);
+
   const formattedDate = ISOtoDate(createdAt);
 
   const { username, review, avatar } = sellerData;
@@ -111,13 +113,15 @@ export default function ProductPageClient({
   return (
     <section className="flex flex-col mt-5 w-full lg:mt-0 lg:ml-16 lg:min-w-[34%] lg:max-w-[430px]">
       <div className="flex items-center justify-between mb-2">
-        <Link
-          key={category.id}
-          href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
-          className="text-[13px] leading-4 border border-black rounded-3xl py-1 px-3"
-        >
-          {category.name}
-        </Link>
+        {category && (
+          <Link
+            key={category.id}
+            href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
+            className="text-[13px] leading-4 border border-black rounded-3xl py-1 px-3"
+          >
+            {category.name}
+          </Link>
+        )}
         <div className="flex items-center ml-5 gap-5 relative">
           <div className="flex items-center gap-1">
             <FavoriteButton favoriteCount={favoritCount} product={product} />

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import fetchHorseted from "@/utils/fetchHorseted";
 import PrevArrow from "@/assets/icons/PrevArrow";
 import capitalizeText from "@/utils/capitalizeText";
 import Radio from "@/components/input/Radio";
@@ -9,23 +8,19 @@ export default function ProductCategorySelect({
   onClickProductCategory,
   onClickPrev,
   activeCategory,
+  subCategories,
 }) {
   const [productCategory, setProductCategory] = useState([]);
 
-  // console.log("activeCategory =>", activeCategory);
+  console.log("subCategories =>", subCategories);
+  const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const query = `/categories?parentId=${activeSubCategory.id}`;
-        const data = await fetchHorseted(query);
-        setProductCategory(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    activeSubCategory !== null && fetchCategories();
-  }, [activeSubCategory]);
+    if (subCategories.length > 0) {
+      setSelectedSubCategory(subCategories[0]);
+    }
+  }, [subCategories]);
 
   return (
     <>

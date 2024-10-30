@@ -1,20 +1,20 @@
-import AddressModal from "./AddressModal";
+import AddressModal from "@/components/Modal/AddresseModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import ModifyIcon from "@/assets/icons/ModifyIcon";
+import Alert from "@/components/Alert";
 
 export default function Address({
   activeAddress,
   setActiveAddress,
-  setIsAddressSaved,
   isAddressSaved,
+  setIsAddressSaved,
 }) {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
   const [isModal, setIsModal] = useState(false);
-
-  // console.log("addresses =>", addresses);
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     getAdress();
@@ -53,10 +53,14 @@ export default function Address({
         <AddressModal
           setIsModal={setIsModal}
           setActiveAddress={setActiveAddress}
-          setIsAddressSaved={setIsAddressSaved}
+          isSaveAddressCheckbox
           isAddressSaved={isAddressSaved}
+          setIsAddressSaved={setIsAddressSaved}
+          type="delivery"
+          setAlert={setAlert}
         />
       )}
+      {alert && <Alert type={alert.type} message={alert.message} />}
     </>
   );
 }

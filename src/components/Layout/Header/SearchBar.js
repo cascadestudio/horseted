@@ -18,7 +18,7 @@ export default function SearchBar({ className }) {
       <input
         className="grow border border-black rounded-full h-11 w-full pl-16 py-0 text-base placeholder:text-sm lg:placeholder:text-base"
         type="text"
-        placeholder="Rechercher un article ou un membre"
+        placeholder="Rechercher des articles"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyDown={handleKeyDown}

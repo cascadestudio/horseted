@@ -2,14 +2,22 @@ import { TextInput } from "@/components/input";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
+import { postAddress } from "@/fetch/addresses";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function AddressModal({
   setIsModal,
-  getAddresses,
   type,
   isDeliverySimilar,
-  postAddress,
+  handleGetAddresses,
+  setActiveAddress,
+  isSaveAddressCheckbox,
+  isAddressSaved,
+  setIsAddressSaved,
+  setAlert,
 }) {
+  const { accessToken } = useAuthContext();
+
   const [address, setAddress] = useState({
     fullName: "",
     street: "",
@@ -21,7 +29,9 @@ export default function AddressModal({
     isDefault: false,
   });
 
-  // console.log("address =>", address);
+  const handleIsAddressSaved = (e) => {
+    setIsAddressSaved(e.target.checked);
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -33,14 +43,31 @@ export default function AddressModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsModal(false);
-    let newAddress = address;
-    await postAddress(newAddress);
-    if (isDeliverySimilar) {
-      newAddress.type = "shipping";
-      await postAddress(newAddress);
+    let addressData = { ...address };
+    if (!addressData.additionalInfos) {
+      delete addressData.additionalInfos;
     }
-    getAddresses();
+    const response = await postAddress(accessToken, addressData);
+    if (response === "address_not_valid") {
+      setAlert({
+        type: "error",
+        message: "Adresse invalide",
+      });
+      return;
+    }
+    setAlert;
+    if (setActiveAddress) {
+      setActiveAddress(response);
+    }
+    if (isDeliverySimilar) {
+      addressData.type = "shipping";
+      await postAddress(accessToken, addressData);
+    }
+
+    setIsModal(false);
+    if (handleGetAddresses) {
+      await handleGetAddresses();
+    }
   };
 
   return (
@@ -96,6 +123,19 @@ export default function AddressModal({
         onChange={handleChange}
         required
       />
+      {isSaveAddressCheckbox && (
+        <label className="flex items-start mt-3">
+          <Checkbox
+            name="isAddressSaved"
+            value={isAddressSaved}
+            checked={isAddressSaved}
+            onChange={handleIsAddressSaved}
+          />
+          <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
+            Enregistrer l’adresse pour plus tard
+          </span>
+        </label>
+      )}
       <label className="flex items-start mt-3">
         <Checkbox
           name="isDefault"
