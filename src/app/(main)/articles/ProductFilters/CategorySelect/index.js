@@ -1,43 +1,41 @@
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
-import SubCategorySelect from "./SubCategorySelect";
-import ProductCategorySelect from "./ProductCategorySelect";
+import { useState } from "react";
 import Dropdown from "@/components/Dropdown";
 import capitalizeText from "@/utils/capitalizeText";
 import slugify from "@/utils/slugify";
 import NextArrow from "@/assets/icons/NextArrow";
+import PrevArrow from "@/assets/icons/PrevArrow";
+import Radio from "@/components/input/Radio";
 
 export default function CategorySelect({
+  categories,
   onClickProductCategory,
   activeCategory,
   className,
   isBlack,
   title = "Catégorie",
-  categories,
 }) {
-  // const [parentCategories, setParentCategories] = useState(categories);
-  // const [activeSubCategory, setActiveSubCategory] = useState(null);
+  const [categoryStack, setCategoryStack] = useState([]);
 
-  const [activeParentCategory, setActiveParentCategory] = useState(null);
-  const [expandedCategoryId, setExpandedCategoryId] = useState(null);
+  const navigateToCategory = (category) => {
+    setCategoryStack([...categoryStack, category]);
+  };
 
-  // console.log("expandedCategoryId =>", expandedCategoryId);
+  const navigateBack = () => {
+    setCategoryStack(categoryStack.slice(0, -1));
+  };
 
-  // function onClickSubCategory(id, name) {
-  //   setActiveSubCategory({ id: id, name: name });
-  // }
+  const handleSelectCategory = (id, name) => {
+    onClickProductCategory(id, name);
+  };
 
-  function showParentCategories() {
-    setActiveParentCategory(null);
-  }
+  const currentCategories =
+    categoryStack.length === 0
+      ? categories
+      : categoryStack[categoryStack.length - 1].subCategories;
 
-  // function showSubCategories() {
-  //   setActiveSubCategory(null);
-  // }
-
-  // const handleOnClickProductCategory = (id, name) => {
-  //   onClickProductCategory(id, name);
-  // };
+  const isLastLevel = currentCategories.every(
+    (category) => !category.hasChildren
+  );
 
   return (
     <Dropdown
@@ -45,51 +43,61 @@ export default function CategorySelect({
       title={title}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
-      onSelect={onClickProductCategory}
+      onSelect={() => handleSelectCategory()}
     >
       <div className="min-w-64 min-h-64 py-4">
-        {activeParentCategory === null && (
-          <div className="flex flex-col gap-y-4">
-            {categories.map((category) => {
-              const { id, name } = category;
-              return (
-                <button
-                  className="flex items-center justify-between"
-                  onClick={() => {
-                    setActiveParentCategory(category);
-                    setExpandedCategoryId(null);
-                  }}
-                  key={id}
-                >
-                  <div className="flex mr-14">
-                    <img src={`/icons/${slugify(name)}.svg`} alt={name} />
-                    <p className="ml-3 font-semibold">{capitalizeText(name)}</p>
-                  </div>
-                  <NextArrow />
-                </button>
-              );
-            })}
-          </div>
+        {categoryStack.length > 0 && (
+          <button
+            className="flex items-center w-full border-b border-black pb-4 mb-4"
+            onClick={navigateBack}
+          >
+            <PrevArrow />
+            <p className="ml-3 basis-full justify-self-center font-bold">
+              {capitalizeText(categoryStack[categoryStack.length - 1].name)}
+            </p>
+          </button>
         )}
-        {activeParentCategory !== null && (
-          <SubCategorySelect
-            activeParentCategory={activeParentCategory}
-            // onClickSubCategory={onClickSubCategory}
-            // activeSubCategory={activeSubCategory}
-            onClickPrev={showParentCategories}
-            // subCategories={activeParentCategory.subCategories || []}
-            setExpandedCategoryId={setExpandedCategoryId}
-            expandedCategoryId={expandedCategoryId}
-          />
-        )}
-        {/* {activeSubCategory !== null && (
-          <ProductCategorySelect
-            activeSubCategory={activeSubCategory}
-            onClickProductCategory={handleOnClickProductCategory}
-            onClickPrev={showSubCategories}
-            activeCategory={activeCategory}
-          />
-        )} */}
+        <div className="flex flex-col gap-y-4">
+          {currentCategories.map((category) =>
+            isLastLevel ? (
+              <label
+                key={category.id}
+                className="flex justify-between items-center cursor-pointer font-semibold"
+              >
+                {capitalizeText(category.name)}
+                <Radio
+                  className="ml-10"
+                  value={category.name}
+                  checked={activeCategory === category.id}
+                  onChange={() =>
+                    handleSelectCategory(category.id, category.name)
+                  }
+                />
+              </label>
+            ) : (
+              <button
+                key={category.id}
+                className="flex items-center justify-between"
+                onClick={() => navigateToCategory(category)}
+              >
+                <div className="flex mr-14">
+                  {categoryStack.length === 0 && (
+                    <img
+                      src={`/icons/${slugify(category.name)}.svg`}
+                      alt={category.name}
+                    />
+                  )}
+                  <p
+                    className={`ml-${categoryStack.length === 0 ? 3 : 0} font-semibold`}
+                  >
+                    {capitalizeText(category.name)}
+                  </p>
+                </div>
+                {category.hasChildren ? <NextArrow /> : null}
+              </button>
+            )
+          )}
+        </div>
       </div>
     </Dropdown>
   );
