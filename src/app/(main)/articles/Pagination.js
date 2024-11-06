@@ -16,17 +16,17 @@ export default function Pagination({ products, setFromId, activeBrands }) {
   });
 
   // Test reset on activebrands
-  useEffect(() => {
-    if (activeBrands.length > 0) {
-      setPages([
-        {
-          firstProductId: products.items[0].id,
-          lastProductId: products.items[products.items.length - 1].id,
-        },
-        setCurrentPageIndex(0),
-      ]);
-    }
-  }, [activeBrands]);
+  // useEffect(() => {
+  //   if (activeBrands.length > 0) {
+  //     setPages([
+  //       {
+  //         firstProductId: products.items[0].id,
+  //         lastProductId: products.items[products.items.length - 1].id,
+  //       },
+  //       setCurrentPageIndex(0),
+  //     ]);
+  //   }
+  // }, [activeBrands]);
 
   useEffect(() => {
     if (products.items && products.items.length > 0) {
