@@ -24,10 +24,6 @@ export default function CategorySelect({
     setCategoryStack(categoryStack.slice(0, -1));
   };
 
-  const handleSelectCategory = (id, name) => {
-    onClickProductCategory(id, name);
-  };
-
   const currentCategories =
     categoryStack.length === 0
       ? categories
@@ -43,7 +39,7 @@ export default function CategorySelect({
       title={title}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
-      onSelect={() => handleSelectCategory()}
+      onSelect={onClickProductCategory}
     >
       <div className="min-w-64 min-h-64 py-4">
         {categoryStack.length > 0 && (
@@ -70,7 +66,7 @@ export default function CategorySelect({
                   value={category.name}
                   checked={activeCategory === category.id}
                   onChange={() =>
-                    handleSelectCategory(category.id, category.name)
+                    onClickProductCategory(category.id, category.name)
                   }
                 />
               </label>
