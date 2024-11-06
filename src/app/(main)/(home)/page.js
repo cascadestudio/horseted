@@ -77,18 +77,18 @@ export default async function Home() {
       <CategoriesSection />
       <ProductsSection
         title="Pour la cavalière"
-        categoryId="1"
-        categoryName="Cavalière"
+        categoryId="1066"
+        categoryName="La Cavalière"
       />
       <ProductsSection
         title="Pour le cavalier"
-        categoryId="1065"
-        categoryName="Cavalier"
+        categoryId="1078"
+        categoryName="le cavalier"
       />
       <ProductsSection
         title="Selles et Accessoires"
-        categoryId="1065"
-        categoryName="Selles et Accessoires"
+        categoryId="1264"
+        categoryName="selles"
       />
       <div className="bg-white">
         <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">

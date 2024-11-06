@@ -351,13 +351,9 @@ export default function ProductsPage({ categories }) {
       ) : (
         <>
           <ProductsList products={products} />
-          <Pagination
-            activeBrands={activeBrands}
-            products={products}
-            setFromId={setFromId}
-          />
         </>
       )}
+      <Pagination products={products} setFromId={setFromId} />
     </div>
   );
 }
