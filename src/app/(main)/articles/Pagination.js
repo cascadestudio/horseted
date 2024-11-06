@@ -1,32 +1,11 @@
 import NextArrow from "@/assets/icons/NextArrow";
 import { useEffect, useState } from "react";
 
-export default function Pagination({ products, setFromId, activeBrands }) {
+export default function Pagination({ products, setFromId }) {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const [pages, setPages] = useState(() => {
-    if (products.items && products.items.length > 0) {
-      return [
-        {
-          firstProductId: products.items[0].id,
-          lastProductId: products.items[products.items.length - 1].id,
-        },
-      ];
-    }
-    return [];
-  });
-
-  // Test reset on activebrands
-  // useEffect(() => {
-  //   if (activeBrands.length > 0) {
-  //     setPages([
-  //       {
-  //         firstProductId: products.items[0].id,
-  //         lastProductId: products.items[products.items.length - 1].id,
-  //       },
-  //       setCurrentPageIndex(0),
-  //     ]);
-  //   }
-  // }, [activeBrands]);
+  console.log("currentPageIndex =>", currentPageIndex);
+  const [pages, setPages] = useState([]);
+  console.log("pages =>", pages);
 
   useEffect(() => {
     if (products.items && products.items.length > 0) {
@@ -43,6 +22,7 @@ export default function Pagination({ products, setFromId, activeBrands }) {
   }, [products]);
 
   const handleClick = (pageIndex) => {
+    console.log("pageIndex =>", pageIndex);
     setCurrentPageIndex(pageIndex);
     if (pageIndex > currentPageIndex) {
       setFromId(pages[pageIndex - 1].lastProductId);
@@ -79,7 +59,7 @@ export default function Pagination({ products, setFromId, activeBrands }) {
                 {pages.length + 1}
               </button>
               <span>...</span>
-              <button onClick={() => handleClick(pages.length)}>
+              <button onClick={() => handleClick(currentPageIndex + 1)}>
                 <NextArrow className={"stroke-medium-grey"} />
               </button>
             </>
