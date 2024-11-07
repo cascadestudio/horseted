@@ -92,7 +92,7 @@ export default async function Home() {
       />
       <div className="bg-white">
         <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">
-          <div className="lg:pt-20">
+          <div className="lg:w-1/2 lg:pt-20">
             <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
               Notre mission : Développement durable et passion
             </h2>
@@ -113,7 +113,7 @@ export default async function Home() {
             </p>
             <Button
               variant="transparent-black"
-              className="w-full mb-7 lg:w-auto lg:mb-24"
+              className="w-full mb-7 lg:w-fit lg:mb-24"
               href="/a-propos"
             >
               En savoir plus
@@ -122,11 +122,11 @@ export default async function Home() {
               src={missionImage2}
               alt="Photo de cheval"
               sizes="(min-width: 1024px) 590px, 100vw"
-              className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-auto"
+              className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-full lg:mx-auto"
             />
           </div>
-          <div>
-            <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44">
+          <div className="lg:w-1/2">
+            <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44 lg:mx-auto">
               <Image
                 src={missionImage1}
                 alt="Selles et accessoires"
@@ -170,7 +170,7 @@ export default async function Home() {
                 </p>
               </div>
               {/* Empty div for the layout */}
-              <div></div>
+              <div className="lg:w-[120px]"></div>
             </div>
             <div className="lg:flex lg:items-stretch lg:mx-5 lg:gap-8 lg:pb-5">
               <div className="flex-1 relative w-full">
@@ -189,8 +189,8 @@ export default async function Home() {
               <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
                 <WhiteThreeStripesIcon />
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et d
+                  J’ai acheté un équipement d’équitation de seconde main à
+                  moitié prix. Je recommande !
                 </p>
                 <p className="font-extrabold text-lg">Élodie M</p>
               </div>
@@ -202,8 +202,8 @@ export default async function Home() {
                   sizes="(min-width: 1024px) 410px, 100vw"
                 />
                 <p className="px-7 mt-5">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt{" "}
+                  Une super application pour vendre le matériel d’équitation
+                  dont je ne me sers plus. Rapide et efficace !
                 </p>
                 <div className="mt-7 px-7 pb-3 flex flex-row-reverse justify-between">
                   <p className="font-extrabold text-lg ">Marion J</p>
