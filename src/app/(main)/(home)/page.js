@@ -92,7 +92,7 @@ export default async function Home() {
       />
       <div className="bg-white">
         <div className="container mx-auto px-5 py-16 lg:py-24 lg:flex lg:flex-row-reverse lg:gap-24">
-          <div className="lg:pt-20">
+          <div className="lg:w-1/2 lg:pt-20">
             <h2 className="font-mcqueen font-bold text-2xl mb-3 lg:hidden">
               Notre mission : Développement durable et passion
             </h2>
@@ -101,17 +101,19 @@ export default async function Home() {
               accessible l’équitation à tous les budgets !
             </h2>
             <p className="lg:text-[18px] mb-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-              <br />
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur
+              Nous sommes convaincus que l'équitation ne devrait pas être un
+              privilège réservé à quelques-uns. En donnant une seconde vie aux
+              équipements équestres, nous contribuons non seulement à rendre
+              cette passion plus abordable, mais aussi à préserver les
+              ressources de notre planète. Acheter et vendre des articles
+              d'équitation de seconde main permet de réduire le gaspillage tout
+              en maintenant un haut niveau de qualité. Ensemble, nous pouvons
+              faire de l'équitation une activité plus responsable et accessible
+              à tous les budgets.
             </p>
             <Button
               variant="transparent-black"
-              className="w-full mb-7 lg:w-auto lg:mb-24"
+              className="w-full mb-7 lg:w-fit lg:mb-24"
               href="/a-propos"
             >
               En savoir plus
@@ -120,11 +122,11 @@ export default async function Home() {
               src={missionImage2}
               alt="Photo de cheval"
               sizes="(min-width: 1024px) 590px, 100vw"
-              className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-auto"
+              className="hidden lg:block object-cover rounded-lg lg:h-[820px] w-full lg:mx-auto"
             />
           </div>
-          <div>
-            <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44">
+          <div className="lg:w-1/2">
+            <div className="relative w-full h-[380px] mb-7 lg:h-[820px] lg:mb-44 lg:mx-auto">
               <Image
                 src={missionImage1}
                 alt="Selles et accessoires"
@@ -138,10 +140,13 @@ export default async function Home() {
                 Une plateforme conçue pour les acheteurs et les vendeurs
               </h2>
               <p className="lg:text-[18px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. 
+                Que vous soyez acheteur ou vendeur, notre plateforme est pensée
+                pour offrir une expérience fluide, sécurisée et agréable. Nous
+                mettons un point d'honneur à faciliter chaque étape, depuis la
+                création de l'annonce jusqu'à la finalisation de la transaction.
+                Vous pouvez parcourir des milliers d'articles, comparer les prix
+                et trouver l'équipement qui correspond parfaitement à vos
+                besoins.  
               </p>
             </div>
           </div>
@@ -158,11 +163,14 @@ export default async function Home() {
                 </h3>
                 <StarsGroup className="w-[110px] mb-10 lg:w-[170px]" />
               </div>
-              <div className="hidden lg:flex lg:items-center lg:justify-center lg:py-7 lg:px-4 lg:bg-dark-green lg:rounded-full lg:mb-7 lg:mr-5">
+              {/* Hidden div for now */}
+              <div className="hidden lg:hidden lg:items-center lg:justify-center lg:py-7 lg:px-4 lg:bg-dark-green lg:rounded-full lg:mb-7 lg:mr-5">
                 <p className="font-mcqueen font-bold text-[30px] text-center text-white">
                   4,6/5
                 </p>
               </div>
+              {/* Empty div for the layout */}
+              <div className="lg:w-[120px]"></div>
             </div>
             <div className="lg:flex lg:items-stretch lg:mx-5 lg:gap-8 lg:pb-5">
               <div className="flex-1 relative w-full">
@@ -181,8 +189,8 @@ export default async function Home() {
               <div className="flex-1 bg-dark-green rounded-[32px] mt-6 w-full text-white text-center py-14 px-9 flex flex-col items-center gap-10 lg:mt-0 lg:max-w-96">
                 <WhiteThreeStripesIcon />
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et d
+                  J’ai acheté un équipement d’équitation de seconde main à
+                  moitié prix. Je recommande !
                 </p>
                 <p className="font-extrabold text-lg">Élodie M</p>
               </div>
@@ -194,8 +202,8 @@ export default async function Home() {
                   sizes="(min-width: 1024px) 410px, 100vw"
                 />
                 <p className="px-7 mt-5">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt{" "}
+                  Une super application pour vendre le matériel d’équitation
+                  dont je ne me sers plus. Rapide et efficace !
                 </p>
                 <div className="mt-7 px-7 pb-3 flex flex-row-reverse justify-between">
                   <p className="font-extrabold text-lg ">Marion J</p>
@@ -204,12 +212,13 @@ export default async function Home() {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center py-7 px-4 bg-dark-green rounded-full my-5 lg:hidden">
+          {/* Hidden div for now */}
+          <div className="hidden items-center justify-center py-7 px-4 bg-dark-green rounded-full my-5 lg:hidden">
             <p className="font-mcqueen font-bold text-[30px] text-center text-white">
               4,6/5
             </p>
           </div>
-          <div className="font-mcqueen text-center leading-7 lg:leading-10 lg:mt-10">
+          <div className="hidden font-mcqueen text-center leading-7 lg:leading-10 lg:mt-10">
             <p className="font-bold text-[30px]">+200 avis</p>
             <p className="text-sm lg:text-xl">
               TrustPilot - Apple Store - Play store
@@ -225,25 +234,29 @@ export default async function Home() {
               Pourquoi choisir des produits d'équitation de seconde main ?
             </h4>
             <p className="text-white lg:text-[18px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur
+              Opter pour des équipements d'équitation de seconde main, c'est
+              faire le choix de la durabilité et de l'écoresponsabilité. En
+              achetant d'occasion, vous contribuez à la réduction des déchets et
+              au prolongement de la vie des produits. Un équipement équestre,
+              souvent conçu pour durer, peut parfaitement être utilisé par
+              plusieurs cavaliers au cours de sa vie, sans perdre de sa qualité
+              ou de son efficacité. Acheter des produits de seconde main permet
+              également d’accéder à des marques et des équipements de qualité à
+              des prix réduits, sans compromettre le confort ou la performance.
             </p>
           </div>
           <div>
             <h4 className="font-mcqueen font-bold text-2xl text-white mb-1 lg:text-3xl lg:mb-5">
-              Pourquoi choisir des produits d'équitation de seconde main ?
+              Comment bien préparer son équipement avant de le vendre ?
             </h4>
             <p className="text-white lg:text-[18px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur
+              Votre équipement est trop petit ? il ne correspond plus à votre
+              pratique ? Vous souhaitez le renouveler ? Mettez-le en vente
+              simplement sur Horseted ! Pour réussir la vente de votre
+              équipement d’équitation, il est essentiel de le préparer avec
+              soin. Un nettoyage complet, en particulier pour le cuir et les
+              textiles, de jolies photos, une description détaillée et un prix
+              correct sont indispensables pour réaliser une vente.
             </p>
           </div>
         </div>
@@ -254,9 +267,11 @@ export default async function Home() {
             Téléchargez l’application Horseted
           </h3>
           <p className="font-mcqueen font-medium text-center text-lg mb-10 lg:px-7">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation
+            Avec l’application Horseted, accédez en quelques clics à tout ce
+            dont vous avez besoin pour vendre et acheter du matériel
+            d’équitation où que vous soyez. Vous pouvez parcourir les annonces,
+            mettre en ligne vos équipements ou encore suivre vos ventes en temps
+            réel.
           </p>
           <Image
             sizes="(min-width: 1024px) 920px, 100vw"

@@ -59,18 +59,7 @@ export default async function CategoryPage({ params }) {
         <h2 className="font-mcqueen font-bold text-2xl mb-5 lg:text-4xl">
           {category.title}
         </h2>
-        <p className="mb-8">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Sodales ut
-          eu sem integer vitae justo eget. Nibh mauris cursus mattis molestie a.
-          Tristique nulla aliquet enim tortor at auctor urna nunc. Id diam
-          maecenas ultricies mi. Risus viverra adipiscing at in tellus integer
-          feugiat. Ut consequat semper viverra nam libero. In cursus turpis
-          massa tincidunt dui ut ornare lectus. Elit pellentesque habitant morbi
-          tristique senectus et netus et. Purus faucibus ornare suspendisse sed
-          nisi. Scelerisque eu ultrices vitae auctor eu augue ut lectus arcu.
-          Mauris rhoncus aenean vel elit. Non consectetur a erat nam at lectus.
-        </p>
+        <p className="mb-8">{category.metaDescription}</p>
         <div className="grid grid-cols-1 gap-6 justify-items-center md:justify-between mb-8 md:grid-cols-[350px_350px] md:gap-8 lg:gap-[30px] xl:grid-cols-[350px_350px_350px] 2xl:grid-cols-4 xl:gap-[38px] 2xl:gap-[66px]">
           {articles.length > 0 ? (
             articles.map((article) => {

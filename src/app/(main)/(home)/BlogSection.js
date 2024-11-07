@@ -11,7 +11,7 @@ export default function BlogSection({ articles }) {
           <br />
           Tendances Équestres
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 lg:gap-12">
+        <div className="grid grid-cols-1 justify-items-center lg:grid-cols-3 gap-6 lg:gap-12">
           {articles?.length > 0 ? (
             articles.slice(0, 3).map((article) => {
               const { title, image, metaDescription, slug } = article;
