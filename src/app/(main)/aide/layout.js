@@ -13,7 +13,8 @@ export const metadata = {
 export default async function HelpLayout({ children }) {
   const helpCategories = await client.fetch(
     `*[_type == "helpCategory"] | order(orderRank asc) {
-      slug
+      slug,
+      title,
     }`,
     { cache: "no-store" }
   );
