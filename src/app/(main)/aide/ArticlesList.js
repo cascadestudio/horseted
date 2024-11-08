@@ -1,4 +1,4 @@
-// import ChevronRight from "@/assets/icons/ChevronRight";
+import ChevronRight from "@/assets/icons/ChevronRight";
 import Link from "next/link";
 
 export default function ArticlesList({ articles, categorySlug }) {
@@ -12,7 +12,7 @@ export default function ArticlesList({ articles, categorySlug }) {
               className="w-full py-4 px-6 flex items-center justify-between hover:bg-pale-grey"
             >
               {article.title}
-              {/* <ChevronRight /> */}
+              <ChevronRight />
             </Link>
           </li>
         ))}

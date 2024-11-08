@@ -2,7 +2,6 @@ import { client } from "../../../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/PortableTextComponents";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import CategoryList from "../CategoryList";
 
 export async function generateMetadata({ params }) {
   const { categorySlug, articleSlug } = params;
@@ -74,7 +73,6 @@ export default async function HelpArticlePage({ params }) {
       <div className="col-span-3 lg:col-span-1">
         {/* <Breadcrumbs breadcrumbs={breadcrumbs} /> */}
         <h1 className="font-mcqueen font-bold text-4xl mb-5">Centre d'aide</h1>
-        <CategoryList activeSlug={categorySlug} />
       </div>
       <div className="col-span-3 lg:col-span-2 pt-5 lg:pt-32">
         <h1 className="font-mcqueen font-bold text-3xl mb-5 lg:text-4xl">

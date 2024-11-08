@@ -18,7 +18,7 @@ export default async function HelpLayout({ children }) {
     { cache: "no-store" }
   );
   return (
-    <div>
+    <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pb-16">
       <Sidebar categories={helpCategories} />
       <main>{children}</main>
     </div>
