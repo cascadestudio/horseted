@@ -33,7 +33,6 @@ export default function ReviewModal({
       true,
       true
     );
-    console.log("response =>", response);
     if (userRole === "seller") {
       setOrder((prevOrder) => ({
         ...prevOrder,

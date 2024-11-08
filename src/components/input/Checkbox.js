@@ -9,6 +9,7 @@ export default function Checkbox({
   name,
   required,
 }) {
+  console.log("disabled =>", disabled);
   return (
     <div className={`w-4 h-4 lg:w-5 lg:h-5 relative ${className}`}>
       <input
@@ -20,8 +21,10 @@ export default function Checkbox({
         checked={checked || false}
         onChange={onChange}
         disabled={disabled}
-        className={`appearance-none cursor-pointer w-4 h-4 lg:w-5 lg:h-5 border border-black rounded bg-white checked:bg-light-green checked:border-transparent ${
-          disabled ? "bg-gray-200 cursor-not-allowed" : ""
+        className={`appearance-none w-4 h-4 lg:w-5 lg:h-5 border border-black rounded  checked:bg-light-green checked:border-transparent ${
+          disabled
+            ? "bg-gray-200 cursor-not-allowed"
+            : "bg-white cursor-pointer"
         }`}
       />
       {checked && (

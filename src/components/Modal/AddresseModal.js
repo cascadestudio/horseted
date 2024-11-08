@@ -142,6 +142,7 @@ export default function AddressModal({
           value={address.isDefault}
           checked={address.isDefault}
           onChange={handleChange}
+          disabled={!isAddressSaved}
         />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           Définir par défaut

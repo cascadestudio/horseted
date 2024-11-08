@@ -56,6 +56,7 @@ const CheckOutPage = () => {
   const [activeDeliveryMethodId, setActiveDeliveryMethodId] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
+  const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
@@ -94,7 +95,7 @@ const CheckOutPage = () => {
     }
     const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
-    if (!isAddressSaved) {
+    if (!isAddressSaved && !isDefaultAddress) {
       const query = `/users/me/addresses/${activeAddress.id}`;
       await fetchHorseted(query, accessToken, "DELETE");
     }
@@ -124,14 +125,15 @@ const CheckOutPage = () => {
     const body = {
       productIds: [parsedProductIds],
     };
-    console.log(body);
     const order = await fetchHorseted(
       `/orders`,
       accessToken,
       "POST",
       body,
+      true,
       true
     );
+    console.log("order =>", order);
     return order.id;
   }
 
@@ -255,6 +257,7 @@ const CheckOutPage = () => {
               setActiveAddress={setActiveAddress}
               isAddressSaved={isAddressSaved}
               setIsAddressSaved={setIsAddressSaved}
+              setIsDefaultAddress={setIsDefaultAddress}
             />
             <DeliveryMethods
               productSize={products[0].shipping}

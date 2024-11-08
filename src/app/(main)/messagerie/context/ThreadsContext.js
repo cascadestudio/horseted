@@ -33,6 +33,7 @@ export const ThreadsProvider = ({ children }) => {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
+  console.log("products =>", products);
 
   // useEffect to fetch threads initially
   useEffect(() => {
@@ -172,6 +173,7 @@ export const ThreadsProvider = ({ children }) => {
   }, []);
 
   const handleGetProductsFromOrder = useCallback(async (order) => {
+    console.log("order =>", order);
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
