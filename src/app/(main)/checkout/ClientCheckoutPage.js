@@ -53,7 +53,7 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-
+  const [activeDeliveryMethodId, setActiveDeliveryMethodId] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [alert, setAlert] = useState({
@@ -145,7 +145,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: shippingMethods[0].id,
+      shippingMethod: activeDeliveryMethodId,
       servicePoint: activeServicePoint?.id || null,
     };
     console.log(body);
@@ -264,6 +264,8 @@ const CheckOutPage = () => {
               setShippingMethods={setShippingMethods}
               activeServicePoint={activeServicePoint}
               setActiveServicePoint={setActiveServicePoint}
+              activeDeliveryMethodId={activeDeliveryMethodId}
+              setActiveDeliveryMethodId={setActiveDeliveryMethodId}
             />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
@@ -300,8 +302,12 @@ const CheckOutPage = () => {
               <>
                 <Button
                   className="mt-12 w-full"
-                  onClick={() => handlePayment()}
-                  disabled={!activePaymentMethodId || !activeAddress}
+                  onClick={handlePayment}
+                  disabled={
+                    !activePaymentMethodId ||
+                    !activeAddress ||
+                    !activeDeliveryMethodId
+                  }
                 >
                   Payer
                 </Button>

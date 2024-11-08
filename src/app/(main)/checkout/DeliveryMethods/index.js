@@ -17,11 +17,11 @@ export default function DeliveryMethods({
   activeServicePoint,
   setActiveServicePoint,
   productSize,
+  activeDeliveryMethodId,
+  setActiveDeliveryMethodId,
 }) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
-  const [activeDeliveryMethod, setActiveDeliveryMethod] =
-    useState("service_point");
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -43,7 +43,7 @@ export default function DeliveryMethods({
   }, [servicePoints]);
 
   function handleDeliveryMethod(e) {
-    setActiveDeliveryMethod(e.target.value);
+    setActiveDeliveryMethodId(Number(e.target.value));
   }
 
   async function getServicePoints() {
@@ -81,8 +81,8 @@ export default function DeliveryMethods({
           return (
             <OptionBlock
               key={id}
-              defaultValue={name}
-              checked={activeDeliveryMethod === name}
+              defaultValue={id}
+              checked={activeDeliveryMethodId === id}
               onChange={handleDeliveryMethod}
             >
               <p className="font-bold">
