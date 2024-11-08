@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
 import ServicePoint from "./ServicePoint";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { shippingSizeTranslations } from "@/utils/translations";
+import {
+  shippingMethodTranslations,
+  shippingSizeTranslations,
+} from "@/utils/translations";
 
 export default function DeliveryMethods({
   activeAddress,
@@ -19,8 +22,6 @@ export default function DeliveryMethods({
   const [servicePoints, setServicePoints] = useState([]);
   const [activeDeliveryMethod, setActiveDeliveryMethod] =
     useState("service_point");
-
-  // console.log("shippingMethods =>", shippingMethods);
 
   useEffect(() => {
     if (activeAddress && productIds) {
@@ -61,7 +62,6 @@ export default function DeliveryMethods({
     if (activeServicePoint) query += `&service_point=${activeServicePoint.id}`;
     const shippingMethods = await fetchHorseted(query, accessToken);
     setShippingMethods(shippingMethods);
-    // console.log("shippingMethods =>", shippingMethods);
   }
 
   return (
@@ -85,7 +85,9 @@ export default function DeliveryMethods({
               checked={activeDeliveryMethod === name}
               onChange={handleDeliveryMethod}
             >
-              <p className="font-bold">{name}</p>
+              <p className="font-bold">
+                {shippingMethodTranslations[name] || name}
+              </p>
               <p>À partir de {centsToEuros(price)} €</p>
             </OptionBlock>
           );
