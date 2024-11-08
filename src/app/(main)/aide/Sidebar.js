@@ -9,8 +9,12 @@ export default function Sidebar({ categories }) {
   return (
     <aside className="bg-light-grey flex flex-col border border-lighter-grey">
       {categories.map((category, index) => {
+        const categorySlug = category.slug.current;
+        const categoryPath = `/aide/${categorySlug}`;
+        const isFirstCategory = index === 0;
         const isActive =
-          pathname === `/aide/${category.slug.current}` || pathname === `/aide`;
+          pathname === categoryPath ||
+          (pathname === "/aide" && isFirstCategory);
         return (
           <Link
             key={index}
