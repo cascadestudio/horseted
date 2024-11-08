@@ -1,20 +1,15 @@
-import Link from "next/link";
-import { client } from "../../../../../sanity/lib/client";
+"use client";
 
-export default async function CategoryList({ activeSlug }) {
-  const helpCategories = await client.fetch(
-    `*[_type == "helpCategory" && count(*[_type == "helpArticle" && references(^._id)]) > 0] | order(orderRank asc) {
-      title,
-      slug
-    }`,
-    { cache: "no-store" }
-  );
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export default function Sidebar({ categories }) {
+  const pathname = usePathname();
 
   return (
     <aside className="bg-light-grey flex flex-col border border-lighter-grey">
-      {helpCategories.map((category, index) => {
-        const isActive = activeSlug === category.slug.current;
-
+      {categories.map((category, index) => {
+        const isActive = pathname === `/aide/${category.slug.current}`;
         return (
           <Link
             key={index}

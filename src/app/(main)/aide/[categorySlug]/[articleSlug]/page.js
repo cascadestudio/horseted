@@ -72,7 +72,7 @@ export default async function HelpArticlePage({ params }) {
   return (
     <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pb-16">
       <div className="col-span-3 lg:col-span-1">
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        {/* <Breadcrumbs breadcrumbs={breadcrumbs} /> */}
         <h1 className="font-mcqueen font-bold text-4xl mb-5">Centre d'aide</h1>
         <CategoryList activeSlug={categorySlug} />
       </div>
