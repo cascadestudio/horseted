@@ -53,9 +53,8 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [activeDeliveryMethodId, setActiveDeliveryMethodId] = useState(null);
+  const [activeDeliveryMethod, setActiveDeliveryMethod] = useState(null);
   const [productIds, setProductIds] = useState([]);
-  console.log("productIds =>", productIds);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
@@ -127,12 +126,9 @@ const CheckOutPage = () => {
   }
 
   async function postOrders() {
-    // const parsedProductIds = productIds);
-    // console.log("parsedProductIds =>", parsedProductIds);
     const body = {
-      productIds: [productIds],
+      productIds: productIds,
     };
-    console.log("body =>", body);
     const order = await fetchHorseted(
       `/orders`,
       accessToken,
@@ -141,7 +137,6 @@ const CheckOutPage = () => {
       true,
       true
     );
-    console.log("order =>", order);
     return order.id;
   }
 
@@ -155,7 +150,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: activeDeliveryMethodId,
+      shippingMethod: activeDeliveryMethod?.id,
       servicePoint: activeServicePoint?.id || null,
     };
     console.log(body);
@@ -275,8 +270,8 @@ const CheckOutPage = () => {
               setShippingMethods={setShippingMethods}
               activeServicePoint={activeServicePoint}
               setActiveServicePoint={setActiveServicePoint}
-              activeDeliveryMethodId={activeDeliveryMethodId}
-              setActiveDeliveryMethodId={setActiveDeliveryMethodId}
+              activeDeliveryMethod={activeDeliveryMethod}
+              setActiveDeliveryMethod={setActiveDeliveryMethod}
             />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
@@ -317,7 +312,7 @@ const CheckOutPage = () => {
                   disabled={
                     !activePaymentMethodId ||
                     !activeAddress ||
-                    !activeDeliveryMethodId
+                    !activeDeliveryMethod
                   }
                 >
                   Payer

@@ -9,7 +9,6 @@ export default function Checkbox({
   name,
   required,
 }) {
-  console.log("disabled =>", disabled);
   return (
     <div className={`w-4 h-4 lg:w-5 lg:h-5 relative ${className}`}>
       <input
