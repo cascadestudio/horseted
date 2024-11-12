@@ -47,7 +47,6 @@ export default function ProductsPage({ categories }) {
   const [activeBrands, setActiveBrands] = useState([]);
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
-  console.log("activeSizes =>", activeSizes);
   const [activePrices, setActivePrices] = useState("");
   const [activeShipping, setActiveShipping] = useState("");
   const [fromId, setFromId] = useState(null);
