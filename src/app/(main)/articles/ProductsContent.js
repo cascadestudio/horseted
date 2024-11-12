@@ -47,6 +47,7 @@ export default function ProductsPage({ categories }) {
   const [activeBrands, setActiveBrands] = useState([]);
   const [activeMaterials, setActiveMaterials] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
+  console.log("activeSizes =>", activeSizes);
   const [activePrices, setActivePrices] = useState("");
   const [activeShipping, setActiveShipping] = useState("");
   const [fromId, setFromId] = useState(null);
@@ -198,7 +199,7 @@ export default function ProductsPage({ categories }) {
     setActiveMaterials(activeMaterials.filter((m) => m !== material));
   }
   function removeSizeFilter(size) {
-    setActiveSizes(activeSizes.filter((s) => s.name !== size));
+    setActiveSizes(activeSizes.filter((s) => s.value !== size));
   }
 
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Catalogue" }];
