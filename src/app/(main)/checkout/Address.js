@@ -65,7 +65,11 @@ export default function Address({
           setAlert={setAlert}
         />
       )}
-      {alert && <Alert type={alert.type} message={alert.message} />}
+      {alert && (
+        <Alert setAlert={setAlert} type={alert.type}>
+          {alert.message}
+        </Alert>
+      )}
     </>
   );
 }

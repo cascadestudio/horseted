@@ -55,6 +55,7 @@ const CheckOutPage = () => {
   const [isAddressSaved, setIsAddressSaved] = useState(false);
   const [activeDeliveryMethodId, setActiveDeliveryMethodId] = useState(null);
   const [productIds, setProductIds] = useState([]);
+  console.log("productIds =>", productIds);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
@@ -65,10 +66,15 @@ const CheckOutPage = () => {
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
     const offerId = searchParams.get("offerId");
+
     if (productIdsParam) {
-      const productIdsParamArray = productIdsParam.split(";");
+      const productIdsParamArray = productIdsParam
+        .split(";")
+        .map((id) => parseInt(id, 10));
+
       setProductIds(productIdsParamArray);
     }
+
     if (offerId) {
       handleGetOffer(offerId);
     }
@@ -121,10 +127,12 @@ const CheckOutPage = () => {
   }
 
   async function postOrders() {
-    const parsedProductIds = parseInt(productIds);
+    // const parsedProductIds = productIds);
+    // console.log("parsedProductIds =>", parsedProductIds);
     const body = {
-      productIds: [parsedProductIds],
+      productIds: [productIds],
     };
+    console.log("body =>", body);
     const order = await fetchHorseted(
       `/orders`,
       accessToken,
