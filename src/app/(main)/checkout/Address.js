@@ -10,6 +10,7 @@ export default function Address({
   setActiveAddress,
   isAddressSaved,
   setIsAddressSaved,
+  setIsDefaultAddress,
 }) {
   const { accessToken } = useAuthContext();
   const [addresses, setAddresses] = useState([]);
@@ -28,6 +29,10 @@ export default function Address({
 
   async function getAdress() {
     const adresses = await fetchHorseted(`/users/me/addresses`, accessToken);
+    const defaultAddress = adresses.find((address) => address.isDefault);
+    if (defaultAddress) {
+      setIsDefaultAddress(true);
+    }
     setAddresses(adresses);
   }
 
@@ -60,7 +65,11 @@ export default function Address({
           setAlert={setAlert}
         />
       )}
-      {alert && <Alert type={alert.type} message={alert.message} />}
+      {alert && (
+        <Alert setAlert={setAlert} type={alert.type}>
+          {alert.message}
+        </Alert>
+      )}
     </>
   );
 }

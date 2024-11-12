@@ -198,7 +198,7 @@ export default function ProductsPage({ categories }) {
     setActiveMaterials(activeMaterials.filter((m) => m !== material));
   }
   function removeSizeFilter(size) {
-    setActiveSizes(activeSizes.filter((s) => s.name !== size));
+    setActiveSizes(activeSizes.filter((s) => s.value !== size));
   }
 
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Catalogue" }];

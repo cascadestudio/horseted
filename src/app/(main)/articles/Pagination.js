@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Pagination({ products, setFromId }) {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  console.log("currentPageIndex =>", currentPageIndex);
   const [pages, setPages] = useState([]);
-  console.log("pages =>", pages);
 
   useEffect(() => {
     if (products.items && products.items.length > 0) {
@@ -22,7 +20,6 @@ export default function Pagination({ products, setFromId }) {
   }, [products]);
 
   const handleClick = (pageIndex) => {
-    console.log("pageIndex =>", pageIndex);
     setCurrentPageIndex(pageIndex);
     if (pageIndex > currentPageIndex) {
       setFromId(pages[pageIndex - 1].lastProductId);

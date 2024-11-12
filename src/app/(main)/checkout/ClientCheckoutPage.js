@@ -53,9 +53,10 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-
+  const [activeDeliveryMethod, setActiveDeliveryMethod] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
+  const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
@@ -64,10 +65,15 @@ const CheckOutPage = () => {
   useEffect(() => {
     const productIdsParam = searchParams.get("productIds");
     const offerId = searchParams.get("offerId");
+
     if (productIdsParam) {
-      const productIdsParamArray = productIdsParam.split(";");
+      const productIdsParamArray = productIdsParam
+        .split(";")
+        .map((id) => parseInt(id, 10));
+
       setProductIds(productIdsParamArray);
     }
+
     if (offerId) {
       handleGetOffer(offerId);
     }
@@ -94,7 +100,7 @@ const CheckOutPage = () => {
     }
     const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
-    if (!isAddressSaved) {
+    if (!isAddressSaved && !isDefaultAddress) {
       const query = `/users/me/addresses/${activeAddress.id}`;
       await fetchHorseted(query, accessToken, "DELETE");
     }
@@ -120,16 +126,15 @@ const CheckOutPage = () => {
   }
 
   async function postOrders() {
-    const parsedProductIds = parseInt(productIds);
     const body = {
-      productIds: [parsedProductIds],
+      productIds: productIds,
     };
-    console.log(body);
     const order = await fetchHorseted(
       `/orders`,
       accessToken,
       "POST",
       body,
+      true,
       true
     );
     return order.id;
@@ -145,7 +150,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: shippingMethods[0].id,
+      shippingMethod: activeDeliveryMethod?.id,
       servicePoint: activeServicePoint?.id || null,
     };
     console.log(body);
@@ -255,6 +260,7 @@ const CheckOutPage = () => {
               setActiveAddress={setActiveAddress}
               isAddressSaved={isAddressSaved}
               setIsAddressSaved={setIsAddressSaved}
+              setIsDefaultAddress={setIsDefaultAddress}
             />
             <DeliveryMethods
               productSize={products[0].shipping}
@@ -264,6 +270,8 @@ const CheckOutPage = () => {
               setShippingMethods={setShippingMethods}
               activeServicePoint={activeServicePoint}
               setActiveServicePoint={setActiveServicePoint}
+              activeDeliveryMethod={activeDeliveryMethod}
+              setActiveDeliveryMethod={setActiveDeliveryMethod}
             />
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
@@ -300,8 +308,12 @@ const CheckOutPage = () => {
               <>
                 <Button
                   className="mt-12 w-full"
-                  onClick={() => handlePayment()}
-                  disabled={!activePaymentMethodId || !activeAddress}
+                  onClick={handlePayment}
+                  disabled={
+                    !activePaymentMethodId ||
+                    !activeAddress ||
+                    !activeDeliveryMethod
+                  }
                 >
                   Payer
                 </Button>

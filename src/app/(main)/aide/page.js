@@ -1,27 +1,35 @@
-import { redirect } from "next/navigation";
 import { client } from "../../../../sanity/lib/client";
-
-export const metadata = {
-  title: "Aide | Horseted",
-  description: "Aide | Horseted",
-  openGraph: {
-    title: "Aide | Horseted",
-    description: "Aide | Horseted",
-  },
-};
+import ArticlesList from "./ArticlesList";
 
 export default async function AidePage() {
-  const helpCategories = await client.fetch(
-    `*[_type == "helpCategory"] | order(orderRank asc) {
+  const firstCategory = await client.fetch(
+    `*[_type == "helpCategory"] | order(orderRank asc)[0] {
+      _id,
+      title,
       slug
     }`,
     { cache: "no-store" }
   );
 
-  if (helpCategories.length > 0) {
-    const firstCategorySlug = helpCategories[0].slug.current;
-    redirect(`/aide/${firstCategorySlug}`);
-  }
+  const articles = await client.fetch(
+    `*[_type == "helpArticle" && references($categoryId)] | order(orderRank asc) {
+      title,
+      slug,
+      helpCategory->{
+        title,
+        slug
+      }
+    }`,
+    { categoryId: firstCategory._id },
+    { cache: "no-store" }
+  );
 
-  return null;
+  return (
+    <div>
+      <ArticlesList
+        articles={articles}
+        categorySlug={firstCategory.slug.current}
+      />
+    </div>
+  );
 }

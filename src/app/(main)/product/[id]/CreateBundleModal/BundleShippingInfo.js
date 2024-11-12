@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { formatNumber } from "@/utils/formatNumber";
+import { shippingMethodTranslations } from "@/utils/translations";
 
 export default function BundleShippingInfo({ products }) {
   const { accessToken } = useAuthContext();
@@ -17,7 +18,7 @@ export default function BundleShippingInfo({ products }) {
 
   const getShippingMethods = async () => {
     const defaultAddress = await getDefaultAddresses();
-    console.log("defaultAddress =>", defaultAddress);
+    if (!defaultAddress) return;
     let query = `/delivery/shipping_methods`;
     query += `?postal_code=${defaultAddress.postalCode}`;
     query += `&product_ids=${products.map((product) => product.id).join(";")}`;
@@ -31,20 +32,11 @@ export default function BundleShippingInfo({ products }) {
     return defaultAddress;
   };
 
-  const getShippingMethodDisplayName = (methodName) => {
-    switch (methodName) {
-      case "Unstamped letter":
-        return "Lettre non affranchie";
-      default:
-        return methodName;
-    }
-  };
+  if (!accessToken || !shippingMethods.length) return;
 
-  if (!accessToken || !shippingMethods.length) return <p>0,00 €</p>;
-
-  const shippingMethodName = getShippingMethodDisplayName(
-    shippingMethods[0].name
-  );
+  const shippingMethodName =
+    shippingMethodTranslations[shippingMethods[0].name] ||
+    shippingMethods[0].name;
 
   return (
     <p>

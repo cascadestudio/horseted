@@ -102,8 +102,6 @@ export default function ProductInfoSection({
     size,
   } = product;
 
-  console.log("product =>", product);
-
   const formattedDate = ISOtoDate(createdAt);
 
   const { username, review, avatar } = sellerData;

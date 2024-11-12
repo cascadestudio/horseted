@@ -10,10 +10,8 @@ import { patchOrderIsReceived } from "@/fetch/orders";
 import ReviewModal from "../../../ThreadInfo/ReviewModal";
 
 export default function OrderInfoMessage({ type, offerId }) {
-  console.log("type =>", type);
   const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
-  // console.log("order =>", order);
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
 

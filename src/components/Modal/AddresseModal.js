@@ -48,17 +48,20 @@ export default function AddressModal({
       delete addressData.additionalInfos;
     }
     const response = await postAddress(accessToken, addressData);
+
     if (response === "address_not_valid") {
+      console.log("response =>", response);
       setAlert({
         type: "error",
         message: "Adresse invalide",
       });
       return;
     }
-    setAlert;
+
     if (setActiveAddress) {
       setActiveAddress(response);
     }
+
     if (isDeliverySimilar) {
       addressData.type = "shipping";
       await postAddress(accessToken, addressData);
@@ -142,6 +145,7 @@ export default function AddressModal({
           value={address.isDefault}
           checked={address.isDefault}
           onChange={handleChange}
+          disabled={!isAddressSaved}
         />
         <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
           Définir par défaut
