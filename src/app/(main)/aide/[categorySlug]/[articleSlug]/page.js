@@ -58,14 +58,12 @@ export default async function HelpArticlePage({ params }) {
   const { title, content } = article;
 
   return (
-    <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pb-16">
-      <div className="col-span-3 lg:col-span-2 pt-5 lg:pt-32">
-        <h1 className="font-mcqueen font-bold text-3xl mb-5 lg:text-4xl">
-          {title}
-        </h1>
-        <div className="prose max-w-none mb-10 text-black">
-          <PortableText value={content} components={PortableTextComponents} />
-        </div>
+    <div className="col-span-3 lg:col-span-2 pt-5 lg:pt-32">
+      <h1 className="font-mcqueen font-bold text-3xl mb-5 lg:text-4xl">
+        {title}
+      </h1>
+      <div className="prose max-w-none mb-10 text-black">
+        <PortableText value={content} components={PortableTextComponents} />
       </div>
     </div>
   );

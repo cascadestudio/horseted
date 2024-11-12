@@ -19,7 +19,7 @@ export default async function CategoryPage({ params }) {
   );
 
   return (
-    <div className="container mx-auto px-5 grid grid-cols-3 gap-4 lg:gap-14 pb-16">
+    <div>
       <ArticlesList articles={articles} categorySlug={categorySlug} />
     </div>
   );
