@@ -20,7 +20,15 @@ export const AuthContextProvider = ({ children }) => {
       if (firebaseUser) {
         try {
           const token = await firebaseUser.getIdToken();
-          const apiUser = await fetchHorseted(`/users/me`, token);
+          const apiUser = await fetchHorseted(
+            `/users/me`,
+            token,
+            "GET",
+            null,
+            false,
+            false,
+            true
+          );
           setUser({ auth: firebaseUser, ...apiUser });
           setAccessToken(token);
         } catch (error) {

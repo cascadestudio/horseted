@@ -4,7 +4,8 @@ export default async function fetchHorseted(
   method = "GET",
   body = null,
   isJsonBody,
-  isDebug
+  isDebug,
+  isThrowError
 ) {
   const apiKey = process.env.NEXT_PUBLIC_HORSETED_API_KEY;
   const baseUrl = process.env.NEXT_PUBLIC_HORSETED_API_BASE_URL;
@@ -51,11 +52,14 @@ export default async function fetchHorseted(
     console.log(
       `Failed to fetch ${query}: ${errorResponse.message || response.statusText}`
     );
-    // return errorResponse.message || response.statusText;
-    throw new Error(
-      `Failed to fetch ${query}: ${
-        errorResponse.message || response.statusText
-      }`
-    );
+    if (isThrowError) {
+      throw new Error(
+        `Failed to fetch ${query}: ${
+          errorResponse.message || response.statusText
+        }`
+      );
+    } else {
+      return errorResponse.message || response.statusText;
+    }
   }
 }
