@@ -36,7 +36,7 @@ export default async function CategoriesSection() {
                   className="w-full object-cover h-full"
                 />
                 <div className="absolute bottom-0 right-0 bg-white flex items-center font-mcqueen text-[20px] gap-2 p-4">
-                  {category.name}
+                  {capitalizeText(category.name)}
                   <RightArrow color="black" />
                 </div>
               </Link>

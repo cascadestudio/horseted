@@ -36,7 +36,7 @@ export default function CategorySelect({
   return (
     <Dropdown
       className={className}
-      title={title}
+      title={capitalizeText(title)}
       isActive={activeCategory !== null && activeCategory !== ""}
       isBlack={isBlack}
       onSelect={onClickProductCategory}
