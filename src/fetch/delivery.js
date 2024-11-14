@@ -9,7 +9,7 @@ export async function getShippingMethods(
   let query = `/delivery/shipping_methods`;
   query += `?postal_code=${postalCode}`;
   query += `&product_ids=${productIds.join(";")}`;
-  query += `&service_point=${activeServicePointId}`;
+  if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
   const shippingMethods = await fetchHorseted(
     query,
     accessToken,

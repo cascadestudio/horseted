@@ -51,7 +51,7 @@ const CheckOutPage = () => {
   const [products, setProducts] = useState([]);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
-  const [shippingMethods, setShippingMethods] = useState([]);
+  const [shippingMethods, setShippingMethods] = useState(null);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
   const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
@@ -274,7 +274,7 @@ const CheckOutPage = () => {
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
                 <p className="justify-self-end">{handleProductsPrice()} €</p>
-                {shippingMethods[0] && (
+                {/* {shippingMethods[0] && (
                   <>
                     <p>Frais de port</p>
                     <p className="justify-self-end">
@@ -293,7 +293,7 @@ const CheckOutPage = () => {
                       €
                     </p>
                   </>
-                )}
+                )} */}
               </div>
               <>
                 <Button
