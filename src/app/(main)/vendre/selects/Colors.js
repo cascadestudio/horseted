@@ -2,6 +2,7 @@ import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useEffect, useState } from "react";
+import capitalizeText from "@/utils/capitalizeText";
 
 export default function Colors({ product, setProduct }) {
   const [colors, setColors] = useState([]);
@@ -51,7 +52,7 @@ export default function Colors({ product, setProduct }) {
                     className="h-8 w-8 rounded-full mr-2"
                     style={{ backgroundColor: `${hex}` }}
                   ></aside>
-                  <p className="capitalize">{name}</p>
+                  <p>{capitalizeText(name)}</p>
                 </div>
                 <Checkbox
                   className="ml-10"

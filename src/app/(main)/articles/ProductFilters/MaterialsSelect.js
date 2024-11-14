@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Dropdown from "@/components/Dropdown";
 import Checkbox from "@/components/input/Checkbox";
+import capitalizeText from "@/utils/capitalizeText";
 
 export default function MaterialSelect({
   activeMaterials = [],
@@ -51,7 +52,7 @@ export default function MaterialSelect({
             key={name}
             className="flex justify-between items-center cursor-pointer font-semibold"
           >
-            {name}
+            {capitalizeText(name)}
             <Checkbox
               className="ml-20"
               value={name}

@@ -17,7 +17,7 @@ import Spinner from "@/components/Spinner";
 import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
 import { formatNumber } from "@/utils/formatNumber";
-import { postOrderPayment } from "@/fetch/orders";
+import { postOrder, postOrderPayment } from "@/fetch/orders";
 import { getOffer } from "@/fetch/offers";
 
 export async function generateMetadata() {
@@ -93,10 +93,13 @@ const CheckOutPage = () => {
   async function handlePayment() {
     setLoading(true);
     let orderId;
+
     if (offer) {
       orderId = searchParams.get("orderId");
     } else {
-      orderId = await postOrders();
+      orderId = await postOrder(accessToken, {
+        productIds: productIds,
+      });
     }
     const paymentResponse = await handleOrdersPayment(orderId);
     await handlePaymentResponse(paymentResponse);
@@ -125,21 +128,6 @@ const CheckOutPage = () => {
     setLoading(false);
   }
 
-  async function postOrders() {
-    const body = {
-      productIds: productIds,
-    };
-    const order = await fetchHorseted(
-      `/orders`,
-      accessToken,
-      "POST",
-      body,
-      true,
-      true
-    );
-    return order.id;
-  }
-
   async function handleOrdersPayment(orderId) {
     const body = {
       offerId: offer?.id || null,
@@ -153,7 +141,6 @@ const CheckOutPage = () => {
       shippingMethod: activeDeliveryMethod?.id,
       servicePoint: activeServicePoint?.id || null,
     };
-    console.log(body);
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
     return paymentResponse;
   }

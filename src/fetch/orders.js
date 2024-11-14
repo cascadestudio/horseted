@@ -12,6 +12,18 @@ export const getOrder = async (accessToken, orderId) => {
   return order;
 };
 
+export const postOrder = async (accessToken, body) => {
+  const order = await fetchHorseted(
+    `/orders`,
+    accessToken,
+    "POST",
+    body,
+    true,
+    true
+  );
+  return order.id;
+};
+
 export const getOrderTracking = async (accessToken, orderId) => {
   const orderTracking = await fetchHorseted(
     `/orders/${orderId}/tracking`,
