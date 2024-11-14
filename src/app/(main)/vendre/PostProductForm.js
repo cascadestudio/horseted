@@ -16,6 +16,7 @@ export default function PostProductForm({
   accessToken,
   setPostResponse,
   setIsLoading,
+  categories,
 }) {
   const [formTouched, setFormTouched] = useState(false);
   const [imgfiles, setImgFiles] = useState([]);
@@ -195,7 +196,11 @@ export default function PostProductForm({
           </label>
         </div>
         <div className="relative w-full">
-          <Category product={product} setProduct={setProduct} />
+          <Category
+            product={product}
+            setProduct={setProduct}
+            categories={categories}
+          />
           {errors.categoryId && (
             <p className="text-red text-xs absolute right-2 bottom-[-20px]">
               {errors.categoryId}
