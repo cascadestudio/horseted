@@ -2,11 +2,9 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import OptionBlock from "@/components/input/OptionBlock";
 import ServicePoint from "./ServicePoint";
-import { centsToEuros } from "@/utils/centsToEuros";
-import {
-  shippingMethodTranslations,
-  shippingSizeTranslations,
-} from "@/utils/translations";
+import replace from "lodash/replace";
+
+import { shippingSizeTranslations } from "@/utils/translations";
 import { getServicePoints, getShippingMethods } from "@/fetch/delivery";
 
 export default function DeliveryMethods({
@@ -17,8 +15,8 @@ export default function DeliveryMethods({
   activeServicePoint,
   setActiveServicePoint,
   productSize,
-  activeDeliveryMethod,
-  setActiveDeliveryMethod,
+  selectedShippingMethod,
+  setSelectedShippingMethod,
 }) {
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
@@ -26,7 +24,6 @@ export default function DeliveryMethods({
   useEffect(() => {
     if (activeAddress && productIds) {
       handleGetServicePoints();
-      handleGetShippingMethods();
     }
   }, [activeAddress, productIds]);
 
@@ -36,30 +33,28 @@ export default function DeliveryMethods({
       productIds,
       accessToken
     );
+    console.log("servicePoints =>", servicePoints);
     setServicePoints(servicePoints.slice(0, 10));
+    setActiveServicePoint(servicePoints[0]);
   }
+
+  useEffect(() => {
+    console.log("activeServicePoint =>", activeServicePoint);
+    if (activeServicePoint) {
+      handleGetShippingMethods();
+    }
+  }, [activeServicePoint]);
 
   async function handleGetShippingMethods() {
     const shippingMethods = await getShippingMethods(
       activeAddress.postalCode,
       productIds,
-      activeServicePoint?.id || null,
+      activeServicePoint.id,
       accessToken
     );
+    console.log("shippingMethods =>", shippingMethods);
     setShippingMethods(shippingMethods);
   }
-
-  // useEffect(() => {
-  //   if (activeServicePoint) {
-  //     getShippingMethods();
-  //   }
-  // }, [activeServicePoint]);
-
-  useEffect(() => {
-    if (servicePoints.length > 0) {
-      setActiveServicePoint(servicePoints[0]);
-    }
-  }, [servicePoints]);
 
   return (
     <>
@@ -73,22 +68,23 @@ export default function DeliveryMethods({
             {shippingSizeTranslations[productSize] || productSize}
           </p>
         </div>
-        {shippingMethods.map((shippingMethod) => {
-          const { id, name, price } = shippingMethod;
-          return (
-            <OptionBlock
-              key={id}
-              defaultValue={shippingMethod}
-              checked={activeDeliveryMethod?.id === id}
-              onChange={() => setActiveDeliveryMethod(shippingMethod)}
-            >
-              <p className="font-bold">
-                {shippingMethodTranslations[name] || name}
-              </p>
-              <p>À partir de {centsToEuros(price)} €</p>
-            </OptionBlock>
-          );
-        })}
+        {shippingMethods[0] && (
+          <OptionBlock
+            checked={selectedShippingMethod !== null}
+            onChange={() => setSelectedShippingMethod(shippingMethods[0])}
+          >
+            <p className="font-bold">Envoi en Point relais</p>
+            <p>À partir de {replace(shippingMethods[0].price, ".", ",")} €</p>
+          </OptionBlock>
+        )}
+        <OptionBlock
+          checked={selectedShippingMethod === null}
+          onChange={() => setSelectedShippingMethod(null)}
+        >
+          <p className="font-bold">Envoi à domicile</p>
+          {/* <p>À partir de {centsToEuros(price)} €</p> */}
+        </OptionBlock>
+
         {servicePoints?.length > 0 && activeServicePoint && (
           <ServicePoint
             servicePoints={servicePoints}

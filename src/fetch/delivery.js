@@ -9,8 +9,15 @@ export async function getShippingMethods(
   let query = `/delivery/shipping_methods`;
   query += `?postal_code=${postalCode}`;
   query += `&product_ids=${productIds.join(";")}`;
-  if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
-  const shippingMethods = await fetchHorseted(query, accessToken);
+  query += `&service_point=${activeServicePointId}`;
+  const shippingMethods = await fetchHorseted(
+    query,
+    accessToken,
+    "GET",
+    false,
+    false,
+    true
+  );
   return shippingMethods;
 }
 

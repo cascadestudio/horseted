@@ -19,6 +19,7 @@ import Alert from "@/components/Alert";
 import { formatNumber } from "@/utils/formatNumber";
 import { postOrder, postOrderPayment } from "@/fetch/orders";
 import { getOffer } from "@/fetch/offers";
+import replace from "lodash/replace";
 
 export async function generateMetadata() {
   const title = "Votre commande | Horseted";
@@ -53,7 +54,7 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState([]);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [activeDeliveryMethod, setActiveDeliveryMethod] = useState(null);
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
@@ -138,7 +139,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: activeDeliveryMethod?.id,
+      shippingMethod: selectedShippingMethod?.id,
       servicePoint: activeServicePoint?.id || null,
     };
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
@@ -249,17 +250,19 @@ const CheckOutPage = () => {
               setIsAddressSaved={setIsAddressSaved}
               setIsDefaultAddress={setIsDefaultAddress}
             />
-            <DeliveryMethods
-              productSize={products[0].shipping}
-              activeAddress={activeAddress}
-              productIds={productIds}
-              shippingMethods={shippingMethods}
-              setShippingMethods={setShippingMethods}
-              activeServicePoint={activeServicePoint}
-              setActiveServicePoint={setActiveServicePoint}
-              activeDeliveryMethod={activeDeliveryMethod}
-              setActiveDeliveryMethod={setActiveDeliveryMethod}
-            />
+            {activeAddress && (
+              <DeliveryMethods
+                productSize={products[0].shipping}
+                activeAddress={activeAddress}
+                productIds={productIds}
+                shippingMethods={shippingMethods}
+                setShippingMethods={setShippingMethods}
+                activeServicePoint={activeServicePoint}
+                setActiveServicePoint={setActiveServicePoint}
+                selectedShippingMethod={selectedShippingMethod}
+                setSelectedShippingMethod={setSelectedShippingMethod}
+              />
+            )}
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
               setActivePaymentMethodId={setActivePaymentMethodId}
@@ -275,7 +278,7 @@ const CheckOutPage = () => {
                   <>
                     <p>Frais de port</p>
                     <p className="justify-self-end">
-                      {shippingMethods[0]?.price} €
+                      {replace(shippingMethods[0].price, ".", ",")} €
                     </p>
                     <p className="font-extrabold">Total</p>
                     <p className="font-extrabold justify-self-end">
@@ -299,7 +302,7 @@ const CheckOutPage = () => {
                   disabled={
                     !activePaymentMethodId ||
                     !activeAddress ||
-                    !activeDeliveryMethod
+                    !selectedShippingMethod
                   }
                 >
                   Payer
