@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CategorySelect from "../../articles/ProductFilters/CategorySelect";
 
-export default function Category({ product, setProduct }) {
+export default function Category({ product, setProduct, categories }) {
   const [activeCategoryName, setActiveCategoryName] = useState("");
 
   const handleChange = (id, name) => {
@@ -15,6 +15,7 @@ export default function Category({ product, setProduct }) {
         Catégorie* :
       </h3>
       <CategorySelect
+        categories={categories}
         onClickProductCategory={handleChange}
         activeCategory={product.categoryId}
         title={

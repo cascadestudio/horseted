@@ -1,3 +1,4 @@
+import { getAllCategories } from "@/fetch/categories";
 import ClientSellPage from "./ClientSellPage";
 
 export const metadata = {
@@ -11,6 +12,8 @@ export const metadata = {
   },
 };
 
-export default function ServerSellPage() {
-  return <ClientSellPage />;
+export default async function ServerSellPage() {
+  const categories = await getAllCategories();
+
+  return <ClientSellPage categories={categories} />;
 }

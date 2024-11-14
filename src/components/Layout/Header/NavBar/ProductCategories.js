@@ -8,10 +8,10 @@ function Category({
   setIsOpen,
   isActive,
 }) {
-  const { name, id, hasChildren, subCategories } = category;
+  const { name, id, hasChildren, subCategories, parentId } = category;
   const isExpanded = expandedCategoryId === id;
-
   if (hasChildren) {
+    console.log("category =>", id, name);
     return (
       <>
         <button
@@ -29,17 +29,26 @@ function Category({
         </button>
 
         {isExpanded && subCategories && (
-          <ul className={subCategories.length > 12 ? `columns-2` : ``}>
-            {subCategories.map((subCategory) => (
-              <Category
-                key={subCategory.id}
-                category={subCategory}
-                expandedCategoryId={expandedCategoryId}
-                onCategoryClick={onCategoryClick}
-                setIsOpen={setIsOpen}
-              />
-            ))}
-          </ul>
+          <div>
+            <Link
+              onClick={() => setIsOpen(false)}
+              className="whitespace-nowrap font-medium p-2 block"
+              href={`/articles?categoryId=${id}&categoryName=${name}`}
+            >
+              Voir tout
+            </Link>
+            <ul className={subCategories.length > 12 ? `columns-2` : ``}>
+              {subCategories.map((subCategory) => (
+                <Category
+                  key={subCategory.id}
+                  category={subCategory}
+                  expandedCategoryId={expandedCategoryId}
+                  onCategoryClick={onCategoryClick}
+                  setIsOpen={setIsOpen}
+                />
+              ))}
+            </ul>
+          </div>
         )}
       </>
     );
@@ -66,8 +75,19 @@ export default function ProductCategories({
     setExpandedCategoryId((prevId) => (prevId === id ? null : id));
   };
 
+  const { id, name } = selectedSubCategory;
+
   return (
     <div className="px-5 py-2 min-w-64">
+      {expandedCategoryId === null && (
+        <Link
+          onClick={() => setIsOpen(false)}
+          className="whitespace-nowrap font-medium p-2 block"
+          href={`/articles?categoryId=${id}&categoryName=${name}`}
+        >
+          Voir tout
+        </Link>
+      )}
       <ul
         className={
           selectedSubCategory.subCategories.length > 12 ? `columns-2` : ``

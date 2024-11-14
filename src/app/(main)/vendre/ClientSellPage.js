@@ -10,7 +10,7 @@ import PostProductForm from "./PostProductForm";
 import Button from "@/components/Button";
 import { getSeller } from "@/fetch/seller";
 
-const SellPage = () => {
+const SellPage = ({ categories }) => {
   const { accessToken } = useAuthContext();
   const [isLoading, setIsLoading] = useState(false);
   const [postResponse, setPostResponse] = useState(null);
@@ -56,6 +56,7 @@ const SellPage = () => {
             accessToken={accessToken}
             setPostResponse={setPostResponse}
             setIsLoading={setIsLoading}
+            categories={categories}
           />
         )
       ) : (
