@@ -51,11 +51,11 @@ export default async function fetchHorseted(
     console.log(
       `Failed to fetch ${query}: ${errorResponse.message || response.statusText}`
     );
-    return errorResponse.message || response.statusText;
-    // throw new Error(
-    //   `Failed to fetch ${query}: ${
-    //     errorResponse.message || response.statusText
-    //   }`
-    // );
+    // return errorResponse.message || response.statusText;
+    throw new Error(
+      `Failed to fetch ${query}: ${
+        errorResponse.message || response.statusText
+      }`
+    );
   }
 }
