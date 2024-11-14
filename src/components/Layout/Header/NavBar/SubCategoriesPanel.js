@@ -1,5 +1,6 @@
 import ProductCategories from "./ProductCategories";
 import { useEffect, useState } from "react";
+import capitalizeText from "@/utils/capitalizeText";
 
 export default function SubCategoriesPanel({
   subCategories,
@@ -27,7 +28,7 @@ export default function SubCategoriesPanel({
           return (
             <li key={name}>
               <button
-                className={`text-left w-full px-6 pt-4 pb-3 mb-1 capitalize whitespace-nowrap font-semibold ${
+                className={`text-left w-full px-6 pt-4 pb-3 mb-1 whitespace-nowrap font-semibold ${
                   isActive && "border-b border-light-green text-light-green"
                 }`}
                 onClick={() => {
@@ -35,7 +36,7 @@ export default function SubCategoriesPanel({
                   setExpandedCategoryId(null);
                 }}
               >
-                {name}
+                {capitalizeText(name)}
               </button>
             </li>
           );
