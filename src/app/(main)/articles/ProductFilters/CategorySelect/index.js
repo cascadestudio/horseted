@@ -33,6 +33,8 @@ export default function CategorySelect({
     (category) => !category.hasChildren
   );
 
+  console.log(categoryStack);
+
   return (
     <Dropdown
       className={className}
@@ -54,6 +56,27 @@ export default function CategorySelect({
           </button>
         )}
         <div className="flex flex-col gap-y-4">
+          {categoryStack.length > 0 && !isLastLevel && (
+            <label
+              key={categoryStack[0].id}
+              className="flex justify-between items-center cursor-pointer font-semibold"
+            >
+              Tous
+              <Radio
+                className="ml-10"
+                value={categoryStack[categoryStack.length - 1].name}
+                checked={
+                  activeCategory === categoryStack[categoryStack.length - 1].id
+                }
+                onChange={() =>
+                  onClickProductCategory(
+                    categoryStack[categoryStack.length - 1].id,
+                    categoryStack[categoryStack.length - 1].name
+                  )
+                }
+              />
+            </label>
+          )}
           {currentCategories.map((category) =>
             isLastLevel ? (
               <label
