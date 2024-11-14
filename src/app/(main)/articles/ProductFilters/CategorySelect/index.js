@@ -33,8 +33,6 @@ export default function CategorySelect({
     (category) => !category.hasChildren
   );
 
-  console.log(categoryStack);
-
   return (
     <Dropdown
       className={className}
