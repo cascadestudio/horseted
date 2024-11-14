@@ -54,13 +54,20 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState(null);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [selectedShippingMethod, setSelectedShippingMethod] = useState(null);
+  const [selectedShippingMethod, setSelectedShippingMethod] =
+    useState("servicePoint");
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
+  });
+  const [summaryPrices, setSummaryPrices] = useState({
+    productsPrice: 0,
+    shippingPrice: 0,
+    protectionPrice: "2,16 €",
+    totalPrice: 0,
   });
 
   useEffect(() => {
@@ -86,6 +93,12 @@ const CheckOutPage = () => {
     });
   }, [productIds]);
 
+  useEffect(() => {
+    if (productIds && selectedShippingMethod && shippingMethods) {
+      handleSummaryPrices();
+    }
+  }, [productIds, selectedShippingMethod, shippingMethods]);
+
   const handleGetOffer = async (offerId) => {
     const offer = await getOffer(accessToken, offerId);
     setOffer(offer);
@@ -110,18 +123,6 @@ const CheckOutPage = () => {
     }
     setLoading(false);
   }
-
-  const handleProductsPrice = () => {
-    if (offer) {
-      return offer.price ? centsToEuros(offer.price) : "0,00";
-    } else {
-      const productsPriceSum = products.reduce((total, product) => {
-        const sum = total + product.price;
-        return sum;
-      }, 0);
-      return centsToEuros(productsPriceSum);
-    }
-  };
 
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
@@ -210,6 +211,35 @@ const CheckOutPage = () => {
     return paymentIntentId;
   }
 
+  const handleSummaryPrices = () => {
+    let productsPriceSum;
+    let shippingPrice;
+    let protectionPrice;
+    let totalPrice;
+
+    if (offer) {
+      productsPriceSum = offer.price / 100;
+    } else {
+      productsPriceSum = products.reduce((total, product) => {
+        let sum = total + product.price;
+        return sum / 100;
+      }, 0);
+    }
+
+    if (shippingMethods && selectedShippingMethod) {
+      shippingPrice = shippingMethods[selectedShippingMethod][0].price;
+    }
+
+    totalPrice = productsPriceSum + shippingPrice;
+
+    setSummaryPrices({
+      productsPrice: replace(productsPriceSum.toFixed(2), ".", ","),
+      shippingPrice: replace(shippingPrice, ".", ","),
+      protectionPrice: "2,16 €", //TODO fetch from API
+      totalPrice: replace(totalPrice, ".", ","),
+    });
+  };
+
   if (loading) {
     return <Spinner isFullScreen />;
   }
@@ -241,7 +271,9 @@ const CheckOutPage = () => {
                   ))}
                 </div>
               </div>
-              <p className="font-bold text-lg">{handleProductsPrice()} €</p>
+              <p className="font-bold text-lg">
+                {summaryPrices.productsPrice} €
+              </p>
             </div>
             <Address
               activeAddress={activeAddress}
@@ -273,27 +305,19 @@ const CheckOutPage = () => {
               <h2 className="font-bold mb-7">Résumé de la commande</h2>
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
-                <p className="justify-self-end">{handleProductsPrice()} €</p>
-                {/* {shippingMethods[0] && (
-                  <>
-                    <p>Frais de port</p>
-                    <p className="justify-self-end">
-                      {replace(shippingMethods[0].price, ".", ",")} €
-                    </p>
-                    <p className="font-extrabold">Total</p>
-                    <p className="font-extrabold justify-self-end">
-                      {formatNumber(
-                        parseFloat(handleProductsPrice().replace(",", ".")) +
-                          parseFloat(
-                            centsToEuros(
-                              shippingMethods[0]?.price || 0
-                            ).replace(",", ".")
-                          )
-                      )}{" "}
-                      €
-                    </p>
-                  </>
-                )} */}
+                <p className="justify-self-end">
+                  {summaryPrices.productsPrice} €
+                </p>
+                <>
+                  <p>Frais de port</p>
+                  <p className="justify-self-end">
+                    {summaryPrices.shippingPrice} €
+                  </p>
+                  <p className="font-extrabold">Total</p>
+                  <p className="font-extrabold justify-self-end">
+                    {summaryPrices.totalPrice} €
+                  </p>
+                </>
               </div>
               <>
                 <Button

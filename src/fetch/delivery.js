@@ -10,14 +10,7 @@ export async function getShippingMethods(
   query += `?postal_code=${postalCode}`;
   query += `&product_ids=${productIds.join(";")}`;
   if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
-  const shippingMethods = await fetchHorseted(
-    query,
-    accessToken,
-    "GET",
-    false,
-    false,
-    true
-  );
+  const shippingMethods = await fetchHorseted(query, accessToken);
   return shippingMethods;
 }
 

@@ -18,8 +18,6 @@ export default function DeliveryMethods({
   selectedShippingMethod,
   setSelectedShippingMethod,
 }) {
-  console.log("shippingMethods =>", shippingMethods);
-
   const { accessToken } = useAuthContext();
   const [servicePoints, setServicePoints] = useState([]);
 
