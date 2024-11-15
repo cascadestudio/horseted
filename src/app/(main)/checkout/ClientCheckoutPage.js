@@ -53,8 +53,7 @@ const CheckOutPage = () => {
   const [shippingMethods, setShippingMethods] = useState(null);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [selectedShippingMethod, setSelectedShippingMethod] =
-    useState("servicePoint");
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState("home");
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
@@ -230,7 +229,7 @@ const CheckOutPage = () => {
     const productsPriceSumInEuros = productsPriceSum / 100;
 
     if (shippingMethods && selectedShippingMethod) {
-      shippingPrice = shippingMethods[selectedShippingMethod][0].price; // Already in euros
+      shippingPrice = shippingMethods[selectedShippingMethod][0].price || 0; // Already in euros
     }
 
     totalPrice =

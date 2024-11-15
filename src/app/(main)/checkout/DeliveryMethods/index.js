@@ -75,8 +75,8 @@ export default function DeliveryMethods({
             {shippingSizeTranslations[productSize] || productSize}
           </p>
         </div>
-        {shippingMethods && (
-          <>
+        <>
+          {shippingMethods?.servicePoint[0] && (
             <OptionBlock
               checked={selectedShippingMethod === "servicePoint"}
               onChange={() => setSelectedShippingMethod("servicePoint")}
@@ -87,6 +87,8 @@ export default function DeliveryMethods({
                 {replace(shippingMethods.servicePoint[0].price, ".", ",")} €
               </p>
             </OptionBlock>
+          )}
+          {shippingMethods?.home[0] && (
             <OptionBlock
               checked={selectedShippingMethod === "home"}
               onChange={() => setSelectedShippingMethod("home")}
@@ -96,9 +98,8 @@ export default function DeliveryMethods({
                 À partir de {replace(shippingMethods.home[0].price, ".", ",")} €
               </p>
             </OptionBlock>
-          </>
-        )}
-
+          )}
+        </>
         {servicePoints?.length > 0 &&
           activeServicePoint &&
           selectedShippingMethod === "servicePoint" && (
