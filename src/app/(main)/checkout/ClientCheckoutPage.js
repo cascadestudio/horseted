@@ -14,12 +14,11 @@ import Button from "@/components/Button";
 import StripeProvider from "@/components/StripeProvider";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner";
-import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
-import { formatNumber } from "@/utils/formatNumber";
 import { postOrder, postOrderPayment } from "@/fetch/orders";
 import { getOffer } from "@/fetch/offers";
 import replace from "lodash/replace";
+import { getFees } from "@/fetch/fees";
 
 export async function generateMetadata() {
   const title = "Votre commande | Horseted";
@@ -211,32 +210,37 @@ const CheckOutPage = () => {
     return paymentIntentId;
   }
 
-  const handleSummaryPrices = () => {
+  const handleSummaryPrices = async () => {
     let productsPriceSum;
     let shippingPrice;
-    let protectionPrice;
     let totalPrice;
 
     if (offer) {
-      productsPriceSum = offer.price / 100;
+      productsPriceSum = offer.price;
     } else {
       productsPriceSum = products.reduce((total, product) => {
         let sum = total + product.price;
-        return sum / 100;
+        return sum;
       }, 0);
     }
 
+    const protectionPrice = await getFees(productsPriceSum, accessToken);
+    const protectionPriceInEuros = protectionPrice / 100;
+
+    const productsPriceSumInEuros = productsPriceSum / 100;
+
     if (shippingMethods && selectedShippingMethod) {
-      shippingPrice = shippingMethods[selectedShippingMethod][0].price;
+      shippingPrice = shippingMethods[selectedShippingMethod][0].price; // Already in euros
     }
 
-    totalPrice = productsPriceSum + shippingPrice;
+    totalPrice =
+      productsPriceSumInEuros + protectionPriceInEuros + shippingPrice;
 
     setSummaryPrices({
-      productsPrice: replace(productsPriceSum.toFixed(2), ".", ","),
-      shippingPrice: replace(shippingPrice, ".", ","),
-      protectionPrice: "2,16 €", //TODO fetch from API
-      totalPrice: replace(totalPrice, ".", ","),
+      productsPrice: replace(productsPriceSumInEuros.toFixed(2), ".", ","),
+      protectionPrice: replace(protectionPriceInEuros.toFixed(2), ".", ","),
+      shippingPrice: replace(shippingPrice.toFixed(2), ".", ","),
+      totalPrice: replace(totalPrice.toFixed(2), ".", ","),
     });
   };
 
@@ -308,33 +312,33 @@ const CheckOutPage = () => {
                 <p className="justify-self-end">
                   {summaryPrices.productsPrice} €
                 </p>
-                <>
-                  <p>Frais de port</p>
-                  <p className="justify-self-end">
-                    {summaryPrices.shippingPrice} €
-                  </p>
-                  <p className="font-extrabold">Total</p>
-                  <p className="font-extrabold justify-self-end">
-                    {summaryPrices.totalPrice} €
-                  </p>
-                </>
-              </div>
-              <>
-                <Button
-                  className="mt-12 w-full"
-                  onClick={handlePayment}
-                  disabled={
-                    !activePaymentMethodId ||
-                    !activeAddress ||
-                    !selectedShippingMethod
-                  }
-                >
-                  Payer
-                </Button>
-                <p className="mt-3 font-semibold text-center">
-                  Paiement sécurisé
+                <p>Protection acheteur</p>
+                <p className="justify-self-end">
+                  {summaryPrices.protectionPrice} €
                 </p>
-              </>
+                <p>Frais de port</p>
+                <p className="justify-self-end">
+                  {summaryPrices.shippingPrice} €
+                </p>
+                <p className="font-extrabold">Total</p>
+                <p className="font-extrabold justify-self-end">
+                  {summaryPrices.totalPrice} €
+                </p>
+              </div>
+              <Button
+                className="mt-12 w-full"
+                onClick={handlePayment}
+                disabled={
+                  !activePaymentMethodId ||
+                  !activeAddress ||
+                  !selectedShippingMethod
+                }
+              >
+                Payer
+              </Button>
+              <p className="mt-3 font-semibold text-center">
+                Paiement sécurisé
+              </p>
             </div>
           </div>
         </div>
