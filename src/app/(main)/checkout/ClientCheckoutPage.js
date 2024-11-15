@@ -14,11 +14,11 @@ import Button from "@/components/Button";
 import StripeProvider from "@/components/StripeProvider";
 import { useRouter } from "next/navigation";
 import Spinner from "@/components/Spinner";
-import { centsToEuros } from "@/utils/centsToEuros";
 import Alert from "@/components/Alert";
-import { formatNumber } from "@/utils/formatNumber";
 import { postOrder, postOrderPayment } from "@/fetch/orders";
 import { getOffer } from "@/fetch/offers";
+import { getFees } from "@/fetch/fees";
+import { formatPrice } from "@/utils/formatNumber";
 
 export async function generateMetadata() {
   const title = "Votre commande | Horseted";
@@ -50,16 +50,22 @@ const CheckOutPage = () => {
   const [products, setProducts] = useState([]);
   const [activeAddress, setActiveAddress] = useState(null);
   const [activePaymentMethodId, setActivePaymentMethodId] = useState(null);
-  const [shippingMethods, setShippingMethods] = useState([]);
+  const [shippingMethods, setShippingMethods] = useState(null);
   const [activeServicePoint, setActiveServicePoint] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
-  const [activeDeliveryMethod, setActiveDeliveryMethod] = useState(null);
+  const [selectedShippingMethod, setSelectedShippingMethod] = useState("home");
   const [productIds, setProductIds] = useState([]);
   const [offer, setOffer] = useState(null);
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [alert, setAlert] = useState({
     type: "",
     message: "",
+  });
+  const [summaryPrices, setSummaryPrices] = useState({
+    productsPrice: 0,
+    shippingPrice: 0,
+    protectionPrice: 0,
+    totalPrice: 0,
   });
 
   useEffect(() => {
@@ -84,6 +90,12 @@ const CheckOutPage = () => {
       getProduct(productId);
     });
   }, [productIds]);
+
+  useEffect(() => {
+    if (productIds && selectedShippingMethod && shippingMethods) {
+      handleSummaryPrices();
+    }
+  }, [productIds, selectedShippingMethod, shippingMethods]);
 
   const handleGetOffer = async (offerId) => {
     const offer = await getOffer(accessToken, offerId);
@@ -110,18 +122,6 @@ const CheckOutPage = () => {
     setLoading(false);
   }
 
-  const handleProductsPrice = () => {
-    if (offer) {
-      return offer.price ? centsToEuros(offer.price) : "0,00";
-    } else {
-      const productsPriceSum = products.reduce((total, product) => {
-        const sum = total + product.price;
-        return sum;
-      }, 0);
-      return centsToEuros(productsPriceSum);
-    }
-  };
-
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
     setProducts((prevProducts) => [...prevProducts, product]);
@@ -138,7 +138,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: activeDeliveryMethod?.id,
+      shippingMethod: shippingMethods[selectedShippingMethod][0].id,
       servicePoint: activeServicePoint?.id || null,
     };
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
@@ -209,6 +209,40 @@ const CheckOutPage = () => {
     return paymentIntentId;
   }
 
+  const handleSummaryPrices = async () => {
+    let productsPriceSum;
+    let shippingPrice;
+    let totalPrice;
+
+    if (offer) {
+      productsPriceSum = offer.price;
+    } else {
+      productsPriceSum = products.reduce(
+        (total, product) => total + product.price,
+        0
+      );
+    }
+
+    const protectionPrice = await getFees(productsPriceSum, accessToken);
+    const protectionPriceInEuros = protectionPrice / 100;
+
+    const productsPriceSumInEuros = productsPriceSum / 100;
+
+    if (shippingMethods && selectedShippingMethod) {
+      shippingPrice = shippingMethods[selectedShippingMethod][0].price || 0; // Already in euros
+    }
+
+    totalPrice =
+      productsPriceSumInEuros + protectionPriceInEuros + shippingPrice;
+
+    setSummaryPrices({
+      productsPrice: formatPrice(productsPriceSumInEuros),
+      protectionPrice: formatPrice(protectionPriceInEuros),
+      shippingPrice: formatPrice(shippingPrice),
+      totalPrice: formatPrice(totalPrice),
+    });
+  };
+
   if (loading) {
     return <Spinner isFullScreen />;
   }
@@ -240,7 +274,9 @@ const CheckOutPage = () => {
                   ))}
                 </div>
               </div>
-              <p className="font-bold text-lg">{handleProductsPrice()} €</p>
+              <p className="font-bold text-lg">
+                {summaryPrices.productsPrice} €
+              </p>
             </div>
             <Address
               activeAddress={activeAddress}
@@ -249,17 +285,19 @@ const CheckOutPage = () => {
               setIsAddressSaved={setIsAddressSaved}
               setIsDefaultAddress={setIsDefaultAddress}
             />
-            <DeliveryMethods
-              productSize={products[0].shipping}
-              activeAddress={activeAddress}
-              productIds={productIds}
-              shippingMethods={shippingMethods}
-              setShippingMethods={setShippingMethods}
-              activeServicePoint={activeServicePoint}
-              setActiveServicePoint={setActiveServicePoint}
-              activeDeliveryMethod={activeDeliveryMethod}
-              setActiveDeliveryMethod={setActiveDeliveryMethod}
-            />
+            {activeAddress && (
+              <DeliveryMethods
+                productSize={products[0].shipping}
+                activeAddress={activeAddress}
+                productIds={productIds}
+                shippingMethods={shippingMethods}
+                setShippingMethods={setShippingMethods}
+                activeServicePoint={activeServicePoint}
+                setActiveServicePoint={setActiveServicePoint}
+                selectedShippingMethod={selectedShippingMethod}
+                setSelectedShippingMethod={setSelectedShippingMethod}
+              />
+            )}
             <PaymentMethods
               activePaymentMethodId={activePaymentMethodId}
               setActivePaymentMethodId={setActivePaymentMethodId}
@@ -270,44 +308,36 @@ const CheckOutPage = () => {
               <h2 className="font-bold mb-7">Résumé de la commande</h2>
               <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
                 <p>Commande</p>
-                <p className="justify-self-end">{handleProductsPrice()} €</p>
-                {shippingMethods[0] && (
-                  <>
-                    <p>Frais de port</p>
-                    <p className="justify-self-end">
-                      {shippingMethods[0]?.price} €
-                    </p>
-                    <p className="font-extrabold">Total</p>
-                    <p className="font-extrabold justify-self-end">
-                      {formatNumber(
-                        parseFloat(handleProductsPrice().replace(",", ".")) +
-                          parseFloat(
-                            centsToEuros(
-                              shippingMethods[0]?.price || 0
-                            ).replace(",", ".")
-                          )
-                      )}{" "}
-                      €
-                    </p>
-                  </>
-                )}
-              </div>
-              <>
-                <Button
-                  className="mt-12 w-full"
-                  onClick={handlePayment}
-                  disabled={
-                    !activePaymentMethodId ||
-                    !activeAddress ||
-                    !activeDeliveryMethod
-                  }
-                >
-                  Payer
-                </Button>
-                <p className="mt-3 font-semibold text-center">
-                  Paiement sécurisé
+                <p className="justify-self-end">
+                  {summaryPrices.productsPrice} €
                 </p>
-              </>
+                <p>Protection acheteur</p>
+                <p className="justify-self-end">
+                  {summaryPrices.protectionPrice} €
+                </p>
+                <p>Frais de port</p>
+                <p className="justify-self-end">
+                  {summaryPrices.shippingPrice} €
+                </p>
+                <p className="font-extrabold">Total</p>
+                <p className="font-extrabold justify-self-end">
+                  {summaryPrices.totalPrice} €
+                </p>
+              </div>
+              <Button
+                className="mt-12 w-full"
+                onClick={handlePayment}
+                disabled={
+                  !activePaymentMethodId ||
+                  !activeAddress ||
+                  !selectedShippingMethod
+                }
+              >
+                Payer
+              </Button>
+              <p className="mt-3 font-semibold text-center">
+                Paiement sécurisé
+              </p>
             </div>
           </div>
         </div>
