@@ -17,8 +17,8 @@ import Spinner from "@/components/Spinner";
 import Alert from "@/components/Alert";
 import { postOrder, postOrderPayment } from "@/fetch/orders";
 import { getOffer } from "@/fetch/offers";
-import replace from "lodash/replace";
 import { getFees } from "@/fetch/fees";
+import { formatPrice } from "@/utils/formatNumber";
 
 export async function generateMetadata() {
   const title = "Votre commande | Horseted";
@@ -218,10 +218,10 @@ const CheckOutPage = () => {
     if (offer) {
       productsPriceSum = offer.price;
     } else {
-      productsPriceSum = products.reduce((total, product) => {
-        let sum = total + product.price;
-        return sum;
-      }, 0);
+      productsPriceSum = products.reduce(
+        (total, product) => total + product.price,
+        0
+      );
     }
 
     const protectionPrice = await getFees(productsPriceSum, accessToken);
@@ -237,10 +237,10 @@ const CheckOutPage = () => {
       productsPriceSumInEuros + protectionPriceInEuros + shippingPrice;
 
     setSummaryPrices({
-      productsPrice: replace(productsPriceSumInEuros.toFixed(2), ".", ","),
-      protectionPrice: replace(protectionPriceInEuros.toFixed(2), ".", ","),
-      shippingPrice: replace(shippingPrice.toFixed(2), ".", ","),
-      totalPrice: replace(totalPrice.toFixed(2), ".", ","),
+      productsPrice: formatPrice(productsPriceSumInEuros),
+      protectionPrice: formatPrice(protectionPriceInEuros),
+      shippingPrice: formatPrice(shippingPrice),
+      totalPrice: formatPrice(totalPrice),
     });
   };
 
