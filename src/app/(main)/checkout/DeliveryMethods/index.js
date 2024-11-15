@@ -56,17 +56,12 @@ export default function DeliveryMethods({
       null,
       accessToken
     );
-    // console.log("servicePointShippingMethods =>", servicePointShippingMethods);
-    // console.log("homeShippingMethods =>", homeShippingMethods);
+
     setShippingMethods({
       servicePoint: servicePointShippingMethods,
       home: homeShippingMethods,
     });
   }
-
-  // const handleShippingPrice = () => {
-  //   replace(shippingMethods[0].price, ".", ",")
-  // }
 
   return (
     <>
@@ -108,7 +103,6 @@ export default function DeliveryMethods({
           activeServicePoint &&
           selectedShippingMethod === "servicePoint" && (
             <ServicePoint
-              servicePoints={servicePoints}
               setActiveServicePoint={setActiveServicePoint}
               activeServicePoint={activeServicePoint}
             />
