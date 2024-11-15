@@ -7,6 +7,7 @@ import HandleFilesForm from "./HandleFilesForm";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 import { loadStripe } from "@stripe/stripe-js";
+import Alert from "@/components/Alert";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -17,6 +18,7 @@ export default function CreateSellerAccount({
   user,
   getSellerData,
 }) {
+  const [alert, setAlert] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [dateOfBirth, setDateOfBirth] = useState(null);
   const [isAdressValid, setIsAdressValid] = useState(false);
@@ -51,19 +53,24 @@ export default function CreateSellerAccount({
     account_number: null, //Test IBAN FR1420041010050500013M02606
   });
 
-  console.log("stripeAccountForm =>", stripeAccountForm);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isFormValid()) return;
     setIsLoading(true);
-    const accountToken = await createStripeAccount();
-    console.log("accountToken =>", accountToken);
-    const bankAccountToken = await createStripeBankAccount();
-    console.log("bankAccountToken =>", bankAccountToken);
-    await createSellerAccount(accountToken, bankAccountToken);
-    getSellerData();
-    setIsLoading(false);
+    try {
+      const accountToken = await createStripeAccount();
+      const bankAccountToken = await createStripeBankAccount();
+      await createSellerAccount(accountToken, bankAccountToken);
+      getSellerData();
+    } catch (error) {
+      console.error("Error creating seller account:", error);
+      setAlert({
+        type: "error",
+        message: "Erreur lors de la création de votre compte vendeur",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isFormValid = () => {
@@ -71,10 +78,16 @@ export default function CreateSellerAccount({
       stripeAccountForm.individual.verification.document.front !== null &&
       stripeAccountForm.individual.verification.document.back !== null;
     if (!isAdressValid) {
-      alert("Veuillez ajouter une adresse");
+      setAlert({
+        type: "error",
+        message: "Veuillez ajouter une adresse",
+      });
       return false;
     } else if (!isDocumentValid) {
-      alert("Veuiller sélectionner un document d'identité");
+      setAlert({
+        type: "error",
+        message: "Veuiller sélectionner un document d'identité",
+      });
       return false;
     } else {
       return true;
@@ -96,7 +109,7 @@ export default function CreateSellerAccount({
     };
   };
 
-  const createStripeAccount = async (filesIds) => {
+  const createStripeAccount = async () => {
     const stripeAccountFormWithDate = addDateOfBirth();
     try {
       const stripe = await stripePromise;
@@ -104,11 +117,17 @@ export default function CreateSellerAccount({
         "account",
         stripeAccountFormWithDate
       );
+      if (accountToken.error) {
+        throw new Error(accountToken.error.message);
+      }
       const token = accountToken.token.id;
       return token;
     } catch (error) {
-      alert("Error creating Stripe account:", error);
-      console.log("Error creating Stripe account:", error);
+      console.error("Error creating Stripe account:", error);
+      setAlert({
+        type: "error",
+        message: "Erreur lors de la création de votre compte vendeur",
+      });
     }
   };
 
@@ -122,54 +141,71 @@ export default function CreateSellerAccount({
       const token = bankAccountToken.token.id;
       return token;
     } catch (error) {
-      alert("Error creating Stripe bank account:", error);
+      console.error("Error creating Stripe bank account:", error);
+      setAlert({
+        type: "error",
+        message: "Erreur lors de la création de votre compte vendeur",
+      });
     }
   };
 
   const createSellerAccount = async (accountToken, bankAccountToken) => {
-    const body = {
-      accountToken: accountToken,
-      bankAccountToken: bankAccountToken,
-    };
-    const response = await fetchHorseted(
-      "/users/me/seller_account",
-      accessToken,
-      "POST",
-      body,
-      true,
-      true
-    );
-    console.log("createSellerAccount =>", response);
+    try {
+      const body = {
+        accountToken: accountToken,
+        bankAccountToken: bankAccountToken,
+      };
+      const response = await fetchHorseted(
+        "/users/me/seller_account",
+        accessToken,
+        "POST",
+        body,
+        true,
+        true
+      );
+      return response;
+    } catch (error) {
+      console.error("Error creating seller account:", error);
+      setAlert({
+        type: "error",
+        message: "Erreur lors de la création de votre compte vendeur",
+      });
+    }
   };
 
   if (isLoading) return <Spinner />;
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4"
-    >
-      <p className="text-xs font-semibold col-span-2">
-        Pour vendre des produits sur Horseted, vous devez valider votre identité
-        avec le formulaire ci-dessous.
-      </p>
-      <CreateStripeAccountForm
-        setStripeAccountForm={setStripeAccountForm}
-        stripeAccountForm={stripeAccountForm}
-        dateOfBirth={dateOfBirth}
-        setDateOfBirth={setDateOfBirth}
-        stripeBankAccountForm={stripeBankAccountForm}
-        setStripeBankAccountForm={setStripeBankAccountForm}
-        isAdressValid={isAdressValid}
-        setIsAdressValid={setIsAdressValid}
-      />
-      <HandleFilesForm
-        setStripeAccountForm={setStripeAccountForm}
-        accessToken={accessToken}
-      />
-      <Button type="submit" className="w-full">
-        Envoyer
-      </Button>
-    </form>
+    <>
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 lg:pt-5 lg:grid-cols-2 lg:gap-x-14 gap-y-4"
+      >
+        <p className="text-xs font-semibold col-span-2">
+          Pour vendre des produits sur Horseted, vous devez valider votre
+          identité avec le formulaire ci-dessous.
+        </p>
+        <CreateStripeAccountForm
+          setStripeAccountForm={setStripeAccountForm}
+          stripeAccountForm={stripeAccountForm}
+          dateOfBirth={dateOfBirth}
+          setDateOfBirth={setDateOfBirth}
+          stripeBankAccountForm={stripeBankAccountForm}
+          setStripeBankAccountForm={setStripeBankAccountForm}
+          isAdressValid={isAdressValid}
+          setIsAdressValid={setIsAdressValid}
+        />
+        <HandleFilesForm
+          setStripeAccountForm={setStripeAccountForm}
+          accessToken={accessToken}
+        />
+        <Button type="submit" className="w-full">
+          Envoyer
+        </Button>
+      </form>
+      {alert && (
+        <Alert setAlert={setAlert} type={alert.type} message={alert.message} />
+      )}
+    </>
   );
 }
