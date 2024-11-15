@@ -54,6 +54,8 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   if (type === "addReview" && userRole === "seller") return;
 
+  console.log("orderID =>", order.id);
+
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -61,7 +63,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           {products.map((product) => (
             <Link
               key={product.id}
-              href={`/product/${product.id}`}
+              href={`/commandes/${order.id}`}
               className="flex items-center"
             >
               <ClientProductImage
