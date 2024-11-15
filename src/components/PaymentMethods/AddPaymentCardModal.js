@@ -47,6 +47,25 @@ const AddPaymentCardModal = ({
     }
   };
 
+  const stripeStyle = {
+    base: {
+      color: "black", // Text color matches the input's default
+      backgroundColor: "transparent", // Matches the transparent background
+      fontWeight: "400", // Matches font-weight in input
+      fontSize: "0.875rem",
+      lineHeight: "1.375rem", // `small` in input styles
+      "::placeholder": {
+        color: "#ADA89F", // Matches placeholder color from globals.css
+      },
+      ":-webkit-autofill": {
+        color: "#ADA89F", // Matches autofill text color
+      },
+    },
+    invalid: {
+      color: "#EF4444", // Error color (red-500)
+    },
+  };
+
   return (
     <Modal
       title="Ajouter un moyen de paiement"
@@ -61,35 +80,40 @@ const AddPaymentCardModal = ({
         <img src={`/logos/visa.svg`} width="50" alt="visa" />
         <img src={`/logos/mastercard.svg`} width="40" alt="mastercard" />
       </div>
-      <div className="mb-5">
+      <div className="mb-5 pb-1 border-b border-black">
         <label htmlFor="cardNumber" className="font-mcqueen font-semibold">
           Numéro de carte :
         </label>
-        <CardNumberElement id="cardNumber" className="input" />
+        <CardNumberElement id="cardNumber" options={{ style: stripeStyle }} />
       </div>
       <div className="grid grid-cols-2 gap-5 mb-5">
-        <div className="mb-5">
+        <div className="mb-5 pb-1 border-b border-black">
           <label htmlFor="cardExpiry" className="font-mcqueen font-semibold">
             Date exp :
           </label>
-          <CardExpiryElement id="cardExpiry" className="input" />
+          <CardExpiryElement id="cardExpiry" options={{ style: stripeStyle }} />
         </div>
-        <div className="mb-5">
+        <div className="mb-5 pb-1 border-b border-black">
           <label htmlFor="cardCvc" className="font-mcqueen font-semibold">
             CSV :
           </label>
-          <CardCvcElement id="cardCvc" className="input" />
+          <CardCvcElement id="cardCvc" options={{ style: stripeStyle }} />
         </div>
       </div>
       {error && <div role="alert">{error}</div>}
-      <label className="font-semibold cursor-pointer flex mx-auto mb-5">
+      <label className="font-semibold cursor-pointer flex mb-5">
         <Checkbox
           checked={isDefaultCard === true}
           onChange={() => setIsDefaultCard(!isDefaultCard)}
           className="mr-2"
         />
-        Enregistrer carte par défaut*
+        Définir par défaut*
       </label>
+      <p className="text-xs font-semibold mb-5 text-grey">
+        *Payer plus rapidement la prochaine fois en enregistrant la carte par
+        défaut. Vous pouvez modifier ce paramètre à tout moment dans "Paramètres{" "}
+        {">"} Paiements".
+      </p>
     </Modal>
   );
 };
