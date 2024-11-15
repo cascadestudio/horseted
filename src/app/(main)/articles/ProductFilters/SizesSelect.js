@@ -28,8 +28,9 @@ export default function SizesSelect({
       }
     };
 
+    setActiveSizes([]);
     fetchSizes();
-  }, []);
+  }, [categoryId]);
 
   const handleCheckboxChange = (item) => {
     setActiveSizes((prevSelectedItems) => {
