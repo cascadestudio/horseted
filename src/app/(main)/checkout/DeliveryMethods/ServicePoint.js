@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import capitalizeText from "@/utils/capitalizeText";
 
 export default function ServicePoint({
-  servicePoints,
   setActiveServicePoint,
   activeServicePoint,
 }) {
@@ -45,7 +44,7 @@ export default function ServicePoint({
 
   const successCallback = (servicePoint) => {
     setActiveServicePoint(servicePoint);
-    console.log("servicePoint =>", servicePoint);
+    // console.log("servicePoint =>", servicePoint);
   };
 
   const failureCallback = (errors) => {
