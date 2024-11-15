@@ -29,7 +29,7 @@ export default function Transactions() {
     }
   };
 
-  if (!isUserSeller)
+  if (!isUserSeller) {
     return (
       <CreateSellerAccount
         accessToken={accessToken}
@@ -37,6 +37,7 @@ export default function Transactions() {
         getSellerData={getSellerData}
       />
     );
-
-  return <DisplaySellerAccount sellerData={sellerData} />;
+  } else {
+    return <DisplaySellerAccount sellerData={sellerData} />;
+  }
 }
