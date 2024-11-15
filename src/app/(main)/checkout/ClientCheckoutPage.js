@@ -64,7 +64,7 @@ const CheckOutPage = () => {
   const [summaryPrices, setSummaryPrices] = useState({
     productsPrice: 0,
     shippingPrice: 0,
-    protectionPrice: "2,16 €",
+    protectionPrice: 0,
     totalPrice: 0,
   });
 
@@ -138,7 +138,7 @@ const CheckOutPage = () => {
         street: activeAddress.street,
         postalCode: activeAddress.postalCode,
       },
-      shippingMethod: selectedShippingMethod?.id,
+      shippingMethod: shippingMethods[selectedShippingMethod][0].id,
       servicePoint: activeServicePoint?.id || null,
     };
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
