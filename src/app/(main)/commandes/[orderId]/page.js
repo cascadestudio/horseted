@@ -15,7 +15,7 @@ import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { useLabelDownloader } from "./useLabelDownloader";
+import { useLabelDownloader } from "@/hooks/useLabelDownloader";
 import { downloadDocument } from "@/utils/downloadDocument";
 
 export default function OrderDetails({ params }) {

@@ -8,10 +8,13 @@ import OrderStatusText from "./OrderStatusText";
 import OfferResponseButtons from "./OfferResponseButtons";
 import { patchOrderIsReceived } from "@/fetch/orders";
 import ReviewModal from "../../../ThreadInfo/ReviewModal";
+import { useLabelDownloader } from "@/hooks/useLabelDownloader";
 
 export default function OrderInfoMessage({ type, offerId }) {
   const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
+  const { downloadLabel } = useLabelDownloader(accessToken, order.id);
+
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
 
@@ -54,8 +57,6 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   if (type === "addReview" && userRole === "seller") return;
 
-  console.log("orderID =>", order.id);
-
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -90,6 +91,11 @@ export default function OrderInfoMessage({ type, offerId }) {
           userRole={userRole}
         />
       </li>
+      {type === "newOrder" && userRole === "seller" && (
+        <div className="flex justify-end">
+          <Button onClick={downloadLabel}>Imprimer l'étiquette</Button>
+        </div>
+      )}
       {type === "newOffer" && // is a new offer and
         !isOfferOwner && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
