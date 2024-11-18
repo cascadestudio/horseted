@@ -24,7 +24,7 @@ export default async function ProductsSection({
   );
   console.log("productsData =>", productsData);
 
-  if (!productsData) return;
+  if (productsData.total === 0) return;
 
   const products = productsData.items.slice(0, 16);
 
