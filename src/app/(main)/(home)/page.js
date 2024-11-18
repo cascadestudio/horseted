@@ -78,16 +78,17 @@ export default async function Home() {
       <ProductsSection
         title="Pour la cavalière"
         categoryId="1066"
+        // categoryId="1160"
         categoryName="La Cavalière"
       />
       <ProductsSection
         title="Pour le cavalier"
-        categoryId="1078"
+        categoryId="1065"
         categoryName="le cavalier"
       />
       <ProductsSection
-        title="Selles et Accessoires"
-        categoryId="1264"
+        title="Accessoires et Selles"
+        categoryId="1275"
         categoryName="selles"
       />
       <div className="bg-white">

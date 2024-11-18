@@ -24,6 +24,7 @@ import { shippingSizeTranslations } from "@/utils/translations";
 
 export default function ProductsPage({ categories }) {
   const router = useRouter();
+  console.log("categories =>", categories);
   const searchParams = useSearchParams();
   const searchParam = searchParams.get("search");
   const categoryIdParam = searchParams.get("categoryId");
