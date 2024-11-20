@@ -13,7 +13,9 @@ import { useLabelDownloader } from "@/hooks/useLabelDownloader";
 export default function OrderInfoMessage({ type, offerId }) {
   const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
-  const { downloadLabel } = useLabelDownloader(accessToken, order.id);
+  const { downloadLabel } = order?.id
+    ? useLabelDownloader(accessToken, order.id)
+    : { downloadLabel: () => {} };
 
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
