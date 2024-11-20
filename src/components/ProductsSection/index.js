@@ -1,32 +1,47 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import ProductCard from "@/components/ProductCard";
 import CardCarousel from "@/components/CardCarousel";
 import Button from "@/components/Button";
 import RightArrow from "@/assets/icons/RightArrow";
 
-export default async function ProductsSection({
+export default function ProductsSection({
   title,
   orderBy,
   categoryId,
   categoryName,
 }) {
-  let query = "/products";
-  if (orderBy) query += `?orderBy=${orderBy}`;
-  if (categoryId) query += `?category=${categoryId}`;
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const productsData = await fetchHorseted(
-    query,
-    null,
-    "GET",
-    null,
-    false,
-    true
-  );
-  console.log("productsData =>", productsData);
+  useEffect(() => {
+    let query = "/products";
+    if (orderBy) query += `?orderBy=${orderBy}`;
+    if (categoryId) query += `?category=${categoryId}`;
 
-  if (productsData.total === 0) return;
+    const fetchProducts = async () => {
+      const productsData = await fetchHorseted(
+        query,
+        null,
+        "GET",
+        null,
+        false,
+        true
+      );
+      console.log("productsData =>", productsData);
 
-  const products = productsData.items.slice(0, 16);
+      if (productsData.total === 0) return;
+
+      setProducts(productsData.items.slice(0, 16));
+      setIsLoading(false);
+    };
+
+    fetchProducts();
+  }, [orderBy, categoryId]);
+
+  if (isLoading) return null;
 
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
