@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuthContext } from "@/context/AuthContext";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "@/components/Button";
 import ShareIcon from "@/assets/icons/ShareIcon";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { useIsClickOutsideElement } from "@/utils/hooks";
 import ThreeDotsProductDropDown from "./ThreeDotsProductDropDown";
 import ShareDropDown from "./ShareDropDown";
 import { useRouter } from "next/navigation";
+import { getProducts } from "@/fetch/products";
 
 export default function ProductInfoSection({
   product,
@@ -45,6 +46,17 @@ export default function ProductInfoSection({
   const [isShareDropdown, setIsShareDropdown] = useState(false);
   const [isClickOutside, setIsClickOutside] =
     useIsClickOutsideElement(dropdownRef);
+  const [isProductSold, setIsProductSold] = useState(false);
+
+  useEffect(() => {
+    const handleSoldProduct = async () => {
+      const product = await getProducts(params.id);
+      const isProductSold = product.status === "sold";
+      setIsProductSold(isProductSold);
+    };
+
+    handleSoldProduct();
+  }, []);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
   const handleCloseOfferModal = () => {
@@ -153,7 +165,7 @@ export default function ProductInfoSection({
         {centsToEuros(price)} €
       </p>
       <ShippingInfo product={product} />
-      {!isUserSeller && (
+      {!isUserSeller && !isProductSold && (
         <>
           <Button
             className="w-full mb-3 h-[52px] text-lg"
@@ -162,7 +174,6 @@ export default function ProductInfoSection({
           >
             Acheter
           </Button>
-
           <Button
             onClick={handleOpenOfferModal}
             price={price}
@@ -191,7 +202,6 @@ export default function ProductInfoSection({
           )}
         </>
       )}
-
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           <tr>
