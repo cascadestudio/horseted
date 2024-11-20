@@ -48,7 +48,6 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
       false,
       true
     );
-    console.log("filesIds =>", filesIds);
     setStripeAccountForm((prevState) => ({
       ...prevState,
       individual: {

@@ -18,7 +18,6 @@ export default function LinkAccount() {
   useEffect(() => {
     const checkIfGoogleLinked = () => {
       const user = auth.currentUser;
-      console.log("user =>", user);
       if (user) {
         const googleProvider = user.providerData.find(
           (provider) => provider.providerId === "google.com"

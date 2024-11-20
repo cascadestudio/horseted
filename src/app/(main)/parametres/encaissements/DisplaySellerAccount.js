@@ -8,19 +8,6 @@ import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 
 export default function DisplaySellerAccount({ sellerData }) {
-  // export default function DisplaySellerAccount() {
-  // const sellerData = {
-  //   ibanLast4: "123",
-  //   address: {
-  //     city: "Paris",
-  //     postalCode: "75001",
-  //     street: "15 Rue de Rivoli",
-  //   },
-  //   dateOfBirth: "1990-01-01",
-  //   firstName: "John",
-  //   lastName: "Doe",
-  //   verificationStatus: "not_valid",
-  // };
   const {
     ibanLast4,
     address,
@@ -29,8 +16,6 @@ export default function DisplaySellerAccount({ sellerData }) {
     lastName,
     verificationStatus,
   } = sellerData;
-
-  // console.log("sellerData =>", sellerData);
 
   const [isModal, setIsModal] = useState(false);
 

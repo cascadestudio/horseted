@@ -10,9 +10,6 @@ export default function CitySelect({ shippingAddress }) {
   const [selectedCity, setSelectedCity] = useState(shippingAddress.city);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // console.log("shippingAddress.city =>", shippingAddress.city);
-  // console.log("selectedCity =>", selectedCity);
-
   useEffect(() => {
     setSelectedCity(shippingAddress.city);
   }, [shippingAddress.city]);
@@ -47,7 +44,6 @@ export default function CitySelect({ shippingAddress }) {
     const body = {
       city: city,
     };
-    console.log("body =>", body);
     await patchAddress(accessToken, body, shippingAddress.id);
   };
 

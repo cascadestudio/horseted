@@ -44,7 +44,6 @@ export default function ServicePoint({
 
   const successCallback = (servicePoint) => {
     setActiveServicePoint(servicePoint);
-    // console.log("servicePoint =>", servicePoint);
   };
 
   const failureCallback = (errors) => {
