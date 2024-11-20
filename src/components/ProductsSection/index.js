@@ -30,7 +30,6 @@ export default function ProductsSection({
         false,
         true
       );
-      console.log("productsData =>", productsData);
 
       if (productsData.total === 0) return;
 
