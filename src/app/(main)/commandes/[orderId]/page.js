@@ -15,13 +15,12 @@ import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { useLabelDownloader } from "@/hooks/useLabelDownloader";
+import { downloadLabel } from "@/utils/downloadLabel";
 import { downloadDocument } from "@/utils/downloadDocument";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
   const { accessToken } = useAuthContext();
-  const { downloadLabel } = useLabelDownloader(accessToken, orderId);
 
   const searchParams = useSearchParams();
   const productId = searchParams.get("productId");
@@ -191,7 +190,7 @@ export default function OrderDetails({ params }) {
         <Button
           variant={"transparent-green"}
           className="w-full mt-2"
-          onClick={downloadLabel}
+          onClick={() => downloadLabel(accessToken, orderId)}
         >
           Imprimer l'étiquette
         </Button>
