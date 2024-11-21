@@ -8,6 +8,7 @@ import {
   useCallback,
 } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { useNotificationsContext } from "@/context/NotificationsContext";
 import { useSearchParams } from "next/navigation";
 import { getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
@@ -19,6 +20,7 @@ const ThreadsContext = createContext();
 
 export const ThreadsProvider = ({ children }) => {
   const { user, accessToken } = useAuthContext();
+  const { handleUnseenMessagesNb } = useNotificationsContext();
   const searchParams = useSearchParams();
   const productIdParam = searchParams.get("productId");
 
@@ -189,6 +191,7 @@ export const ThreadsProvider = ({ children }) => {
         { seen: true },
         true
       );
+      handleUnseenMessagesNb();
       await handleGetThreads();
     },
     [accessToken]
