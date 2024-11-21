@@ -6,7 +6,7 @@ import { getUser } from "@/utils/getUser";
 import Alert from "@/components/Alert";
 import { useState } from "react";
 
-const SignIn = ({ providerName, type }) => {
+const SignIn = ({ providerName, type, setIsSignInModal }) => {
   const router = useRouter();
   const [isAlert, setIsAlert] = useState(false);
 
@@ -43,12 +43,22 @@ const SignIn = ({ providerName, type }) => {
             username: result.user.displayName,
             newsletter: true,
           });
-          console.log("User created successfully, redirecting to home...");
-          return router.push("/");
+          console.log("User created successfully");
+          if (setIsSignInModal) {
+            setIsSignInModal(false);
+          } else {
+            console.log("Redirecting to home...");
+            return router.push("/");
+          }
         }
       } else {
-        console.log("User already exists, redirecting to home...", user);
-        return router.push("/");
+        console.log("User already exists");
+        if (setIsSignInModal) {
+          setIsSignInModal(false);
+        } else {
+          console.log("Redirecting to home...");
+          return router.push("/");
+        }
       }
     } catch (error) {
       console.error(`Error during ${providerName} sign-in:`, error);

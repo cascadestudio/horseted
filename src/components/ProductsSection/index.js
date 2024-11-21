@@ -22,14 +22,7 @@ export default function ProductsSection({
     if (categoryId) query += `?category=${categoryId}`;
 
     const fetchProducts = async () => {
-      const productsData = await fetchHorseted(
-        query,
-        null,
-        "GET",
-        null,
-        false,
-        true
-      );
+      const productsData = await fetchHorseted(query);
 
       if (productsData.total === 0) return;
 
