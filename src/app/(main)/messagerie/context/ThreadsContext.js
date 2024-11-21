@@ -13,6 +13,7 @@ import { getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
 import { getUser } from "@/fetch/users";
 import { getProducts } from "@/fetch/products";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 const ThreadsContext = createContext();
 
@@ -45,6 +46,7 @@ export const ThreadsProvider = ({ children }) => {
     updateMessages();
     getRecipient(activeThread);
     handleThreadOrderInfo();
+    handleIsSeenThread(activeThread.id, activeThread.lastMessage.id);
   }, [activeThread]);
 
   // Effect to check for productId in the URL params and set active thread or initiate new thread
@@ -177,6 +179,20 @@ export const ThreadsProvider = ({ children }) => {
     );
     setProducts(products);
   }, []);
+
+  const handleIsSeenThread = useCallback(
+    async (threadId, messageId) => {
+      await fetchHorseted(
+        `/threads/${threadId}/messages/${messageId}`,
+        accessToken,
+        "PATCH",
+        { seen: true },
+        true
+      );
+      await handleGetThreads();
+    },
+    [accessToken]
+  );
 
   return (
     <ThreadsContext.Provider

@@ -1,26 +1,12 @@
 import fetchHorseted from "@/utils/fetchHorseted";
 
 export const getOrder = async (accessToken, orderId) => {
-  const order = await fetchHorseted(
-    `/orders/${orderId}`,
-    accessToken,
-    "GET",
-    null,
-    false,
-    true
-  );
+  const order = await fetchHorseted(`/orders/${orderId}`, accessToken);
   return order;
 };
 
 export const postOrder = async (accessToken, body) => {
-  const order = await fetchHorseted(
-    `/orders`,
-    accessToken,
-    "POST",
-    body,
-    true,
-    true
-  );
+  const order = await fetchHorseted(`/orders`, accessToken, "POST", body, true);
   return order.id;
 };
 
