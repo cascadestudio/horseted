@@ -23,7 +23,7 @@ export default function OrderDetails({ params }) {
   const { accessToken } = useAuthContext();
 
   const searchParams = useSearchParams();
-  const productId = searchParams.get("productId");
+  const productIds = searchParams.get("productIds");
   const cavalierId = searchParams.get("cavalierId");
 
   const [paymentInfos, setPaymentInfos] = useState(null);
@@ -42,8 +42,15 @@ export default function OrderDetails({ params }) {
   };
 
   const handleGetProducts = async () => {
-    const product = await getProducts(productId);
-    setProducts(Array.isArray(product) ? product : [product]);
+    const productIdsArray = productIds.split(";").map((id) => parseInt(id, 10));
+    const products = await Promise.all(
+      productIdsArray.map(async (productId) => {
+        const product = await getProducts(productId);
+        return product;
+      })
+    );
+
+    setProducts(products);
   };
 
   const handleGetUser = async () => {
@@ -101,30 +108,28 @@ export default function OrderDetails({ params }) {
           </p>
         </div>
         <div className="bg-white rounded-xl p-8 border border-lighter-grey mb-4">
-          {products.map((product) => (
-            <div
-              className="flex items-center justify-between mb-3"
-              key={product.id}
-            >
-              <div className="flex items-center">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center">
+              {products.map((product) => (
                 <ClientProductImage
+                  key={product.id}
                   product={product}
                   size="small"
-                  className="w-10 h-[50px]"
+                  className="h-[50px] w-[50px] mr-2"
                 />
-                <div className="font-extrabold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
-                  <p>
-                    {products.length > 1
-                      ? `${products.length} articles`
-                      : product.title}
-                  </p>
-                </div>
-              </div>
-              <div className="font-poppins font-extrabold text-sm">
-                {centsToEuros(amount)}€
+              ))}
+              <div className="font-extrabold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+                <p>
+                  {products.length > 1
+                    ? `${products.length} articles`
+                    : products[0].title}
+                </p>
               </div>
             </div>
-          ))}
+            <div className="font-poppins font-extrabold text-sm">
+              {centsToEuros(amount)}€
+            </div>
+          </div>
         </div>
         <div className="flex items-center justify-between bg-white rounded-xl p-8 border border-lighter-grey mb-4">
           <div className="flex items-center">
@@ -136,7 +141,7 @@ export default function OrderDetails({ params }) {
               <StarRating review={user.review} />
             </div>
           </div>
-          <Link href={`/messagerie?productId=${productId}`} className="h-8 w-8">
+          <Link href={`/messagerie?orderId=${orderId}`} className="h-8 w-8">
             <MessageGreenIcon />
           </Link>
         </div>

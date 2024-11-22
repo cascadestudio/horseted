@@ -22,7 +22,7 @@ export default function ThreadInfo() {
     product,
     orderTracking,
     recipient,
-    initWithLastThread,
+    initThreads,
     activeThread,
     setIsInfo,
   } = useThreadsContext();
@@ -66,7 +66,7 @@ export default function ThreadInfo() {
 
   const onDeleteThread = async () => {
     await deleteThread(accessToken, activeThread.id);
-    await initWithLastThread();
+    await initThreads();
     setIsInfo(false);
   };
 
