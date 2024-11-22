@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function OrderList({ orderType }) {
   const { user, accessToken } = useAuthContext();
-  const [purchasesOrSales, setPurchasesOrSales] = useState([]);
+  const [ordersWithProducts, setOrdersWithProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -34,23 +34,23 @@ export default function OrderList({ orderType }) {
       orders = ordersData.filter((order) => order.userId === user.id);
     }
 
-    const purchasesOrSales = await Promise.all(
-      orders.flatMap(async (order) => {
-        const cavalier = orderType === "sale" ? order.buyer : order.seller;
-
-        return Promise.all(
+    const ordersWithProducts = await Promise.all(
+      orders.map(async (order) => {
+        const products = await Promise.all(
           order.items.map(async (item) => {
             const product = await fetchHorseted(
               `/products/${item.productId}`,
               accessToken
             );
-            return { product, cavalier, order };
+            return product;
           })
         );
+
+        return { order, products };
       })
     );
 
-    setPurchasesOrSales(purchasesOrSales.flat());
+    setOrdersWithProducts(ordersWithProducts);
     setIsLoading(false);
   }
 
@@ -83,7 +83,7 @@ export default function OrderList({ orderType }) {
           </tr>
         </thead>
         <tbody>
-          {purchasesOrSales.length === 0 ? (
+          {ordersWithProducts.length === 0 ? (
             <tr>
               <td
                 colSpan="4"
@@ -95,12 +95,15 @@ export default function OrderList({ orderType }) {
               </td>
             </tr>
           ) : (
-            purchasesOrSales.map((purchaseOrSale) => {
-              const { product, cavalier, order } = purchaseOrSale;
+            ordersWithProducts.map(({ order, products }) => {
+              const cavalier =
+                orderType === "sale" ? order.buyer : order.seller;
               return (
                 <tr key={order.id} className="border-b border-lighter-grey">
                   <td className="py-4 pr-2 text-sm lg:text-base font-semibold">
-                    {product.title}
+                    {products.map((product) => (
+                      <div key={product.id}>{product.title}</div>
+                    ))}
                   </td>
                   <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate">
                     <Link href={`/vendeur/${cavalier.id}`}>
@@ -115,7 +118,9 @@ export default function OrderList({ orderType }) {
                       href={{
                         pathname: `/commandes/${order.id}`,
                         query: {
-                          productId: product.id,
+                          productIds: [
+                            products.map((product) => product.id).join(";"),
+                          ],
                           cavalierId: cavalier.id,
                         },
                       }}
