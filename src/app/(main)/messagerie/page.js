@@ -4,6 +4,7 @@ import { ThreadsProvider } from "@/app/(main)/messagerie/context/ThreadsContext"
 import withAuth from "@/hoc/withAuth";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ThreadsContainer from "./ThreadsContainer";
+import { useSearchParams } from "next/navigation";
 
 const breadcrumbs = [
   { label: "Accueil", href: "/" },
@@ -12,8 +13,11 @@ const breadcrumbs = [
 ];
 
 function ThreadsPage() {
+  const searchParams = useSearchParams();
+  const orderId = parseInt(searchParams.get("orderId"), 10);
+
   return (
-    <ThreadsProvider>
+    <ThreadsProvider orderId={orderId}>
       <div className="container mx-auto px-5 pb-10">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         <ThreadsContainer />

@@ -18,7 +18,7 @@ import fetchHorseted from "@/utils/fetchHorseted";
 
 const ThreadsContext = createContext();
 
-export const ThreadsProvider = ({ children }) => {
+export const ThreadsProvider = ({ children, orderId }) => {
   const { user, accessToken } = useAuthContext();
   const { handleUnseenMessagesNb } = useNotificationsContext();
   const searchParams = useSearchParams();
@@ -39,8 +39,8 @@ export const ThreadsProvider = ({ children }) => {
 
   // useEffect to fetch threads initially
   useEffect(() => {
-    initWithLastThread();
-  }, []);
+    initThreads(orderId);
+  }, [orderId]);
 
   // Effect to handle thread change and get recipient, messages, and order info
   useEffect(() => {
@@ -109,30 +109,44 @@ export const ThreadsProvider = ({ children }) => {
     [accessToken]
   );
 
-  const initWithLastThread = useCallback(async () => {
-    const treadsResponse = await handleGetThreads();
-    if (treadsResponse.length > 0) {
-      const threadsNotDeletedByUser = treadsResponse.filter((thread) =>
-        thread.authors.some(
-          (author) => author.id === user.id && !author.deleted
-        )
-      );
-      setThreads(threadsNotDeletedByUser);
-      if (threadsNotDeletedByUser.length === 0) return;
-      const lastThread = threadsNotDeletedByUser[0];
-      setActiveThread(lastThread);
-      setRecipient(lastThread.authors[0]);
-      await updateMessages(lastThread.id);
-      if (lastThread.productId) {
-        handleGetProduct(lastThread.productId);
+  const initThreads = useCallback(
+    async (orderId) => {
+      const treadsResponse = await handleGetThreads();
+      if (treadsResponse.length > 0) {
+        const threadsNotDeletedByUser = treadsResponse.filter((thread) =>
+          thread.authors.some(
+            (author) => author.id === user.id && !author.deleted
+          )
+        );
+        setThreads(threadsNotDeletedByUser);
+        if (threadsNotDeletedByUser.length === 0) return;
+        let activeThread;
+        if (orderId) {
+          activeThread = threadsNotDeletedByUser.find(
+            (thread) => thread.orderId === orderId
+          );
+        } else {
+          activeThread = threadsNotDeletedByUser[0];
+        }
+
+        setActiveThread(activeThread);
+        setRecipient(activeThread.authors[0]);
+        await updateMessages(activeThread.id);
+        if (activeThread.productId) {
+          handleGetProduct(activeThread.productId);
+        }
+        if (activeThread.orderId) {
+          const orderResponse = await getOrder(
+            accessToken,
+            activeThread.orderId
+          );
+          setOrder(orderResponse);
+          await handleGetOrderTracking(orderResponse);
+        }
       }
-      if (lastThread.orderId) {
-        const orderResponse = await getOrder(accessToken, lastThread.orderId);
-        setOrder(orderResponse);
-        await handleGetOrderTracking(orderResponse);
-      }
-    }
-  }, [threads, accessToken]);
+    },
+    [threads, accessToken]
+  );
 
   const getRecipient = useCallback(
     async (activeThread) => {
@@ -224,7 +238,7 @@ export const ThreadsProvider = ({ children }) => {
         setProducts,
         setOrder,
         handleGetProduct,
-        initWithLastThread,
+        initThreads,
         handleGetThreads,
       }}
     >
