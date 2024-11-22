@@ -114,7 +114,7 @@ const CheckOutPage = () => {
       });
     }
     const paymentResponse = await handleOrdersPayment(orderId);
-    await handlePaymentResponse(paymentResponse);
+    await handlePaymentResponse(paymentResponse, orderId);
     if (!isAddressSaved && !isDefaultAddress) {
       const query = `/users/me/addresses/${activeAddress.id}`;
       await fetchHorseted(query, accessToken, "DELETE");
@@ -146,7 +146,7 @@ const CheckOutPage = () => {
     return paymentResponse;
   }
 
-  async function handlePaymentResponse(paymentResponse) {
+  async function handlePaymentResponse(paymentResponse, orderId) {
     //  processing, requiresAction, requiresCapture, requiresConfirmation, requiresPaymentMethod, succeded
     switch (paymentResponse.status) {
       case "canceled":
@@ -161,7 +161,7 @@ const CheckOutPage = () => {
           type: "success",
           message: "Paiement validé",
         });
-        router.push(`/messagerie`);
+        router.push(`/messagerie?orderId=${orderId}`);
         break;
       case "requires_action":
         const paymentIntenturl = paymentResponse.nextAction.url;

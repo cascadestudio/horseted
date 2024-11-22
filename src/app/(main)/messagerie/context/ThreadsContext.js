@@ -15,10 +15,14 @@ import { getOrder, getOrderTracking } from "@/fetch/orders";
 import { getUser } from "@/fetch/users";
 import { getProducts } from "@/fetch/products";
 import fetchHorseted from "@/utils/fetchHorseted";
+import { useRouter, usePathname } from "next/navigation";
 
 const ThreadsContext = createContext();
 
 export const ThreadsProvider = ({ children, orderId }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const { user, accessToken } = useAuthContext();
   const { handleUnseenMessagesNb } = useNotificationsContext();
   const searchParams = useSearchParams();
@@ -45,10 +49,13 @@ export const ThreadsProvider = ({ children, orderId }) => {
   // Effect to handle thread change and get recipient, messages, and order info
   useEffect(() => {
     if (!activeThread) return;
+
     updateMessages();
     getRecipient(activeThread);
     handleThreadOrderInfo();
     handleIsSeenThread(activeThread.id, activeThread.lastMessage.id);
+    const newUrl = `${pathname}?orderId=${encodeURIComponent(activeThread.orderId)}`;
+    router.replace(newUrl);
   }, [activeThread]);
 
   // Effect to check for productId in the URL params and set active thread or initiate new thread
