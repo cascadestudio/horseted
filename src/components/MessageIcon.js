@@ -1,47 +1,7 @@
-import fetchHorseted from "@/utils/fetchHorseted";
-import { useEffect, useState } from "react";
-import { useAuthContext } from "@/context/AuthContext";
+import { useNotificationsContext } from "@/context/NotificationsContext";
 
 export default function MessageIcon() {
-  const { accessToken } = useAuthContext();
-  const [unseenMessagesNb, setUnseenMessagesNb] = useState(0);
-
-  useEffect(() => {
-    if (accessToken) handleUnseenMessagesNb();
-  }, [accessToken]);
-
-  async function handleUnseenMessagesNb() {
-    const threads = await getThreads();
-    const unseenThreads = threads.filter((thread) => !thread.lastMessage.seen);
-    const messages = await Promise.all(
-      unseenThreads.map(async (thread) => {
-        return await getMessages(thread.id);
-      })
-    );
-    const unseenMessagesNb = messages
-      .flat()
-      .filter((message) => !message.seen).length;
-    setUnseenMessagesNb(unseenMessagesNb);
-  }
-
-  async function getThreads() {
-    const threads = await fetchHorseted(
-      "/threads",
-      accessToken,
-      "GET",
-      null,
-      true
-    );
-    return threads;
-  }
-
-  async function getMessages(threadId) {
-    const messages = await fetchHorseted(
-      `/threads/${threadId}/messages`,
-      accessToken
-    );
-    return messages;
-  }
+  const { unseenMessagesNb } = useNotificationsContext();
 
   return (
     <div className="relative">

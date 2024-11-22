@@ -8,10 +8,12 @@ import OrderStatusText from "./OrderStatusText";
 import OfferResponseButtons from "./OfferResponseButtons";
 import { patchOrderIsReceived } from "@/fetch/orders";
 import ReviewModal from "../../../ThreadInfo/ReviewModal";
+import { downloadLabel } from "@/utils/downloadLabel";
 
 export default function OrderInfoMessage({ type, offerId }) {
   const { order, user, accessToken, products, updateMessages, recipient } =
     useThreadsContext();
+
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
 
@@ -61,7 +63,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           {products.map((product) => (
             <Link
               key={product.id}
-              href={`/product/${product.id}`}
+              href={`/commandes/${order.id}`}
               className="flex items-center"
             >
               <ClientProductImage
@@ -88,6 +90,13 @@ export default function OrderInfoMessage({ type, offerId }) {
           userRole={userRole}
         />
       </li>
+      {type === "newOrder" && userRole === "seller" && (
+        <div className="flex justify-end">
+          <Button onClick={() => downloadLabel(accessToken, order.id)}>
+            Imprimer l'étiquette
+          </Button>
+        </div>
+      )}
       {type === "newOffer" && // is a new offer and
         !isOfferOwner && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />

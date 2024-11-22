@@ -124,6 +124,7 @@ const CheckOutPage = () => {
 
   async function getProduct(productId) {
     const product = await fetchHorseted(`/products/${productId}`);
+    console.log(product);
     setProducts((prevProducts) => [...prevProducts, product]);
     setLoading(false);
   }

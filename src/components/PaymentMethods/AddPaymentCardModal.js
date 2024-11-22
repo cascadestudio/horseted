@@ -49,20 +49,20 @@ const AddPaymentCardModal = ({
 
   const stripeStyle = {
     base: {
-      color: "black", // Text color matches the input's default
-      backgroundColor: "transparent", // Matches the transparent background
-      fontWeight: "400", // Matches font-weight in input
+      color: "black",
+      backgroundColor: "transparent",
+      fontWeight: "400",
       fontSize: "0.875rem",
-      lineHeight: "1.375rem", // `small` in input styles
+      lineHeight: "1.375rem",
       "::placeholder": {
-        color: "#ADA89F", // Matches placeholder color from globals.css
+        color: "#ADA89F",
       },
       ":-webkit-autofill": {
-        color: "#ADA89F", // Matches autofill text color
+        color: "#ADA89F",
       },
     },
     invalid: {
-      color: "#EF4444", // Error color (red-500)
+      color: "#EF4444",
     },
   };
 

@@ -39,7 +39,6 @@ export default function Contact() {
       true,
       true
     );
-    console.log("response =>", response);
   }
 
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Contact" }];

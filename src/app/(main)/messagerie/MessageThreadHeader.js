@@ -5,8 +5,6 @@ export default function MessageThreadHeader() {
   const { product, products, recipient, isInfo, setIsInfo } =
     useThreadsContext();
 
-  // console.log("products =>", products);
-
   return (
     <div className="flex justify-between items-center p-6 border-b border-pale-grey">
       <h2 className="text-xl font-mcqueen font-bold capitalize">

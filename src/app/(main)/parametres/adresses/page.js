@@ -103,9 +103,12 @@ export default function Addresses() {
           setIsModal={() => setModal((prev) => ({ ...prev, isOpen: false }))}
           handleGetAddresses={handleGetAddresses}
           setAlert={setAlert}
+          isAddressSaved={true}
         />
       )}
-      {alert && <Alert type={alert.type} message={alert.message} />}
+      {alert && (
+        <Alert setAlert={setAlert} type={alert.type} message={alert.message} />
+      )}
     </div>
   );
 }

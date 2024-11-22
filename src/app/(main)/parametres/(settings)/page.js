@@ -44,7 +44,6 @@ export default function Settings() {
       true
     );
     setIsAlert(true);
-    console.log("user =>", user);
   }
 
   const formatDate = (isoDate) => {

@@ -1,5 +1,4 @@
 import Modal from "@/components/Modal";
-import Image from "next/image";
 import signIn from "@/libs/firebase/auth/signin";
 import Button from "@/components/Button";
 import { deleteFirebaseUser } from "@/libs/firebase/auth/deleteUser";

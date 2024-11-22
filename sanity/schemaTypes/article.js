@@ -58,7 +58,7 @@ export const article = {
     },
     {
       name: "body",
-      title: "Texte",
+      title: "Contenu",
       type: "blockContent",
       validation: (Rule) => Rule.required(),
     },

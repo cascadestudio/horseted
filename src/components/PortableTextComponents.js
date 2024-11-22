@@ -1,4 +1,8 @@
-const PortableTextComponents = () => ({
+import Image from "next/image";
+import { urlForImage } from "../../sanity/lib/image";
+import { getImageDimensions } from "@sanity/asset-utils";
+
+const PortableTextComponents = {
   block: {
     normal: ({ children }) => <p className="text-black my-4">{children}</p>,
     h1: ({ children }) => (
@@ -44,6 +48,6 @@ const PortableTextComponents = () => ({
       );
     },
   },
-});
+};
 
 export default PortableTextComponents;

@@ -1,7 +1,6 @@
 import { client } from "../../../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/PortableTextComponents";
-import Breadcrumbs from "@/components/Breadcrumbs";
 
 export async function generateMetadata({ params }) {
   const { categorySlug, articleSlug } = params;

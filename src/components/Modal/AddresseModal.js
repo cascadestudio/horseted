@@ -50,7 +50,6 @@ export default function AddressModal({
     const response = await postAddress(accessToken, addressData);
 
     if (response === "address_not_valid") {
-      console.log("response =>", response);
       setAlert({
         type: "error",
         message: "Adresse invalide",

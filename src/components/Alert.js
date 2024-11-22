@@ -1,7 +1,13 @@
 import classNames from "classnames";
 import { useEffect } from "react";
 
-export default function Alert({ type, children, duration = 5000, setAlert }) {
+export default function Alert({
+  type,
+  children,
+  duration = 5000,
+  setAlert,
+  message,
+}) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setAlert(null);
@@ -32,7 +38,7 @@ export default function Alert({ type, children, duration = 5000, setAlert }) {
         >
           !
         </span>
-        <p className="text-center font-bold">{children}</p>
+        <p className="text-center font-bold">{children || message}</p>
       </div>
     </div>
   );

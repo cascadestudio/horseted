@@ -19,8 +19,6 @@ function SellerPage({ params }) {
   const [shippingPrice, setShippingPrice] = useState(5.9);
   const [seller, setSeller] = useState(null);
 
-  // console.log("seller =>", seller);
-
   const handleOpenCreateBundleModal = () => setIsCreateBundleModalOpen(true);
   const handleCloseCreateBundleModal = () => setIsCreateBundleModalOpen(false);
 
@@ -30,7 +28,6 @@ function SellerPage({ params }) {
 
   const getSeller = async () => {
     const seller = await fetchHorseted(`/users/${params.id}`, accessToken);
-    console.log("seller =>", seller);
     setSeller(seller);
   };
 

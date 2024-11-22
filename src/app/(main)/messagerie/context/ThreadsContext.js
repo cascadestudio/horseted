@@ -8,16 +8,19 @@ import {
   useCallback,
 } from "react";
 import { useAuthContext } from "@/context/AuthContext";
+import { useNotificationsContext } from "@/context/NotificationsContext";
 import { useSearchParams } from "next/navigation";
 import { getMessages, getThreads } from "@/fetch/threads";
 import { getOrder, getOrderTracking } from "@/fetch/orders";
 import { getUser } from "@/fetch/users";
 import { getProducts } from "@/fetch/products";
+import fetchHorseted from "@/utils/fetchHorseted";
 
 const ThreadsContext = createContext();
 
 export const ThreadsProvider = ({ children }) => {
   const { user, accessToken } = useAuthContext();
+  const { handleUnseenMessagesNb } = useNotificationsContext();
   const searchParams = useSearchParams();
   const productIdParam = searchParams.get("productId");
 
@@ -33,7 +36,6 @@ export const ThreadsProvider = ({ children }) => {
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
-  console.log("products =>", products);
 
   // useEffect to fetch threads initially
   useEffect(() => {
@@ -46,6 +48,7 @@ export const ThreadsProvider = ({ children }) => {
     updateMessages();
     getRecipient(activeThread);
     handleThreadOrderInfo();
+    handleIsSeenThread(activeThread.id, activeThread.lastMessage.id);
   }, [activeThread]);
 
   // Effect to check for productId in the URL params and set active thread or initiate new thread
@@ -173,12 +176,26 @@ export const ThreadsProvider = ({ children }) => {
   }, []);
 
   const handleGetProductsFromOrder = useCallback(async (order) => {
-    console.log("order =>", order);
     const products = await Promise.all(
       order.items.map(async (item) => await getProducts(item.productId))
     );
     setProducts(products);
   }, []);
+
+  const handleIsSeenThread = useCallback(
+    async (threadId, messageId) => {
+      await fetchHorseted(
+        `/threads/${threadId}/messages/${messageId}`,
+        accessToken,
+        "PATCH",
+        { seen: true },
+        true
+      );
+      handleUnseenMessagesNb();
+      await handleGetThreads();
+    },
+    [accessToken]
+  );
 
   return (
     <ThreadsContext.Provider

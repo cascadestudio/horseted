@@ -3,9 +3,14 @@ import UploadIcon from "@/assets/icons/UploadIcon";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { objectToFormData } from "@/utils/objectToFormData";
+import Image from "next/image";
 
 const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
   const [isConsent, setIsConsent] = useState(false);
+  const [imageSrcs, setImageSrcs] = useState({
+    frontDocument: null,
+    backDocument: null,
+  });
   const [files, setFiles] = useState({
     frontDocument: null,
     backDocument: null,
@@ -24,6 +29,12 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
     const file = files[0];
     if (file) {
       setFiles((prev) => ({ ...prev, [name]: file }));
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImageSrcs((prev) => ({ ...prev, [name]: reader.result }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -37,7 +48,6 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
       false,
       true
     );
-    console.log("filesIds =>", filesIds);
     setStripeAccountForm((prevState) => ({
       ...prevState,
       individual: {
@@ -75,24 +85,54 @@ const HandleFiles = ({ setStripeAccountForm, accessToken }) => {
         Carte d'identité
       </p>
       <div className="flex gap-8">
-        <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
-          <UploadIcon />
-          <p className="text-sm font-semibold uppercase text-center">Recto</p>
+        <label className="h-[130px] text-light-green  w-full border border-light-green border-dashed rounded-xl bg-white mb-4 cursor-pointer">
+          {imageSrcs.frontDocument ? (
+            <Image
+              src={imageSrcs.frontDocument}
+              className="w-full h-full object-cover rounded-xl"
+              width={100}
+              height={100}
+              alt="Avatar"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+              <UploadIcon />
+              <p className="text-sm font-semibold uppercase text-center">
+                Recto
+              </p>
+            </div>
+          )}
           <input
             onChange={handleFileChange}
             type="file"
             name="frontDocument"
             className="hidden"
+            accept="image/png, image/jpeg"
           />
         </label>
-        <label className="text-light-green flex flex-col gap-2 items-center justify-center w-full border border-light-green border-dashed rounded-xl bg-white py-5 mb-4 cursor-pointer">
-          <UploadIcon />
-          <p className="text-sm font-semibold uppercase text-center">Verso</p>
+        <label className="h-[130px] text-light-green  w-full border border-light-green border-dashed rounded-xl bg-white mb-4 cursor-pointer">
+          {imageSrcs.backDocument ? (
+            <Image
+              src={imageSrcs.backDocument}
+              className="w-full h-full object-cover rounded-xl"
+              width={100}
+              height={100}
+              alt="Avatar"
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+              <UploadIcon />
+              <p className="text-sm font-semibold uppercase text-center">
+                Verso
+              </p>
+            </div>
+          )}
           <input
             onChange={handleFileChange}
             type="file"
             name="backDocument"
             className="hidden"
+            accept="image/png, image/jpeg"
           />
         </label>
       </div>

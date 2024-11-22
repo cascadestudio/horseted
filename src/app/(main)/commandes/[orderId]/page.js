@@ -15,6 +15,8 @@ import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { centsToEuros } from "@/utils/centsToEuros";
+import { downloadLabel } from "@/utils/downloadLabel";
+import { downloadDocument } from "@/utils/downloadDocument";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
@@ -37,19 +39,16 @@ export default function OrderDetails({ params }) {
   const handleGetPaymentInfos = async () => {
     const paymentInfos = await getPaymentInfos(accessToken, orderId);
     setPaymentInfos(paymentInfos);
-    console.log("paymentInfos =>", paymentInfos);
   };
 
   const handleGetProducts = async () => {
     const product = await getProducts(productId);
     setProducts(Array.isArray(product) ? product : [product]);
-    console.log("product =>", product);
   };
 
   const handleGetUser = async () => {
     const user = await getUser(accessToken, cavalierId);
     setUser(user);
-    console.log("user =>", user);
   };
 
   const handleDocumentDownload = async (documentType) => {
@@ -65,20 +64,6 @@ export default function OrderDetails({ params }) {
       downloadDocument(blob, documentName);
       return;
     }
-  };
-
-  const downloadDocument = (blob, documentName) => {
-    const pdfBlob = new Blob([blob], { type: "application/pdf" });
-    const url = URL.createObjectURL(pdfBlob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = documentName;
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
   };
 
   if (!paymentInfos || !products || !user) {
@@ -201,6 +186,13 @@ export default function OrderDetails({ params }) {
           onClick={() => handleDocumentDownload("receipt")}
         >
           Voir le reçu
+        </Button>
+        <Button
+          variant={"transparent-green"}
+          className="w-full mt-2"
+          onClick={() => downloadLabel(accessToken, orderId)}
+        >
+          Imprimer l'étiquette
         </Button>
       </div>
     </div>

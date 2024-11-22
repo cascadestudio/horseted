@@ -23,8 +23,6 @@ export default function AddressModal({
     isDefault: false,
   });
 
-  // console.log("formData =>", formData);
-
   const handleIsAddressSaved = (e) => {
     setIsAddressSaved(e.target.checked);
   };
@@ -49,7 +47,6 @@ export default function AddressModal({
     if (!addressData.additionalInfos) {
       delete addressData.additionalInfos;
     }
-    console.log("addressData =>", addressData);
     const address = await postAddress(accessToken, addressData);
     setActiveAddress(address);
     setIsModal(false);
