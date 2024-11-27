@@ -72,7 +72,7 @@ export default function signinPage() {
         </h2>
         <div className="flex justify-center gap-2">
           <a
-            href="#"
+            href="https://play.google.com/store/apps/details?id=com.citronnoir.horseted"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
@@ -89,7 +89,7 @@ export default function signinPage() {
             </div>
           </a>
           <a
-            href="#"
+            href="https://apps.apple.com/fr/app/horseted-mat%C3%A9riel-%C3%A9quitation/id6670403795"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"

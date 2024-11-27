@@ -58,7 +58,7 @@ export default function AboutPage() {
             </p>
             <div className="lg:flex lg:gap-6">
               <a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.citronnoir.horseted"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center border border-black bg-white px-9 py-3 rounded-xl mb-3 lg:mb-0"
@@ -74,7 +74,7 @@ export default function AboutPage() {
                 </div>
               </a>
               <a
-                href="#"
+                href="https://apps.apple.com/fr/app/horseted-mat%C3%A9riel-%C3%A9quitation/id6670403795"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center border border-black bg-white px-9 py-3 rounded-xl"
