@@ -36,18 +36,6 @@ export default function ReAuthModal({ setIsReAuthModal, accessToken }) {
         Vous êtes sur le point de supprimer définitivement votre compte. Cette
         action est irréversible et supprimera définitivement toutes vos données.
       </p>
-      <a
-        href="#"
-        className="flex items-center border border-black w-fit rounded-[50px] p-1 ml-auto mr-auto"
-      >
-        <div className="bg-white rounded-full h-[41px] w-[41px] flex items-center justify-center mr-3 lg:h-[50px] lg:w-[50px]">
-          <img src="/icons/google-logo.svg" alt="Logo Google" />
-        </div>
-        <span className="font-semibold pl-3 pr-8 lg:pr-[70px] lg:pl-[38px] text-nowrap">
-          Continuer avec Google
-        </span>
-      </a>
-
       <form
         onSubmit={handleForm}
         className={`mt-4 border-b border-black mb-11 lg:border-b-0 lg:mb-[82px]`}

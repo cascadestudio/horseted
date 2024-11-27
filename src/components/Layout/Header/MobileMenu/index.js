@@ -151,9 +151,6 @@ export default function MobileMenu({ categories }) {
               >
                 <InstagramIcon />
               </a>
-              {/* <a href="#">
-                  <YoutubeIcon />
-                </a> */}
               <a
                 href="https://www.facebook.com/horseted/"
                 target="_blank"
@@ -161,9 +158,6 @@ export default function MobileMenu({ categories }) {
               >
                 <FacebookIcon />
               </a>
-              {/* <a href="#">
-                  <LinkedInIcon />
-                </a> */}
             </div>
           </div>
         </div>

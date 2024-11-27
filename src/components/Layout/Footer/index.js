@@ -176,9 +176,6 @@ export default function Footer() {
                 >
                   <InstagramIcon />
                 </a>
-                {/* <a href="#">
-                  <YoutubeIcon />
-                </a> */}
                 <a
                   href="https://www.facebook.com/horseted/"
                   target="_blank"
@@ -187,9 +184,6 @@ export default function Footer() {
                 >
                   <FacebookIcon />
                 </a>
-                {/* <a href="#">
-                  <LinkedInIcon />
-                </a> */}
               </div>
             </div>
           </div>
