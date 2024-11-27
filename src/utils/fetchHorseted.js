@@ -52,14 +52,14 @@ export default async function fetchHorseted(
     console.log(
       `Failed to fetch ${query}: ${errorResponse.message || response.statusText}`
     );
-    // if (isThrowError) {
-    //   throw new Error(
-    //     `Failed to fetch ${query}: ${
-    //       errorResponse.message || response.statusText
-    //     }`
-    //   );
-    // } else {
-    //   return errorResponse.message || response.statusText;
-    // }
+    if (isThrowError) {
+      throw new Error(
+        `Failed to fetch ${query}: ${
+          errorResponse.message || response.statusText
+        }`
+      );
+    } else {
+      return errorResponse.message || response.statusText;
+    }
   }
 }
