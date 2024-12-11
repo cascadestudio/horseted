@@ -7,6 +7,8 @@ import BurstIcon from "@/assets/icons/BurstIcon";
 import CategoryBlogSection from "../../CategoryBlogSection";
 import ShareSection from "./ShareSection";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }) {
   const { articleSlug } = params;
   const { article, categoryArticles } = await getArticleData(articleSlug);
@@ -43,7 +45,6 @@ async function getArticleData(slug) {
     metaDescription
   }`,
     { slug }
-    // { cache: "no-store" }
   );
 
   const categoryArticles = await client.fetch(
@@ -56,7 +57,6 @@ async function getArticleData(slug) {
       "category": category->{title, _id, slug}
     }`,
     { categoryId: articles[0].category._id }
-    // { cache: "no-store" }
   );
 
   return { article: articles[0], categoryArticles };
