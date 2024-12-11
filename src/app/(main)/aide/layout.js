@@ -10,6 +10,8 @@ export const metadata = {
   },
 };
 
+export const revalidate = 3600;
+
 export default async function HelpLayout({ children, params }) {
   const { articleSlug } = params;
 

@@ -1,7 +1,7 @@
 import { client } from "../../../../sanity/lib/client";
 import ArticlesList from "./ArticlesList";
 
-// export const revalidate = 3600; // Enables ISR
+export const revalidate = 3600;
 
 export default async function AidePage() {
   const firstCategory = await client.fetch(
