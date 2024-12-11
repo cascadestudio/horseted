@@ -10,6 +10,8 @@ export const metadata = {
   },
 };
 
+export const revalidate = 3600;
+
 export default async function HelpLayout({ children, params }) {
   const { articleSlug } = params;
 
@@ -17,8 +19,7 @@ export default async function HelpLayout({ children, params }) {
     `*[_type == "helpCategory"] | order(orderRank asc) {
       slug,
       title,
-    }`,
-    { cache: "no-store" }
+    }`
   );
 
   let articleTitle = null;
@@ -29,8 +30,7 @@ export default async function HelpLayout({ children, params }) {
       `*[_type == "helpArticle" && slug.current == $articleSlug][0] {
         title
       }`,
-      { articleSlug },
-      { cache: "no-store" }
+      { articleSlug }
     );
 
     if (article) {

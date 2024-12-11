@@ -19,6 +19,8 @@ export async function generateMetadata({ params }) {
   };
 }
 
+export const revalidate = 3600;
+
 async function getData(categorySlug) {
   const category = await client.fetch(
     `*[_type == "category" && slug.current == $categorySlug][0]{
@@ -34,8 +36,7 @@ async function getData(categorySlug) {
         slug
       }
     }`,
-    { categorySlug },
-    { cache: "no-store" }
+    { categorySlug }
   );
 
   if (!category) {

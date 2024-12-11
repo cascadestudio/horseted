@@ -1,6 +1,7 @@
-import Breadcrumbs from "@/components/Breadcrumbs";
 import { client } from "../../../../../sanity/lib/client";
 import ArticlesList from "../ArticlesList";
+
+export const revalidate = 3600;
 
 export default async function CategoryPage({ params }) {
   const { categorySlug } = params;
@@ -14,8 +15,7 @@ export default async function CategoryPage({ params }) {
         slug
       }
     }`,
-    { categorySlug },
-    { cache: "no-store" }
+    { categorySlug }
   );
 
   return (

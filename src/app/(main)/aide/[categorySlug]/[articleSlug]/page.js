@@ -2,6 +2,8 @@ import { client } from "../../../../../../sanity/lib/client";
 import { PortableText } from "@portabletext/react";
 import PortableTextComponents from "@/components/PortableTextComponents";
 
+export const revalidate = 3600;
+
 export async function generateMetadata({ params }) {
   const { categorySlug, articleSlug } = params;
 
@@ -10,8 +12,7 @@ export async function generateMetadata({ params }) {
       metaTitle,
       metaDescription,
     }`,
-    { categorySlug, articleSlug },
-    { cache: "no-store" }
+    { categorySlug, articleSlug }
   );
 
   if (!article) {
@@ -46,8 +47,7 @@ export default async function HelpArticlePage({ params }) {
         title, slug
       }
     }`,
-    { categorySlug, articleSlug },
-    { cache: "no-store" }
+    { categorySlug, articleSlug }
   );
 
   if (!article) {

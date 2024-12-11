@@ -7,4 +7,10 @@ export const client = createClient({
   dataset,
   projectId,
   useCdn,
+  fetch: (url, options = {}) => {
+    return fetch(url, {
+      ...options,
+      next: { revalidate: 3600 },
+    });
+  },
 });

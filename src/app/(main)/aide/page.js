@@ -1,14 +1,15 @@
 import { client } from "../../../../sanity/lib/client";
 import ArticlesList from "./ArticlesList";
 
+export const revalidate = 3600;
+
 export default async function AidePage() {
   const firstCategory = await client.fetch(
     `*[_type == "helpCategory"] | order(orderRank asc)[0] {
       _id,
       title,
       slug
-    }`,
-    { cache: "no-store" }
+    }`
   );
 
   const articles = await client.fetch(
@@ -20,8 +21,7 @@ export default async function AidePage() {
         slug
       }
     }`,
-    { categoryId: firstCategory._id },
-    { cache: "no-store" }
+    { categoryId: firstCategory._id }
   );
 
   return (

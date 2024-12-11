@@ -3,18 +3,18 @@ import { client } from "../../../../sanity/lib/client";
 import Button from "@/components/Button";
 import Link from "next/link";
 
+export const revalidate = 3600;
+
 export default async function BlogPage() {
   const articles = await client.fetch(
     `*[_type == "article"] | order(orderRank asc) { 
       ..., 
       category->{_id, title, slug},
       _createdAt
-    }`,
-    { cache: "no-store" }
+    }`
   );
   const categories = await client.fetch(
-    `*[_type == "category"] | order(orderRank asc)`,
-    { cache: "no-store" }
+    `*[_type == "category"] | order(orderRank asc)`
   );
 
   return (
