@@ -10,7 +10,6 @@ export default async function AidePage() {
       title,
       slug
     }`
-    // { cache: "no-store" }
   );
 
   const articles = await client.fetch(
@@ -23,7 +22,6 @@ export default async function AidePage() {
       }
     }`,
     { categoryId: firstCategory._id }
-    // { cache: "no-store" }
   );
 
   return (

@@ -20,7 +20,6 @@ export default async function HelpLayout({ children, params }) {
       slug,
       title,
     }`
-    // { cache: "no-store" }
   );
 
   let articleTitle = null;
@@ -32,7 +31,6 @@ export default async function HelpLayout({ children, params }) {
         title
       }`,
       { articleSlug }
-      // { cache: "no-store" }
     );
 
     if (article) {
