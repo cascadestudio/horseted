@@ -17,6 +17,7 @@ import { postUser } from "@/utils/postUser";
 import ExternalProviderLoginButton from "@/components/ExternalProviderLoginButton";
 import { TextInput } from "@/components/input";
 import Alert from "@/components/Alert";
+import Link from "next/link";
 
 export default function signupPage() {
   const [email, setEmail] = useState("");
@@ -172,13 +173,16 @@ export default function signupPage() {
                     </div>
                     <span className="ml-2 text-[12px] leading-[18px] font-normal xl:whitespace-nowrap">
                       J’accepte les{" "}
-                      <a href="#" className="underline">
+                      <Link href="/cgu" className="underline">
                         conditions d’utilisation
-                      </a>
+                      </Link>
                       , j’ai lu la{" "}
-                      <a href="#" className="underline">
+                      <Link
+                        href="/politique-de-confidentialite"
+                        className="underline"
+                      >
                         politique de confidentialité
-                      </a>{" "}
+                      </Link>{" "}
                       et j’ai + de 18 ans.
                     </span>
                   </label>
@@ -225,7 +229,7 @@ export default function signupPage() {
         </h2>
         <div className="flex justify-center gap-2">
           <a
-            href="#"
+            href="https://play.google.com/store/apps/details?id=com.citronnoir.horseted"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] rounded-xl my-8 lg:my-0 lg:pl-7 lg:mb-12"
@@ -242,7 +246,7 @@ export default function signupPage() {
             </div>
           </a>
           <a
-            href="#"
+            href="https://apps.apple.com/fr/app/horseted-mat%C3%A9riel-%C3%A9quitation/id6670403795"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center border border-white px-[19px] py-[11px] my-8 rounded-xl lg:my-0 lg:pl-7 lg:mb-12"

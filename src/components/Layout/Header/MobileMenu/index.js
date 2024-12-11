@@ -110,7 +110,7 @@ export default function MobileMenu({ categories }) {
           </div>
           <div className="px-11 mb-9">
             <a
-              href="#"
+              href="https://play.google.com/store/apps/details?id=com.citronnoir.horseted"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center border border-black bg-white px-9 py-3 rounded-xl mb-3"
@@ -126,7 +126,7 @@ export default function MobileMenu({ categories }) {
               </div>
             </a>
             <a
-              href="#"
+              href="https://apps.apple.com/fr/app/horseted-mat%C3%A9riel-%C3%A9quitation/id6670403795"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center border border-black bg-white px-9 py-3 rounded-xl"
@@ -151,9 +151,6 @@ export default function MobileMenu({ categories }) {
               >
                 <InstagramIcon />
               </a>
-              {/* <a href="#">
-                  <YoutubeIcon />
-                </a> */}
               <a
                 href="https://www.facebook.com/horseted/"
                 target="_blank"
@@ -161,9 +158,6 @@ export default function MobileMenu({ categories }) {
               >
                 <FacebookIcon />
               </a>
-              {/* <a href="#">
-                  <LinkedInIcon />
-                </a> */}
             </div>
           </div>
         </div>
