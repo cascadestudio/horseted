@@ -15,9 +15,10 @@ const breadcrumbs = [
 function ThreadsPage() {
   const searchParams = useSearchParams();
   const orderId = parseInt(searchParams.get("orderId"), 10);
+  const productIdParam = parseInt(searchParams.get("productId"));
 
   return (
-    <ThreadsProvider orderId={orderId}>
+    <ThreadsProvider orderId={orderId} productIdParam={productIdParam}>
       <div className="container mx-auto px-5 pb-10">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         <ThreadsContainer />
