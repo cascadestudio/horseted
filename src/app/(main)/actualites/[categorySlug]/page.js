@@ -34,8 +34,8 @@ async function getData(categorySlug) {
         slug
       }
     }`,
-    { categorySlug },
-    { cache: "no-store" }
+    { categorySlug }
+    // { cache: "no-store" }
   );
 
   if (!category) {

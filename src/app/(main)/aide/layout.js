@@ -17,8 +17,8 @@ export default async function HelpLayout({ children, params }) {
     `*[_type == "helpCategory"] | order(orderRank asc) {
       slug,
       title,
-    }`,
-    { cache: "no-store" }
+    }`
+    // { cache: "no-store" }
   );
 
   let articleTitle = null;
@@ -29,8 +29,8 @@ export default async function HelpLayout({ children, params }) {
       `*[_type == "helpArticle" && slug.current == $articleSlug][0] {
         title
       }`,
-      { articleSlug },
-      { cache: "no-store" }
+      { articleSlug }
+      // { cache: "no-store" }
     );
 
     if (article) {

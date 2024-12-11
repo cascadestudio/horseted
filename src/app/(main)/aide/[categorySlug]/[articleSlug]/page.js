@@ -10,8 +10,8 @@ export async function generateMetadata({ params }) {
       metaTitle,
       metaDescription,
     }`,
-    { categorySlug, articleSlug },
-    { cache: "no-store" }
+    { categorySlug, articleSlug }
+    // { cache: "no-store" }
   );
 
   if (!article) {
@@ -46,8 +46,8 @@ export default async function HelpArticlePage({ params }) {
         title, slug
       }
     }`,
-    { categorySlug, articleSlug },
-    { cache: "no-store" }
+    { categorySlug, articleSlug }
+    // { cache: "no-store" }
   );
 
   if (!article) {

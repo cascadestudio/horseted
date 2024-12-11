@@ -14,8 +14,8 @@ export default async function CategoryPage({ params }) {
         slug
       }
     }`,
-    { categorySlug },
-    { cache: "no-store" }
+    { categorySlug }
+    // { cache: "no-store" }
   );
 
   return (

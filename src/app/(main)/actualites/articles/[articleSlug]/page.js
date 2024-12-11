@@ -42,8 +42,8 @@ async function getArticleData(slug) {
     metaTitle,
     metaDescription
   }`,
-    { slug },
-    { cache: "no-store" }
+    { slug }
+    // { cache: "no-store" }
   );
 
   const categoryArticles = await client.fetch(
@@ -55,8 +55,8 @@ async function getArticleData(slug) {
       slug,
       "category": category->{title, _id, slug}
     }`,
-    { categoryId: articles[0].category._id },
-    { cache: "no-store" }
+    { categoryId: articles[0].category._id }
+    // { cache: "no-store" }
   );
 
   return { article: articles[0], categoryArticles };

@@ -9,12 +9,12 @@ export default async function BlogPage() {
       ..., 
       category->{_id, title, slug},
       _createdAt
-    }`,
-    { cache: "no-store" }
+    }`
+    // { cache: "no-store" }
   );
   const categories = await client.fetch(
-    `*[_type == "category"] | order(orderRank asc)`,
-    { cache: "no-store" }
+    `*[_type == "category"] | order(orderRank asc)`
+    // { cache: "no-store" }
   );
 
   return (
