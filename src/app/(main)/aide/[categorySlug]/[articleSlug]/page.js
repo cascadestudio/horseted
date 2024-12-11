@@ -4,6 +4,22 @@ import PortableTextComponents from "@/components/PortableTextComponents";
 
 export const revalidate = 3600;
 
+export async function generateStaticParams() {
+  const articles = await client.fetch(
+    `*[_type == "helpArticle"] {
+      slug,
+      helpCategory->{
+        slug
+      }
+    }`
+  );
+
+  return articles.map((article) => ({
+    categorySlug: article.helpCategory.slug.current,
+    articleSlug: article.slug.current,
+  }));
+}
+
 export async function generateMetadata({ params }) {
   const { categorySlug, articleSlug } = params;
 
