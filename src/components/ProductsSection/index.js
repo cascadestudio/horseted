@@ -12,6 +12,7 @@ export default function ProductsSection({
   orderBy,
   categoryId,
   categoryName,
+  sellerId,
 }) {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,7 @@ export default function ProductsSection({
     let query = "/products";
     if (orderBy) query += `?orderBy=${orderBy}`;
     if (categoryId) query += `?category=${categoryId}`;
+    if (sellerId) query += `?userId=${sellerId}`;
 
     const fetchProducts = async () => {
       const productsData = await fetchHorseted(query);
@@ -31,9 +33,9 @@ export default function ProductsSection({
     };
 
     fetchProducts();
-  }, [orderBy, categoryId]);
+  }, [orderBy, categoryId, sellerId]);
 
-  if (isLoading) return null;
+  if (isLoading || products.length === 0) return null;
 
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
@@ -51,20 +53,37 @@ export default function ProductsSection({
             <RightArrow className="ml-2" />
           </Button>
         </div>
-        <CardCarousel>
-          {products.map((product, index) => {
-            return (
-              <div
-                className={`block ${index >= 4 ? "hidden md:block" : ""} ${
-                  index >= 16 ? "hidden lg:block" : ""
-                }`}
-                key={product.id}
-              >
-                <ProductCard className="mb-8 mr-6 lg:mr-12" product={product} />
-              </div>
-            );
-          })}
-        </CardCarousel>
+        {products.length <= 4 ? (
+          <div className="flex">
+            {products.map((product) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  className="mb-8 mr-6 lg:mr-12"
+                  product={product}
+                />
+              );
+            })}
+          </div>
+        ) : (
+          <CardCarousel>
+            {products.map((product, index) => {
+              return (
+                <div
+                  className={`block ${index >= 4 ? "hidden md:block" : ""} ${
+                    index >= 16 ? "hidden lg:block" : ""
+                  }`}
+                  key={product.id}
+                >
+                  <ProductCard
+                    className="mb-8 mr-6 lg:mr-12"
+                    product={product}
+                  />
+                </div>
+              );
+            })}
+          </CardCarousel>
+        )}
       </div>
     </section>
   );
