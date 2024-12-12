@@ -24,7 +24,7 @@ export default function ProductsSection({
     if (sellerId) query += `?userId=${sellerId}`;
 
     const fetchProducts = async () => {
-      const productsData = await fetchHorseted(query);
+      let productsData = await fetchHorseted(query);
 
       if (productsData.total === 0) return;
 
@@ -35,7 +35,7 @@ export default function ProductsSection({
     fetchProducts();
   }, [orderBy, categoryId, sellerId]);
 
-  if (isLoading || products.length === 0) return null;
+  if (isLoading || products.length <= 1) return null;
 
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
@@ -45,7 +45,11 @@ export default function ProductsSection({
             {title}
           </h3>
           <Button
-            href={`/articles${categoryId && categoryName ? `?categoryId=${categoryId}&categoryName=${categoryName}` : ""}`}
+            href={
+              sellerId
+                ? `/vendeur/${sellerId}`
+                : `/articles${categoryId && categoryName ? `?categoryId=${categoryId}&categoryName=${categoryName}` : ""}`
+            }
             variant="transparent-green"
             className="border-none px-0 font-bold pr-0 lg:border-solid lg:px-5"
           >

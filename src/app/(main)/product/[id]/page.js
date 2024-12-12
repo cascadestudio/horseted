@@ -71,7 +71,11 @@ export default async function ProductPage({ params }) {
           title={`Sellerie de ${sellerData.username}`}
           sellerId={sellerData.id}
         />
-        <ProductsSection title="Articles similaires" />
+        <ProductsSection
+          title="Articles similaires"
+          categoryId={product.category.id}
+          categoryName={product.category.name}
+        />
       </div>
     </div>
   );
