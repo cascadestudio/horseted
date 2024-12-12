@@ -106,9 +106,9 @@ export default function ProductInfoSection({
     createdAt,
     shipping,
     brand,
-    material,
+    materials,
     favoritCount,
-    color,
+    colors,
     category,
     state,
     size,
@@ -204,72 +204,89 @@ export default function ProductInfoSection({
       )}
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
-          <tr>
-            <td>Catégorie</td>
-            <td>
-              {category && (
+          {category && (
+            <tr>
+              <td>Catégorie</td>
+              <td>
                 <Link
                   href={`/articles?categoryId=${category.id}&categoryName=${category.name}`}
                 >
                   {category.name}
                 </Link>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>État</td>
-            <td>
-              {state && (
+              </td>
+            </tr>
+          )}
+          {state && (
+            <tr>
+              <td>État</td>
+              <td>
                 <Link href={`/articles?state=${state}`}>
                   {stateTranslations[state] || state}
                 </Link>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>Couleurs</td>
-            <td>
-              {color && (
-                <Link href={`/articles?color=${color}`}>{color.name}</Link>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>Marque</td>
-            <td>
-              {brand && <Link href={`/articles?brand=${brand}`}>{brand}</Link>}
-            </td>
-          </tr>
-          <tr>
-            <td>Matières</td>
-            <td>
-              {material && (
-                <Link href={`/articles?material=${material}`}>{material}</Link>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>Taille</td>
-            <td>
-              {size && (
+              </td>
+            </tr>
+          )}
+          {colors && (
+            <tr>
+              <td>Couleurs</td>
+              <td>
+                {colors.map((color) => (
+                  <p
+                    key={color.name}
+                    className="ml-2"
+                    href={`/articles?color=${color.name}`}
+                  >
+                    {color.name}
+                  </p>
+                ))}
+              </td>
+            </tr>
+          )}
+          {brand && (
+            <tr>
+              <td>Marque</td>
+              <td>
+                <Link href={`/articles?brand=${brand}`}>{brand}</Link>
+              </td>
+            </tr>
+          )}
+          {materials && (
+            <tr>
+              <td>Matières</td>
+              <td>
+                {materials.map((material) => (
+                  <Link
+                    key={material}
+                    href={`/articles?materialId=${material}`}
+                  >
+                    {material}
+                  </Link>
+                ))}
+              </td>
+            </tr>
+          )}
+          {size && (
+            <tr>
+              <td>Taille</td>
+              <td>
                 <Link
-                  href={`/articles?sizeId=${size.id}&sizeName=${size.value}`}
+                  href={`/articles?categoryId=${category.id}&categoryName=${category.name}&sizeId=${size.id}&sizeName=${size.value}`}
                 >
                   {size.value}
                 </Link>
-              )}
-            </td>
-          </tr>
-          <tr>
-            <td>Taille du colis</td>
-            <td>
-              {shipping && (
+              </td>
+            </tr>
+          )}
+          {shipping && (
+            <tr>
+              <td>Taille du colis</td>
+              <td>
                 <Link href={`/articles?shipping=${shipping}`}>
                   {shippingSizeTranslations[shipping] || shipping}
                 </Link>
-              )}
-            </td>
-          </tr>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <SellerBlock

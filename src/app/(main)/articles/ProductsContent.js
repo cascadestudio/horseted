@@ -29,7 +29,6 @@ export default function ProductsPage({ categories }) {
   const categoryIdParam = searchParams.get("categoryId");
   const categoryNameParam = searchParams.get("categoryName");
   const stateParam = searchParams.get("state");
-  const colorParam = searchParams.get("color");
   const brandParam = searchParams.get("brand");
   const materialIdParam = searchParams.get("materialId");
   const sizeIdParam = searchParams.get("sizeId");
@@ -72,17 +71,20 @@ export default function ProductsPage({ categories }) {
     if (stateParam) {
       setActiveState(stateParam);
     }
-    if (colorParam) {
-      setActiveBrands([colorParam]);
-    }
     if (brandParam) {
       setActiveBrands([brandParam]);
     }
     if (materialIdParam) {
       setActiveMaterials([materialIdParam]);
     }
-    if (sizeNameParam && sizeIdParam) {
-      setActiveSizes([{ id: sizeIdParam, value: sizeNameParam }]);
+    if (sizeNameParam && sizeIdParam && categoryIdParam && categoryNameParam) {
+      setActiveCategory({
+        id: categoryIdParam,
+        name: categoryNameParam,
+      });
+      setActiveSizes([
+        { id: parseInt(sizeIdParam, 10), value: sizeNameParam, order: 0 },
+      ]);
     }
     if (shippingParam) {
       setActiveShipping(shippingParam);
@@ -91,7 +93,6 @@ export default function ProductsPage({ categories }) {
     categoryNameParam,
     categoryIdParam,
     stateParam,
-    colorParam,
     brandParam,
     materialIdParam,
     sizeNameParam,
