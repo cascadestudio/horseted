@@ -28,14 +28,13 @@ export default function SizesSelect({
       }
     };
 
-    setActiveSizes([]);
     fetchSizes();
   }, [categoryId]);
 
   const handleCheckboxChange = (item) => {
     setActiveSizes((prevSelectedItems) => {
-      if (prevSelectedItems.includes(item)) {
-        return prevSelectedItems.filter((i) => i !== item);
+      if (prevSelectedItems.some((i) => i.id === item.id)) {
+        return prevSelectedItems.filter((i) => i.id !== item.id);
       } else {
         return [...prevSelectedItems, item];
       }
@@ -74,7 +73,9 @@ export default function SizesSelect({
                   className="ml-20"
                   value={value}
                   onChange={() => handleCheckboxChange(size)}
-                  checked={activeSizes?.includes(size)}
+                  checked={activeSizes?.some(
+                    (activeSize) => activeSize.id === size.id
+                  )}
                 />
               )}
             </label>
