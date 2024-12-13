@@ -49,7 +49,7 @@ export default function SignalementModal({
     >
       <p>
         Souhaitez-vous {recipientBlocked ? "débloquer " : "bloquer "}
-        l’utilisateur {recipient.username} ?
+        l’utilisateur <span className="capitalize">{recipient.username}</span> ?
       </p>
     </Modal>
   );

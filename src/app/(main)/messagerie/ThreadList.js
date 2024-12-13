@@ -48,7 +48,7 @@ export default function ThreadList() {
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center">
-                  <h2 className="font-bold mr-2 max-w-[200px] truncate lg:max-w-none">
+                  <h2 className="font-bold mr-2 max-w-[200px] truncate lg:max-w-none capitalize">
                     {recipient.username}
                   </h2>
                   {!lastMessage.seen && (

@@ -90,8 +90,8 @@ export default function CreateBundleModal({
           </div>
         </div>
         <div className="container mx-auto px-5 pt-5">
-          <h2 className="text-[24px] font-bold font-mcqueen capitalize">
-            La sellerie de {username}
+          <h2 className="text-[24px] font-bold font-mcqueen">
+            La sellerie de <span className="capitalize">{username}</span>
           </h2>
           <p className="font-mcqueen font-medium text-lg">
             {userProducts.items.length} articles

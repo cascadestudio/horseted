@@ -66,7 +66,9 @@ export default function Settings() {
           <Avatar setFormData={setFormData} user={user} />
           <div className="self-end mb-3">
             <span className="mr-1 font-bold font-mcqueen text-[24px]">@</span>
-            <span className="text-lg text-grey">{user.username}*</span>
+            <span className="text-lg text-grey capitalize">
+              {user.username}*
+            </span>
           </div>
         </div>
         <div className="flex flex-col items-end col-span-2 lg:col-span-1">

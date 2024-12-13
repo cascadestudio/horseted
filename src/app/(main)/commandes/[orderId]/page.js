@@ -135,7 +135,7 @@ export default function OrderDetails({ params }) {
           <div className="flex items-center">
             <AvatarDisplay avatar={user.avatar} size={56} />
             <div className="ml-3">
-              <p className="font-mcqueen font-semibold text-lg">
+              <p className="font-mcqueen font-semibold text-lg capitalize">
                 {user.username}
               </p>
               <StarRating review={user.review} />

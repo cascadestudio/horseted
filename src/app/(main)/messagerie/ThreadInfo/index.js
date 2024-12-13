@@ -84,7 +84,7 @@ export default function ThreadInfo() {
                 size={54}
                 className="flex-none mr-4"
               />
-              {recipient.username}
+              <span className="capitalize">{recipient.username}</span>
               <NextArrow className="ml-auto mr-10" />
             </Link>
             <button className="p-2" onClick={handleClick}>
