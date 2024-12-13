@@ -17,12 +17,14 @@ function ThreadsPage() {
   const orderId = parseInt(searchParams.get("orderId"), 10);
   const productIdParam = parseInt(searchParams.get("productId"));
   const userIdParam = parseInt(searchParams.get("userId"));
+  const threadIdParam = parseInt(searchParams.get("threadId"));
 
   return (
     <ThreadsProvider
       orderId={orderId}
       productIdParam={productIdParam}
       userIdParam={userIdParam}
+      threadIdParam={threadIdParam}
     >
       <div className="container mx-auto px-5 pb-10">
         <Breadcrumbs breadcrumbs={breadcrumbs} />

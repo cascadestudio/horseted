@@ -21,8 +21,8 @@ const ThreadsContext = createContext();
 export const ThreadsProvider = ({
   children,
   orderId,
-  productIdParam,
   userIdParam,
+  threadIdParam,
 }) => {
   const router = useRouter();
   const { user, accessToken } = useAuthContext();
@@ -43,8 +43,8 @@ export const ThreadsProvider = ({
 
   // Initialize threads
   useEffect(() => {
-    initThreads(orderId, productIdParam);
-  }, [orderId, productIdParam, user]);
+    initThreads(orderId, userIdParam, threadIdParam);
+  }, [orderId, user]);
 
   // Fetch thread-specific data when activeThread changes
   useEffect(() => {
@@ -67,7 +67,7 @@ export const ThreadsProvider = ({
   }, [accessToken]);
 
   const initThreads = useCallback(
-    async (orderId, productIdParam) => {
+    async (orderId, userIdParam, threadIdParam) => {
       const threadsResponse = await handleGetThreads();
       if (!threadsResponse.length) return;
 
@@ -81,6 +81,9 @@ export const ThreadsProvider = ({
       let thread = null;
       if (orderId) {
         thread = userThreads.find((t) => t.orderId === orderId);
+      } else if (threadIdParam) {
+        console.log("threadIdParam", threadIdParam);
+        thread = userThreads.find((t) => t.id === threadIdParam);
       } else if (userIdParam) {
         thread = userThreads.find((t) =>
           t.authors.some((author) => author.id === userIdParam)
@@ -115,12 +118,7 @@ export const ThreadsProvider = ({
       setOrderTracking(null);
     }
 
-    const url = new URL(window.location.href);
-    url.searchParams.set(
-      activeThread.orderId ? "orderId" : "productId",
-      activeThread.orderId || activeThread.productId || productIdParam
-    );
-    router.replace(url.toString());
+    router.replace(`/messagerie?threadId=${activeThread.id}`);
   }, [activeThread, user]);
 
   const updateMessages = useCallback(
