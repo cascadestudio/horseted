@@ -34,7 +34,7 @@ export default function MessageThread() {
               <li className="message-container self-start">
                 <p className="font-medium text-sm">
                   <span className="font-bold">Bonjour</span>, moi c’est{" "}
-                  {recipient.username}
+                  <span className="capitalize">{recipient.username}</span>
                 </p>
                 <StarRating review={recipient.review} />
                 {recipient.city && (

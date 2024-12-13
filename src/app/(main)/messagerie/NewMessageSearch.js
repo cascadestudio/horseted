@@ -57,7 +57,7 @@ export default function NewMessageSearch() {
                   onClick={() => handleClick(user)}
                 >
                   <AvatarDisplay avatar={avatar} size={43} className="mr-4" />
-                  <p className="font-semibold">{username}</p>
+                  <p className="font-semibold capitalize">{username}</p>
                   <NextArrow className="ml-auto" />
                 </button>
               </li>

@@ -745,11 +745,8 @@ export default function CGUPage() {
         L’Utilisateur, qui a des questions concernant les présentes Conditions
         Générales d’Utilisation, peut contacter HORSETED à l’adresse e-mail
         suivante :{" "}
-        <a
-          href="mailto:contact@horseted.com"
-          className="text-blue-500 underline"
-        >
-          contact@horseted.com
+        <a href="mailto:info@horseted.com" className="text-blue-500 underline">
+          info@horseted.com
         </a>
       </p>
       {/* Annexes */}

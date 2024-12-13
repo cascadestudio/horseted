@@ -26,19 +26,20 @@ export default function MentionsLegalesPage() {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">Éditeur</h2>
       <p>
-        <span className="font-bold">Horseted</span> SAS au capital de 5000€ dont
-        le siège social est situé 6 IMPASSE VAUBAN 66440 TORREILLES - France
-        représentée par Lea Escande en sa qualité de Président, immatriculée au
-        RCS de Perpignan 980 946 693, TVA intracommunautaire : FR62980946693.
+        <span className="font-bold">Horseted</span> SAS au capital de 10000€
+        dont le siège social est situé 6 IMPASSE VAUBAN 66440 TORREILLES -
+        France représentée par Lea Escande en sa qualité de Président,
+        immatriculée au RCS de Perpignan 980 946 693, TVA intracommunautaire :
+        FR62980946693.
       </p>
       <p>Directeur de Publication : Lea Escande</p>
       <p>
         Courriel de contact :{" "}
         <a
-          href="mailto:contact@horseted.com"
+          href="mailto:info@horseted.com"
           className="text-blue-600 hover:underline"
         >
-          contact@horseted.com
+          info@horseted.com
         </a>
       </p>
 

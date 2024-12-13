@@ -4,6 +4,7 @@ import ProductsSection from "@/components/ProductsSection";
 import ProductMediaSection from "./ProductMediaSection";
 import { getProducts } from "@/fetch/products";
 import getImage from "@/utils/getImage";
+import capitalizeText from "@/utils/capitalizeText";
 
 export async function generateMetadata({ params }) {
   const product = await getProducts(params.id);
@@ -31,8 +32,8 @@ export async function generateMetadata({ params }) {
     : `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`;
 
   return {
-    title: `${product.title} | Horseted`,
-    description: `${product.title} – article d’équitation de seconde main sur Horseted`,
+    title: `${capitalizeText(product.title)} | ${product.title} | Horseted`,
+    description: `${capitalizeText(product.title)} – article d’équitation de seconde main sur Horseted`,
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
     openGraph: {
       images: [
@@ -68,7 +69,7 @@ export default async function ProductPage({ params }) {
           />
         </div>
         <ProductsSection
-          title={`Sellerie de ${sellerData.username}`}
+          title={`Sellerie de ${capitalizeText(sellerData.username)}`}
           sellerId={sellerData.id}
         />
         <ProductsSection

@@ -7,7 +7,9 @@ export default function ProductSummary({ postResponse }) {
   return (
     <div className="min-h-screen bg-white">
       <div className="flex flex-col items-center pt-[50px] pb-[70px] bg-light-grey">
-        <h1 className="font-mcqueen font-bold text-3xl mb-2">{title}</h1>
+        <h1 className="font-mcqueen font-bold text-3xl mb-2 capitalize">
+          {title}
+        </h1>
         <p className="text-sm font-extrabold text-light-green mb-1">{brand}</p>
         <p className="text-sm font-medium text-grey">{size.value}</p>
         <div className="mt-5">

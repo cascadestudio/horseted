@@ -38,7 +38,10 @@ function SellerPage({ params }) {
       <div className="flex flex-col lg:flex-row gap-4 items-center">
         <ProfileInfo profile={seller} accessToken={accessToken} />
         <div className="flex gap-3 lg:ml-8">
-          <Button variant="transparent-green" href="/messagerie">
+          <Button
+            variant="transparent-green"
+            href={`/messagerie?userId=${seller.id}`}
+          >
             Contacter
           </Button>
           <Button onClick={handleOpenCreateBundleModal}>Acheter un lot</Button>

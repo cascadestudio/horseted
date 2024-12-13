@@ -105,7 +105,7 @@ export default function OrderList({ orderType }) {
                       <div key={product.id}>{product.title}</div>
                     ))}
                   </td>
-                  <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate">
+                  <td className="py-4 pr-2 text-sm lg:text-base text-light-green font-semibold truncate capitalize">
                     <Link href={`/vendeur/${cavalier.id}`}>
                       {cavalier.username}
                     </Link>
