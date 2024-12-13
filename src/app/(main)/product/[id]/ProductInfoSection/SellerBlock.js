@@ -21,7 +21,7 @@ export default function SellerBlock({ sellerData, productId, isUserSeller }) {
       {!isUserSeller && (
         <div className="flex items-center">
           <Link
-            href={`/messagerie?productId=${productId}`}
+            href={`/messagerie?productId=${productId}&userId=${id}`}
             className="h-8 w-8 mx-4 lg:pr-4 box-content lg:mr-4 lg:border-r border-grey flex justify-center items-center "
           >
             <MessageGreenIcon />

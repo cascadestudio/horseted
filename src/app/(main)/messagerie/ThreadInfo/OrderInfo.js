@@ -20,6 +20,8 @@ export default function OrderInfo() {
 
   const userType = user.id === order.userId ? "buyer" : "seller";
 
+  if (!orderTracking.statuses) return;
+
   return (
     <>
       {orderTracking.statuses.map((status) => {
