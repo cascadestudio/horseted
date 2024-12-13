@@ -83,14 +83,14 @@ export default function CreateBundleModal({
             <div className="flex items-center">
               <AvatarDisplay avatar={avatar} size={54} />
               <div className="ml-4">
-                <h4 className="font-bold">{username}</h4>
+                <h4 className="font-bold capitalize">{username}</h4>
                 <StarRating review={review} />
               </div>
             </div>
           </div>
         </div>
         <div className="container mx-auto px-5 pt-5">
-          <h2 className="text-[24px] font-bold font-mcqueen">
+          <h2 className="text-[24px] font-bold font-mcqueen capitalize">
             La sellerie de {username}
           </h2>
           <p className="font-mcqueen font-medium text-lg">

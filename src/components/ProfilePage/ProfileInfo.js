@@ -54,7 +54,7 @@ export default function ProfileInfo({ profile, accessToken }) {
       <AvatarDisplay avatar={profile.avatar} size={130} />
       <div className="flex flex-col items-center lg:items-start ms-7">
         <StarRating rating="4.5" count="6" />
-        <p className="text-[22px] font-mcqueen font-semibold">
+        <p className="text-[22px] font-mcqueen font-semibold capitalize">
           {profile.username}
         </p>
         {location.city && location.code && (

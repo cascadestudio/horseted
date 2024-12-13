@@ -12,7 +12,7 @@ export default function SellerBlock({ sellerData, productId, isUserSeller }) {
       <div className="flex">
         <AvatarDisplay size="56" avatar={avatar} />
         <div className="flex flex-col justify-center min-w-0">
-          <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate">
+          <h4 className="font-mcqueen font-bold lg:text-lg leading-5 ml-3 truncate capitalize">
             {username}
           </h4>
           <StarRating className="ml-3" review={review} />

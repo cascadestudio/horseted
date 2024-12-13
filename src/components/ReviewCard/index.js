@@ -24,7 +24,9 @@ export default function ReviewCard({ review }) {
       <div>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-semibold font-mcqueen">{author.username}</h3>
+            <h3 className="font-semibold font-mcqueen capitalize">
+              {author.username}
+            </h3>
             <p className="text-xs">
               <span>Il y a </span>
               {/* TODO add days since today */}

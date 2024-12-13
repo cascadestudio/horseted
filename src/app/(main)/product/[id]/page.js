@@ -4,6 +4,7 @@ import ProductsSection from "@/components/ProductsSection";
 import ProductMediaSection from "./ProductMediaSection";
 import { getProducts } from "@/fetch/products";
 import getImage from "@/utils/getImage";
+import capitalizeText from "@/utils/capitalizeText";
 
 export async function generateMetadata({ params }) {
   const product = await getProducts(params.id);
@@ -68,7 +69,7 @@ export default async function ProductPage({ params }) {
           />
         </div>
         <ProductsSection
-          title={`Sellerie de ${sellerData.username}`}
+          title={`Sellerie de ${capitalizeText(sellerData.username)}`}
           sellerId={sellerData.id}
         />
         <ProductsSection
