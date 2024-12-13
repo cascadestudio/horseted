@@ -157,7 +157,7 @@ export default function ProductInfoSection({
           )}
         </div>
       </div>
-      <h1 className="font-mcqueen font-bold text-2xl lg:text-4xl mb-2">
+      <h1 className="font-mcqueen font-bold text-2xl lg:text-4xl mb-2 capitalize">
         {title}
       </h1>
       <p className="text-sm leading-5 lg:text-base mb-6">{description}</p>

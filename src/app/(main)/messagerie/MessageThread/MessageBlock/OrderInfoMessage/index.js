@@ -72,7 +72,7 @@ export default function OrderInfoMessage({ type, offerId }) {
                 size="small"
                 className="w-24 h-14"
               />
-              <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px]">
+              <div className="font-bold ml-6 overflow-hidden text-ellipsis whitespace-nowrap max-w-[90px] sm:max-w-[415px] capitalize">
                 {product.title}
               </div>
               <img

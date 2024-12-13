@@ -11,6 +11,7 @@ import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { postMedia } from "@/utils/postMedia";
+import capitalizeText from "@/utils/capitalizeText";
 
 export default function PostProductForm({
   accessToken,
@@ -140,7 +141,7 @@ export default function PostProductForm({
           <TextInput
             onChange={handleFormChange}
             name="title"
-            value={product.title}
+            value={capitalizeText(product.title)}
             className="mx-0 max-w-[700px]"
             hideLabel
             placeholder="Ex : Couverture de poney"

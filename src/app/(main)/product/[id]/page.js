@@ -32,8 +32,8 @@ export async function generateMetadata({ params }) {
     : `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`;
 
   return {
-    title: `${product.title} | Horseted`,
-    description: `${product.title} – article d’équitation de seconde main sur Horseted`,
+    title: `${capitalizeText(product.title)} | ${product.title} | Horseted`,
+    description: `${capitalizeText(product.title)} – article d’équitation de seconde main sur Horseted`,
     url: `${process.env.NEXT_PUBLIC_BASE_URL}/products/${params.id}`,
     openGraph: {
       images: [
