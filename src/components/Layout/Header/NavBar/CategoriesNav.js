@@ -40,7 +40,7 @@ export default function CategoriesNav({ categories }) {
             <button
               ref={buttonRef}
               onClick={() => handleClick(id)}
-              className={`relative py-3 px-6 text-center ${
+              className={`relative py-3 px-5 text-center ${
                 isActive && "text-light-green border-"
               }`}
             >
