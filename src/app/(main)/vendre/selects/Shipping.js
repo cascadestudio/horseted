@@ -8,19 +8,18 @@ export default function Shipping({ product, setProduct }) {
       value: "small",
       name: "Petit",
       description:
-        "Idéal pour des accessoires légers tels que des gants d'équitation ou des petits équipements.",
+        "Idéal pour une bombe, un tapis de selle ou des bottes d’équitation",
     },
     {
       value: "medium",
       name: "Moyen",
-      description:
-        "Adapté pour un casque, des bottes d'équitation ou un tapis de selle.",
+      description: "Adapté pour une couverture ou des protections de transport",
     },
     {
       value: "large",
       name: "Grand",
       description:
-        "Convient pour des articles plus volumineux comme une selle ou un tapis de selle.",
+        "Convient pour des articles plus volumineux comme une selle ou plusieurs articles",
     },
     {
       value: "very_large",
