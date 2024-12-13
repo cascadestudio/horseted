@@ -35,10 +35,10 @@ export default function MentionsLegalesPage() {
       <p>
         Courriel de contact :{" "}
         <a
-          href="mailto:contact@horseted.com"
+          href="mailto:info@horseted.com"
           className="text-blue-600 hover:underline"
         >
-          contact@horseted.com
+          info@horseted.com
         </a>
       </p>
 

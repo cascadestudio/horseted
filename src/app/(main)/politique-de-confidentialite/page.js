@@ -1200,8 +1200,8 @@ const PrivacyPolicyPage = () => {
         outre, il est possible, à tout moment, d'adresser un courrier
         électronique à l'adresse électronique suivante afin de demander de
         cesser l'envoi de ces communications commerciales :{" "}
-        <a href="mailto:contact@horseted.com" className="text-blue-500">
-          contact@horseted.com
+        <a href="mailto:info@horseted.com" className="text-blue-500">
+          info@horseted.com
         </a>
       </p>
       {/* Other sections of the Privacy Policy */}
@@ -1357,8 +1357,8 @@ const PrivacyPolicyPage = () => {
         d'exercice des droits de la personne concernée, sont gérées par la
         personne désignée ci-dessous qui peut être contactée par l’envoi d’un
         courrier électronique à l’adresse e-mail suivante :{" "}
-        <a href="mailto:contact@horseted.com" className="text-blue-500">
-          contact@horseted.com
+        <a href="mailto:info@horseted.com" className="text-blue-500">
+          info@horseted.com
         </a>
       </p>
       <p className="mb-4">
