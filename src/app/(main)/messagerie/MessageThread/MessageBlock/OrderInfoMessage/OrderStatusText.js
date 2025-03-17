@@ -31,9 +31,13 @@ export default function OrderStatusText({
         userRole === "seller" ? `Horseted a remboursé ${recipient.username} sans retour`
                               : "Horseted vous rembourse sans retour",
       disputeSentToHorseted: 'Le litige a été envoyé à Horseted',
-      horsetedDisputeDecisionReturnAtSellerCharge: "horsetedDisputeDecisionReturnAtSellerCharge",
-      horsetedDisputeDecisionReturnAtBuyerCharge: "horsetedDisputeDecisionReturnAtBuyerCharge",
-      horsetedDisputeDecisionReturnAtHorsetedCharge: 'horsetedDisputeDecisionReturnAtHorsetedCharge',
+      horsetedDisputeDecisionReturnAtSellerCharge:
+        userRole === "seller" ? "Horseted accepte le retour de la commande à vos frais"
+                              : `Horseted accepte le retour de la commande aux frais de ${recipient.username}`,        
+      horsetedDisputeDecisionReturnAtBuyerCharge: 
+        userRole === "buyer" ? "Horseted accepte le retour de la commande à vos frais"
+                              : `Horseted accepte le retour de la commande aux frais de ${recipient.username}`,
+      horsetedDisputeDecisionReturnAtHorsetedCharge: 'Horseted accepte le retour de la commande à ses frais',
       orderReturnDeliveredConfirmationRequired: "Le colis a été livré",
       orderReturnDelivered: "Livraison à domicile effectuée",
       orderReturnSent: "Le colis a été retourné",
@@ -68,9 +72,9 @@ export default function OrderStatusText({
       ) : type === 'sellerDisputeDecisionReturnAtBuyerCharge' && userRole === 'buyer'
           || type === 'sellerDisputeDecisionReturnAtSellerCharge' && userRole === 'seller' ? (
         <span>Retour du colis à vos frais</span>
-      ) : (
+      ) : recipient ? (
         <span>{getOrderMessageText(type)}</span>
-      )}
+      ) : <span></span> }
     </p>
   );
 }

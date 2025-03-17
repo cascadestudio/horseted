@@ -24,3 +24,18 @@ export const postReturnPayment = async (accessToken, disputeId, body) => {
   const response = await fetchHorseted(`/disputes/${disputeId}/return_payment`, accessToken, "POST", body, true);
   return response;
 }
+
+export const postReturnDeliveryConfirmation = async (accessToken, disputeId) => {
+  const response = await fetchHorseted(`/disputes/${disputeId}/return_delivery_confirmation`, accessToken, "POST", {}, true);
+  return response;
+}
+
+export const postReturnDispute = async (accessToken, disputeId) => {
+  const response = await fetchHorseted(`/disputes/${disputeId}/return_dispute`, accessToken, "POST", {}, true);
+  return response;
+}
+
+export const sendToHorseted = async (accessToken, disputeId) => {
+  const response = await fetchHorseted(`/disputes/${disputeId}/sendToHorseted`, accessToken, "POST", {}, true);
+  return response;
+}

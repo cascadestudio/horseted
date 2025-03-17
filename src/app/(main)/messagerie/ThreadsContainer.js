@@ -7,6 +7,8 @@ import NewMessageSearch from "./NewMessageSearch";
 import NewMessageForm from "./NewMessageForm";
 import ThreadInfo from "./ThreadInfo";
 import MessageThreadHeader from "./MessageThreadHeader";
+import { useState } from "react";
+import DisputeModal from "./ThreadInfo/DisputeModal";
 
 export default function ThreadsContainer() {
   const {
@@ -19,7 +21,10 @@ export default function ThreadsContainer() {
     isInfo,
     setProducts,
     setProduct,
+    dispute
   } = useThreadsContext();
+
+  const [isDisputeModal, setIsDisputeModal] = useState(false);
 
   const handleNewMessageSearchClick = () => {
     setIsNewMessageSearch(!isNewMessageSearch);
@@ -53,13 +58,23 @@ export default function ThreadsContainer() {
           <>
             <MessageThreadHeader />
             {isInfo && recipient ? (
-              <ThreadInfo />
+              <ThreadInfo 
+                setIsDisputeModal={() => setIsDisputeModal(true)}
+              />
             ) : (
               <>
                 <MessageThread />
                 <NewMessageForm />
               </>
             )}
+            {
+                    isDisputeModal && (
+                      <DisputeModal
+                        setIsDisputeModal={setIsDisputeModal}            
+                        dispute={dispute}
+                      />
+                    )
+                  }
           </>
         )}
       </div>

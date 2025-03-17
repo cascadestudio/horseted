@@ -15,7 +15,9 @@ import { deleteThread } from "@/fetch/threads";
 import { getBlockedUsers } from "@/fetch/users";
 import Alert from "@/components/Alert";
 
-export default function ThreadInfo() {
+export default function ThreadInfo({
+  setIsDisputeModal
+}) {
   const {
     user,
     accessToken,
@@ -25,6 +27,8 @@ export default function ThreadInfo() {
     initThreads,
     activeThread,
     setIsInfo,
+    dispute,
+    order    
   } = useThreadsContext();
 
   const [isDropdown, setIsDropdown] = useState(false);
@@ -71,8 +75,15 @@ export default function ThreadInfo() {
   };
 
   return (
-    <>
-      <div className="flex flex-col w-full px-10 py-4">
+    <div>
+      { order?.adminStatus === 'disputed' ||
+        (dispute && !dispute.sentToHorseted && !dispute.orderRefunds.length) && (
+        <div className="flex items-center justify-between w-full h-[50px] px-10 bg-[#D61919]">
+          <span className="font-mcqueen font-bold text-[14px] text-white">Litige en cours</span>
+          <Link href="" onClick={setIsDisputeModal} className="font-mcqueen font-bold text-[14px] text-white underline">VOIR LE LITIGE</Link>
+        </div>   
+      )}
+      <div className="flex flex-col w-full px-10 py-4">        
         <div className="flex items-center justify-between relative">
           <div className="flex items-center py-2 border-b w-full">
             <Link
@@ -166,6 +177,6 @@ export default function ThreadInfo() {
           {alert}
         </Alert>
       )}
-    </>
+    </div>
   );
 }

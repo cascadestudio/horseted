@@ -14,11 +14,12 @@ import DisputeModal from "../../../ThreadInfo/DisputeModal";
 import { useRouter } from "next/navigation";
 
 import moment from "moment";
+import { postReturnDispute } from "@/fetch/disputes";
 
 export default function OrderInfoMessage({ type, offerId }) {
   const router = useRouter();
 
-  const { order, user, accessToken, products, updateMessages, recipient, dispute } =
+  const { order, user, accessToken, products, updateMessages, recipient, dispute, setDispute } =
     useThreadsContext();
 
   const [offer, setOffer] = useState(null);
@@ -58,6 +59,24 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   const handleConfirmOrderDelivered = async () => {
     await patchOrderIsReceived(order.id, accessToken);
+    updateMessages();
+  };
+
+  const handleConfirmReturnDelivered = async () => {
+    const response = await postReturnDeliveryConfirmation(accessToken, dispute.id);
+    setDispute(response);    
+    updateMessages();
+  };
+
+  const handleReturnTracking = async () => {
+    const response = await postReturnDeliveryConfirmation(accessToken, dispute.id);
+    setDispute(response);    
+    updateMessages();
+  };
+
+  const handleReturnDispute = async () => {
+    const response = await postReturnDispute(accessToken, dispute.id);
+    setDispute(response);    
     updateMessages();
   };
 
@@ -119,7 +138,7 @@ export default function OrderInfoMessage({ type, offerId }) {
         <div className="flex justify-between	items-center">
           <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
             Confirmer la réception
-          </Button>                    
+          </Button>
           <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeCreateModal(true)} href=''>
             Ouvrir un litige
           </Link>
@@ -128,16 +147,16 @@ export default function OrderInfoMessage({ type, offerId }) {
       {type === "newDispute" && dispute && (
         <div className="flex justify-between	items-center">
           {
-            !dispute.sellerDecision && userRole === 'seller' ? (
+            !dispute.sellerDecision && userRole === 'seller' && (
               <p>Vous avez {72-moment().diff(dispute.createdAt, 'hour')}h pour répondre avant le {moment(dispute.createdAt).add(72, 'hour').format('DD/MM/YYYY HH:mm')}</p>
-            ) : <div></div>
+            )
           }
           <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
             Voir le litige
           </Link>
         </div>
       )}
-      {type === "sellerDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && (
+      { type === "sellerDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && dispute && !dispute.returnPaymentId && !dispute.sentToHorseted && (
         <div className="flex justify-between	items-center">
           <Button variant={"green"} onClick={handlePayReturn}>
             Payer le retour
@@ -146,8 +165,17 @@ export default function OrderInfoMessage({ type, offerId }) {
             Je ne souhaite pas payer le retour
           </Link>
         </div>
+      )}            
+      { (type === "horsetedDisputeDecisionReturnAtSellerCharge" &&  userRole === 'seller' && dispute && !dispute.returnPaymentId)
+        || (type === "horsetedDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && dispute &&  !dispute.returnPaymentId)
+        && (
+        <div className="flex justify-between	items-center">
+          <Button variant={"green"} onClick={handlePayReturn}>
+            Payer le retour
+          </Button>
+        </div>
       )}      
-      { type === "disputeDecisionReturnPaid" && (
+      { (type === "disputeDecisionReturnPaid" || type === "horsetedDisputeDecisionReturnAtHorsetedCharge") && (
         <div className="flex justify-between	items-center">
           <Button onClick={() => downloadDisputeLabel(accessToken, dispute.id)}>
             Imprimer l'étiquette
@@ -157,6 +185,26 @@ export default function OrderInfoMessage({ type, offerId }) {
           </Link>
         </div>
       )}
+      { type === "orderReturnDeliveredConfirmationRequired" && dispute && !dispute.returnDeliveryConfirmedAt && !dispute.returnDisputeCreatedAt && (
+        <div className="flex justify-between	items-center">
+          <Button variant={"green"} onClick={handleConfirmReturnDelivered}>
+            Confirmer la réception
+          </Button>
+          <Link className="text-dark-green text-xs underline" onClick={handleReturnDispute} href=''>
+            Ouvrir un litige
+          </Link>
+        </div>
+      )}
+      { type === "orderReturnSent" &&
+        <div className="flex justify-between	items-center">
+          <Button variant={"transparent-green"} onClick={handleReturnTracking}>
+            Suivre le retour
+          </Button>
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
+            Voir le litige
+          </Link>
+        </div>      
+      }
       {type === "addReview" && (
         <div className="flex">
           <Button variant={"green"} onClick={() => setIsReviewModal(true)}>

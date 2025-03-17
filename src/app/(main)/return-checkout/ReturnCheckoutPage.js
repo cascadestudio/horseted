@@ -18,6 +18,7 @@ import { formatPrice } from "@/utils/formatNumber";
 import { getShippingMethods } from "@/fetch/delivery";
 import { postReturnPayment, getDisputeById } from '@/fetch/disputes';
 import Button from "@/components/Button";
+import Link from "next/link";
 
 const ReturnCheckoutPage = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const ReturnCheckoutPage = () => {
   const [shippingMethod, setShippingMethod] = useState(0);
 
   const [dispute, setDispute] = useState(null);
+  const [order, setOrder] = useState(null);
   
   const [activeAddress, setActiveAddress] = useState(null);
   const [isAddressSaved, setIsAddressSaved] = useState(false);
@@ -49,8 +51,10 @@ const ReturnCheckoutPage = () => {
     const dispute = await getDisputeById(accessToken, disputeId);
     setDispute(dispute);
 
-    const order = await getOrder(accessToken, dispute.orderId);
-    const productIds = order.items.map(i => i.productId);
+    const orderRes = await getOrder(accessToken, dispute.orderId);
+    setOrder(orderRes);
+
+    const productIds = orderRes.items.map(i => i.productId);
 
     const shippingMethods = await getShippingMethods(null, productIds, null, accessToken);
     setShippingMethod(shippingMethods[0]);    
@@ -142,10 +146,21 @@ const ReturnCheckoutPage = () => {
     <StripeProvider>
       <div className="container mx-auto py-10 px-5">
         <h1 className="font-mcqueen font-extrabold text-2xl mb-4">
-          Retour
+          Votre commande
         </h1>
         <div className="grid grid-cols-1 lg:grid-cols-3 lg:gap-6">
-          <div className="col-span-2">
+          <div className="col-span-2">            
+            <div className="mb-[10px] flex flex-row justify-between g-block">
+              <div className="flex flex-col">
+                <span className="font-raleway font-extrabold text-[16px]">Frais de retour</span>
+                { order &&
+                  <span className="font-raleway font-medium text-[14px]">{order.items.length} articles</span>
+                }
+              </div>
+              { shippingMethod &&
+                <span className="font-raleway font-extrabold text-[16px]">{formatPrice(shippingMethod.price)}€</span>
+              }                
+            </div>            
             <Address
               title={"Adresse de facturation"}
               activeAddress={activeAddress}
@@ -161,17 +176,43 @@ const ReturnCheckoutPage = () => {
           </div>
           <div className="col-span-1">
             <div className="g-block">
-              <h2 className="font-bold mb-7">Résumé</h2>
+              <h2 className="font-bold mb-7">Résumé de la commande</h2>
               { shippingMethod &&
                 <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
-                  <p>Frais de retour</p>
-                  <p className="justify-self-end">
+                  <p className="font-raleway font-semibold text-[16px]">Frais de retour</p>
+                  <p className="font-raleway font-semibold text-[16px] justify-self-end">
+                    {formatPrice(shippingMethod.price)} €
+                  </p>                
+                </div>
+              }
+
+              <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold">
+                <button
+                  className="text-light-green underline font-semibold  font-raleway text-start"
+                  onClick={() => {}}
+                >
+                  Protection acheteur
+                  <img
+                    className="relative top-[-8px] ml-1 inline-block"
+                    src="/icons/external-link.svg"
+                    alt=""
+                  />
+                </button>
+                <p className="font-raleway font-semibold text-[16px] justify-self-end">
+                  {formatPrice(0)} €
+                </p>                
+              </div>
+
+              { shippingMethod &&
+                <div className="grid grid-cols-2 gap-y-1 justify-between font-semibold mt-[87px]">
+                  <p className="font-raleway font-extrabold text-[16px]">Total</p>
+                  <p className="font-raleway font-extrabold text-[16px] justify-self-end">
                     {formatPrice(shippingMethod.price)} €
                   </p>                
                 </div>
               }              
               <Button
-                  className="mt-12 w-full"
+                  className="mt-[27px] w-full"
                   onClick={handlePayment}
                   disabled={
                     !shippingMethod ||
@@ -181,7 +222,7 @@ const ReturnCheckoutPage = () => {
                 >
                   Payer
                 </Button>
-                <p className="mt-3 font-semibold text-center">
+                <p className="mt-3 font-raleway font-semibold text-center">
                   Paiement sécurisé
                 </p>
             </div>
