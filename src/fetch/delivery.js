@@ -7,8 +7,8 @@ export async function getShippingMethods(
   accessToken
 ) {
   let query = `/delivery/shipping_methods`;
-  query += `?postal_code=${postalCode}`;
-  query += `&product_ids=${productIds.join(";")}`;
+  query += `?product_ids=${productIds.join(";")}`;
+  if (postalCode) query += `&postal_code=${postalCode}`;
   if (activeServicePointId) query += `&service_point=${activeServicePointId}`;
   const shippingMethods = await fetchHorseted(query, accessToken);
   return shippingMethods;

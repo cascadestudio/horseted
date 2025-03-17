@@ -20,13 +20,13 @@ export default function Shipping({ product, setProduct }) {
       name: "Grand",
       description:
         "Convient pour des articles plus volumineux comme une selle ou plusieurs articles",
-    },
-    {
-      value: "very_large",
-      name: "Très grand",
-      description:
-        "Adapté pour des articles de grande taille ou les commandes de plusieurs articles volumineux.",
-    },
+    }
+    // {
+    //   value: "very_large",
+    //   name: "Très grand",
+    //   description:
+    //     "Adapté pour des articles de grande taille ou les commandes de plusieurs articles volumineux.",
+    // },
   ];
 
   const [shippingName, setShippingName] = useState("");

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import withAuth from "@/hoc/withAuth";
 import PaymentMethods from "@/components/PaymentMethods";
 import DeliveryMethods from "./DeliveryMethods";
-import Address from "./Address";
+import Address from "@/components/Address";
 import { useAuthContext } from "@/context/AuthContext";
 import handleSocketPayment from "@/libs/socket/handleSocketPayment";
 import ClientProductImage from "@/components/ClientProductImage";

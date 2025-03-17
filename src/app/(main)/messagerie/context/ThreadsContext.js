@@ -15,6 +15,7 @@ import { getUser } from "@/fetch/users";
 import { getProducts } from "@/fetch/products";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useRouter } from "next/navigation";
+import { getDisputeByOrderId } from "@/fetch/disputes";
 
 const ThreadsContext = createContext();
 
@@ -40,6 +41,7 @@ export const ThreadsProvider = ({
   const [isNewMessageSearch, setIsNewMessageSearch] = useState(false);
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
+  const [dispute, setDispute] = useState(null);
 
   // Initialize threads
   useEffect(() => {
@@ -110,6 +112,14 @@ export const ThreadsProvider = ({
     if (activeThread.orderId) {
       const orderData = await getOrder(accessToken, activeThread.orderId);
       setOrder(orderData);
+
+      if (orderData) {
+        try {
+          const disputeResponse = await getDisputeByOrderId(accessToken, activeThread.orderId);                    
+          setDispute(disputeResponse);
+        } catch (_) {}
+      }
+
       if (orderData?.status === "paid") {
         const tracking = await getOrderTracking(accessToken, orderData.id);
         setOrderTracking(tracking);
@@ -194,6 +204,8 @@ export const ThreadsProvider = ({
         isNewMessageSearch,
         setIsNewMessageSearch,
         user,
+        // oppositeUser,
+        // setOppositeUser,
         recipient,
         setRecipient,
         accessToken,
@@ -208,6 +220,8 @@ export const ThreadsProvider = ({
         handleGetThreads,
         handleGetOrderTracking,
         handleIsSeenThread,
+        dispute,
+        setDispute,
       }}
     >
       {children}

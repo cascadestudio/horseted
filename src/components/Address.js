@@ -6,6 +6,7 @@ import ModifyIcon from "@/assets/icons/ModifyIcon";
 import Alert from "@/components/Alert";
 
 export default function Address({
+  title,
   activeAddress,
   setActiveAddress,
   isAddressSaved,
@@ -40,7 +41,7 @@ export default function Address({
     <>
       <div className="g-block flex justify-between">
         <div className="border-b border-black pb-2">
-          <h2 className="font-mcqueen font-bold text-xl mb-1">Adresse</h2>
+          <h2 className="font-mcqueen font-bold text-xl mb-1">{title ?? "Adresse"}</h2>
           {activeAddress ? (
             <p>
               {`${activeAddress.fullName}, ${activeAddress.street},`} <br />

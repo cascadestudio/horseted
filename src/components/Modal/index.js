@@ -14,6 +14,7 @@ export default function Modal({
   className,
   isNotForm,
   redButton,
+  disabled
 }) {
   const modalRef = useRef();
   const [isClickOutside, setIsClickOutside] =
@@ -77,7 +78,7 @@ export default function Modal({
           >
             {children}
             {buttonText && (
-              <Button className="w-full text-xl h-12 mt-4" type="submit">
+              <Button className="w-full text-xl h-12 mt-4" type="submit" disabled={disabled}>
                 {buttonText}
               </Button>
             )}

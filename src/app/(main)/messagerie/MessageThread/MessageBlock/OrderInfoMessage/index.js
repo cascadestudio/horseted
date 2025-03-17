@@ -8,15 +8,24 @@ import OrderStatusText from "./OrderStatusText";
 import OfferResponseButtons from "./OfferResponseButtons";
 import { patchOrderIsReceived } from "@/fetch/orders";
 import ReviewModal from "../../../ThreadInfo/ReviewModal";
-import { downloadLabel } from "@/utils/downloadLabel";
+import { downloadOrderLabel, downloadDisputeLabel } from "@/utils/downloadLabel";
+import DisputeCreateModal from "../../../ThreadInfo/DisputeCreateModal";
+import DisputeModal from "../../../ThreadInfo/DisputeModal";
+import { useRouter } from "next/navigation";
+
+import moment from "moment";
 
 export default function OrderInfoMessage({ type, offerId }) {
-  const { order, user, accessToken, products, updateMessages, recipient } =
+  const router = useRouter();
+
+  const { order, user, accessToken, products, updateMessages, recipient, dispute } =
     useThreadsContext();
 
   const [offer, setOffer] = useState(null);
   const [isReviewModal, setIsReviewModal] = useState(false);
-
+  const [isDisputeCreateModal, setIsDisputeCreateModal] = useState(false);
+  const [isDisputeModal, setIsDisputeModal] = useState(false);
+  
   const userRole = getUserRole();
 
   function getUserRole() {
@@ -51,6 +60,10 @@ export default function OrderInfoMessage({ type, offerId }) {
     await patchOrderIsReceived(order.id, accessToken);
     updateMessages();
   };
+
+  const handlePayReturn = async () => {
+    router.push(`/return-checkout?disputeId=${dispute.id}`);
+  }
 
   const isOfferOwner = user?.id === offer?.userId;
 
@@ -88,11 +101,12 @@ export default function OrderInfoMessage({ type, offerId }) {
           totalPrice={totalPrice}
           offerPrice={offer?.price}
           userRole={userRole}
+          recipient={recipient}
         />
       </li>
       {type === "newOrder" && userRole === "seller" && (
         <div className="flex justify-end">
-          <Button onClick={() => downloadLabel(accessToken, order.id)}>
+          <Button onClick={() => downloadOrderLabel(accessToken, order.id)}>
             Imprimer l'étiquette
           </Button>
         </div>
@@ -105,9 +119,41 @@ export default function OrderInfoMessage({ type, offerId }) {
         <div className="flex justify-between	items-center">
           <Button variant={"green"} onClick={handleConfirmOrderDelivered}>
             Confirmer la réception
-          </Button>
-          <Link className="text-dark-green text-xs underline" href="/contact">
+          </Button>                    
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeCreateModal(true)} href=''>
             Ouvrir un litige
+          </Link>
+        </div>
+      )}
+      {type === "newDispute" && dispute && (
+        <div className="flex justify-between	items-center">
+          {
+            !dispute.sellerDecision && userRole === 'seller' ? (
+              <p>Vous avez {72-moment().diff(dispute.createdAt, 'hour')}h pour répondre avant le {moment(dispute.createdAt).add(72, 'hour').format('DD/MM/YYYY HH:mm')}</p>
+            ) : <div></div>
+          }
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
+            Voir le litige
+          </Link>
+        </div>
+      )}
+      {type === "sellerDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && (
+        <div className="flex justify-between	items-center">
+          <Button variant={"green"} onClick={handlePayReturn}>
+            Payer le retour
+          </Button>                    
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeCreateModal(true)} href=''>
+            Je ne souhaite pas payer le retour
+          </Link>
+        </div>
+      )}      
+      { type === "disputeDecisionReturnPaid" && (
+        <div className="flex justify-between	items-center">
+          <Button onClick={() => downloadDisputeLabel(accessToken, dispute.id)}>
+            Imprimer l'étiquette
+          </Button>
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
+            Voir le litige
           </Link>
         </div>
       )}
@@ -147,7 +193,7 @@ export default function OrderInfoMessage({ type, offerId }) {
             Acheter
           </Button>
         </div>
-      )}
+      )}      
       {isReviewModal && (
         <ReviewModal
           setIsReviewModal={setIsReviewModal}
@@ -156,6 +202,22 @@ export default function OrderInfoMessage({ type, offerId }) {
           userRole={userRole}
         />
       )}
+      {
+        isDisputeCreateModal && (
+          <DisputeCreateModal
+            setIsDisputeCreateModal={setIsDisputeCreateModal}            
+            orderId={order.id}
+          />
+        )
+      }
+      {
+        isDisputeModal && (
+          <DisputeModal
+            setIsDisputeModal={setIsDisputeModal}            
+            dispute={dispute}
+          />
+        )
+      }
     </>
   );
 }

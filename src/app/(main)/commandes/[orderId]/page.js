@@ -15,7 +15,7 @@ import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { downloadLabel } from "@/utils/downloadLabel";
+import { downloadOrderLabel } from "@/utils/downloadLabel";
 import { downloadDocument } from "@/utils/downloadDocument";
 
 export default function OrderDetails({ params }) {
@@ -195,7 +195,7 @@ export default function OrderDetails({ params }) {
         <Button
           variant={"transparent-green"}
           className="w-full mt-2"
-          onClick={() => downloadLabel(accessToken, orderId)}
+          onClick={() => downloadOrderLabel(accessToken, orderId)}
         >
           Imprimer l'étiquette
         </Button>
