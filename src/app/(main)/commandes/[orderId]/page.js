@@ -175,13 +175,13 @@ export default function OrderDetails({ params }) {
               <span className="font-poppins font-medium">
                 {centsToEuros(amount)}€
               </span>
-            </li>
+            </li>            
             <li className="flex justify-between mb-3">
               <span className="font-semibold">Frais de port</span>
               <span className="font-poppins font-medium">
-                {/* {centsToEuros(shippingPrice)}€ */}
+                {centsToEuros(shippingPrice ?? 0)}€
               </span>
-            </li>
+            </li>            
             <li className="flex justify-between mb-14">
               <button
                 className="text-light-green underline font-semibold text-start"
