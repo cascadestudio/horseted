@@ -15,8 +15,10 @@ import StarRating from "@/components/StarRating";
 import Link from "next/link";
 import MessageGreenIcon from "@/assets/icons/MessageGreenIcon";
 import { centsToEuros } from "@/utils/centsToEuros";
-import { downloadOrderLabel } from "@/utils/downloadLabel";
+import { downloadOrderLabel, downloadDisputeLabel } from "@/utils/downloadLabel";
 import { downloadDocument } from "@/utils/downloadDocument";
+import { getDisputeByOrderId } from "@/fetch/disputes";
+import { useRouter } from "next/navigation";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
@@ -29,17 +31,26 @@ export default function OrderDetails({ params }) {
   const [paymentInfos, setPaymentInfos] = useState(null);
   const [products, setProducts] = useState(null);
   const [user, setUser] = useState(null);
+  const [dispute, setDispute] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     handleGetPaymentInfos();
     handleGetProducts();
     handleGetUser();
+    handleGetDispute();
   }, []);
 
   const handleGetPaymentInfos = async () => {
     const paymentInfos = await getPaymentInfos(accessToken, orderId);
     setPaymentInfos(paymentInfos);
   };
+
+  const handleGetDispute = async () => {
+    const res = await getDisputeByOrderId(accessToken, orderId);
+    setDispute(res);
+  }
 
   const handleGetProducts = async () => {
     const productIdsArray = productIds.split(";").map((id) => parseInt(id, 10));
@@ -57,6 +68,10 @@ export default function OrderDetails({ params }) {
     const user = await getUser(accessToken, cavalierId);
     setUser(user);
   };
+
+  const handleMessage = async () => {
+    router.push(`/messagerie?orderId=${orderId}`);
+  }
 
   const handleDocumentDownload = async (documentType) => {
     const documentName = `order_${orderId}_${documentType}.pdf`;
@@ -80,9 +95,14 @@ export default function OrderDetails({ params }) {
   const { amount, appFees, date, paymentMethod, shipping, shippingPrice } =
     paymentInfos;
 
-  return (
-    <div className="flex flex-col lg:flex-row lg:gap-7">
-      <div className="flex-[6] w-full lg:w-auto">
+  const refund = dispute.orderRefunds.find(r => r.refundId);
+  
+  return (    
+    <div className="flex flex-col lg:flex-row lg:gap-7">      
+      <div className="flex-[6] w-full lg:w-auto">        
+        { dispute &&
+          <Button className="w-full mb-[10px]" variant={"transparent-red"} onClick={() => {}}>{ refund ? "Commande remboursée" : "Litige en cours"}</Button>
+        }        
         <div className="bg-white rounded-xl p-8 border border-lighter-grey mb-3">
           <ul>
             <li className="font-semibold">
@@ -159,7 +179,7 @@ export default function OrderDetails({ params }) {
             <li className="flex justify-between mb-3">
               <span className="font-semibold">Frais de port</span>
               <span className="font-poppins font-medium">
-                {centsToEuros(shippingPrice)}€
+                {/* {centsToEuros(shippingPrice)}€ */}
               </span>
             </li>
             <li className="flex justify-between mb-14">
@@ -178,28 +198,57 @@ export default function OrderDetails({ params }) {
                 {centsToEuros(appFees)}€
               </span>
             </li>
+            { refund &&
+              <li className="flex justify-between mb-3">
+                <span className="font-semibold">Remboursement</span>
+                <span className="font-poppins font-medium">
+                  -{centsToEuros(refund.amount)}€
+                </span>
+              </li>
+            }
             <li className="flex justify-between font-semibold">
               <span>Total</span>
               <span className="font-poppins font-extrabold">
-                {centsToEuros(amount + shippingPrice + appFees)}€
+                {centsToEuros(amount + shippingPrice + appFees - (refund?.amount ?? 0))}€
               </span>
             </li>
           </ul>
         </div>
-        <Button
-          className={"w-full"}
-          onClick={() => handleDocumentDownload("receipt")}
-        >
-          Voir le reçu
-        </Button>
-        <Button
-          variant={"transparent-green"}
-          className="w-full mt-2"
-          onClick={() => downloadOrderLabel(accessToken, orderId)}
-        >
-          Imprimer l'étiquette
-        </Button>
+        { dispute
+            ? <Button
+                className={"w-full"}
+                onClick={handleMessage}
+              >
+                Messagerie
+              </Button>
+            : <Button
+                className={"w-full"}
+                onClick={() => handleDocumentDownload("receipt")}
+              >
+                Voir le reçu
+              </Button>
+
+        }        
+        { dispute
+          ? dispute.returnParcelId
+            ? <Button
+                variant={"transparent-green"}
+                className="w-full mt-2"
+                onClick={() => downloadDisputeLabel(accessToken, dispute.id)}
+              >
+                Imprimer l'étiquette retour
+              </Button>
+            : <></>
+          : <Button
+              variant={"transparent-green"}
+              className="w-full mt-2"
+              onClick={() => downloadOrderLabel(accessToken, orderId)}
+            >
+              Imprimer l'étiquette
+            </Button>
+        }
+        
       </div>
-    </div>
+    </div>    
   );
 }
