@@ -37,8 +37,11 @@ export default function DisputeCreateModal({
     formData.append('orderId', orderId);
     formData.append('details', disputeFormData.details.trim());
 
-    if (disputeFormData.files.length) {
-      formData.append('files', disputeFormData.files);
+    console.log(disputeFormData.files.length);
+    if (disputeFormData.files.length) {      
+      disputeFormData.files.map((file, index) => {
+        formData.append('files', file, file.name);
+      });
     }
 
     const dispute = await createDispute(accessToken, formData);

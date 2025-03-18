@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import TrashIcon from "@/assets/icons/TrashIcon";
 import { createDispute, postDisputeDecision } from "@/fetch/disputes";
 import { useRouter } from "next/navigation";
+import { downloadDocument } from "@/utils/downloadDocument";
 
 export default function DisputeModal({
   setIsDisputeModal,  
@@ -29,8 +30,16 @@ export default function DisputeModal({
     }
   }
 
-  const handleFile = (e) => {
+  const handleFile = async (file) => {
+    console.log(file);
+    const data = await fetchHorseted(
+      `/medias/${file.fileName}`,
+      accessToken
+    );
 
+    if (data) {      
+      downloadDocument(data, file.originalName);
+    }
   }
 
   const makeDisputeDecision = async (decision) => {    
@@ -65,10 +74,10 @@ export default function DisputeModal({
       {dispute.files && dispute.files.length && (
         <div className="mb-[35px]">
           <p className="label font-mcqueen font-semibold">Pièces jointes :</p>
-          { dispute.files.map(file => <Button              
+          { dispute.files.map((file, index) => <Button              
               variant="transparent-black"
-              onClick={handleFile}
-              className="w-full"
+              onClick={() => handleFile(file)}
+              className="w-full mt-[6px]"
             >              
               {file.originalName}
             </Button>)}

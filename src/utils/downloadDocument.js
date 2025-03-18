@@ -1,5 +1,5 @@
-export const downloadDocument = (blob, documentName) => {
-  const pdfBlob = new Blob([blob], { type: "application/pdf" });
+export const downloadDocument = (blob, documentName, type = "application/pdf") => {
+  const pdfBlob = new Blob([blob], { type });
   const url = URL.createObjectURL(pdfBlob);
 
   const a = document.createElement("a");
