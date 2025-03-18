@@ -6,9 +6,11 @@ import AddReviewStarIcon from "@/assets/icons/AddReviewStarIcon";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import Button from "@/components/Button";
 import TrashIcon from "@/assets/icons/TrashIcon";
-import { createDispute, postDisputeDecision } from "@/fetch/disputes";
+import { createDispute, postDisputeDecision, sendToHorseted, postReturnDeliveryConfirmation } from "@/fetch/disputes";
 import { useRouter } from "next/navigation";
 import { downloadDocument } from "@/utils/downloadDocument";
+import moment from "moment";
+import Link from "next/link";
 
 export default function DisputeModal({
   setIsDisputeModal,  
@@ -30,8 +32,7 @@ export default function DisputeModal({
     }
   }
 
-  const handleFile = async (file) => {
-    console.log(file);
+  const handleFile = async (file) => {    
     const data = await fetchHorseted(
       `/medias/${file.fileName}`,
       accessToken
@@ -59,9 +60,80 @@ export default function DisputeModal({
     makeDisputeDecision('return_at_buyer_charge');
   }
 
-  const handleReturnAtSellerCharge = () => {
+  const handleCheckout = () => {
     router.push(`/return-checkout?disputeId=${dispute.id}`)
   }
+
+  const handleSendToHorseted = async () => {
+    const res = await sendToHorseted(accessToken, dispute.id);    
+    await updateMessages(activeThread.id);
+
+    setDispute(res);    
+    setIsDisputeModal(false);
+  }
+
+  const handleConfirmReturnDelivery = async () => {
+    const res = await postReturnDeliveryConfirmation(accessToken, dispute.id);    
+    await updateMessages(activeThread.id);
+    
+    setDispute(res);    
+    setIsDisputeModal(false);
+  }
+
+
+  const getDecisionMessage = (decision) => {
+    if (decision === 'refund_without_return') {
+      return `Remboursement sans retour`
+    } else if ((decision === 'return_at_buyer_charge' && userRole === 'seller')
+              || (decision === 'return_at_seller_charge' && userRole === 'buyer')
+    ) {
+      return `Retour du colis aux frais de ${recipient.username}`;
+    } else if ((decision === 'return_at_seller_charge' && userRole === 'seller')
+              || decision === 'return_at_buyer_charge' && userRole === 'buyer' ) {
+      return `Retour du colis à vos frais`
+    } else if (decision === 'return_at_horseted_charge') {
+      return `Retour aux frais d'horseted`;
+    }
+  }
+
+  const getFooterButtons = () => {
+    const decision = dispute.sellerDecision ?? dispute.horsetedDecision;
+
+    if (dispute.sentToHorseted && !dispute.horsetedDecision) {
+      return <p className="font-mcqueen font-semibold text-[16px] mt-[35px] text-center" style={{color: "#D61919"}}>Horseted va traiter le litige</p>
+    } else if (dispute.returnParcelId) {
+      return <div className="w-full flex flex-col items-stretch mt-[35px]">
+        <Button variant={'transparent-green'} onClick={() => {}}>Suivre le retour</Button>
+        { !dispute.returnDeliveryConfirmedAt && userRole === 'seller' && dispute.returnDeliveredAt &&
+          <Button className="mt-[6px]" variant={'green'} onClick={handleConfirmReturnDelivery}>Confirmer le retour</Button>
+        }
+        <center><Link className="text-dark-green text-xs underline mt-[6px]" onClick={() => {}} href=''>Ouvrir un litige sur le retour</Link></center>
+      </div>;
+    } else if ((decision === 'return_at_buyer_charge' && userRole === 'buyer')
+      || (decision === 'return_at_seller_charge' && userRole === 'seller')
+      && !dispute.returnPaymentId
+    ) {
+      return <div className="w-full flex flex-col items-stretch mt-[35px]">
+        <Button variant={'transparent-green'} onClick={handleCheckout}>Payer le retour</Button>
+        { !dispute.sentToHorseted && userRole === 'buyer' (
+          <center className="mt-[6px]">
+            <Link className="text-dark-green text-xs underline" onClick={handleSendToHorseted} href=''>Envoyer le litige à l'équipe Horseted</Link>
+          </center>          
+        )}        
+      </div>
+    } else if (!decision && userRole === 'buyer') {
+      return <div className="mt-[35px]">
+        { moment().subtract(72, 'hours').isBefore(dispute.createdAt)
+            ? <p className="font-raleway text-[14px] font-medium text-center" style={{color:"#00000080"}}>Vous pouvez envoyer le litige à l'équipe Horseted, sans réponse du vendeur après 72h</p>
+            : <center><Link className="text-dark-green text-xs underline" onClick={handleSendToHorseted} href=''>Envoyer le litige à l'équipe Horseted</Link></center>
+        }
+      </div>
+    } else {
+      return <></>
+    }
+  }
+
+  
 
   return (
     <Modal
@@ -85,7 +157,7 @@ export default function DisputeModal({
       )}
       <p className="label font-mcqueen font-semibold">Détails du litige :</p>
       <p>{ dispute.details }</p>
-      {userRole === 'seller' && !dispute.sellerDecision && (
+      {userRole === 'seller' && !dispute.sellerDecision && !dispute.sentToHorseted && (
         <div className="mt-[14px]">
           <p className="label font-mcqueen font-semibold">Actions :</p>
           <Button              
@@ -95,7 +167,7 @@ export default function DisputeModal({
             >Rembourser {recipient.username} sans retour du colis</Button>              
           <Button              
               variant="transparent-black"
-              onClick={handleReturnAtSellerCharge}
+              onClick={handleCheckout}
               className="w-full mb-[6px]"
             >Retour du colis à vos frais</Button>              
             <Button              
@@ -104,9 +176,11 @@ export default function DisputeModal({
               className="w-full"
             >Retour du colis au frais de {recipient.username}</Button>
         </div>
-      )}
-      
-      <div className="h-[19px]"></div>      
+      )}      
+      { (dispute.sellerDecision || dispute.horsetedDecision) && 
+        (<p className="font-mcqueen font-semibold text-[16px] mt-[16px] text-center " style={{color: "#D61919"}}>{getDecisionMessage(dispute.horsetedDecision ?? dispute.sellerDecision)}</p>)
+      }
+      { getFooterButtons() }      
     </Modal>
   );
 }

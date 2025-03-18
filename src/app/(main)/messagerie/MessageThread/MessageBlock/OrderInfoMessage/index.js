@@ -147,9 +147,9 @@ export default function OrderInfoMessage({ type, offerId }) {
       {type === "newDispute" && dispute && (
         <div className="flex justify-between	items-center">
           {
-            !dispute.sellerDecision && userRole === 'seller' && (
-              <p>Vous avez {72-moment().diff(dispute.createdAt, 'hour')}h pour répondre avant le {moment(dispute.createdAt).add(72, 'hour').format('DD/MM/YYYY HH:mm')}</p>
-            )
+            !dispute.sellerDecision && userRole === 'seller' && moment().diff(dispute.createdAt, 'hour') < 72
+              ? <p>Vous avez {72-moment().diff(dispute.createdAt, 'hour')}h pour répondre avant le {moment(dispute.createdAt).add(72, 'hour').format('DD/MM/YYYY HH:mm')}</p>
+              : <div/>
           }
           <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
             Voir le litige
