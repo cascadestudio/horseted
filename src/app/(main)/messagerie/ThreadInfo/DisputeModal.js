@@ -87,15 +87,17 @@ export default function DisputeModal({
   }
 
 
-  const getDecisionMessage = (decision) => {
+  const getDecisionMessage = () => {
+    const decision = dispute.horsetedDecision ?? dispute.sellerDecision
+
     if (decision === 'refund_without_return') {
-      return `Remboursement sans retour`
+      return `La commande a été remboursé sans retour`
     } else if ((decision === 'return_at_buyer_charge' && userRole === 'seller')
               || (decision === 'return_at_seller_charge' && userRole === 'buyer')
     ) {
       return `Retour du colis aux frais de ${recipient.username}`;
     } else if ((decision === 'return_at_seller_charge' && userRole === 'seller')
-              || decision === 'return_at_buyer_charge' && userRole === 'buyer' ) {
+              || (decision === 'return_at_buyer_charge' && userRole === 'buyer' )) {
       return `Retour du colis à vos frais`
     } else if (decision === 'return_at_horseted_charge') {
       return `Retour aux frais d'horseted`;
@@ -103,8 +105,8 @@ export default function DisputeModal({
   }
 
   const getFooterButtons = () => {
-    const decision = dispute.sellerDecision ?? dispute.horsetedDecision;
-
+    const decision = dispute.horsetedDecision ?? dispute.sellerDecision;
+    
     if (dispute.sentToHorseted && !dispute.horsetedDecision) {
       return <p className="font-mcqueen font-semibold text-[16px] mt-[35px] text-center" style={{color: "#D61919"}}>Horseted va traiter le litige</p>
     } else if (dispute.returnParcelId) {
@@ -113,14 +115,17 @@ export default function DisputeModal({
         { !dispute.returnDeliveryConfirmedAt && userRole === 'seller' && dispute.returnDeliveredAt &&
           <Button className="mt-[6px]" variant={'green'} onClick={handleConfirmReturnDelivery}>Confirmer le retour</Button>
         }
-        <center><Link className="text-dark-green text-xs underline mt-[6px]" onClick={() => {}} href=''>Ouvrir un litige sur le retour</Link></center>
+        { !dispute.returnDeliveryConfirmedAt && userRole === 'seller' &&
+          <center><Link className="text-dark-green text-xs underline mt-[6px]" onClick={() => {}} href=''>Ouvrir un litige sur le retour</Link></center>
+        }        
       </div>;
-    } else if ((decision === 'return_at_buyer_charge' && userRole === 'buyer')
-      || (decision === 'return_at_seller_charge' && userRole === 'seller')
-      && !dispute.returnPaymentId
+    } else if (      
+        ((decision == 'return_at_seller_charge' && userRole === 'seller')
+          || (decision == 'return_at_buyer_charge' && userRole === 'buyer'))              
+       && !dispute.returnPaymentId
     ) {
       return <div className="w-full flex flex-col items-stretch mt-[35px]">
-        <Button variant={'transparent-green'} onClick={handleCheckout}>Payer le retour</Button>
+        <Button variant={'green'} onClick={handleCheckout}>Payer le retour</Button>
         { !dispute.sentToHorseted && userRole === 'buyer' (
           <center className="mt-[6px]">
             <Link className="text-dark-green text-xs underline" onClick={handleSendToHorseted} href=''>Envoyer le litige à l'équipe Horseted</Link>
@@ -184,7 +189,7 @@ export default function DisputeModal({
         </div>
       )}      
       { (dispute.sellerDecision || dispute.horsetedDecision) && 
-        (<p className="font-mcqueen font-semibold text-[16px] mt-[16px] text-center " style={{color: "#D61919"}}>{getDecisionMessage(dispute.horsetedDecision ?? dispute.sellerDecision)}</p>)
+        (<p className="font-mcqueen font-semibold text-[16px] mt-[16px] text-center " style={{color: "#D61919"}}>{getDecisionMessage()}</p>)
       }
       { getFooterButtons() }      
     </Modal>

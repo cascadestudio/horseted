@@ -88,6 +88,7 @@ export default function OrderInfoMessage({ type, offerId }) {
 
   if (type === "addReview" && userRole === "seller") return;
 
+  
   return (
     <>
       <li className="w-full border-y py-2 border-pale-grey flex flex-col lg:flex-row items-center justify-between">
@@ -165,9 +166,16 @@ export default function OrderInfoMessage({ type, offerId }) {
             Je ne souhaite pas payer le retour
           </Link>
         </div>
-      )}            
-      { (type === "horsetedDisputeDecisionReturnAtSellerCharge" &&  userRole === 'seller' && dispute && !dispute.returnPaymentId)
-        || (type === "horsetedDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && dispute &&  !dispute.returnPaymentId)
+      )}                 
+      { type === "sellerDisputeDecisionReturnAtSellerCharge" &&  userRole === 'buyer' && dispute?.returnParcelId && (
+        <div className="flex justify-between	items-center">
+          <Button onClick={() => downloadDisputeLabel(accessToken, dispute.id)}>
+            Imprimer l'étiquette
+          </Button>          
+        </div>
+      )}
+      { ((type === "horsetedDisputeDecisionReturnAtSellerCharge" &&  userRole === 'seller' && dispute &&  !dispute.returnPaymentId)
+        || (type === "horsetedDisputeDecisionReturnAtBuyerCharge" &&  userRole === 'buyer' && dispute &&  !dispute.returnPaymentId))
         && (
         <div className="flex justify-between	items-center">
           <Button variant={"green"} onClick={handlePayReturn}>
