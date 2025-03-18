@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { downloadDocument } from "@/utils/downloadDocument";
 import moment from "moment";
 import Link from "next/link";
+import { getParcelById } from "@/fetch/parcels";
 
 export default function DisputeModal({
   setIsDisputeModal,  
@@ -80,6 +81,11 @@ export default function DisputeModal({
     setIsDisputeModal(false);
   }
 
+  const handleReturnTracking = async () => {
+    const res = await getParcelById(accessToken, dispute.returnParcelId);    
+    window.open(res.trackingUrl, '_blank');
+  }
+
 
   const getDecisionMessage = (decision) => {
     if (decision === 'refund_without_return') {
@@ -103,7 +109,7 @@ export default function DisputeModal({
       return <p className="font-mcqueen font-semibold text-[16px] mt-[35px] text-center" style={{color: "#D61919"}}>Horseted va traiter le litige</p>
     } else if (dispute.returnParcelId) {
       return <div className="w-full flex flex-col items-stretch mt-[35px]">
-        <Button variant={'transparent-green'} onClick={() => {}}>Suivre le retour</Button>
+        <Button variant={'transparent-green'} onClick={handleReturnTracking}>Suivre le retour</Button>
         { !dispute.returnDeliveryConfirmedAt && userRole === 'seller' && dispute.returnDeliveredAt &&
           <Button className="mt-[6px]" variant={'green'} onClick={handleConfirmReturnDelivery}>Confirmer le retour</Button>
         }

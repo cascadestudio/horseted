@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 
 import moment from "moment";
 import { postReturnDispute } from "@/fetch/disputes";
+import { getParcelById } from "@/fetch/parcels";
 
 export default function OrderInfoMessage({ type, offerId }) {
   const router = useRouter();
@@ -69,9 +70,8 @@ export default function OrderInfoMessage({ type, offerId }) {
   };
 
   const handleReturnTracking = async () => {
-    const response = await postReturnDeliveryConfirmation(accessToken, dispute.id);
-    setDispute(response);    
-    updateMessages();
+    const res = await getParcelById(accessToken, dispute.returnParcelId);
+    window.open(res.trackingUrl, '_blank');    
   };
 
   const handleReturnDispute = async () => {
@@ -161,7 +161,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           <Button variant={"green"} onClick={handlePayReturn}>
             Payer le retour
           </Button>                    
-          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeCreateModal(true)} href=''>
+          <Link className="text-dark-green text-xs underline" onClick={() => setIsDisputeModal(true)} href=''>
             Je ne souhaite pas payer le retour
           </Link>
         </div>
@@ -175,7 +175,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           </Button>
         </div>
       )}      
-      { (type === "disputeDecisionReturnPaid" || type === "horsetedDisputeDecisionReturnAtHorsetedCharge") && (
+      { (type === "disputeDecisionReturnPaid" || type === "horsetedDisputeDecisionReturnAtHorsetedCharge") && dispute?.returnParcelId && (
         <div className="flex justify-between	items-center">
           <Button onClick={() => downloadDisputeLabel(accessToken, dispute.id)}>
             Imprimer l'étiquette
@@ -185,7 +185,7 @@ export default function OrderInfoMessage({ type, offerId }) {
           </Link>
         </div>
       )}
-      { type === "orderReturnDeliveredConfirmationRequired" && dispute && !dispute.returnDeliveryConfirmedAt && !dispute.returnDisputeCreatedAt && (
+      { type === "orderReturnDeliveredConfirmationRequired" && dispute && !dispute.returnDeliveryConfirmedAt && (
         <div className="flex justify-between	items-center">
           <Button variant={"green"} onClick={handleConfirmReturnDelivered}>
             Confirmer la réception
