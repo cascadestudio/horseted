@@ -227,6 +227,16 @@ export default function OrderInfoMessage({ message, offerId }) {
           </Button>
         </div>
       )}      
+      { type === "horsetedDisputeDecitionRefundBuyer" &&  userRole === 'seller' && (
+        <p className="font-raleway">
+          Horseted a remboursé l'acheteur     
+        </p>
+      )}      
+      { type === "horsetedDisputeDecitionRefundSeller" &&  userRole === 'buyer' && (
+        <p className="font-raleway">
+          Horseted a remboursé le vendeur
+        </p>
+      )}      
       {( (type === "disputeDecisionReturnPaid" || type === "horsetedDisputeDecisionReturnAtHorsetedCharge")) && dispute?.returnParcelId && userRole === 'buyer' && (
         <div className="flex justify-between	items-center">
           <Button onClick={() => downloadDisputeLabel(accessToken, dispute.id)}>

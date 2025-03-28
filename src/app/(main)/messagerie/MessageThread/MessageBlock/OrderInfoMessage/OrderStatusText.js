@@ -49,9 +49,12 @@ export default function OrderStatusText({
         userRole == "seller" ? `${recipient.username} a refusé de payé le retour` 
                               : "Vous ne souhaitez pas payer le retour",
       disputeDecisionReturnPaid: 'Confirmation de paiement du retour',      
-      horsetedDisputeDecitionRefund:
-        userRole === "seller" ? `Horseted a remboursé ${recipient.username} sans retour`
-                              : "Horseted vous rembourse sans retour",
+      horsetedDisputeDecitionRefundBuyer:
+        userRole === "seller" ? "Litige cloturé"
+                              : `Horseted va rembourser ${formatPrice(refundAmount/100)}€`,                              
+      horsetedDisputeDecitionRefundSeller:
+        userRole === "buyer" ? "Litige cloturé"
+                              : `Horseted va rembourser ${formatPrice(refundAmount/100)}€`,
       disputeSentToHorseted: 'Le litige a été envoyé à Horseted',
       horsetedDisputeDecisionReturnAtSellerCharge:
         userRole === "seller" ? "Horseted propose un retour de la commande à vos frais"
