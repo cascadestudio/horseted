@@ -21,6 +21,6 @@ export default function MessageBlock({ message }) {
       </li>
     );
   } else {
-    return <OrderInfoMessage type={type} offerId={offerId} />;
+    return <OrderInfoMessage message={message} offerId={offerId} />;
   }
 }

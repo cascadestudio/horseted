@@ -126,7 +126,7 @@ export default function DisputeModal({
     ) {
       return <div className="w-full flex flex-col items-stretch mt-[35px]">
         <Button variant={'green'} onClick={handleCheckout}>Payer le retour</Button>
-        { !dispute.sentToHorseted && userRole === 'buyer' (
+        { !dispute.sentToHorseted && userRole === 'buyer' && (
           <center className="mt-[6px]">
             <Link className="text-dark-green text-xs underline" onClick={handleSendToHorseted} href=''>Envoyer le litige à l'équipe Horseted</Link>
           </center>          

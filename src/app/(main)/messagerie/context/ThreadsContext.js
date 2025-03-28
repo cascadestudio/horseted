@@ -16,6 +16,7 @@ import { getProducts } from "@/fetch/products";
 import fetchHorseted from "@/utils/fetchHorseted";
 import { useRouter } from "next/navigation";
 import { getDisputeByOrderId } from "@/fetch/disputes";
+import { getParcelById } from "@/fetch/parcels";
 
 const ThreadsContext = createContext();
 
@@ -42,6 +43,7 @@ export const ThreadsProvider = ({
   const [recipient, setRecipient] = useState(null);
   const [isInfo, setIsInfo] = useState(false);
   const [dispute, setDispute] = useState(null);
+  const [parcel, setParcel] = useState(null);
 
   // Initialize threads
   useEffect(() => {
@@ -59,9 +61,19 @@ export const ThreadsProvider = ({
     if (order?.items?.length) {
       handleGetProductsFromOrder(order);
     }
+
+    if (order?.parcelId) {
+      handleGetParcel(order.parcelId);
+    }    
   }, [order]);
 
   // Functions
+
+  const handleGetParcel = async (parcelId) => {
+    const parcel = await getParcelById(accessToken, parcelId);
+    setParcel(parcel);
+  }
+
   const handleGetThreads = useCallback(async () => {
     const response = await getThreads(accessToken);
     setThreads(response);
@@ -222,6 +234,8 @@ export const ThreadsProvider = ({
         handleIsSeenThread,
         dispute,
         setDispute,
+        parcel,
+        setParcel
       }}
     >
       {children}
