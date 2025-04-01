@@ -169,7 +169,7 @@ export default function Footer() {
             <div className="flex justify-center lg:justify-start">
               <div className="inline-flex justify-center items-center gap-5 px-5 py-3 bg-light-grey border border-black rounded-full lg:bg-transparent lg:border-none lg:px-0 lg:py-0 lg:pb-2 [&>a>svg]:h-6">
                 <a
-                  href="https://www.instagram.com/horseted.fr/"
+                  href="https://www.instagram.com/horseted_fr/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Suivez-nous sur Instagram"
