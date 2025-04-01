@@ -14,7 +14,7 @@ export default async function CategoriesSection() {
       <div className="container mx-auto px-5 pb-8 lg:pb-24">
         <div className="relative flex justify-center mb-9">
           <h2 className="font-mcqueen font-bold text-2xl text-center lg:text-4xl lg:text-left">
-            Achetez et vendez du matériel d'équitation de qualité
+            Vendez et achetez du matériel d'équitation de qualité
           </h2>
           <GreenThreeStripesIcon className="absolute -top-10 -right-1 lg:top-0 lg:right-0 lg:relative lg:mt-[-40px]" />
         </div>

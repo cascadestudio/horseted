@@ -4,7 +4,7 @@ import { mcqueen, raleway, poppins } from "@/utils/fonts";
 
 const baseMetadata = {
   title:
-    "Achetez et vendez votre matériel d'équitation Neuf ou d'occastion avec Horseted",
+    "Vendez et achetez votre matériel d'équitation Neuf ou d'occastion avec Horseted",
   description:
     "Téléchargez l’application Horseted et donnez une seconde vie à vos articles d’équitation en vendant votre matériel dès maintenant !",
   imageUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/images/og-image.jpg`,

@@ -33,7 +33,7 @@ export default async function Home() {
             Articles d’équitation <br /> de seconde main
           </h1>
           <p className="max-w-[610px] text-center lg:text-left">
-            Achetez et vendez votre matériel d’équitation avec Horseted. Donnez
+            Vendez et achetez votre matériel d’équitation avec Horseted. Donnez
             une seconde vie à vos articles d’équitation en vendant votre
             matériel sur Horseted
           </p>

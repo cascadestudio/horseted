@@ -38,7 +38,7 @@ export default function Footer() {
           <div className="flex flex-col mb-7 lg:mb-5">
             <BurstIcon className="self-end mr-3 lg:w-12 lg:-mr-20 lg:-mb-3" />
             <p className="text-center -mt-3 font-bold text-2xl lg:text-4xl">
-              Achetez et vendez <br />
+              Vendez et achetez <br />
               votre matériel d’équitation
             </p>
           </div>
