@@ -83,7 +83,7 @@ export default async function Home() {
       />
       <ProductsSection
         title="Pour le cavalier"
-        categoryId="1065"
+        categoryId="1078"
         categoryName="le cavalier"
       />
       <ProductsSection
