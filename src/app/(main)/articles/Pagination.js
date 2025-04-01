@@ -29,9 +29,9 @@ export default function Pagination({ products, setFromId }) {
     }
   };
 
-  const isNextButton = products.total > pages.length * 50;
+  const isNextButton = products.total > pages.length * 32;
 
-  if (products.total > 50)
+  if (products.total > 32)
     return (
       <nav className="py-12">
         <ul className="flex gap-x-7 justify-center items-center text-xl text-medium-grey font-poppins">

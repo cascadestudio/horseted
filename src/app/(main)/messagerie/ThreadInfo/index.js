@@ -141,7 +141,7 @@ export default function ThreadInfo({
                 product={product}
                 size="small"
               />
-              <Link href={`/product/${product.id}`}>
+              <Link href={`/articles/${product.id}`}>
                 <h3 className="text-lg font-mcqueen font-bold capitalize">
                   {product.title}
                 </h3>

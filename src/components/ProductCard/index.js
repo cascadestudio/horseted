@@ -51,7 +51,7 @@ export default function ProductCard({
         <div className="max-w-[82%]">
           <p className="font-poppins font-bold">{centsToEuros(price)} €</p>
           <Link
-            href={`/product/${id}`}
+            href={`/articles/${id}`}
             className="block text-lg font-extrabold text-light-green truncate capitalize"
           >
             {title}

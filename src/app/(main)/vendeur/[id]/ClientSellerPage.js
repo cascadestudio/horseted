@@ -5,7 +5,7 @@ import withAuth from "@/hoc/withAuth";
 import Button from "@/components/Button";
 import { useEffect, useState } from "react";
 
-import CreateBundleModal from "../../product/[id]/CreateBundleModal";
+import CreateBundleModal from "../../articles/[id]/CreateBundleModal";
 import fetchHorseted from "@/utils/fetchHorseted";
 import Spinner from "@/components/Spinner";
 import ProfileInfo from "@/components/ProfilePage/ProfileInfo";

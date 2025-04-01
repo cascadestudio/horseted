@@ -101,7 +101,7 @@ export default function ProductsPage({ categories }) {
   ]);
 
   useEffect(() => {
-    let query = `/products?orderBy=${activeOrder}`;
+    let query = `/products?take=32&orderBy=${activeOrder}`;
     if (activeCategory !== null) {
       query += `&category=${activeCategory.id}`;
     }

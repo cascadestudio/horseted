@@ -122,7 +122,7 @@ export default function Footer() {
             </p>
             <ul className="[&>li]:pb-2 [&>li]:font-semibold">
               <FooterLink
-                id={531}
+                id={1066}
                 name={"Cavalière"}
                 title={"Vêtements pour la cavalière"}
               />
