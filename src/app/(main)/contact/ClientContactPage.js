@@ -39,6 +39,8 @@ export default function Contact() {
       true,
       true
     );
+
+    alert("Votre message a bien été envoyé");
   }
 
   const breadcrumbs = [{ label: "Accueil", href: "/" }, { label: "Contact" }];
