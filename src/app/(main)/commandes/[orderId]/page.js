@@ -48,8 +48,10 @@ export default function OrderDetails({ params }) {
   };
 
   const handleGetDispute = async () => {
-    const res = await getDisputeByOrderId(accessToken, orderId);
-    setDispute(res);
+    const res = await getDisputeByOrderId(accessToken, orderId);    
+    if (typeof res === 'object' && res.orderId == orderId) {
+      setDispute(res);
+    }        
   }
 
   const handleGetProducts = async () => {
@@ -95,7 +97,7 @@ export default function OrderDetails({ params }) {
   const { amount, appFees, date, paymentMethod, shipping, shippingPrice } =
     paymentInfos;
 
-  const refund = dispute.orderRefunds.find(r => r.refundId);
+  const refund = dispute?.orderRefunds?.find(r => r.refundId);
   
   return (    
     <div className="flex flex-col lg:flex-row lg:gap-7">      
