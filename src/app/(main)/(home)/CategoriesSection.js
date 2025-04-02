@@ -2,12 +2,27 @@ import fetchHorseted from "@/utils/fetchHorseted";
 import Image from "next/image";
 import GreenThreeStripesIcon from "@/assets/icons/GreenThreeStripesIcon";
 import categoryImage from "@/assets/images/categoryImage.jpg";
+import categorieAlimentaire from "@/assets/images/categorieAlimentaire.jpg";
+import categorieCavalier from "@/assets/images/categorieCavalier.jpg";
+import categorieEcurie from "@/assets/images/categorieEcurie.jpg";
+import categoriePansage from "@/assets/images/categoriePansage.jpg";
+import categoriePoney from "@/assets/images/categoriePoney.jpg";
+import categorieSoins from "@/assets/images/categorieSoins.jpg";
 import Link from "next/link";
 import RightArrow from "@/assets/icons/RightArrow";
 import capitalizeText from "@/utils/capitalizeText";
 
 export default async function CategoriesSection() {
   const categories = await fetchHorseted("/categories");
+
+  const categoryImages = {
+    1065: categorieCavalier,
+    1160: categoriePoney,
+    1359: categoriePansage,
+    1425: categorieSoins,
+    1491: categorieAlimentaire,
+    1560: categorieEcurie
+  };
 
   return (
     <section className=" bg-light-grey">
@@ -29,7 +44,7 @@ export default async function CategoriesSection() {
                 } ${index === 1 ? "lg:col-span-2 lg:row-span-1" : ""}`}
               >
                 <Image
-                  src={categoryImage}
+                  src={categoryImages[category.id] ?? categoryImage}
                   alt={category.name}
                   title="Voir la catégorie"
                   sizes="(min-width: 1024px) 640px, 100vw"
