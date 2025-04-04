@@ -161,47 +161,61 @@ export default function ProductInfoSection({
         {title}
       </h1>
       <p className="text-sm leading-5 lg:text-base mb-6">{description}</p>
-      <p className="font-poppins font-semibold text-2xl lg:text-[28px] leading-[42px]">
-        {centsToEuros(price)} €
-      </p>
-      <ShippingInfo product={product} />
-      {!isUserSeller && !isProductSold && (
-        <>
-          <Button
-            className="w-full mb-3 h-[52px] text-lg"
-            withAuth
-            href={`/checkout?productIds=${params.id}`}
-          >
-            Acheter
-          </Button>
-          <Button
-            onClick={handleOpenOfferModal}
-            price={price}
-            variant="transparent-green"
-            className={`w-full h-[52px] text-xl ${className}`}
-            withAuth
-          >
-            Faire une offre
-          </Button>
-          {userProducts?.items?.length > 1 && (
-            <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
-              <div>
-                <h4 className="font-mcqueen font-bold text-lg leading-5">
-                  Acheter un lot
-                </h4>
-                <p className="text-sm">Économisez sur les frais de livraison</p>
-              </div>
-              <Button
-                onClick={handleOpenCreateBundleModal}
-                className="text-sm h-8 ml-5"
-                withAuth
-              >
-                Créer un lot
-              </Button>
-            </div>
-          )}
-        </>
-      )}
+      { !isProductSold
+        ? <>
+            <p className="font-poppins font-semibold text-2xl lg:text-[28px] leading-[42px]">
+              {centsToEuros(price)} €
+            </p>
+            <ShippingInfo product={product} />
+            { !isUserSeller && (
+              <>
+                <Button
+                  className="w-full mb-3 h-[52px] text-lg"
+                  withAuth
+                  href={`/checkout?productIds=${params.id}`}
+                >
+                  Acheter
+                </Button>
+                <Button
+                  onClick={handleOpenOfferModal}
+                  price={price}
+                  variant="transparent-green"
+                  className={`w-full h-[52px] text-xl ${className}`}
+                  withAuth
+                >
+                  Faire une offre
+                </Button>
+                {userProducts?.items?.length > 1 && (
+                  <div className="flex justify-between items-center mt-3 border border-light-green rounded-2xl pl-6 py-6 pr-3">
+                    <div>
+                      <h4 className="font-mcqueen font-bold text-lg leading-5">
+                        Acheter un lot
+                      </h4>
+                      <p className="text-sm">Économisez sur les frais de livraison</p>
+                    </div>
+                    <Button
+                      onClick={handleOpenCreateBundleModal}
+                      className="text-sm h-8 ml-5"
+                      withAuth
+                    >
+                      Créer un lot
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
+          </>
+        : (
+            <Button
+              className="w-full mb-3 h-[52px] text-lg"
+              withAuth
+              href=""
+              variant={'red'}
+            >
+              Article vendu
+            </Button>
+          )
+      }
       <table className="table-auto mt-5">
         <tbody className="[&>tr]:flex [&>tr]:justify-between [&>tr]:border-b [&>tr]:border-grey [&>tr]:py-2 [&_td] [&_td]:font-semibold [&_td]:text-sm [&_td]:leading-6 [&_a]:text-light-green [&_a]:underline">
           {category && (
