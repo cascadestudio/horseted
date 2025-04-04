@@ -4,7 +4,7 @@ import placeholderImage from "@/assets/images/placeholder.svg";
 import Image from "next/image";
 import Spinner from "@/components/Spinner";
 
-export default function ClientProductImage({ product, className, size }) {
+export default function ClientProductImage({ product, className, size, style }) {
   const [imageSrc, setImageSrc] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaceholder, setIsPlaceholder] = useState(false);
@@ -54,6 +54,7 @@ export default function ClientProductImage({ product, className, size }) {
         className={`aspect-[280/340] object-cover rounded-md ${className}`}
         src={placeholderImage}
         alt={product.title}
+        style={style}
         priority
       />
     );
@@ -64,6 +65,7 @@ export default function ClientProductImage({ product, className, size }) {
         src={imageSrc}
         alt={product.title}
         title="Voir le produit"
+        style={style}
       />
     );
   }

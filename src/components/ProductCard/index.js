@@ -37,15 +37,16 @@ export default function ProductCard({
   const shippingSizeFrench = shippingSizeTranslations[shipping];
 
   return (
-    <div
+    <div    
       className={`
       ${className} relative flex flex-col items-center border-b border-grey focus:outline-none"
     `}
-    >
+    >      
       <ClientProductImage
         product={product}
-        className="w-[280px] max-h-[340px]"
-      />
+        className="w-[280px] max-h-[340px] border-[1px] border-solid"
+        style={{borderColor: '#CCCCCC'}}
+      />     
 
       <div className="flex w-full p-5 justify-between self-start">
         <div className="max-w-[82%]">
