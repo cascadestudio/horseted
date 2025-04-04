@@ -24,10 +24,6 @@ export default function OrderDetails({ params }) {
   const { orderId } = params;
   const { accessToken, user } = useAuthContext();
 
-  const searchParams = useSearchParams();
-  // const productIds = searchParams.get("productIds");
-  // const cavalierId = searchParams.get("cavalierId");
-
   const [paymentInfos, setPaymentInfos] = useState(null);
   const [products, setProducts] = useState(null);
   const [cavalier, setCavalier] = useState(null);
@@ -55,13 +51,12 @@ export default function OrderDetails({ params }) {
   }
 
   const handleGetProducts = async () => {
-    const order = await getOrder(accessToken, orderId);    
-    console.log(order);
+    const order = await getOrder(accessToken, orderId);
 
     handleGetUser(order.userId == user.id ? order.seller.id : order.buyer.id);
 
     const productIds = order.items.map(i => i.productId);
-            
+
     const products = await Promise.all(
       productIds.map(async (productId) => {
         const product = await getProducts(productId);
