@@ -37,6 +37,14 @@ export default function ProductsSection({
 
   if (isLoading || products.length <= 1) return null;
 
+  const maxProductCount = window.innerWidth < 768
+    ? 1
+    : window.innerWidth < 1025
+      ? 3
+      : 4;
+      
+  const productsToDisplay = products;
+
   return (
     <section className="pb-14 lg:pb-24 bg-light-grey">
       <div className="container mx-auto px-5">
@@ -57,13 +65,13 @@ export default function ProductsSection({
             <RightArrow className="ml-2" />
           </Button>
         </div>
-        {products.length <= 4 ? (
+        {productsToDisplay.length <= maxProductCount ? (
           <div className="flex">
-            {products.map((product) => {
+            {productsToDisplay.map((product, index) => {
               return (
                 <ProductCard
                   key={product.id}
-                  className="mb-8 mr-6 lg:mr-12"
+                  className={`flex-1 min-w-0 mb-8 ${index < productsToDisplay.length-1 ? 'mr-6 lg:mr-12' : ''}`}
                   product={product}
                 />
               );
@@ -71,7 +79,7 @@ export default function ProductsSection({
           </div>
         ) : (
           <CardCarousel>
-            {products.map((product, index) => {
+            {productsToDisplay.map((product, index) => {
               return (
                 <div
                   className={`block ${index >= 4 ? "hidden md:block" : ""} ${
