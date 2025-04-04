@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { getOrderDocuments, getPaymentInfos } from "@/fetch/orders";
+import { getOrder, getOrderDocuments, getPaymentInfos } from "@/fetch/orders";
 import { useSearchParams } from "next/navigation";
 import Spinner from "@/components/Spinner";
 import { getProducts } from "@/fetch/products";
@@ -22,20 +22,20 @@ import { useRouter } from "next/navigation";
 
 export default function OrderDetails({ params }) {
   const { orderId } = params;
-  const { accessToken } = useAuthContext();
+  const { accessToken, user } = useAuthContext();
 
   const searchParams = useSearchParams();
-  const productIds = searchParams.get("productIds");
-  const cavalierId = searchParams.get("cavalierId");
+  // const productIds = searchParams.get("productIds");
+  // const cavalierId = searchParams.get("cavalierId");
 
   const [paymentInfos, setPaymentInfos] = useState(null);
   const [products, setProducts] = useState(null);
-  const [user, setUser] = useState(null);
+  const [cavalier, setCavalier] = useState(null);
   const [dispute, setDispute] = useState(null);
 
   const router = useRouter();
 
-  useEffect(() => {
+  useEffect(() => {    
     handleGetPaymentInfos();
     handleGetProducts();
     handleGetUser();
@@ -55,20 +55,26 @@ export default function OrderDetails({ params }) {
   }
 
   const handleGetProducts = async () => {
-    const productIdsArray = productIds.split(";").map((id) => parseInt(id, 10));
+    const order = await getOrder(accessToken, orderId);    
+    console.log(order);
+
+    handleGetUser(order.userId == user.id ? order.seller.id : order.buyer.id);
+
+    const productIds = order.items.map(i => i.productId);
+            
     const products = await Promise.all(
-      productIdsArray.map(async (productId) => {
+      productIds.map(async (productId) => {
         const product = await getProducts(productId);
         return product;
       })
     );
 
-    setProducts(products);
+    setProducts(products);    
   };
 
-  const handleGetUser = async () => {
-    const user = await getUser(accessToken, cavalierId);
-    setUser(user);
+  const handleGetUser = async (cavalierId) => {    
+    const cavalier = await getUser(accessToken, cavalierId);
+    setCavalier(cavalier);
   };
 
   const handleMessage = async () => {
@@ -90,7 +96,7 @@ export default function OrderDetails({ params }) {
     }
   };
 
-  if (!paymentInfos || !products || !user) {
+  if (!paymentInfos || !products || !cavalier) {
     return <Spinner />;
   }
 
@@ -155,12 +161,12 @@ export default function OrderDetails({ params }) {
         </div>
         <div className="flex items-center justify-between bg-white rounded-xl p-8 border border-lighter-grey mb-4">
           <div className="flex items-center">
-            <AvatarDisplay avatar={user.avatar} size={56} />
+            <AvatarDisplay avatar={cavalier.avatar} size={56} />
             <div className="ml-3">
               <p className="font-mcqueen font-semibold text-lg capitalize">
-                {user.username}
+                {cavalier.username}
               </p>
-              <StarRating review={user.review} />
+              <StarRating review={cavalier.review} />
             </div>
           </div>
           <Link href={`/messagerie?orderId=${orderId}`} className="h-8 w-8">
