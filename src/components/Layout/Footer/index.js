@@ -127,23 +127,23 @@ export default function Footer() {
                 title={"Vêtements pour la cavalière"}
               />
               <FooterLink
-                id={585}
-                name={"Boots cuir"}
-                title={"Boots en cuir pour la cavalière"}
+                id={1119}
+                name={"Boots pour la cavalière"}
+                title={"Boots pour la cavalière"}
               />
-              <FooterLink id={614} name={"Casques"} title={"Casques"} />
+              <FooterLink id={1147} name={"Bombes"} title={"Bombes"} />
               <FooterLink
-                id={651}
-                name={"Sangles et Accessoires"}
-                title={"Sangles et accessoires"}
+                id={1186}
+                name={"Sangles et bavettes"}
+                title={"Sangles et bavettes"}
               />
-              <FooterLink id={712} name={"Enrênements"} title={"Enrênements"} />
+              <FooterLink id={1279} name={"Licols et longes "} title={"Licols et longes "} />
               <FooterLink
-                id={729}
-                name={"Selles et Accessoires"}
-                title={"Selles et accessoires"}
+                id={1264}
+                name={"Selles"}
+                title={"Selles"}
               />
-              <FooterLink id={825} name={"Brosse"} title={"Brosse"} />
+              <FooterLink id={1360} name={"Brosse"} title={"Brosse"} />
             </ul>
           </div>
           <div className="lg:flex lg:flex-col lg:justify-between lg:pb-7">
