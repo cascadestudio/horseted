@@ -81,7 +81,7 @@ export default function Footer() {
           <div className="flex items-center flex-col mb-8">
             <Image
               src={HorsetedLogoBlackIcon}
-              alt="Logo Horseted"
+              alt="Application Horseted"
               className="h-24 w-24 self-center mb-3 lg:h-40 lg:w-40 lg:mb-7"
             />
             <Button withAuth href="/vendre" className="px-16 w-full lg:w-auto">
