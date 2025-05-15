@@ -20,6 +20,7 @@ export default function AddressModal({
 
   const [address, setAddress] = useState({
     fullName: "",
+    houseNumber: "",
     street: "",
     postalCode: "",
     city: "",
@@ -95,27 +96,35 @@ export default function AddressModal({
         required
         disabled
       />
-      <TextInput
-        label="N° et nom de rue"
-        name="street"
-        value={address.street}
-        onChange={handleChange}
-        required
-        placeholder="Ex : 1 avenue de la Paix"
-      />
-      <TextInput
-        label="Complément d’adresse"
-        name="additionalInfos"
-        value={address.additionalInfos}
-        onChange={handleChange}
-        placeholder="Ex : Bâtiment C"
-      />
+      <p className="label font-mcqueen font-semibold">Adresse :</p>
+      <div className="flex flex-row">
+        <TextInput
+          className="w-[49px]"
+          hideLabel={true}
+          name="houseNumber"
+          value={address.houseNumber}
+          onChange={handleChange}
+          required
+          placeholder="No"
+        />        
+        <TextInput    
+          className="pl-5"              
+          hideLabel={true}
+          name="street"
+          value={address.street}
+          onChange={handleChange}
+          required
+          placeholder="Adresse"
+        />        
+      </div>   
       <TextInput
         label="Code postal"
         name="postalCode"
         value={address.postalCode}
         onChange={handleChange}
         required
+        minLength={5}
+        maxLength={5}
         placeholder="Ex : 75 015"
       />
       <TextInput

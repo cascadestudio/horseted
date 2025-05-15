@@ -14,6 +14,7 @@ export default function AddressModal({
   const { accessToken } = useAuthContext();
   const [formData, setFormData] = useState({
     fullName: "",
+    houseNumber: "",
     street: "",
     postalCode: "",
     city: "",
@@ -66,23 +67,28 @@ export default function AddressModal({
         onChange={handleChange}
         required
         placeholder="Sophie Marceau"
-      />
-      <TextInput
-        label="Pays"
-        name="country"
-        value={formData.country}
-        onChange={handleChange}
-        required
-        disabled
-      />
-      <TextInput
-        label="N° et nom de rue"
-        name="street"
-        value={formData.street}
-        onChange={handleChange}
-        required
-        placeholder="Ex : 1 avenue de la Paix"
-      />
+      />      
+      <p className="label font-mcqueen font-semibold">Adresse :</p>
+      <div className="flex flex-row">
+        <TextInput
+          className="w-[49px]"
+          hideLabel={true}
+          name="houseNumber"
+          value={address.houseNumber}
+          onChange={handleChange}
+          required
+          placeholder="No"
+        />        
+        <TextInput    
+          className="pl-5"              
+          hideLabel={true}
+          name="street"
+          value={address.street}
+          onChange={handleChange}
+          required
+          placeholder="Adresse"
+        />        
+      </div>
       <TextInput
         label="Complément d’adresse"
         name="additionalInfos"
@@ -96,6 +102,8 @@ export default function AddressModal({
         value={formData.postalCode}
         onChange={handleChange}
         required
+        minLength={5}
+        maxLength={5}
         placeholder="Ex : 75 015"
       />
       <TextInput
