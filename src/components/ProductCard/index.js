@@ -33,9 +33,8 @@ export default function ProductCard({
     return <Spinner />;
   }
 
-  const { title, price, favoritCount, shipping, id } = product;
-  const shippingSizeFrench = shippingSizeTranslations[shipping];
-
+  const { title, price, favoritCount, size, id } = product;
+  
   return (
     <div    
       className={`
@@ -58,7 +57,9 @@ export default function ProductCard({
             {title}
             <span className="absolute inset-0"></span>
           </Link>
-          <p className="text-grey">{shippingSizeFrench}</p>
+          { size?.value && 
+            <p className="text-grey">{size.value}</p>
+          }          
         </div>
         <div className="flex items-start z-20">
           <FavoriteButton favoriteCount={favoritCount} product={product} />
