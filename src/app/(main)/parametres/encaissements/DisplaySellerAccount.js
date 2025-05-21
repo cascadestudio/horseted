@@ -14,6 +14,7 @@ export default function DisplaySellerAccount({ sellerData }) {
     dateOfBirth,
     firstName,
     lastName,
+    phoneNumber,
     verificationStatus,
   } = sellerData;
 
@@ -35,6 +36,16 @@ export default function DisplaySellerAccount({ sellerData }) {
             FR76 **** **** **** **** **** {ibanLast4}
           </div>
         </div>
+        { phoneNumber &&
+          <div className="mt-5">
+            <h3 className="font-mcqueen font-semibold mb-2">
+              Téléphone
+            </h3>
+            <p className="text-sm">
+              { phoneNumber }
+            </p>
+          </div>
+        }        
         <div className="mt-5">
           <h3 className="font-mcqueen font-semibold mb-2">
             Adresse d’expédition* :

@@ -9,11 +9,13 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Image from "next/image";
 import Link from "next/link";
 import Checkbox from "@/components/input/Checkbox";
+import horsetedApp from "@/assets/images/horsetedApp.png";
 
 export default function Contact() {
-  const { accessToken } = useAuthContext();
+  const { accessToken, user } = useAuthContext();
   const [contactData, setContactData] = useState({
     object: "",
+    email: "",
     message: "",
     acceptTerms: false,
   });
@@ -31,11 +33,21 @@ export default function Contact() {
   };
 
   async function postContact() {
+    let data = {
+      object: contactData.object,
+      message: contactData.message
+    };
+
+    const email = contactData.email.trim();
+    if (email.length) {
+      data = { ...data, email };
+    }    
+
     const response = await fetchHorseted(
       `/contact`,
       accessToken,
       "POST",
-      contactData,
+      data,
       true,
       true
     );
@@ -73,6 +85,17 @@ export default function Contact() {
             className="col-span-2 lg:col-span-1 lg:w-1/2"
             placeholder="Objet du message..."
           />
+          { !user &&
+            <TextInput
+              label="E-mail"
+              name="email"
+              value={contactData.email}
+              onChange={handleChange}
+              required
+              className="col-span-2 lg:col-span-1"
+              placeholder="Email de réponse..."
+            />
+          }
           <TextInput
             type="textarea"
             label="Message"
@@ -103,7 +126,7 @@ export default function Contact() {
           <div className="hidden lg:flex lg:justify-end lg:col-start-2 lg:row-start-1 lg:row-span-4">
             <Image
               sizes="(min-width: 1024px) 920px, 50vw"
-              src="/images/horsetedApp.png"
+              src={horsetedApp}
               alt="App Horseted"
               width={920}
               height={500}

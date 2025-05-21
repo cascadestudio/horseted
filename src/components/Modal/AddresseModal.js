@@ -4,6 +4,8 @@ import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 import { postAddress } from "@/fetch/addresses";
 import { useAuthContext } from "@/context/AuthContext";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function AddressModal({
   setIsModal,
@@ -20,6 +22,7 @@ export default function AddressModal({
 
   const [address, setAddress] = useState({
     fullName: "",
+    phoneNumber: "",
     houseNumber: "",
     street: "",
     postalCode: "",
@@ -49,11 +52,17 @@ export default function AddressModal({
       delete addressData.additionalInfos;
     }
     const response = await postAddress(accessToken, addressData);
-
+    
     if (response === "address_not_valid") {
       setAlert({
         type: "error",
         message: "Adresse invalide",
+      });
+      return;
+    } else if (response === "phone_not_valid") {
+      setAlert({
+        type: "error",
+        message: "Téléphone invalide",
       });
       return;
     }
@@ -96,6 +105,26 @@ export default function AddressModal({
         required
         disabled
       />
+      <p className="label font-mcqueen font-semibold">Téléphone :</p>
+      <PhoneInput
+        containerStyle={{
+          borderBottom: '1px solid black'
+        }}
+        buttonStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        inputStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        country={'fr'}
+        placeholder=""
+        value={address.phoneNumber}
+        onChange={phone => {
+          setAddress({ ...address, phoneNumber: `+${phone}` });
+        }}
+      />      
       <p className="label font-mcqueen font-semibold">Adresse :</p>
       <div className="flex flex-row">
         <TextInput

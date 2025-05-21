@@ -1,5 +1,7 @@
 import { TextInput } from "@/components/input";
 import SellerAdress from "./SellerAdress";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function CreateStripeAccount({
   stripeAccountForm,
@@ -21,6 +23,16 @@ export default function CreateStripeAccount({
       },
     });
   };
+
+  const handlePhoneChange = (phoneNumber) => {
+    setStripeAccountForm({
+      ...stripeAccountForm,
+      individual: {
+        ...stripeAccountForm.individual,
+        phone: phoneNumber
+      }
+    });
+  }
 
   return (
     <div className="col-span-2 lg:col-span-1">
@@ -55,6 +67,24 @@ export default function CreateStripeAccount({
         required
         className="mb-4 lg:mb-0"
       />
+      <p className="label font-mcqueen font-semibold">Téléphone :</p>
+      <PhoneInput
+        containerStyle={{
+          borderBottom: '1px solid black'
+        }}
+        buttonStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        inputStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        country={'fr'}
+        placeholder=""
+        value={stripeAccountForm.individual.phone}
+        onChange={phone => handlePhoneChange(`+${phone}`)}
+      />  
       <TextInput
         onChange={(e) =>
           setStripeBankAccountForm({
