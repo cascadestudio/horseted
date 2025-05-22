@@ -133,12 +133,21 @@ const CheckOutPage = () => {
     const body = {
       offerId: offer?.id || null,
       paymentMethod: activePaymentMethodId,
-      address: {
-        fullName: activeAddress.fullName,
-        city: activeAddress.city,
-        street: activeAddress.street,
-        postalCode: activeAddress.postalCode,
-      },
+      address: activeServicePoint?.id
+      ? {
+          fullName: activeAddress.fullName,
+          city: activeServicePoint.city,
+          houseNumber: activeServicePoint.houseNumber,
+          street: activeServicePoint.street,
+          postalCode: activeServicePoint.postalCode,
+        }
+      : {
+          fullName: activeAddress.fullName,
+          city: activeAddress.city,
+          houseNumber: activeAddress.houseNumber,
+          street: activeAddress.street,
+          postalCode: activeAddress.postalCode,
+        },
       shippingMethod: shippingMethods[selectedShippingMethod][0].id,
       servicePoint: activeServicePoint?.id || null,
     };

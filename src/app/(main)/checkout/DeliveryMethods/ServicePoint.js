@@ -5,7 +5,7 @@ export default function ServicePoint({
   setActiveServicePoint,
   activeServicePoint,
 }) {
-  const { name, street, code, city, carrier, id } = activeServicePoint;
+  const { name, houseNumber, street, code, city, carrier, id } = activeServicePoint;
 
   useEffect(() => {
     const loadSendCloudScript = () => {
@@ -68,7 +68,7 @@ export default function ServicePoint({
               <p className="font-semibold">{capitalizeText(name)}</p>
             </div>
             <p className="text-sm">
-              {`${capitalizeText(street)}, ${code} ${capitalizeText(city)}`}
+              {`${capitalizeText([houseNumber, street].filter(el => el).join(" "))}, ${code} ${capitalizeText(city)}`}
             </p>
           </div>
           <button
