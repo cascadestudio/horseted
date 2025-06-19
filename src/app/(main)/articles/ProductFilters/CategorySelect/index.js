@@ -76,7 +76,7 @@ export default function CategorySelect({
             </label>
           )}
           {currentCategories.map((category) =>
-            isLastLevel ? (
+            !category.hasChildren ? (
               <label
                 key={category.id}
                 className="flex justify-between items-center cursor-pointer font-semibold"
