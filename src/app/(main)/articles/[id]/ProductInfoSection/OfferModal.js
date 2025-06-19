@@ -12,7 +12,7 @@ export default function OfferModal({
   products,
   offerId,
   isCounterOffer,
-  orderId,
+  order,
 }) {
   const { accessToken } = useAuthContext();
   const [showAlert, setShowAlert] = useState(false);
@@ -29,14 +29,15 @@ export default function OfferModal({
       setShowAlert(false);
       if (isCounterOffer) {
         await postOffer(accessToken, {
-          orderId: orderId,
+          orderId: order.id,
           price: offerPrice,
           declinedOfferId: offerId,
         });
       } else {
-        await postOrder(productIds, offerPrice);
+        order = await postOrder(productIds, offerPrice);
       }
-      onClose();
+
+      onClose(order);
     }
   };
 
@@ -62,7 +63,8 @@ export default function OfferModal({
       true,
       true
     );
-    return order.id;
+    
+    return order;
   }
 
   return (

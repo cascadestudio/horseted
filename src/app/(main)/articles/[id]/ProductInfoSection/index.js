@@ -59,9 +59,11 @@ export default function ProductInfoSection({
   }, []);
 
   const handleOpenOfferModal = () => setIsOfferModalOpen(true);
-  const handleCloseOfferModal = () => {
+  const handleCloseOfferModal = (order) => {
     setIsOfferModalOpen(false);
-    router.push(`/messagerie`);
+    if (order) {
+      router.push(`/messagerie?threadId=${order.threadId}`);
+    }    
   };
 
   const handleOpenCreateBundleModal = () => {
@@ -82,8 +84,11 @@ export default function ProductInfoSection({
     setIsBundleOfferModalOpen(true);
     setIsBundleSummaryModalOpen(false);
   };
-  const handleCloseBundleOfferModal = () => {
+  const handleCloseBundleOfferModal = (order) => {
     setIsBundleOfferModalOpen(false);
+    if (order) {
+      router.push(`/messagerie?threadId=${order.threadId}`);
+    }
   };
 
   const handleThreeDotsClick = () => {
