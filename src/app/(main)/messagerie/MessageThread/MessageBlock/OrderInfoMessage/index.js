@@ -145,6 +145,18 @@ export default function OrderInfoMessage({ message, offerId }) {
           </Button>
         </div>
       )}
+      {type === "offerAccepted" && !isOfferOwner && order?.status !== 'paid' && (
+        <div className="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 gap-x-3">
+          <Button
+            variant={"green"}
+            href={`/checkout?orderId=${order?.id}&offerId=${offerId}&productIds=${products
+              .map((product) => product.id)
+              .join(",")}`}
+          >
+            Payer
+          </Button>
+        </div>
+      )}
       {type === "newOffer" && // is a new offer and
         !isOfferOwner && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
