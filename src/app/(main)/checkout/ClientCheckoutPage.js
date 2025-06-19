@@ -139,7 +139,7 @@ const CheckOutPage = () => {
           city: activeServicePoint.city,
           houseNumber: activeServicePoint.houseNumber,
           street: activeServicePoint.street,
-          postalCode: activeServicePoint.postalCode,
+          postalCode: activeServicePoint.postal_code,
         }
       : {
           fullName: activeAddress.fullName,
@@ -151,6 +151,7 @@ const CheckOutPage = () => {
       shippingMethod: shippingMethods[selectedShippingMethod][0].id,
       servicePoint: activeServicePoint?.id || null,
     };
+
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
     return paymentResponse;
   }
