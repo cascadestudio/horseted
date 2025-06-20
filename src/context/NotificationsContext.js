@@ -10,6 +10,7 @@ export const useNotificationsContext = () => useContext(NotificationsContext);
 export const NotificationsContextProvider = ({ children }) => {
   const { accessToken } = useAuthContext();
 
+  const [threads, setThreads] = useState([]);
   const [unseenMessagesNb, setUnseenMessagesNb] = useState(0);
 
   useEffect(() => {
@@ -18,16 +19,24 @@ export const NotificationsContextProvider = ({ children }) => {
 
   async function handleUnseenMessagesNb() {
     const threads = await getThreads();
-    const unseenThreads = threads.filter((thread) => !thread.lastMessage.seen);
-    const messages = await Promise.all(
-      unseenThreads.map(async (thread) => {
-        return await getMessages(thread.id);
-      })
-    );
-    const unseenMessagesNb = messages
-      .flat()
-      .filter((message) => !message.seen).length;
-    setUnseenMessagesNb(unseenMessagesNb);
+    const unseenThreads = threads.filter((thread) => thread.lastMessage && !thread.lastMessage.seen);
+
+    setThreads(threads);
+    setUnseenMessagesNb(unseenThreads.length);
+  }
+
+  async function markThreadAsSeen(threadId) {
+    const thread = threads.find(t => t.id == threadId);
+    
+    if (!thread) {
+      handleUnseenMessagesNb();
+    } else if (thread?.lastMessage?.seen === false) {
+      thread.lastMessage.seen = true;      
+      const unseenThreads = threads.filter((thread) => thread.lastMessage && !thread.lastMessage.seen);
+      
+      setThreads(threads);
+      setUnseenMessagesNb(unseenThreads.length);    
+    }    
   }
 
   async function getThreads() {
@@ -49,32 +58,13 @@ export const NotificationsContextProvider = ({ children }) => {
     return messages;
   }
 
-  // const [unseenNotificationsNb, setUnseenNotificationsNb] = useState(0);
-
-  // useEffect(() => {
-  //   if (accessToken) handleUnseenNotificationsNb();
-  // }, [accessToken]);
-
-  // async function handleUnseenNotificationsNb() {
-  //   const notifications = await getNotifications();
-  //   console.log("notifications =>", notifications);
-
-  //   const unseenNotifications = notifications.filter(
-  //     (notification) => notification.seen === "false"
-  //   );
-  //   const unseenNotificationsNb = unseenNotifications.length;
-  //   console.log("unseenNotificationsNb =>", unseenNotificationsNb);
-  //   setUnseenNotificationsNb(unseenNotificationsNb);
-  // }
-
-  // async function getNotifications() {
-  //   const notifications = await fetchHorseted("/notifications", accessToken);
-  //   return notifications;
-  // }
-
   return (
     <NotificationsContext.Provider
-      value={{ unseenMessagesNb, handleUnseenMessagesNb }}
+      value={{
+        unseenMessagesNb,
+        handleUnseenMessagesNb,
+        markThreadAsSeen       
+      }}
     >
       {children}
     </NotificationsContext.Provider>

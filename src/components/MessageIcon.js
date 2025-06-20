@@ -1,7 +1,10 @@
+import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import { useNotificationsContext } from "@/context/NotificationsContext";
 
 export default function MessageIcon() {
   const { unseenMessagesNb } = useNotificationsContext();
+
+  // const unseenMessagesNb = threads?.filter(t => t.lastMessage && !t.lastMessage.seen).length ?? 0;
 
   return (
     <div className="relative">

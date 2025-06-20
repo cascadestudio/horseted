@@ -28,7 +28,7 @@ export const ThreadsProvider = ({
 }) => {
   const router = useRouter();
   const { user, accessToken } = useAuthContext();
-  const { handleUnseenMessagesNb } = useNotificationsContext();
+  const { handleUnseenMessagesNb, markThreadAsSeen } = useNotificationsContext();
 
   // States
   const [threads, setThreads] = useState([]);
@@ -114,8 +114,9 @@ export const ThreadsProvider = ({
       } else if (thread) {
         if (thread.lastMessage) {
           thread.lastMessage.seen = true;
+          markThreadAsSeen(thread.id);
         }
-        
+
         setActiveThread(thread);
       }
     },

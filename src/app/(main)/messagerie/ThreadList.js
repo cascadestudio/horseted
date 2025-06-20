@@ -1,9 +1,11 @@
 import AvatarDisplay from "@/components/AvatarDisplay";
 import { ISOtoLastMessageDate } from "@/utils/formatDate";
 import { useThreadsContext } from "./context/ThreadsContext";
-import { markMessageAsSeen } from "@/fetch/threads";
+import { useNotificationsContext } from "@/context/NotificationsContext";
 
 export default function ThreadList() {
+  const {markThreadAsSeen}  = useNotificationsContext();
+
   const {
     threads,
     activeThread,    
@@ -20,6 +22,7 @@ export default function ThreadList() {
     const thread = threads.find((thread) => thread.id === id);
     if (thread?.lastMessage && !thread?.lastMessage.seen) {
       thread.lastMessage.seen = true;
+      markThreadAsSeen(thread.id);
     }
 
     setActiveThread(thread);    
