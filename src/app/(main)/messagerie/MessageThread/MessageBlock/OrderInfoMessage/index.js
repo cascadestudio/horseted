@@ -58,7 +58,7 @@ export default function OrderInfoMessage({ message, offerId }) {
 
   const isBuyButton =
     offer?.status === "approved" &&
-    user?.id === offer?.userId &&
+    order?.userId === user?.id &&    
     order?.status !== "paid";
 
   const handleConfirmOrderDelivered = async () => {
@@ -145,7 +145,7 @@ export default function OrderInfoMessage({ message, offerId }) {
           </Button>
         </div>
       )}
-      {type === "offerAccepted" && !isOfferOwner && order?.status !== 'paid' && (
+      {/* {type === "offerAccepted" && !isOfferOwner && order?.status !== 'paid' && (
         <div className="flex flex-col lg:flex-row gap-y-3 lg:gap-y-0 gap-x-3">
           <Button
             variant={"green"}
@@ -156,7 +156,7 @@ export default function OrderInfoMessage({ message, offerId }) {
             Payer
           </Button>
         </div>
-      )}
+      )} */}
       {type === "newOffer" && // is a new offer and
         !isOfferOwner && ( // user is not the offer owner
           <OfferResponseButtons offerId={offerId} totalPrice={totalPrice} />
