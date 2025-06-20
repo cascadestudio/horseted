@@ -97,7 +97,7 @@ export const ThreadsProvider = ({
         thread = userThreads.find((t) => t.orderId === orderId);
       } else if (threadIdParam) {
         console.log("threadIdParam", threadIdParam);
-        thread = userThreads.find((t) => t.id === threadIdParam);
+        thread = userThreads.find((t) => t.id === threadIdParam);        
       } else if (userIdParam) {
         thread = userThreads.find((t) =>
           t.authors.some((author) => author.id === userIdParam)
@@ -111,7 +111,13 @@ export const ThreadsProvider = ({
         setProduct(null);
       } else if (!thread && userThreads.length) {
         thread = userThreads[0];
-      } else if (thread) setActiveThread(thread);
+      } else if (thread) {
+        if (thread.lastMessage) {
+          thread.lastMessage.seen = true;
+        }
+        
+        setActiveThread(thread);
+      }
     },
     [user]
   );
