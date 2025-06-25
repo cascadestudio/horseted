@@ -7,6 +7,7 @@ import { useState } from "react";
 export default function NewMessageSearch() {
   const {
     threads,
+    accessToken,
     setProduct,
     setMessages,
     setRecipient,
@@ -21,12 +22,13 @@ export default function NewMessageSearch() {
   };
 
   async function getUsers(searchTerm) {
-    const searchedUsers = await fetchHorseted(`/users?terms=${searchTerm}`);
+    const searchedUsers = await fetchHorseted(`/users?terms=${searchTerm}`, accessToken);
     const usersWithoutThreads = searchedUsers.items.filter(
       (searchedUser) =>
         searchedUser.id !== user.id &&
         !threads.some((thread) => thread.authors[0].id === searchedUser.id)
     );
+    
     setUsers(usersWithoutThreads);
   }
 

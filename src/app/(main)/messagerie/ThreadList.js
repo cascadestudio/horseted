@@ -11,25 +11,28 @@ export default function ThreadList() {
     activeThread,    
     setActiveThread,
     setProduct,
+    setProducts,
     handleGetProduct,
     user,
     setIsInfo,
     updateMessages,
     setIsNewMessageSearch,
+    resetActiveThread
   } = useThreadsContext();
 
   function handleThreadClick(id, productId) {
+    if (activeThread?.id == id) {
+      return;
+    }
+    
     const thread = threads.find((thread) => thread.id === id);
     if (thread?.lastMessage && !thread?.lastMessage.seen) {
       thread.lastMessage.seen = true;
       markThreadAsSeen(thread.id);
     }
 
-    setActiveThread(thread);    
-    updateMessages(id);
-    setProduct(null);
-    setIsInfo(false);
-    setIsNewMessageSearch(false);
+    resetActiveThread(thread);    
+        
     if (productId) {
       handleGetProduct(productId);
     }

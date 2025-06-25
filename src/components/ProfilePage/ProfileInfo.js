@@ -13,8 +13,7 @@ export default function ProfileInfo({ profile, accessToken }) {
   });
 
   useEffect(() => {
-    // getCity();
-    setLocation({ city: profile.city, code: "75" }); // TODO: voir avec Jonas comment gérer la ville
+    setLocation({ city: profile.city });
   }, []);
 
   const getCity = async () => {
@@ -57,11 +56,11 @@ export default function ProfileInfo({ profile, accessToken }) {
         <p className="text-[22px] font-mcqueen font-semibold capitalize">
           {profile.username}
         </p>
-        {location.city && location.code && (
+        {(location.city || location.code) &&  (
           <div className="flex gap-2 items-center font-medium text-sm mb-4">
             <CityIcon className="w-3 stroke-current fill-none" />
             <p>
-              {location.city} ({location.code})
+              { [location.city, location.code].map(el => el?.trim()).filter(el => el?.length).join(" ") }              
             </p>
           </div>
         )}

@@ -37,25 +37,8 @@ export default function BrandSelect({
   };
 
   const filteredBrands = brands.filter(({ name }) =>
-    name.toLowerCase().includes(searchTerm.toLowerCase())
+    name.toLowerCase().includes(searchTerm.trim().toLowerCase())
   );
-
-  useEffect(() => {
-    if (isPostProduct) {
-      if (searchTerm === "") {
-        setProduct((prev) => ({ ...prev, brand: "" }));
-      }
-      if (
-        !brands.some((brand) =>
-          brand.name.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      ) {
-        setProduct((prev) => ({ ...prev, brand: searchTerm }));
-      } else {
-        setProduct((prev) => ({ ...prev, brand: "" }));
-      }
-    }
-  }, [filteredBrands.length, searchTerm, isPostProduct, setProduct]);
 
   const handleCheckboxChange = (e) => {
     const brand = e.target.value;
@@ -67,12 +50,30 @@ export default function BrandSelect({
       );
     }
   };
+  
+  const handleBrandPick = (brand) => {
+    setSearchTerm("");
+    onBrandsChange(brand);
+  }
+
+  const handleOnKeyUp = (e) => {    
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      
+      const brand = searchTerm.trim().toLowerCase();
+
+      if (brand.length) {        
+        setSearchTerm("");
+        setProduct((prev) => ({ ...prev, brand }));
+      }
+    }
+  }
 
   return (
     <Dropdown
-      className={className}
+      className={className} 
       title={title || "Marques"}
-      isActive={activeBrands.length > 0 || (activeBrand && activeBrand !== "")}
+      isActive={activeBrands.length > 0 || (activeBrand && activeBrand !== "")}      
       isBlack={isBlack}
       onSelect={onBrandsChange}
     >
@@ -83,13 +84,18 @@ export default function BrandSelect({
             src="/icons/search.svg"
             alt=""
           />
-          <input
-            className="border-none"
-            type="text"
-            placeholder="Rechercher une marque"
-            value={searchTerm}
-            onChange={handleFilterChange}
-          />
+          
+            <input
+              className="border-none"
+              type="text"
+              placeholder="Rechercher une marque"
+              value={searchTerm}
+              onKeyDown={handleOnKeyUp}
+              // onS
+              // onSubmit={handleSubmitSearchTerm}
+              onChange={handleFilterChange}
+            />
+          {/* </form>           */}
         </div>
         <div className="flex flex-col gap-y-4 max-h-96 overflow-y-scroll py-4 pe-3">
           {filteredBrands.map(({ name }) => (
@@ -102,7 +108,7 @@ export default function BrandSelect({
                 <Radio
                   className="ml-20"
                   value={name}
-                  onChange={onBrandsChange}
+                  onChange={handleBrandPick}
                   checked={activeBrand === name}
                 />
               ) : (

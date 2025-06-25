@@ -6,7 +6,7 @@ export const getDisputeById = async (accessToken, disputeId) => {
 };
 
 export const getDisputeByOrderId = async (accessToken, orderId) => {
-  const dispute = await fetchHorseted(`/disputes?orderId=${orderId}`, accessToken);
+  const dispute = await fetchHorseted(`/disputes?orderId=${orderId}`, accessToken, 'GET', null, false, false, true);
   return dispute;
 };
 

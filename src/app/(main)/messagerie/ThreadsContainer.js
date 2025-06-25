@@ -12,7 +12,8 @@ import DisputeModal from "./ThreadInfo/DisputeModal";
 
 export default function ThreadsContainer() {
   const {
-    threads,
+    threads,  
+    activeThread,
     setActiveThread,
     recipient,
     setIsNewMessageSearch,
@@ -58,7 +59,7 @@ export default function ThreadsContainer() {
           <>
             <MessageThreadHeader />
             {isInfo && recipient ? (
-              <ThreadInfo 
+              <ThreadInfo
                 setIsDisputeModal={() => setIsDisputeModal(true)}
               />
             ) : (
