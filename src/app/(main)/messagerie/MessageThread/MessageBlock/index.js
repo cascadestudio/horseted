@@ -2,12 +2,21 @@ import DisplayMedia from "@/components/DisplayMedia";
 
 import OrderInfoMessage from "./OrderInfoMessage";
 import { useThreadsContext } from "../../context/ThreadsContext";
+import { useEffect } from "react";
+import { markMessageAsSeen } from "@/fetch/threads";
 
 export default function MessageBlock({ message }) {
   const { content, type, medias, offerId, senderId } = message;
-  const { user } = useThreadsContext();
+  const { user, activeThread,  accessToken } = useThreadsContext();
 
   const isMessageFromRecipient = user?.id === senderId;
+
+  useEffect(() => {
+    if (!message.seen) {
+      message.seen = true;
+      markMessageAsSeen(accessToken, activeThread.id, message.id);
+    }
+  }, [])
 
   if (type === "message") {
     return (

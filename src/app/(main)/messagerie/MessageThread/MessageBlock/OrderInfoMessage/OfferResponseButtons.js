@@ -5,18 +5,20 @@ import Button from "@/components/Button";
 import OfferModal from "@/app/(main)/articles/[id]/ProductInfoSection/OfferModal";
 
 export default function OfferResponseButtons({ offerId, totalPrice }) {
-  const { updateMessages, accessToken, products, order } = useThreadsContext();
+  const { updateMessages, activeThread, accessToken, products, order } = useThreadsContext();
 
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
   const handleOfferSellerResponse = async (status) => {
     await patchOffer(status, offerId, accessToken);
-    updateMessages();
+    updateMessages(activeThread.id);
   };
 
-  const handleCloseOfferModal = () => {
+  const handleCloseOfferModal = (order) => {
     setIsOfferModalOpen(false);
-    updateMessages();
+    if (order) {
+      updateMessages(activeThread.id);
+    }    
   };
 
   return (
@@ -48,7 +50,7 @@ export default function OfferResponseButtons({ offerId, totalPrice }) {
           products={products}
           offerId={offerId}
           isCounterOffer
-          orderId={order.id}
+          order={order}
         />
       )}
     </>

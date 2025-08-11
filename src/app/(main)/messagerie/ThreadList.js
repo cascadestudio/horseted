@@ -1,26 +1,38 @@
 import AvatarDisplay from "@/components/AvatarDisplay";
 import { ISOtoLastMessageDate } from "@/utils/formatDate";
 import { useThreadsContext } from "./context/ThreadsContext";
+import { useNotificationsContext } from "@/context/NotificationsContext";
 
 export default function ThreadList() {
+  const {markThreadAsSeen}  = useNotificationsContext();
+
   const {
     threads,
-    activeThread,
+    activeThread,    
     setActiveThread,
     setProduct,
+    setProducts,
     handleGetProduct,
     user,
     setIsInfo,
     updateMessages,
     setIsNewMessageSearch,
+    resetActiveThread
   } = useThreadsContext();
 
   function handleThreadClick(id, productId) {
-    setActiveThread(threads.find((thread) => thread.id === id));
-    updateMessages(id);
-    setProduct(null);
-    setIsInfo(false);
-    setIsNewMessageSearch(false);
+    if (activeThread?.id == id) {
+      return;
+    }
+    
+    const thread = threads.find((thread) => thread.id === id);
+    if (thread?.lastMessage && !thread?.lastMessage.seen) {
+      thread.lastMessage.seen = true;
+      markThreadAsSeen(thread.id);
+    }
+
+    resetActiveThread(thread);    
+        
     if (productId) {
       handleGetProduct(productId);
     }
@@ -29,8 +41,12 @@ export default function ThreadList() {
   return (
     <ul className="overflow-y-scroll">
       {threads.map((thread) => {
-        const { id, productId, authors, lastMessage } = thread;
+        const { id, productId, authors } = thread;
         const isActive = id === activeThread?.id;
+        const { lastMessage } = isActive
+          ? activeThread
+          : thread;
+
         const recipient = authors.find((authors) => authors.id !== user.id);
 
         return (

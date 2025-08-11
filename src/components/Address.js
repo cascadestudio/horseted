@@ -44,7 +44,7 @@ export default function Address({
           <h2 className="font-mcqueen font-bold text-xl mb-1">{title ?? "Adresse"}</h2>
           {activeAddress ? (
             <p>
-              {`${activeAddress.fullName}, ${activeAddress.street},`} <br />
+              {`${activeAddress.fullName}, ${[activeAddress.houseNumber, activeAddress.street].filter(el => el).join(" ")},`} <br />
               {`${activeAddress.postalCode} ${activeAddress.city} `}
             </p>
           ) : (

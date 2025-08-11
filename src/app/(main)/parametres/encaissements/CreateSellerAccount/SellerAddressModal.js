@@ -43,6 +43,7 @@ export default function AddressModal({
       <TextInput
         label="N° et nom de rue"
         name="line1"
+        maxLength={32}
         value={address.line1}
         onChange={handleChange}
         required
@@ -54,6 +55,8 @@ export default function AddressModal({
         value={address.postal_code}
         onChange={handleChange}
         required
+        minLength={5}
+        maxLength={5}
         placeholder="Ex : 75 015"
       />
       <TextInput

@@ -23,12 +23,13 @@ const ThreadsContext = createContext();
 export const ThreadsProvider = ({
   children,
   orderId,
+  productIdParam,
   userIdParam,
   threadIdParam,
 }) => {
   const router = useRouter();
   const { user, accessToken } = useAuthContext();
-  const { handleUnseenMessagesNb } = useNotificationsContext();
+  const { handleUnseenMessagesNb, markThreadAsSeen } = useNotificationsContext();
 
   // States
   const [threads, setThreads] = useState([]);
@@ -47,7 +48,7 @@ export const ThreadsProvider = ({
 
   // Initialize threads
   useEffect(() => {
-    initThreads(orderId, userIdParam, threadIdParam);
+    initThreads(orderId, userIdParam, threadIdParam, productIdParam);
   }, [orderId, user]);
 
   // Fetch thread-specific data when activeThread changes
@@ -81,7 +82,7 @@ export const ThreadsProvider = ({
   }, [accessToken]);
 
   const initThreads = useCallback(
-    async (orderId, userIdParam, threadIdParam) => {
+    async (orderId, userIdParam, threadIdParam, productIdParam) => {
       const threadsResponse = await handleGetThreads();
       if (!threadsResponse.length) return;
 
@@ -93,25 +94,40 @@ export const ThreadsProvider = ({
       setThreads(userThreads);
 
       let thread = null;
-      if (orderId) {
+      if (threadIdParam) {
+        thread = userThreads.find((t) => t.id === threadIdParam);        
+      } else if (orderId) {
         thread = userThreads.find((t) => t.orderId === orderId);
-      } else if (threadIdParam) {
-        console.log("threadIdParam", threadIdParam);
-        thread = userThreads.find((t) => t.id === threadIdParam);
+      } else if (productIdParam) {
+        thread = userThreads.find((t) => t.productId == productIdParam);
       } else if (userIdParam) {
         thread = userThreads.find((t) =>
           t.authors.some((author) => author.id === userIdParam)
+          && !t.orderId
+          && !t.productId
         );
       }
+      
       if (!thread && userIdParam) {
         const recipient = await getUser(accessToken, userIdParam);
         setRecipient(recipient);
         setIsNewMessageSearch(false);
-        setMessages([]);
+        setMessages([]);        
         setProduct(null);
+        if (productIdParam) {
+          handleGetProduct(productIdParam);
+        }
+        
       } else if (!thread && userThreads.length) {
         thread = userThreads[0];
-      } else if (thread) setActiveThread(thread);
+      } else if (thread) {
+        if (thread.lastMessage) {
+          thread.lastMessage.seen = true;
+          markThreadAsSeen(thread.id);
+        }
+
+        setActiveThread(thread);
+      }
     },
     [user]
   );
@@ -127,9 +143,11 @@ export const ThreadsProvider = ({
 
       if (orderData) {
         try {
-          const disputeResponse = await getDisputeByOrderId(accessToken, activeThread.orderId);                    
+          const disputeResponse = await getDisputeByOrderId(accessToken, activeThread.orderId);                              
           setDispute(disputeResponse);
-        } catch (_) {}
+        } catch (_) {
+          setDispute(null);
+        }
       }
 
       if (orderData?.status === "paid") {
@@ -199,6 +217,24 @@ export const ThreadsProvider = ({
     [accessToken]
   );
 
+  const resetActiveThread = useCallback((thread) => {
+    setActiveThread(null);
+    setMessages([]);
+    setIsInfo(false);
+    setRecipient(null);
+    setParcel(null);
+    setDispute(null);
+    setIsNewMessageSearch(false);
+    setOrderTracking(null);
+    setOrder(null);
+    setProducts([]);
+    setProduct(null);
+
+    if (thread) {
+      setActiveThread(thread);
+    }    
+  }, []);
+
   return (
     <ThreadsContext.Provider
       value={{
@@ -235,7 +271,8 @@ export const ThreadsProvider = ({
         dispute,
         setDispute,
         parcel,
-        setParcel
+        setParcel,
+        resetActiveThread
       }}
     >
       {children}

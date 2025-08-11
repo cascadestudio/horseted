@@ -53,7 +53,7 @@ export default function Modal({
           </h1>
           <div
             className="col-start-3 cursor-pointer justify-self-end self-center"
-            onClick={onClose}
+            onClick={() => onClose()}
           >
             <CloseButton className="h-7 w-7" />
           </div>

@@ -42,3 +42,17 @@ export const postMessage = async (
     true
   );
 };
+
+export const markMessageAsSeen = async (
+  accessToken,
+  threadId,
+  messageId
+) => {
+  await fetchHorseted(
+    `/threads/${threadId}/messages/${messageId}`,
+    accessToken,
+    "PATCH",
+    { seen: true },
+    true
+  )
+}

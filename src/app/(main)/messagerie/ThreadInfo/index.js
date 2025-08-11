@@ -2,6 +2,7 @@ import { useIsClickOutsideElement } from "@/utils/hooks";
 import { useThreadsContext } from "@/app/(main)/messagerie/context/ThreadsContext";
 import { useEffect, useRef, useState } from "react";
 import { centsToEuros } from "@/utils/centsToEuros";
+import { useRouter } from "next/navigation";
 
 import ThreeDotsIcon from "@/assets/icons/ThreeDotsIcon";
 import AvatarDisplay from "@/components/AvatarDisplay";
@@ -26,10 +27,14 @@ export default function ThreadInfo({
     recipient,
     initThreads,
     activeThread,
+    setActiveThread,
     setIsInfo,
     dispute,
-    order    
+    order,
+    resetActiveThread
   } = useThreadsContext();
+
+  const router = useRouter();
 
   const [isDropdown, setIsDropdown] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -71,18 +76,21 @@ export default function ThreadInfo({
   const onDeleteThread = async () => {
     await deleteThread(accessToken, activeThread.id);
     await initThreads();
-    setIsInfo(false);
+
+    resetActiveThread(null);
+    router.replace('/messagerie');
   };
 
   return (
     <div>
       { order?.adminStatus === 'disputed' ||
-        (dispute && !dispute.sentToHorseted && !dispute.orderRefunds.length) && (
-        <div className="flex items-center justify-between w-full h-[50px] px-10 bg-[#D61919]">
-          <span className="font-mcqueen font-bold text-[14px] text-white">Litige en cours</span>
-          <Link href="" onClick={setIsDisputeModal} className="font-mcqueen font-bold text-[14px] text-white underline">VOIR LE LITIGE</Link>
-        </div>   
-      )}
+        (dispute && !dispute.sentToHorseted && !(dispute.orderRefunds?.length ?? 0)) && (
+          <div className="flex items-center justify-between w-full h-[50px] px-10 bg-[#D61919]">
+            <span className="font-mcqueen font-bold text-[14px] text-white">Litige en cours</span>
+            <Link href="" onClick={setIsDisputeModal} className="font-mcqueen font-bold text-[14px] text-white underline">VOIR LE LITIGE</Link>
+          </div>   
+        )
+      }
       <div className="flex flex-col w-full px-10 py-4">        
         <div className="flex items-center justify-between relative">
           <div className="flex items-center py-2 border-b w-full">

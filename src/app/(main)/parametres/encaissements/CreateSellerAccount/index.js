@@ -8,6 +8,7 @@ import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 import { loadStripe } from "@stripe/stripe-js";
 import Alert from "@/components/Alert";
+import parsePhoneNumber from 'libphonenumber-js'
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -28,6 +29,7 @@ export default function CreateSellerAccount({
     individual: {
       first_name: "",
       last_name: "",
+      phone: "",
       email: user?.auth.email,
       address: {
         line1: "",
@@ -55,7 +57,9 @@ export default function CreateSellerAccount({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!isFormValid()) return;
+
     setIsLoading(true);
     try {
       const accountToken = await createStripeAccount();
@@ -73,11 +77,20 @@ export default function CreateSellerAccount({
     }
   };
 
-  const isFormValid = () => {
+  const isFormValid = () => {    
+    const parsedPhoneNumber = parsePhoneNumber(stripeAccountForm.individual.phone ?? '');
+    
     const isDocumentValid =
       stripeAccountForm.individual.verification.document.front !== null &&
       stripeAccountForm.individual.verification.document.back !== null;
-    if (!isAdressValid) {
+    
+    if (!(parsedPhoneNumber?.isValid() ?? false)) {
+      setAlert({
+        type: "error",
+        message: "Téléphone non valide",
+      });
+      return false;
+    } else if (!isAdressValid) {
       setAlert({
         type: "error",
         message: "Veuillez ajouter une adresse",
@@ -187,7 +200,7 @@ export default function CreateSellerAccount({
         </p>
         <CreateStripeAccountForm
           setStripeAccountForm={setStripeAccountForm}
-          stripeAccountForm={stripeAccountForm}
+          stripeAccountForm={stripeAccountForm}          
           dateOfBirth={dateOfBirth}
           setDateOfBirth={setDateOfBirth}
           stripeBankAccountForm={stripeBankAccountForm}

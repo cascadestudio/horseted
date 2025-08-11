@@ -4,6 +4,8 @@ import Modal from "@/components/Modal";
 import Checkbox from "@/components/input/Checkbox";
 import { postAddress } from "@/fetch/addresses";
 import { useAuthContext } from "@/context/AuthContext";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 export default function AddressModal({
   setIsModal,
@@ -20,6 +22,8 @@ export default function AddressModal({
 
   const [address, setAddress] = useState({
     fullName: "",
+    phoneNumber: "",
+    houseNumber: "",
     street: "",
     postalCode: "",
     city: "",
@@ -48,11 +52,17 @@ export default function AddressModal({
       delete addressData.additionalInfos;
     }
     const response = await postAddress(accessToken, addressData);
-
+    
     if (response === "address_not_valid") {
       setAlert({
         type: "error",
         message: "Adresse invalide",
+      });
+      return;
+    } else if (response === "phone_not_valid") {
+      setAlert({
+        type: "error",
+        message: "Téléphone invalide",
       });
       return;
     }
@@ -95,27 +105,55 @@ export default function AddressModal({
         required
         disabled
       />
-      <TextInput
-        label="N° et nom de rue"
-        name="street"
-        value={address.street}
-        onChange={handleChange}
-        required
-        placeholder="Ex : 1 avenue de la Paix"
-      />
-      <TextInput
-        label="Complément d’adresse"
-        name="additionalInfos"
-        value={address.additionalInfos}
-        onChange={handleChange}
-        placeholder="Ex : Bâtiment C"
-      />
+      <p className="label font-mcqueen font-semibold">Téléphone :</p>
+      <PhoneInput
+        containerStyle={{
+          borderBottom: '1px solid black'
+        }}
+        buttonStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        inputStyle={{
+          border: 'none',
+          background: 'none'
+        }}
+        country={'fr'}
+        placeholder=""
+        value={address.phoneNumber}
+        onChange={phone => {
+          setAddress({ ...address, phoneNumber: `+${phone}` });
+        }}
+      />      
+      <p className="label font-mcqueen font-semibold">Adresse :</p>
+      <div className="flex flex-row">
+        <TextInput
+          className="w-[49px]"
+          hideLabel={true}
+          name="houseNumber"
+          value={address.houseNumber}
+          onChange={handleChange}
+          required
+          placeholder="No"
+        />        
+        <TextInput    
+          className="pl-5"              
+          hideLabel={true}
+          name="street"
+          value={address.street}
+          onChange={handleChange}
+          required
+          placeholder="Adresse"
+        />        
+      </div>   
       <TextInput
         label="Code postal"
         name="postalCode"
         value={address.postalCode}
         onChange={handleChange}
         required
+        minLength={5}
+        maxLength={5}
         placeholder="Ex : 75 015"
       />
       <TextInput

@@ -123,26 +123,43 @@ const CheckOutPage = () => {
   }
 
   async function getProduct(productId) {
-    const product = await fetchHorseted(`/products/${productId}`);
-    console.log(product);
+    const product = await fetchHorseted(`/products/${productId}`);    
     setProducts((prevProducts) => [...prevProducts, product]);
     setLoading(false);
   }
 
   async function handleOrdersPayment(orderId) {
+    const sendToServicePoint = selectedShippingMethod === 'servicePoint';
+    const shippingMethod = shippingMethods[selectedShippingMethod][0].id
+    
     const body = {
       offerId: offer?.id || null,
       paymentMethod: activePaymentMethodId,
-      address: {
-        fullName: activeAddress.fullName,
-        city: activeAddress.city,
-        street: activeAddress.street,
-        postalCode: activeAddress.postalCode,
-      },
-      shippingMethod: shippingMethods[selectedShippingMethod][0].id,
-      servicePoint: activeServicePoint?.id || null,
+      address: sendToServicePoint && activeServicePoint?.id
+      ? {
+          fullName: activeAddress.fullName,
+          city: activeServicePoint.city,
+          houseNumber: activeServicePoint.houseNumber,
+          street: activeServicePoint.street,
+          postalCode: activeServicePoint.postal_code,
+        }
+      : {
+          fullName: activeAddress.fullName,
+          city: activeAddress.city,
+          houseNumber: activeAddress.houseNumber,
+          street: activeAddress.street,
+          phoneNumber: activeAddress.phoneNumber,
+          postalCode: activeAddress.postalCode,
+        },
+      shippingMethod: shippingMethod,
+      servicePoint: sendToServicePoint ? activeServicePoint?.id : null,
     };
+
+    console.log(activeAddress);
+    console.log(body);
+
     const paymentResponse = await postOrderPayment(accessToken, orderId, body);
+    
     return paymentResponse;
   }
 
