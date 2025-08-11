@@ -349,8 +349,8 @@ export default function CGUPage() {
       <p>
         Le montant des frais de la Protection de l’Acheteur est indiqué et
         inclus au sein du Prix total. Pour chaque Commande, l’Utilisateur
-        Acheteur paiera un montant fixe de 0,99 € ainsi qu’un montant variable
-        de 5% appliqué sur le Prix de chaque Produit de la Commande.
+        Acheteur paiera un montant fixe de 1,99 € ainsi qu’un montant variable
+        de 8% appliqué sur le Prix de chaque Produit de la Commande.
       </p>
 
       {/* 6.3 Prix du Service d’expédition des Produits */}
